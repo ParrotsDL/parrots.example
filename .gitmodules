@@ -1,0 +1,6 @@
+[submodule "models/pytorch-object-detection"]
+	path = models/pytorch-object-detection
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+[submodule "models/parrots.example"]
+	path = models/parrots.example
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/parrots.example.git
