@@ -13,8 +13,6 @@ dataset:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
     reader: pillow
-    resize: 256
-    random_crop: [224, 224]
     random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
@@ -35,7 +33,7 @@ dataset:
  
 trainer:
   max_epoch: 120
-  test_freq: 2
+  test_freq: 120
   log_freq: 100
   label_smooth:
   optimizer:
@@ -57,7 +55,7 @@ saver:
 #  load_pavi: True   # load pretrain/resume model from pavi
 #  save_pavi: True   # add snapshot to pavi
   save_dir: checkpoints/vgg16   # save checkpoint locally
-  save_epoch_freq: 1
+  save_epoch_freq: 120
   save_latest: True
   save_best: True
   sync_bn_stats: False  

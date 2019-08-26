@@ -29,7 +29,7 @@ dataset:
     reader: opencv
     resize: 256
     center_crop: [224, 224]
-    colorjitter:
+    colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: True
@@ -38,7 +38,7 @@ dataset:
  
 trainer:
   max_epoch: 240
-  test_freq: 1
+  test_freq: 240
   log_freq: 100
   label_smooth:
   optimizer:
@@ -59,7 +59,7 @@ saver:
  # load_pavi: True   # load pretrain/resume model from pavi
  # save_pavi: True   # add snapshot to pavi
   save_dir: checkpoints/shuffle_v1   # save checkpoint locally
-  save_epoch_freq: 1
+  save_epoch_freq: 240
   save_latest: True
   save_best: True
   sync_bn_stats: False  

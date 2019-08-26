@@ -51,7 +51,7 @@ saver:
   #load_pavi:   # load pretrain/resume model from pavi
   #save_pavi:   # add snapshot to pavi
   save_dir: checkpoints/resnet50   # save checkpoint locally
-  save_epoch_freq: 1
+  save_epoch_freq: 120
   save_latest: False
   save_best: False
   sync_bn_stats: False  

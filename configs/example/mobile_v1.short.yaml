@@ -16,7 +16,6 @@ dataset:
     reader: pillow
     resize: 256
     random_crop: [224, 224]
-    random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
@@ -58,7 +57,7 @@ saver:
   # load_pavi: True   # load pretrain/resume model from pavi
   # save_pavi: True   # add snapshot to pavi
   save_dir: checkpoints/short/mobilev1   # save checkpoint locally
-  save_epoch_freq: 1
+  save_epoch_freq: 4
   save_latest: False
   save_best: False
   sync_bn_stats: False  
