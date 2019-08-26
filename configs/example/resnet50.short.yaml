@@ -28,8 +28,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
-  test_freq: 120
+  max_epoch: 4 
+  test_freq: 5
   log_freq: 100
   label_smooth:
   optimizer:
@@ -48,21 +48,21 @@ trainer:
 saver:
   pretrain_model:
   resume_model:
-  load_pavi:   # load pretrain/resume model from pavi
-  save_pavi:   # add snapshot to pavi
-  save_dir: checkpoints/weekly/resnet50   # save checkpoint locally
+  #load_pavi:   # load pretrain/resume model from pavi
+  #save_pavi:   # add snapshot to pavi
+  save_dir: checkpoints/short/resnet50   # save checkpoint locally
   save_epoch_freq: 1
   save_latest: False
   save_best: False
   sync_bn_stats: False  
  
-monitor:
-  # type: pavi
-  # _taskid: # continue training
-  # kwargs:
-  #   project: rabbit
-  #   task: resnet50
-  #   model: resnet50
+#monitor:
+ #  type: pavi
+ #  _taskid: # continue training
+ #  kwargs:
+ #    project: rabbit
+ #    task: resnet50
+ #    model: resnet50
   # type: tensorboard
   # kwargs:
   #     logdir: tensorboard
