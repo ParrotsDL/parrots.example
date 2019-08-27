@@ -4,3 +4,6 @@
 [submodule "models/parrots.example"]
 	path = models/parrots.example
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/parrots.example.git
+[submodule "models/ssd.triondet"]
+	path = models/ssd.triondet
+	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
