@@ -7,3 +7,6 @@
 [submodule "models/Light_Seg"]
 	path = models/Light_Seg
 	url = git@gitlab.bj.sensetime.com:xuchi/Light_Seg.git
+[submodule "models/ssd.triondet"]
+	path = models/ssd.triondet
+	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
