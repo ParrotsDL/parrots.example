@@ -1,0 +1,75 @@
+seed: 99
+net:
+    type: shuffle_v1
+    kwargs:
+        num_classes: 1000
+        groups: 3
+        in_channels: 3
+        width_mult: 1
+    #bn:
+    #    group_size: 1
+    #fp16:
+    #    scale_factor: 1024
+ 
+dataset:
+  train:
+    meta_file: /mnt/lustre/share/images/meta/train.txt
+    image_dir: /mnt/lustre/share/images/train
+    reader: opencv
+    resize: 256
+    random_crop: [224, 224]
+    random_resize_crop: 224
+    colorjitter: [0.2, 0.2, 0.2, 0.1]
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    mirror: True
+  test:
+    meta_file: /mnt/lustre/share/images/meta/val.txt
+    image_dir: /mnt/lustre/share/images/val
+    reader: opencv
+    resize: 256
+    center_crop: [224, 224]
+    colorjitter: [0.2, 0.2, 0.2, 0.1]
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    mirror: True
+  batch_size: 128
+  workers: 4
+ 
+trainer:
+  max_epoch: 240
+  test_freq: 240
+  log_freq: 100
+  label_smooth:
+  optimizer:
+    type: SGD
+    kwargs:
+      lr: 0.5
+      momentum: 0.9
+      weight_decay: 0.00004
+  lr_scheduler:
+    warmup_epochs: 0
+    type: LinearLR
+    kwargs:
+      min_lr: 0.0
+ 
+saver:
+  #pretrian_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  #resume_model: ckpt_e1.pth_02c603a7-3959-4b58-b089-723e39f75974
+ # load_pavi: True   # load pretrain/resume model from pavi
+ # save_pavi: True   # add snapshot to pavi
+  save_dir: checkpoints/shuffle_v1   # save checkpoint locally
+  save_epoch_freq: 240
+  save_latest: True
+  save_best: True
+  sync_bn_stats: False  
+ 
+#monitor:
+#  type: pavi
+#  kwargs:
+#    project: zhujuan_demo
+#    task: shuffle_v1_1x
+#    model: shuffle_v1_1x
+  # type: tensorboard
+  # kwargs:
+  #     logdir: tensorboard
