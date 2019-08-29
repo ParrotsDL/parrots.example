@@ -97,7 +97,8 @@ def build_loader(cfg, batch_size, workers, training=True):
         shuffle=(data_sampler is None),
         num_workers=workers,
         pin_memory=True,
-        sampler=data_sampler)
+        sampler=data_sampler,
+        collate_fn=data_set.collate_fn)
     return data_loader, data_sampler
 
 
