@@ -1,7 +1,8 @@
 import torch
 from torch.utils.data.sampler import Sampler
 from torch.utils.data import DataLoader
-from utils.memcached_dataset import McDataset
+# from utils.memcached_dataset import McDataset
+from utils.senseagent_dataset import AgentDataset
 import torchvision.transforms as transforms
 import utils.dist_util as dist
 import math
@@ -73,8 +74,19 @@ def build_loader(cfg, batch_size, workers, training=True):
         mean=cfg.get('mean', [0.485, 0.456, 0.406]),
         std=cfg.get('std', [0.229, 0.224, 0.225]))
     compose_list.append(data_normalize)
-    data_set = McDataset(cfg.image_dir, cfg.meta_file,
-                         transforms.Compose(compose_list), cfg.reader)
+    # data_set = McDataset(cfg.image_dir, cfg.meta_file,
+    #                      transforms.Compose(compose_list), cfg.reader)
+    data_set = AgentDataset(
+        "AQBSsq1cPCqjABAAHcm6x74uBgcEX54FXZKMaA==",
+        "ysgns",
+        "ysgnsfuse",
+        "ysg",
+        "10.5.9.171",
+        8090,
+        cfg.image_dir,
+        cfg.meta_file,
+        transforms.Compose(compose_list),
+        cfg.reader)
 
     round_up = True if training else False
     data_sampler = DistributedSampler(data_set, round_up=round_up)
