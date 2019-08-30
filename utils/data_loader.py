@@ -51,7 +51,7 @@ class DistributedSampler(Sampler):
         self.epoch = epoch
 
 
-def build_loader(cfg, batch_size, workers, training=True, dataset_type):
+def build_loader(cfg, batch_size, workers, training=True, dataset_type="memcached"):
     compose_list = []
     if training:
         if cfg.random_resize_crop:
@@ -115,7 +115,7 @@ def build_loader(cfg, batch_size, workers, training=True, dataset_type):
 
 def build_dataloader(cfg, dataset_type="memcached"):
     train_loader, train_sampler = build_loader(
-        cfg.train, cfg.batch_size, cfg.workers, training=True)
+        cfg.train, cfg.batch_size, cfg.workers, training=True, dataset_type=dataset_type)
     test_loader, test_sampler = build_loader(
-        cfg.test, cfg.batch_size, cfg.workers, training=False)
+        cfg.test, cfg.batch_size, cfg.workers, training=False, dataset_type=dataset_type)
     return train_loader, train_sampler, test_loader, test_sampler
