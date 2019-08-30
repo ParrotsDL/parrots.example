@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data.sampler import Sampler
 from torch.utils.data import DataLoader
-# from utils.memcached_dataset import McDataset
+from utils.memcached_dataset import McDataset
 from utils.senseagent_dataset import AgentDataset
 import torchvision.transforms as transforms
 import utils.dist_util as dist
@@ -51,7 +51,7 @@ class DistributedSampler(Sampler):
         self.epoch = epoch
 
 
-def build_loader(cfg, batch_size, workers, training=True):
+def build_loader(cfg, batch_size, workers, training=True, dataset_type):
     compose_list = []
     if training:
         if cfg.random_resize_crop:
@@ -74,35 +74,46 @@ def build_loader(cfg, batch_size, workers, training=True):
         mean=cfg.get('mean', [0.485, 0.456, 0.406]),
         std=cfg.get('std', [0.229, 0.224, 0.225]))
     compose_list.append(data_normalize)
-    # data_set = McDataset(cfg.image_dir, cfg.meta_file,
-    #                      transforms.Compose(compose_list), cfg.reader)
-    data_set = AgentDataset(
-        "AQBSsq1cPCqjABAAHcm6x74uBgcEX54FXZKMaA==",
-        "ysgns",
-        "ysgnsfuse",
-        "ysg",
-        "10.5.9.171",
-        8090,
-        cfg.image_dir,
-        cfg.meta_file,
-        transforms.Compose(compose_list),
-        cfg.reader)
+    if (dataset_type=="senseagent"):
+        data_set = AgentDataset(
+            "AQAuBiddb73YOhAATKFupY//RQ2F5KI1pAVV3Q==",
+            "ysgns",
+            "ysgnsfuse",
+            "ysg",
+            "10.5.9.230",
+            8090,
+            cfg.image_dir,
+            cfg.meta_file,
+            transforms.Compose(compose_list),
+            cfg.reader)
+    else:
+        data_set = McDataset(cfg.image_dir, cfg.meta_file,
+                            transforms.Compose(compose_list), cfg.reader)
 
     round_up = True if training else False
     data_sampler = DistributedSampler(data_set, round_up=round_up)
 
-    data_loader = DataLoader(
-        data_set,
-        batch_size=batch_size,
-        shuffle=(data_sampler is None),
-        num_workers=workers,
-        pin_memory=True,
-        sampler=data_sampler,
-        collate_fn=data_set.collate_fn)
+    if (dataset_type=="senseagent"):
+        data_loader = DataLoader(
+            data_set,
+            batch_size=batch_size,
+            shuffle=(data_sampler is None),
+            num_workers=workers,
+            pin_memory=True,
+            sampler=data_sampler,
+            collate_fn=data_set.collate_fn)
+    else:
+        data_loader = DataLoader(
+            data_set,
+            batch_size=batch_size,
+            shuffle=(data_sampler is None),
+            num_workers=workers,
+            pin_memory=True,
+            sampler=data_sampler)
     return data_loader, data_sampler
 
 
-def build_dataloader(cfg):
+def build_dataloader(cfg, dataset_type="memcached"):
     train_loader, train_sampler = build_loader(
         cfg.train, cfg.batch_size, cfg.workers, training=True)
     test_loader, test_sampler = build_loader(

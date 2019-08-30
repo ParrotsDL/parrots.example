@@ -114,7 +114,7 @@ def main():
 
     # Data loading code
     train_loader, train_sampler, test_loader, test_sampler = build_dataloader(
-        cfg.dataset)
+        cfg.dataset, dataset_type="senseagent")
 
     # test mode
     if args.test:
