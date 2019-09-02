@@ -162,8 +162,6 @@ def main():
         # train for one epoch
         exited = train(train_loader, model, criterion, optimizer, lr_scheduler, epoch,
               args, monitor_writer)
-        if exited == True:
-            break
         cur_iter = (epoch + 1) * len(train_loader)
 
         # save checkpoint
@@ -191,6 +189,8 @@ def main():
                     save_name = '{}_ckpt_best.pth'.format(cfg.net.type)
                     saver.save_ckpt(monitor_writer, epoch, cfg_saver, model,
                                     optimizer, save_name, best_acc1, cur_iter)
+        if exited is True:
+            break
 
 
 def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, monitor_writer):
@@ -257,7 +257,7 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
                 monitor_writer.add_scalar('LR', cur_lr.val, cur_iter)
 
         # quick early to get profile
-        if cur_iter >= args.iter_num:
+        if i >= args.iter_num:
             return True
     return  False
 
