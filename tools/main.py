@@ -21,6 +21,8 @@ import models
 from utils.dist_util import DistributedModel, HalfModel
 import utils.dist_util as dist
 
+import parrots
+
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
@@ -43,6 +45,11 @@ parser.add_argument(
     dest='test',
     action='store_true',
     help='evaluate model on validation set')
+parser.add_argument(
+    '--iter_num',
+    default=10,
+    type=int,
+    help='number of iters less than one epoch for recording profiles')
 
 best_acc1 = 0.
 local_rank = 0
@@ -64,6 +71,10 @@ def main():
     dist.barrier()
     logger("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
+
+    parrots.runtime.profile(enable=True, file='profile_{}.txt'.format(rank))
+    
+    logger("profiling enabled in rank {}".format(rank))
 
     if cfg.seed is not None:
         random.seed(cfg.seed)
@@ -149,8 +160,10 @@ def main():
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, lr_scheduler, epoch,
+        exited = train(train_loader, model, criterion, optimizer, lr_scheduler, epoch,
               args, monitor_writer)
+        if exited == True:
+            break
         cur_iter = (epoch + 1) * len(train_loader)
 
         # save checkpoint
@@ -242,6 +255,11 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
                 monitor_writer.add_scalar('Accuracy.train.top5', top5.val,
                                           cur_iter)
                 monitor_writer.add_scalar('LR', cur_lr.val, cur_iter)
+
+        # quick early to get profile
+        if cur_iter >= args.iter_num:
+            return True
+    return  False
 
 
 def test(test_loader, model, criterion, args):
