@@ -112,6 +112,6 @@ cmake-build-debug/
 # macos system files
 .DS_Store
 
-./scripts/checkpoint/
-./scripts/log/
-./scripts/profile*/
+scripts/checkpoints/
+scripts/log/
+scripts/profile*/
