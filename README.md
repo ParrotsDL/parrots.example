@@ -1,35 +1,39 @@
-Parrots2 examples
-==
+## Parrots2 examples
+Image Classification Training in Parrots and Pytorch.
 
-Preparation
-----
-Modify config yaml as you want. e.g.
+Get detailed documentation in http://confluence.sensetime.com/pages/viewpage.action?pageId=101886408
 
-./config/resnet.yaml
+<hr>
 
-Run
-----
-*cd scripts*
+### usage
+##### Train
+```
+# Modify config yaml as you want
+vim ./config/resnet.yaml
+cd scripts
+# sh main.sh [PartitionName] [NodeNum] [ConfigFileName]
+sh main.sh Test 8 resnet
+```
+##### Test
+```
+# Fill *pretrain\_model/resume\_model* in config file;
+vim config/resnet.yaml  
+# begin test
+cd scripts
+# sh eval.sh [Partition-Name] [NodeNum] [ConfigFileName] 
+sh eval.sh Test 1 resnet
+```
+<hr>
 
-sh main.sh \[PartitionName\] \[NodeNum\] \[ConfigFileName\]  e.g.
+### Version
+version: 0.1
 
-*sh main.sh Test 8 resnet*
+update: 2019-8-27
+<hr>
 
-Test
-----
-##### Step1
-Fill *pretrain\_model/resume\_model* in config file;
-
-##### Step2
-*cd scripts*
-
-sh eval.sh \[Partition-Name\] \[NodeNum\] \[ConfigFileName\]  e.g.
-
-*sh eval.sh Test 1 resnet*
-
-Features
-----
+### Features
 ##### Mix Training
-*cd scripts*
-
-*sh main.sh Test 8 resnet_mix*
+```
+cd scripts
+sh main.sh Test 8 resnet_mix
+```
