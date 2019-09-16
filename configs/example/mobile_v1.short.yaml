@@ -14,8 +14,7 @@ dataset:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
     reader: pillow
-    resize: 256
-    random_crop: [224, 224]
+    random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
@@ -29,8 +28,8 @@ dataset:
     colorjitter:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
-    mirror: True
-  batch_size: 96
+    mirror: False
+  batch_size: 32
   workers: 4
  
 trainer:
