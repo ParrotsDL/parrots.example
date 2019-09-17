@@ -130,7 +130,8 @@ def main():
                                  cfg.trainer.lr_scheduler)
 
     # import monitor
-    use_monitor = cfg.monitor
+    # use_monitor = cfg.monitor
+    use_monitor = False
     monitor_writer = None
     if rank == 0 and use_monitor:
         if use_monitor.type == 'tensorboard':
@@ -198,6 +199,17 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
     cur_iter = epoch * len(train_loader)
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
+        if i == 210:
+            from bench_utils import Timer
+            timer = Timer()
+            timer.start()
+        elif i == 310:
+            timer.stop()
+            timer.dump(Dict(args.config).net.type)
+            logger('timer avg {:.3f} var {:.6f} len {}'.format(timer.avg(), timer.var(), len(timer)))
+            exit()
+        elif i > 210:
+            timer.step()
         # measure data loading time
         data_time.update(time.time() - end)
 
