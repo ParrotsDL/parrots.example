@@ -133,7 +133,6 @@ class MobileNetV2(nn.Module):
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0)
 
-
 def mobile_v2(**kwargs):
     model = MobileNetV2(**kwargs)
     return model

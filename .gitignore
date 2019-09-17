@@ -115,3 +115,4 @@ cmake-build-debug/
 scripts/checkpoints/
 scripts/log/
 scripts/profile*/
+scripts/profile_*
