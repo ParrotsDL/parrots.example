@@ -27,7 +27,6 @@ dataset:
     reader: opencv
     resize: 256
     center_crop: [224, 224]
-    colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
