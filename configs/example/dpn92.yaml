@@ -33,8 +33,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
-  test_freq: 120
+  max_epoch: 100
+  test_freq: 100
   log_freq: 100
   label_smooth:
   optimizer:
@@ -56,7 +56,7 @@ saver:
   #load_pavi: True   # load pretrain/resume model from pavi
   #save_pavi: True   # add snapshot to pavi
   save_dir: checkpoints/dpn92  # save checkpoint locally
-  save_epoch_freq: 120
+  save_epoch_freq: 100
   save_latest: True
   save_best: True
   sync_bn_stats: False  
