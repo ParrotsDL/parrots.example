@@ -30,7 +30,7 @@ dataset:
 trainer:
   max_epoch: 2
   test_freq: 1
-  log_freq: 10
+  log_freq: 1
   label_smooth:
   optimizer:
     type: SGD

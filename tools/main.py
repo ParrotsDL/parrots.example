@@ -27,7 +27,7 @@ from parrots.log_utils import log_debug_to
 
 log_debug_to('parrots_engine_debug.log')
 
-runtime.raw_engine = True
+# runtime.raw_engine = True
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
@@ -184,9 +184,10 @@ def main():
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
             if rank == 0 and monitor_writer:
-                monitor_writer.add_scalar('Accuracy', acc1, cur_iter)
-                monitor_writer.add_scalar('Accuracy.top5', acc5, cur_iter)
-                monitor_writer.add_scalar('Test.loss', loss, cur_iter)
+                # monitor_writer.add_scalar('Accuracy', acc1, cur_iter)
+                # monitor_writer.add_scalar('Accuracy.top5', acc5, cur_iter)
+                # monitor_writer.add_scalar('Test.loss', loss, cur_iter)
+                pass
             # remember best acc@1 and save checkpoint
             if acc1 > best_acc1:
                 best_acc1 = acc1
@@ -194,8 +195,8 @@ def main():
                     save_name = '{}_ckpt_best.pth'.format(cfg.net.type)
                     saver.save_ckpt(monitor_writer, epoch, cfg_saver, model,
                                     optimizer, save_name, best_acc1, cur_iter)
-        if exited is True:
-            break
+        # if exited is True:
+        #     break
 
 
 def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, monitor_writer):
@@ -254,12 +255,13 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
         if i == 0 or i % args.log_freq == 0:
             progress.print_log(i)
             if rank == 0 and monitor_writer:
-                monitor_writer.add_scalar('Loss', losses.val, cur_iter)
-                monitor_writer.add_scalar('Accuracy.train.top1', top1.val,
-                                          cur_iter)
-                monitor_writer.add_scalar('Accuracy.train.top5', top5.val,
-                                          cur_iter)
-                monitor_writer.add_scalar('LR', cur_lr.val, cur_iter)
+                # monitor_writer.add_scalar('Loss', losses.val, cur_iter)
+                # monitor_writer.add_scalar('Accuracy.train.top1', top1.val,
+                #                           cur_iter)
+                # monitor_writer.add_scalar('Accuracy.train.top5', top5.val,
+                #                           cur_iter)
+                # monitor_writer.add_scalar('LR', cur_lr.val, cur_iter)
+                pass
 
         # quick early to get profile
         if i >= args.iter_num:
