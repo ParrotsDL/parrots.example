@@ -23,11 +23,11 @@ import utils.dist_util as dist
 
 import parrots
 from parrots.runtimeconfig import runtime
-from parrots.log_utils import log_debug_to
+# from parrots.log_utils import log_debug_to
 
-log_debug_to('parrots_engine_debug.log')
+# log_debug_to('parrots_engine_debug.log')
 
-# runtime.raw_engine = True
+runtime.raw_engine = True
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
