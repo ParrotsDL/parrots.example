@@ -2,7 +2,8 @@ import torch
 try:
     from pape.parallel import DistributedModel
     from pape.half import HalfModel, HalfOptimizer
-    from pape.distributed import init, barrier, get_rank, get_world_size, all_reduce
+    from pape.distributed import init, barrier, get_rank, get_world_size, all_reduce, group
+    from pape.op import SyncBatchNorm2d
 except ImportError:
     '''
     This is a fake pape
