@@ -24,7 +24,7 @@ def accuracy(output, target, topk=(1, )):
 
 
 def build_syncbn(model, group, **kwargs):
-    for name, mod in model.model.named_modules():
+    for name, mod in model.named_modules():
         if len(name) == 0:
             continue
         parent_module = model

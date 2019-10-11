@@ -193,7 +193,7 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
     memory = AverageMeter('Memory(MB)', ':.0f', 1)
     progress = ProgressMeter(
         len(train_loader), batch_time, data_time, losses, top1, top5, cur_lr,
-        memory, prefix="Epoch: [{}/{}] ".format(epoch + 1, args.max_epoch))
+        memory, prefix="[{}] Epoch: [{}/{}] ".format(time.strftime('%Y-%m-%d %H:%M:%S'), epoch + 1, args.max_epoch))
 
     # switch to train mode
     model.cuda().train()
