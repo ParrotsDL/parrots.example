@@ -54,6 +54,15 @@ except ImportError:
             raise NotImplementedError(
                 "Mix training optimizer not supported in NON-PAPE environment.")
 
+    class group(object):
+        WORLD = 0
+
+    class SyncBatchNorm2d(Module):
+        def __init__(self, num_features, eps=1e-5, momentum=0.1, affine=True,
+                     track_running_stats=True, group=dist.group.WORLD):
+            raise NotImplementedError(
+                "SyncBN not supported in NON-PAPE environment.")
+
     def get_rank():
         return int(os.environ.get('SLURM_PROCID', 0))
 

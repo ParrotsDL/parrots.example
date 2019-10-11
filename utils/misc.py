@@ -33,19 +33,20 @@ def build_syncbn(model, group, **kwargs):
         last_name = name.split('.')[-1]
         last_module = getattr(parent_module, last_name)
         if isinstance(last_module, torch.nn.BatchNorm2d):
-             print('replace module {} with syncbn.'.format(name))
-             syncbn = dist_util.SyncBatchNorm2d(last_module.num_features,
-                                              eps=last_module.eps,
-                                              momentum=last_module.momentum,
-                                              affine=last_module.affine,
-                                              group=group,
-                                              **kwargs)
-             if last_module.affine:
-                 syncbn.weight.data = last_module.weight.data.clone().detach()
-                 syncbn.bias.data = last_module.bias.data.clone().detach()
-             syncbn.running_mean.data = last_module.running_mean.clone().detach()
-             syncbn.running_var.data = last_module.running_var.clone().detach()
-             parent_module.add_module(last_name, syncbn)
+            syncbn = dist_util.SyncBatchNorm2d(
+                last_module.num_features,
+                eps=last_module.eps,
+                momentum=last_module.momentum,
+                affine=last_module.affine,
+                group=group,
+                **kwargs)
+            if last_module.affine:
+                syncbn.weight.data = last_module.weight.data.clone().detach()
+                syncbn.bias.data = last_module.bias.data.clone().detach()
+            syncbn.running_mean.data = last_module.running_mean.clone().detach(
+            )
+            syncbn.running_var.data = last_module.running_var.clone().detach()
+            parent_module.add_module(last_name, syncbn)
     return model
 
 

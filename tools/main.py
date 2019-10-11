@@ -80,7 +80,7 @@ def main():
     else:
         args.dist = False
     if cfg.net.syncbn == 1:
-        logger("syncbn mode")
+        logger("=> syncbn mode")
         model = build_syncbn(model, dist.group.WORLD)
     if cfg.trainer.get('mixed_training', False):
         model = HalfModel(model, cfg.trainer.get('float_layers', None))
