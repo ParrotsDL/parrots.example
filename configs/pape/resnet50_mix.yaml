@@ -28,8 +28,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
-  test_freq: 120
+  max_epoch: 100
+  test_freq: 101
   log_freq: 100
   mixed_training: True
   label_smooth:
@@ -39,7 +39,7 @@ trainer:
       lr: 0.1
       momentum: 0.9
       weight_decay: 0.0001
-      loss_scale: 128
+      loss_scale: 64
   lr_scheduler:
     warmup_epochs: 0
     type: MultiStepLR
@@ -53,7 +53,7 @@ saver:
   load_pavi:   # load pretrain/resume model from pavi
   save_pavi:   # add snapshot to pavi
   save_dir: checkpoints   # save checkpoint locally
-  save_epoch_freq: 120
+  save_epoch_freq: 10
   save_latest: False
   save_best: False
   sync_bn_stats: False  
