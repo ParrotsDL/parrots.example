@@ -2,7 +2,8 @@ import torch
 try:
     from pape.parallel import DistributedModel
     from pape.half import HalfModel, HalfOptimizer
-    from pape.distributed import init, barrier, get_rank, get_world_size, all_reduce
+    from pape.distributed import init, barrier, get_rank, get_world_size, all_reduce, group
+    from pape.op import SyncBatchNorm2d
 except ImportError:
     '''
     This is a fake pape
@@ -12,22 +13,22 @@ except ImportError:
     from torch.nn import Module
 
     class DistributedModel(Module):
-        def __init__(self, module):
+        def __init__(self, model):
             super(DistributedModel, self).__init__()
-            self.module = module
+            self.model = model
             self.broadcast_params()
 
         def forward(self, *inputs, **kwargs):
-            return self.module(*inputs, **kwargs)
+            return self.model(*inputs, **kwargs)
 
         def train(self, mode=True):
             super(DistributedModel, self).train(mode)
-            self.module.train(mode)
+            self.model.train(mode)
 
         def average_gradients(self):
             world_size = dist.get_world_size()
             param_list = []
-            for param in self.module.parameters():
+            for param in self.model.parameters():
                 if param.requires_grad:
                     dist.all_reduce(param.grad.data)
                     param_list.append(param)
@@ -35,12 +36,12 @@ except ImportError:
                 param.grad.data /= world_size
 
         def sum_gradients(self):
-            for param in self.module.parameters():
+            for param in self.model.parameters():
                 if param.requires_grad:
                     dist.all_reduce(param.grad.data)
 
         def broadcast_params(self):
-            for p in self.module.state_dict().values():
+            for p in self.model.state_dict().values():
                 dist.broadcast(p, 0)
 
     class HalfModel(Module):
@@ -52,6 +53,15 @@ except ImportError:
         def __init__(self, half_model, optimizer_name, **kwargs):
             raise NotImplementedError(
                 "Mix training optimizer not supported in NON-PAPE environment.")
+
+    class group(object):
+        WORLD = 0
+
+    class SyncBatchNorm2d(Module):
+        def __init__(self, num_features, eps=1e-5, momentum=0.1, affine=True,
+                     track_running_stats=True, group=dist.group.WORLD):
+            raise NotImplementedError(
+                "SyncBN not supported in NON-PAPE environment.")
 
     def get_rank():
         return int(os.environ.get('SLURM_PROCID', 0))

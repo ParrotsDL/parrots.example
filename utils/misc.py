@@ -23,6 +23,33 @@ def accuracy(output, target, topk=(1, )):
         return res
 
 
+def build_syncbn(model, group, **kwargs):
+    for name, mod in model.named_modules():
+        if len(name) == 0:
+            continue
+        parent_module = model
+        for mod_name in name.split('.')[0:-1]:
+            parent_module = getattr(parent_module, mod_name)
+        last_name = name.split('.')[-1]
+        last_module = getattr(parent_module, last_name)
+        if isinstance(last_module, torch.nn.BatchNorm2d):
+            syncbn = dist_util.SyncBatchNorm2d(
+                last_module.num_features,
+                eps=last_module.eps,
+                momentum=last_module.momentum,
+                affine=last_module.affine,
+                group=group,
+                **kwargs)
+            if last_module.affine:
+                syncbn.weight.data = last_module.weight.data.clone().detach()
+                syncbn.bias.data = last_module.bias.data.clone().detach()
+            syncbn.running_mean.data = last_module.running_mean.clone().detach(
+            )
+            syncbn.running_var.data = last_module.running_var.clone().detach()
+            parent_module.add_module(last_name, syncbn)
+    return model
+
+
 def logger(msg, rank=0):
     world_size = dist_util.get_world_size()
     global_rank = dist_util.get_rank()
