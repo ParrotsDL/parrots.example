@@ -67,7 +67,7 @@ class Saver:
         else:
             state_dict = checkpoint
         model_keys = model.state_dict().keys()
-        state_dict = self.adapt_prefix(model_keys, state_dict, 'module.')
+        state_dict = self.adapt_prefix(model_keys, state_dict, 'model.')
         share_keys = self.check_keys(model_keys, state_dict.keys())
         logger('=> loading {} keys......'.format(len(share_keys)))
         model.load_state_dict(state_dict, strict)
