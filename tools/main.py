@@ -191,9 +191,10 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
     top5 = AverageMeter('Acc@5', ':6.2f', 1)
     cur_lr = AverageMeter('LR', ':6.4f', 1)
     memory = AverageMeter('Memory(MB)', ':.0f', 1)
+    log_time = AverageMeter('', '', 1)
     progress = ProgressMeter(
-        len(train_loader), batch_time, data_time, losses, top1, top5, cur_lr,
-        memory, prefix="[{}] Epoch: [{}/{}] ".format(time.strftime('%Y-%m-%d %H:%M:%S'), epoch + 1, args.max_epoch))
+        len(train_loader), log_time, batch_time, data_time, losses, top1, top5, cur_lr,
+        memory, prefix="Epoch: [{}/{}] ".format(epoch + 1, args.max_epoch))
 
     # switch to train mode
     model.cuda().train()
@@ -222,6 +223,7 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
         top5.update(acc5[0])
         cur_lr.update(lr_scheduler.get_lr()[0])
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+        log_time.update(time.strftime('%Y-%m-%d %H:%M:%S'))
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
