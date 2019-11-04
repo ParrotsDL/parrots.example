@@ -4,6 +4,6 @@
     --hostfile ./mpirun_hostfile \
     --np 2 \
     --npernode 2 \
-    bash /mnt/lustrenew/wangqian4/parrots.example/scripts/mpirun_main.sh \
+    bash mpirun_main.sh \
     resnet \
     --max_epoch 10
