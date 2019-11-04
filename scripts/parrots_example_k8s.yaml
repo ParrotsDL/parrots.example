@@ -1,0 +1,56 @@
+apiVersion: supercomputer.sensetime.com/v1alpha1
+kind: Mpirun
+metadata:
+  name: parrots-example-resnet
+spec:
+  podnumber: 1
+  mpicommand:
+    - /mnt/lustre/share/platform/dep/openmpi-2.1.6-cuda9.0/bin/mpirun
+    - --allow-run-as-root
+    - --hostfile
+    - /root/mpirun_hostfile
+    - --np
+    - "2"
+    - --npernode
+    - "2"
+    - bash
+    - /mnt/lustre/wangqian4/parrots.example/scripts/mpirun_main.sh
+    - resnet
+    - --max_epoch
+    - "10"
+  volumes:
+    - name: dev
+      hostPath:
+        path: /dev
+    - name: imagenet
+      hostPath:
+        path: /mnt/lustrenew/share/images
+    - name: scripts
+      hostPath:
+        path: /mnt/lustrenew/wangqian4/parrots.example
+  containers:
+    - name: parrots
+      image:  registry.sensetime.com/share/platform/parrots/0.3.0rc1/condaenv:0.5.1
+      workingDir: /mnt/lustre/wangqian4/parrots.example/scripts
+      securityContext:
+        capabilities:
+          add: ["IPC_LOCK"]
+      env:
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: "compute,utility"
+        - name: NVIDIA_REQUIRE_CUDA
+          value: "cuda>=8.0"
+        - name: MV2_ENABLE_AFFINITY
+          value: "0"
+      resources:
+        limits:
+          nvidia.com/gpu: 2
+          rdma/hca: 1 # requesting 1 RDMA device
+      volumeMounts:
+        - mountPath: /dev/shm
+          subPath: shm
+          name: dev
+        - mountPath: /mnt/lustre/share/images
+          name: imagenet
+        - mountPath: /mnt/lustre/wangqian4/parrots.example
+          name: scripts

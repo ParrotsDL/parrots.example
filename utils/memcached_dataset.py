@@ -6,6 +6,8 @@ import cv2
 import numpy as np
 
 
+use_memcached = False
+
 def pil_loader(img_str):
     buff = io.BytesIO(img_str)
     with Image.open(buff) as img:
@@ -52,22 +54,23 @@ class McDataset(Dataset):
         filename = self.root_dir + '/' + self.metas[idx][0]
         cls = self.metas[idx][1]
 
-        # memcached
-        self._init_memcached()
-        value = mc.pyvector()
-        self.mclient.Get(filename, value)
-        value_buf = mc.ConvertBuffer(value)
-        if self.reader == 'opencv':
-            img = cv2_loader(value_buf)
-        elif self.reader == 'pillow':
-            img = pil_loader(value_buf)
+        if use_memcached is True:
+            # memcached
+            self._init_memcached()
+            value = mc.pyvector()
+            self.mclient.Get(filename, value)
+            value_buf = mc.ConvertBuffer(value)
+            if self.reader == 'opencv':
+                img = cv2_loader(value_buf)
+            elif self.reader == 'pillow':
+                img = pil_loader(value_buf)
+            else:
+                assert self.reader == 'opencv' or self.reader == 'pillow', 'reader should be opencv or pillow.'
         else:
-            assert self.reader == 'opencv' or self.reader == 'pillow', 'reader should be opencv or pillow.'
-
-        # # raw-reading
-        # with open(filename, 'rb') as value_str:
-        #     with Image.open(value_str) as img:
-        #         img = img.convert('RGB')
+            # raw-reading
+            with open(filename, 'rb') as value_str:
+                with Image.open(value_str) as img:
+                    img = img.convert('RGB')
 
         # transform
         if self.transform is not None:

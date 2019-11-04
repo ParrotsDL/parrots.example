@@ -22,12 +22,6 @@ from utils.dist_util import DistributedModel, HalfModel
 import utils.dist_util as dist
 
 import parrots
-from parrots.runtimeconfig import runtime
-# from parrots.log_utils import log_debug_to
-
-# log_debug_to('parrots_engine_debug.log')
-
-runtime.raw_engine = True
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
@@ -51,10 +45,10 @@ parser.add_argument(
     action='store_true',
     help='evaluate model on validation set')
 parser.add_argument(
-    '--iter_num',
-    default=10,
+    '--max_epoch',
+    default=-1,
     type=int,
-    help='number of iters less than one epoch for recording profiles')
+    help='num of training epoch')
 
 best_acc1 = 0.
 local_rank = 0
@@ -111,7 +105,8 @@ def main():
     cudnn.benchmark = True
 
     args.start_epoch = -cfg.trainer.lr_scheduler.get('warmup_epochs', 0)
-    args.max_epoch = cfg.trainer.max_epoch
+    if args.max_epoch == -1:
+        args.max_epoch = cfg.trainer.max_epoch
     args.test_freq = cfg.trainer.test_freq
     args.log_freq = cfg.trainer.log_freq
 
@@ -168,7 +163,7 @@ def main():
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        exited = train(train_loader, model, criterion, optimizer, lr_scheduler, epoch,
+        train(train_loader, model, criterion, optimizer, lr_scheduler, epoch,
               args, monitor_writer)
         cur_iter = (epoch + 1) * len(train_loader)
 
@@ -187,10 +182,9 @@ def main():
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
             if rank == 0 and monitor_writer:
-                # monitor_writer.add_scalar('Accuracy', acc1, cur_iter)
-                # monitor_writer.add_scalar('Accuracy.top5', acc5, cur_iter)
-                # monitor_writer.add_scalar('Test.loss', loss, cur_iter)
-                pass
+                monitor_writer.add_scalar('Accuracy', acc1, cur_iter)
+                monitor_writer.add_scalar('Accuracy.top5', acc5, cur_iter)
+                monitor_writer.add_scalar('Test.loss', loss, cur_iter)
             # remember best acc@1 and save checkpoint
             if acc1 > best_acc1:
                 best_acc1 = acc1
@@ -198,8 +192,6 @@ def main():
                     save_name = '{}_ckpt_best.pth'.format(cfg.net.type)
                     saver.save_ckpt(monitor_writer, epoch, cfg_saver, model,
                                     optimizer, save_name, best_acc1, cur_iter)
-        # if exited is True:
-        #     break
 
 
 def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, monitor_writer):
@@ -260,18 +252,12 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
         if i == 0 or i % args.log_freq == 0:
             progress.print_log(i)
             if rank == 0 and monitor_writer:
-                # monitor_writer.add_scalar('Loss', losses.val, cur_iter)
-                # monitor_writer.add_scalar('Accuracy.train.top1', top1.val,
-                #                           cur_iter)
-                # monitor_writer.add_scalar('Accuracy.train.top5', top5.val,
-                #                           cur_iter)
-                # monitor_writer.add_scalar('LR', cur_lr.val, cur_iter)
-                pass
-
-        # quick early to get profile
-        if i >= args.iter_num:
-            return True
-    return  False
+                monitor_writer.add_scalar('Loss', losses.val, cur_iter)
+                monitor_writer.add_scalar('Accuracy.train.top1', top1.val,
+                                          cur_iter)
+                monitor_writer.add_scalar('Accuracy.train.top5', top5.val,
+                                          cur_iter)
+                monitor_writer.add_scalar('LR', cur_lr.val, cur_iter)
 
 
 def test(test_loader, model, criterion, args):
