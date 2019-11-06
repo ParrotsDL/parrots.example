@@ -17,7 +17,7 @@ spec:
     - /mnt/lustre/wangqian4/parrots.example/scripts/mpirun_main.sh
     - mobile_v1
     - --max_epoch
-    - "120"
+    - "4"
   volumes:
     - name: dev
       hostPath:

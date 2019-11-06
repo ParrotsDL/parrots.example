@@ -1,7 +1,7 @@
 apiVersion: supercomputer.sensetime.com/v1alpha1
 kind: Mpirun
 metadata:
-  name: resnet_speed_test_1
+  name: mobile_v1_precision_test_2
 spec:
   podnumber: 1
   mpicommand:
@@ -10,14 +10,12 @@ spec:
     - --hostfile
     - /root/mpirun_hostfile
     - --np
-    - "1"
+    - "8"
     - --npernode
-    - "1"
+    - "8"
     - bash
     - /mnt/lustre/wangqian4/parrots.example/scripts/mpirun_main.sh
-    - resnet
-    - --max_epoch
-    - "4"
+    - mobile_v1
   volumes:
     - name: dev
       hostPath:
@@ -44,7 +42,7 @@ spec:
           value: "0"
       resources:
         limits:
-          nvidia.com/gpu: 1
+          nvidia.com/gpu: 8
           rdma/hca: 1 # requesting 1 RDMA device
       volumeMounts:
         - mountPath: /dev/shm
