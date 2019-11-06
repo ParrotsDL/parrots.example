@@ -111,3 +111,6 @@ cmake-build-debug/
 
 # macos system files
 .DS_Store
+
+# sphinx docs
+docs/build
