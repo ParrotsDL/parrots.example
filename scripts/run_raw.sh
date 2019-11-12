@@ -13,7 +13,7 @@ export MV2_ENABLE_AFFINITY="0"
     --allow-run-as-root \
     --hostfile ./mpirun_hostfile \
     --np ${TOTAL_NUM} \
-    --npernode ${NODE_NUM} \
+    --npernode ${GPU_NUM} \
     bash mpirun_main.sh \
     ${MODEL_NAME} \
     --max_epoch ${MAX_EPOCH}
