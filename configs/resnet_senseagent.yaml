@@ -9,8 +9,8 @@ dataset:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
     dataset_name: train_dataset
-    superblock_source: /mnt/lustre/zhangjiawei1/train_superblocks.txt
     meta_source: /mnt/lustre/zhangjiawei1/train_metaInfo.txt
+    superblock_source: /mnt/lustre/zhangjiawei1/train_superblocks.txt
     reader: pillow
     resize:
     random_crop:
@@ -23,8 +23,8 @@ dataset:
     meta_file: /mnt/lustre/share/images/meta/val.txt
     image_dir: /mnt/lustre/share/images/val
     dataset_name: val_dataset
-    superblock_source: /mnt/lustre/zhangjiawei1/val_superblocks.txt
     meta_source: /mnt/lustre/zhangjiawei1/val_metaInfo.txt
+    superblock_source: /mnt/lustre/zhangjiawei1/val_superblocks.txt
     reader: pillow
     resize: 256
     center_crop: [224, 224]
@@ -38,6 +38,8 @@ dataset:
     user: ysg
     ip: 10.121.2.165
     port: 8090
+    distcache: True
+    blockshuffleread: False
   batch_size: 32
   workers: 4
 

@@ -1,4 +1,4 @@
-from SenseAgentClient import SenseAgent
+from SenseAgentClient import SenseAgentClientNG as sa
 from torch.utils.data import Dataset
 import numpy as np
 from torch.utils.data.dataloader import default_collate
@@ -20,7 +20,7 @@ def cv2_loader2(img_buf):
     return img
 
 class AgentDataset(Dataset):
-    def __init__(self, userKey, nameSpace, user, agentIp, agentPort, root_dir, meta_file, dataSet, superblock_file, superblock_meta = None, transform=None, reader='pillow'):
+    def __init__(self, userKey, nameSpace, user, agentIp, agentPort, enableDistCache, blockShuffleRead, root_dir, meta_file, dataSet, superblock_file, superblock_meta, transform=None, reader='pillow'):
         self.root_dir = root_dir
         self.transform = transform
         self.reader = reader
@@ -31,6 +31,10 @@ class AgentDataset(Dataset):
         self.user = user
         self.agentIp = agentIp
         self.agentPort = agentPort
+        self.enableDistCache = enableDistCache
+        self.blockShuffleRead = blockShuffleRead
+        self.superblock_file = superblock_file
+        self.superblock_meta = superblock_meta
         self.initialized = False
         with open(meta_file) as f:
             lines = f.readlines()
@@ -42,7 +46,11 @@ class AgentDataset(Dataset):
         
     def __init_senseagent(self):
         if not self.initialized:
-            self.agentclient = SenseAgent.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort)
+            self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
+            if self.enableDistCache:
+                self.agentclient.loadMetainfos(self.superblock_meta)
+                my_rank = self.agentclient.startDistCache(0.5)
+                print("my rank is", my_rank)
             self.initialized = True
 	
     def __len__(self):

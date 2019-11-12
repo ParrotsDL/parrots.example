@@ -81,6 +81,8 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             senseagent_config.user,
             senseagent_config.ip,
             senseagent_config.port,
+            senseagent_config.distcache,
+            senseagent_config.blockshuffleread,
             cfg.image_dir,
             cfg.meta_file,
             cfg.dataset_name,
