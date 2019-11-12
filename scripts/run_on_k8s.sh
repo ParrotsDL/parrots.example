@@ -1,7 +1,7 @@
 #!/bin/sh
 MODEL_NAME=resnet
 POD_NUM=1
-GPU_NUM=4
+GPU_NUM=8
 MAX_EPOCH=120
 CODE_DIR=/mnt/lustrenew/wangqian4/parrots.example
 
