@@ -16,7 +16,7 @@ from utils.save_util import Saver
 from utils.scheduler import get_scheduler
 from utils.optimizer import build_optimizer
 from utils.meters import AverageMeter, ProgressMeter
-from utils.misc import logger, accuracy
+from utils.misc import logger, accuracy, build_syncbn
 import models
 from utils.dist_util import DistributedModel, HalfModel
 import utils.dist_util as dist
@@ -79,6 +79,9 @@ def main():
         model = DistributedModel(model)
     else:
         args.dist = False
+    if cfg.net.syncbn == 1:
+        logger("=> syncbn mode")
+        model = build_syncbn(model, dist.group.WORLD)
     if cfg.trainer.get('mixed_training', False):
         model = HalfModel(model, cfg.trainer.get('float_layers', None))
         args.mixed_training = True
@@ -188,8 +191,9 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
     top5 = AverageMeter('Acc@5', ':6.2f', 1)
     cur_lr = AverageMeter('LR', ':6.4f', 1)
     memory = AverageMeter('Memory(MB)', ':.0f', 1)
+    log_time = AverageMeter('', '', 1)
     progress = ProgressMeter(
-        len(train_loader), batch_time, data_time, losses, top1, top5, cur_lr,
+        len(train_loader), log_time, batch_time, data_time, losses, top1, top5, cur_lr,
         memory, prefix="Epoch: [{}/{}] ".format(epoch + 1, args.max_epoch))
 
     # switch to train mode
@@ -219,6 +223,7 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
         top5.update(acc5[0])
         cur_lr.update(lr_scheduler.get_lr()[0])
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+        log_time.update(time.strftime('%Y-%m-%d %H:%M:%S'))
 
         # compute gradient and do SGD step
         optimizer.zero_grad()

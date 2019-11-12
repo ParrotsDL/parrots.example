@@ -30,7 +30,7 @@ class DistributedSampler(Sampler):
     def __iter__(self):
         g = torch.Generator()
         g.manual_seed(self.epoch)
-        indices = list(torch.randperm(len(self.dataset), generator=g))
+        indices = torch.randperm(len(self.dataset), generator=g).tolist()
 
         if self.round_up:
             indices += indices[:(self.total_size - len(indices))]
