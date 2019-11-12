@@ -51,7 +51,7 @@ class DistributedSampler(Sampler):
         self.epoch = epoch
 
 
-def build_loader(cfg, batch_size, workers, training=True, dataset_type="memcached"):
+def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dataset_type="memcached"):
     compose_list = []
     if training:
         if cfg.random_resize_crop:
@@ -76,14 +76,16 @@ def build_loader(cfg, batch_size, workers, training=True, dataset_type="memcache
     compose_list.append(data_normalize)
     if (dataset_type=="senseagent"):
         data_set = AgentDataset(
-            "AQAuBiddb73YOhAATKFupY//RQ2F5KI1pAVV3Q==",
-            "ysgns",
-            "ysgnsfuse",
-            "ysg",
-            "10.5.9.230",
-            8090,
+            senseagent_config.userkey,
+            senseagent_config.namespace,
+            senseagent_config.user,
+            senseagent_config.ip,
+            senseagent_config.port,
             cfg.image_dir,
             cfg.meta_file,
+            cfg.dataset_name,
+            cfg.superblock_source,
+            cfg.meta_source,
             transforms.Compose(compose_list),
             cfg.reader)
     else:
@@ -115,7 +117,7 @@ def build_loader(cfg, batch_size, workers, training=True, dataset_type="memcache
 
 def build_dataloader(cfg, dataset_type="memcached"):
     train_loader, train_sampler = build_loader(
-        cfg.train, cfg.batch_size, cfg.workers, training=True, dataset_type=dataset_type)
+        cfg.train, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=True, dataset_type=dataset_type)
     test_loader, test_sampler = build_loader(
-        cfg.test, cfg.batch_size, cfg.workers, training=False, dataset_type=dataset_type)
+        cfg.test, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=False, dataset_type=dataset_type)
     return train_loader, train_sampler, test_loader, test_sampler

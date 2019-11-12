@@ -20,7 +20,7 @@ def cv2_loader2(img_buf):
     return img
 
 class AgentDataset(Dataset):
-    def __init__(self, userKey, nameSpace, dataSet, user, agentIp, agentPort, root_dir, meta_file, transform=None, reader='pillow'):
+    def __init__(self, userKey, nameSpace, user, agentIp, agentPort, root_dir, meta_file, dataSet, superblock_file, superblock_meta = None, transform=None, reader='pillow'):
         self.root_dir = root_dir
         self.transform = transform
         self.reader = reader
