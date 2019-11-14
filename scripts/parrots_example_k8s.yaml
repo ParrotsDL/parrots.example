@@ -3,7 +3,7 @@ kind: Mpirun
 metadata:
   name: ${INST_NAME}
 spec:
-  podnumber: ${POD_NUM}
+  podnumber: ${NODE_NUM}
   mpicommand:
     - /mnt/lustre/share/platform/dep/openmpi-2.1.6-cuda9.0/bin/mpirun
     - --allow-run-as-root

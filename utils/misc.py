@@ -51,8 +51,10 @@ def build_syncbn(model, group, **kwargs):
 
 
 def logger(msg, rank=0):
-    world_size = dist_util.get_world_size()
-    global_rank = dist_util.get_rank()
+    # world_size = dist_util.get_world_size()
+    world_size = torch.distributed.get_world_size()
+    # global_rank = dist_util.get_rank()
+    global_rank = torch.distributed.get_rank()
     assert rank < world_size
     if rank >= 0:
         if global_rank == rank:

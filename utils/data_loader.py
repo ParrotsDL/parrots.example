@@ -12,7 +12,7 @@ class DistributedSampler(Sampler):
         if world_size is None:
             world_size = dist.get_world_size()
         if rank is None:
-            rank = dist.get_rank()
+            rank = torch.distributed.get_rank()
         self.dataset = dataset
         self.world_size = world_size
         self.rank = rank

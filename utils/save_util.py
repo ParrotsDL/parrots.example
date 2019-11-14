@@ -2,7 +2,8 @@ import torch
 import os
 import shutil
 from utils.misc import logger
-from utils.dist_util import get_rank
+# from utils.dist_util import get_rank
+from torch.distributed import get_rank
 
 
 class Saver:

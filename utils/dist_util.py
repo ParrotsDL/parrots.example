@@ -81,8 +81,8 @@ except ImportError:
                 pos2 = 1000
             node_list = node_list[:min(pos1, pos2)].replace('[', '')
         hostname = node_list[8:].replace('-', '.')
-        global_rank = get_rank()
-        global_size = get_world_size()
+        global_rank = torch.distributed.get_rank()
+        global_size = torch.distributed.get_world_size()
         num_gpus = torch.cuda.device_count()
         local_rank = global_rank % num_gpus
         torch.cuda.set_device(local_rank)
