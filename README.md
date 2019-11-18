@@ -1,9 +1,22 @@
-## Parrots2 examples
-Image Classification Training in Parrots and Pytorch.
-
-Get detailed documentation in http://confluence.sensetime.com/pages/viewpage.action?pageId=101886408
-
+## Parrots2 examples for k8s
+Classification models for testing parrots2 on kubernetes
 <hr>
+
+### Use k8s or raw mpirun to train models
+Get detailed information on https://confluence.sensetime.com/pages/viewpage.action?pageId=117756142
+##### k8s
+Modify training parameters like num of GPUs, num of servers, epochs in `./scripts/run_on_k8s.yaml`
+```
+cd scripts/
+./run_on_k8s.yaml
+```
+
+##### raw mpirun
+Modify training parameters like num of GPUs, num of servers, epochs in `./scripts/run_raw.yaml`
+```
+cd scripts/
+./run_raw.yaml
+```
 
 ### usage
 ##### Train
