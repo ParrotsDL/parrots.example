@@ -5,6 +5,7 @@ net:
         num_classes: 1000
  
 dataset:
+  type: senseagent
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
