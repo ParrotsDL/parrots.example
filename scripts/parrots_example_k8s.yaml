@@ -22,6 +22,9 @@ spec:
     - name: dev
       hostPath:
         path: /dev
+    - name: memcached
+      hostPath:
+        path: /mnt/lustre/share/memcached_client/server_list.conf
     - name: imagenet
       hostPath:
         path: /mnt/lustrenew/share/images
@@ -54,3 +57,5 @@ spec:
           name: imagenet
         - mountPath: /mnt/lustre/wangqian4/parrots.example
           name: scripts
+        - mountPath: /mnt/lustre/share/memcached_client/server_list.conf
+          name: memcached
