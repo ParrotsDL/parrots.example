@@ -1,4 +1,4 @@
-source /mnt/lustre/share/platform/env/pat0.3.0rc1
+source /mnt/lustre/share/platform/env/pat0.4.0b0
 mkdir -p log
 now=$(date +"%Y%m%d_%H%M%S")
 ROOT=..
