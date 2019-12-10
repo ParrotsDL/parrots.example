@@ -3,16 +3,16 @@ from torch.utils.data.sampler import Sampler
 from torch.utils.data import DataLoader
 from utils.memcached_dataset import McDataset
 import torchvision.transforms as transforms
-import utils.dist_util as dist
+from pape.distributed import get_rank, get_world_size
 import math
 
 
 class DistributedSampler(Sampler):
     def __init__(self, dataset, world_size=None, rank=None, round_up=True):
         if world_size is None:
-            world_size = dist.get_world_size()
+            world_size = get_world_size()
         if rank is None:
-            rank = dist.get_rank()
+            rank = get_rank()
         self.dataset = dataset
         self.world_size = world_size
         self.rank = rank

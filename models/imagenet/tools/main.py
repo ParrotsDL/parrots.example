@@ -18,8 +18,9 @@ from utils.optimizer import build_optimizer
 from utils.meters import AverageMeter, ProgressMeter
 from utils.misc import logger, accuracy, build_syncbn
 import models
-from utils.dist_util import DistributedModel, HalfModel
-import utils.dist_util as dist
+from pape.parallel import DistributedModel
+from pape.half import HalfModel
+from pape.distributed import init, group
 
 
 model_names = sorted(name for name in models.__dict__
@@ -57,11 +58,11 @@ def main():
 
     global best_acc1, local_rank, rank, global_size
 
-    rank, global_size, local_rank = dist.init()
+    rank, global_size, local_rank = init()
 
     logger("=> rank {} of {} jobs, in {}".format(
         rank, global_size, socket.gethostname()), rank=-1)
-    dist.barrier()
+    barrier()
     logger("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
 
@@ -81,7 +82,7 @@ def main():
         args.dist = False
     if cfg.net.syncbn == 1:
         logger("=> syncbn mode")
-        model = build_syncbn(model, dist.group.WORLD)
+        model = build_syncbn(model, group.WORLD)
     if cfg.trainer.get('mixed_training', False):
         model = HalfModel(model, cfg.trainer.get('float_layers', None))
         args.mixed_training = True
@@ -136,11 +137,7 @@ def main():
     use_monitor = cfg.monitor
     monitor_writer = None
     if rank == 0 and use_monitor:
-        if use_monitor.type == 'tensorboard':
-            from tensorboardX import SummaryWriter
-            monitor_writer = SummaryWriter(use_monitor.kwargs.logdir)
-            cfg_saver.save_pavi = False
-        elif use_monitor.type == 'pavi':
+        if use_monitor.type == 'pavi':
             from pavi import SummaryWriter
             monitor_writer = SummaryWriter(
                 session_text=yaml.dump(args.config), **use_monitor.kwargs)

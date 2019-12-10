@@ -14,13 +14,13 @@ def pil_loader(img_str):
     return img
 
 
-def cv2_loader(img_buf):
-    img_array = np.frombuffer(img_buf, np.uint8)
-    img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = Image.fromarray(img)
+# def cv2_loader(img_buf):
+#     img_array = np.frombuffer(img_buf, np.uint8)
+#     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+#     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#     img = Image.fromarray(img)
 
-    return img
+#     return img
 
 
 class McDataset(Dataset):
@@ -57,12 +57,12 @@ class McDataset(Dataset):
         value = mc.pyvector()
         self.mclient.Get(filename, value)
         value_buf = mc.ConvertBuffer(value)
-        if self.reader == 'opencv':
-            img = cv2_loader(value_buf)
-        elif self.reader == 'pillow':
-            img = pil_loader(value_buf)
-        else:
-            assert self.reader == 'opencv' or self.reader == 'pillow', 'reader should be opencv or pillow.'
+        # if self.reader == 'opencv':
+        #     img = cv2_loader(value_buf)
+        # elif self.reader == 'pillow':
+        assert self.reader == 'opencv' or self.reader == 'pillow', 'reader should be opencv or pillow.'
+        img = pil_loader(value_buf)
+        
 
         # # raw-reading
         # with open(filename, 'rb') as value_str:

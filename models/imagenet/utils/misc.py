@@ -1,5 +1,6 @@
 import torch
-import utils.dist_util as dist_util
+from pape.distributed import get_rank, get_world_size, all_reduce
+from pape.op import SyncBatchNorm2d
 
 
 def accuracy(output, target, topk=(1, )):
@@ -11,14 +12,14 @@ def accuracy(output, target, topk=(1, )):
         correct = pred.eq(target.view(1, -1).expand_as(pred))
         batch_size = target.size(0)
         full_batch_size = torch.Tensor([batch_size]).to(output)
-        world_size = dist_util.get_world_size()
+        world_size = get_world_size()
         if world_size > 1:
-            dist_util.all_reduce(full_batch_size)
+            all_reduce(full_batch_size)
         res = []
         for k in topk:
             correct_k = correct[:k].view(-1).to(output).sum(0, keepdim=True)
             if world_size > 1:
-                dist_util.all_reduce(correct_k)
+                all_reduce(correct_k)
             res.append(correct_k.mul_(100.0 / full_batch_size))
         return res
 
@@ -33,7 +34,7 @@ def build_syncbn(model, group, **kwargs):
         last_name = name.split('.')[-1]
         last_module = getattr(parent_module, last_name)
         if isinstance(last_module, torch.nn.BatchNorm2d):
-            syncbn = dist_util.SyncBatchNorm2d(
+            syncbn = SyncBatchNorm2d(
                 last_module.num_features,
                 eps=last_module.eps,
                 momentum=last_module.momentum,
@@ -51,8 +52,8 @@ def build_syncbn(model, group, **kwargs):
 
 
 def logger(msg, rank=0):
-    world_size = dist_util.get_world_size()
-    global_rank = dist_util.get_rank()
+    world_size = get_world_size()
+    global_rank = get_rank()
     assert rank < world_size
     if rank >= 0:
         if global_rank == rank:

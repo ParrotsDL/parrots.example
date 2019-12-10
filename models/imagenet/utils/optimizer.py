@@ -1,5 +1,5 @@
 import torch
-from utils.dist_util import HalfOptimizer
+from pape.half import HalfOptimizer
 
 
 def build_optimizer(cfg_trainer, model):

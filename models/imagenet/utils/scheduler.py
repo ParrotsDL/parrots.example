@@ -1,5 +1,5 @@
 from torch.optim import Optimizer
-from utils.dist_util import HalfOptimizer
+from pape.half import HalfOptimizer
 import math
 from addict import Dict
 

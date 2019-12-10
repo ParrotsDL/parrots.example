@@ -2,7 +2,7 @@ import torch
 import os
 import shutil
 from utils.misc import logger
-from utils.dist_util import get_rank
+from pape.distributed import get_rank
 
 
 class Saver:
@@ -46,13 +46,13 @@ class Saver:
         if cfg.checkpoint is None:
             logger('=> no checkpoint found!')
             return
-        if cfg.load_pavi:
-            import pavi
-            checkpoint = pavi.get_snapshot(cfg.checkpoint)
-            if not checkpoint:
-                logger('=> no checkpoint found on PAVI')
-                return
-            logger('=> load checkpoint from PAVI......')
+        # if cfg.load_pavi:
+        #     import pavi
+        #     checkpoint = pavi.get_snapshot(cfg.checkpoint)
+        #     if not checkpoint:
+        #         logger('=> no checkpoint found on PAVI')
+        #         return
+        #     logger('=> load checkpoint from PAVI......')
         else:
             if not os.path.isfile(cfg.checkpoint):
                 logger('=> no checkpoint found at {}'.format(cfg.checkpoint))
@@ -92,11 +92,11 @@ class Saver:
             'optimizer': optimizer.state_dict()
         }
 
-        if cfg_saver.save_pavi:
-            save_writer.add_snapshot(file_name, state_dict, cur_iter)
-            if cfg_saver.save_latest:
-                save_writer.add_snapshot(self.arch + '_ckpt_latest.pth', state_dict,
-                                         cur_iter)
+        # if cfg_saver.save_pavi:
+        #     save_writer.add_snapshot(file_name, state_dict, cur_iter)
+        #     if cfg_saver.save_latest:
+        #         save_writer.add_snapshot(self.arch + '_ckpt_latest.pth', state_dict,
+        #                                  cur_iter)
         if cfg_saver.save_dir:
             file_name = os.path.join(self.save_dir, file_name)
             torch.save(state_dict, file_name)
