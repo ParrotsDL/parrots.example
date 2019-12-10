@@ -20,7 +20,7 @@ from utils.misc import logger, accuracy, build_syncbn
 import models
 from pape.parallel import DistributedModel
 from pape.half import HalfModel
-from pape.distributed import init, group
+from pape.distributed import init, barrier, group
 
 
 model_names = sorted(name for name in models.__dict__
