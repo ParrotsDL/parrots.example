@@ -61,8 +61,8 @@ def main():
 
     rank, global_size, local_rank = init()
 
-    logger().info("=> rank {} of {} jobs, in {}".format(
-        rank, global_size, socket.gethostname()), rank=-1)
+    logger(rank=-1).info("=> rank {} of {} jobs, in {}".format(
+        rank, global_size, socket.gethostname()))
     barrier()
     logger().info("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
