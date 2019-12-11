@@ -1,3 +1,5 @@
+import logging
+
 import torch
 from pape.distributed import get_rank, get_world_size, all_reduce
 from pape.op import SyncBatchNorm2d
@@ -51,12 +53,32 @@ def build_syncbn(model, group, **kwargs):
     return model
 
 
-def logger(msg, rank=0):
+# def logger(msg, rank=0):
+#     world_size = get_world_size()
+#     global_rank = get_rank()
+#     assert rank < world_size
+#     if rank >= 0:
+#         if global_rank == rank:
+#             print(msg)
+#     elif rank == -1:
+#         print(msg)
+
+
+
+def get_root_logger(log_level=logging.INFO, rank=0):
+    logger = logging.getLogger()
+    if not logger.hasHandlers():
+        logging.basicConfig(
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            level=log_level)
+    # rank, _ = get_dist_info()
+    # if rank != 0:
+    #     logger.setLevel('ERROR')
     world_size = get_world_size()
     global_rank = get_rank()
     assert rank < world_size
     if rank >= 0:
         if global_rank == rank:
-            print(msg)
+            return logger
     elif rank == -1:
-        print(msg)
+        return logger

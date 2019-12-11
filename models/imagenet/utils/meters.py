@@ -1,5 +1,5 @@
 import numpy as np
-from utils.misc import logger
+from utils.misc import get_root_logger as logger
 
 
 class AverageMeter(object):
@@ -50,7 +50,7 @@ class ProgressMeter(object):
     def print_log(self, batch):
         entries = [self.prefix + self.batch_fmtstr.format(batch)]
         entries += [str(meter) for meter in self.meters]
-        logger('\t'.join(entries))
+        logger().info('\t'.join(entries))
 
     def _get_batch_fmtstr(self, num_batches):
         num_digits = len(str(num_batches // 1))

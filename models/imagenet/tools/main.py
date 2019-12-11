@@ -16,7 +16,8 @@ from utils.save_util import Saver
 from utils.scheduler import get_scheduler
 from utils.optimizer import build_optimizer
 from utils.meters import AverageMeter, ProgressMeter
-from utils.misc import logger, accuracy, build_syncbn
+from utils.misc import accuracy, build_syncbn
+from utils.misc import get_root_logger as logger
 import models
 from pape.parallel import DistributedModel
 from pape.half import HalfModel
@@ -60,10 +61,10 @@ def main():
 
     rank, global_size, local_rank = init()
 
-    logger("=> rank {} of {} jobs, in {}".format(
+    logger().info("=> rank {} of {} jobs, in {}".format(
         rank, global_size, socket.gethostname()), rank=-1)
     barrier()
-    logger("config file: \n{}".format(
+    logger().info("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
 
     if cfg.seed is not None:
@@ -71,7 +72,7 @@ def main():
         torch.manual_seed(cfg.seed)
         cudnn.deterministic = True
 
-    logger("=> creating model '{}'".format(cfg.net.type))
+    logger().info("=> creating model '{}'".format(cfg.net.type))
     model = models.__dict__[cfg.net.type](**cfg.net.kwargs)
     model.cuda()
 
@@ -81,12 +82,12 @@ def main():
     else:
         args.dist = False
     if cfg.net.syncbn == 1:
-        logger("=> syncbn mode")
+        logger().info("=> syncbn mode")
         model = build_syncbn(model, group.WORLD)
     if cfg.trainer.get('mixed_training', False):
         model = HalfModel(model, cfg.trainer.get('float_layers', None))
         args.mixed_training = True
-        logger("=> mix training mode")
+        logger().info("=> mix training mode")
     else:
         args.mixed_training = False
 
@@ -107,10 +108,10 @@ def main():
     if cfg.saver.resume_model:
         use_resume = True
         cfg_saver.checkpoint = cfg_saver.resume_model
-        logger('=> resume checkpoint "{}"'.format(cfg_saver.checkpoint))
+        logger().info('=> resume checkpoint "{}"'.format(cfg_saver.checkpoint))
     elif cfg_saver.pretrain_model:
         cfg_saver.checkpoint = cfg_saver.pretrain_model
-        logger('=> load checkpoint "{}"'.format(cfg_saver.checkpoint))
+        logger().info('=> load checkpoint "{}"'.format(cfg_saver.checkpoint))
 
     saver = Saver(cfg.net.type, cfg_saver.save_dir)
     if cfg_saver.checkpoint:
@@ -281,7 +282,7 @@ def test(test_loader, model, criterion, args):
 
             if i % args.log_freq == 0:
                 progress.print_log(i)
-    logger(' * All Loss {loss.avg:.4f} Prec@1 {top1.avg:.3f} Prec@5'
+    logger().info(' * All Loss {loss.avg:.4f} Prec@1 {top1.avg:.3f} Prec@5'
            ' {top5.avg:.3f}'.format(loss=losses, top1=top1, top5=top5))
     return losses.avg, top1.avg, top5.avg
 

@@ -1,7 +1,7 @@
 import torch
 import os
 import shutil
-from utils.misc import logger
+from utils.misc import get_root_logger as logger
 from pape.distributed import get_rank
 
 
@@ -18,10 +18,10 @@ class Saver:
         ckpt_keys = set(ckpt_keys)
         missing_keys = own_keys - ckpt_keys
         for missing_k in missing_keys:
-            logger('caution: missing keys:{}'.format(missing_k))
+            logger().info('caution: missing keys:{}'.format(missing_k))
         unexpected_keys = ckpt_keys - own_keys
         if len(unexpected_keys) > 0:
-            logger('caution: {} unexpected keys. '.format(
+            logger().info('caution: {} unexpected keys. '.format(
                 len(unexpected_keys)))
         shared_keys = own_keys & ckpt_keys
         return shared_keys
@@ -44,21 +44,14 @@ class Saver:
 
     def load_state(self, model, cfg, strict=False):
         if cfg.checkpoint is None:
-            logger('=> no checkpoint found!')
+            logger().info('=> no checkpoint found!')
             return
-        # if cfg.load_pavi:
-        #     import pavi
-        #     checkpoint = pavi.get_snapshot(cfg.checkpoint)
-        #     if not checkpoint:
-        #         logger('=> no checkpoint found on PAVI')
-        #         return
-        #     logger('=> load checkpoint from PAVI......')
         else:
             if not os.path.isfile(cfg.checkpoint):
-                logger('=> no checkpoint found at {}'.format(cfg.checkpoint))
+                logger().info('=> no checkpoint found at {}'.format(cfg.checkpoint))
                 return
             checkpoint = torch.load(cfg.checkpoint, map_location='cpu')
-            logger('=> load checkpoint from lustre......')
+            logger().info('=> load checkpoint from lustre......')
         checkpoint['best_acc1'] = torch.as_tensor(checkpoint['best_acc1'])
         if 'model' in checkpoint:
             state_dict = checkpoint['model']
@@ -69,16 +62,16 @@ class Saver:
         model_keys = model.state_dict().keys()
         state_dict = self.adapt_prefix(model_keys, state_dict, 'model.')
         share_keys = self.check_keys(model_keys, state_dict.keys())
-        logger('=> loading {} keys......'.format(len(share_keys)))
+        logger().info('=> loading {} keys......'.format(len(share_keys)))
         model.load_state_dict(state_dict, strict)
-        logger('=> loading checkpoint done!')
+        logger().info('=> loading checkpoint done!')
         self.checkpoint = checkpoint
 
     def load_optimizer(self, optimizer):
         best_acc1 = self.checkpoint['best_acc1'].cpu().cuda()
         start_epoch = self.checkpoint['epoch']
         optimizer.load_state_dict(self.checkpoint['optimizer'])
-        logger('=> also load optimizer from checkpoint')
+        logger().info('=> also load optimizer from checkpoint')
         return best_acc1, start_epoch
 
     def save_ckpt(self, save_writer, epoch, cfg_saver, model, optimizer,
