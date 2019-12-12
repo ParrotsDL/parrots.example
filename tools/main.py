@@ -71,9 +71,9 @@ def main():
     logger("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
 
-    parrots.runtime.profile(enable=True, file='profile_{}.txt'.format(rank))
-    
-    logger("profiling enabled in rank {}".format(rank))
+    # parrots.runtime.profile(enable=True, file='profile_{}.txt'.format(rank))
+    # 
+    # logger("profiling enabled in rank {}".format(rank))
 
     if cfg.seed is not None:
         random.seed(cfg.seed)
