@@ -1,0 +1,301 @@
+2019-12-14 16:31:24,505 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,505 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,505 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,505 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,505 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,508 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,513 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:31:24,520 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:32:01,033 [32mINFO[0m: => rank 4 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,033 [32mINFO[0m: => rank 5 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,033 [32mINFO[0m: => rank 7 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,033 [32mINFO[0m: => rank 1 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,033 [32mINFO[0m: => rank 6 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,034 [32mINFO[0m: => rank 0 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,034 [32mINFO[0m: => rank 3 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,034 [32mINFO[0m: => rank 2 of 8 jobs, in SH-IDC1-10-5-31-36[0m
+2019-12-14 16:32:01,160 [32mINFO[0m: config file: 
+{
+  "seed": 99,
+  "net": {
+    "type": "resnet50",
+    "kwargs": {
+      "num_classes": 1000
+    }
+  },
+  "dataset": {
+    "train": {
+      "meta_file": "/mnt/lustre/share/images/meta/train.txt",
+      "image_dir": "/mnt/lustre/share/images/train",
+      "reader": "pillow",
+      "resize": null,
+      "random_crop": null,
+      "random_resize_crop": 224,
+      "colorjitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": true
+    },
+    "test": {
+      "meta_file": "/mnt/lustre/share/images/meta/val.txt",
+      "image_dir": "/mnt/lustre/share/images/val",
+      "reader": "pillow",
+      "resize": 256,
+      "center_crop": [
+        224,
+        224
+      ],
+      "colorjitter": null,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": false
+    },
+    "batch_size": 32,
+    "workers": 4
+  },
+  "trainer": {
+    "max_epoch": 120,
+    "test_freq": 1,
+    "log_freq": 100,
+    "label_smooth": null,
+    "optimizer": {
+      "type": "SGD",
+      "kwargs": {
+        "lr": 0.1,
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      }
+    },
+    "lr_scheduler": {
+      "warmup_epochs": 0,
+      "type": "MultiStepLR",
+      "kwargs": {
+        "milestones": [
+          30,
+          60,
+          90
+        ],
+        "gamma": 0.1
+      }
+    }
+  },
+  "saver": {
+    "pretrain_model": null,
+    "resume_model": null,
+    "save_dir": "checkpoints",
+    "save_epoch_freq": 1,
+    "save_latest": false,
+    "save_best": false,
+    "sync_bn_stats": false
+  },
+  "monitor": {
+    "type": "pavi",
+    "_taskid": null,
+    "kwargs": {
+      "project": "default",
+      "task": "resnet50",
+      "model": "resnet50"
+    }
+  }
+}[0m
+2019-12-14 16:32:01,243 [32mINFO[0m: => creating model 'resnet50'[0m
+2019-12-14 16:38:32,279 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m2019-12-14 16:38:32,326 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+
+2019-12-14 16:38:32,303 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+2019-12-14 16:38:32,289 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+2019-12-14 16:38:32,303 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+2019-12-14 16:38:32,278 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+2019-12-14 16:38:32,289 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+2019-12-14 16:38:32,279 [31mERROR[0m: Uncaught exception: 
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'[0m
+Traceback (most recent call last):
+  File "../tools/main.py", line 291, in <module>
+    main()
+  File "../tools/main.py", line 154, in main
+    main()
+  File "../tools/main.py", line 154, in main
+    main()
+  File "../tools/main.py", line 154, in main
+    main()
+  File "../tools/main.py", line 154, in main
+    main()
+  File "../tools/main.py", line 154, in main
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    main()
+  File "../tools/main.py", line 154, in main
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    args, monitor_writer)
+  File "../tools/main.py", line 240, in train
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    progress.print_log(i)
+  File "/mnt/lustre/guanrui/dev/fix_scripts/parrots.example/models/imagenet/utils/meters.py", line 53, in print_log
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+    logger().info('\t'.join(entries))
+TypeError: get_root_logger() missing 1 required positional argument: 'msg'
+12/14/19 16:38:32.781 (P3986977.T3986977) [I] parrots exit with unhandled error
+12/14/19 16:38:32.781 (P3986982.T3986982) [I] parrots exit with unhandled error
+12/14/19 16:38:32.782 (P3986979.T3986979) [I] parrots exit with unhandled error
+12/14/19 16:38:32.783 (P3986976.T3986976) [I] parrots exit with unhandled error
+12/14/19 16:38:32.783 (P3986981.T3986981) [I] parrots exit with unhandled error
+12/14/19 16:38:32.782 (P3986980.T3986980) [I] parrots exit with unhandled error
+12/14/19 16:38:32.785 (P3986978.T3986978) [I] parrots exit with unhandled error
+12/14/19 16:38:32.785 (P3986975.T3986975) [I] parrots exit with unhandled error
+srun: error: SH-IDC1-10-5-31-36: task 6: Exited with exit code 1
+srun: error: SH-IDC1-10-5-31-36: tasks 1-5,7: Exited with exit code 1
+srun: error: SH-IDC1-10-5-31-36: task 0: Exited with exit code 1

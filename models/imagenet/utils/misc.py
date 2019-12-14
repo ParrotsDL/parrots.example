@@ -65,7 +65,7 @@ def build_syncbn(model, group, **kwargs):
 
 
 
-def get_root_logger(log_level=logging.INFO, rank=0):
+def get_root_logger(msg, log_level=logging.INFO, rank=0):
     logger = logging.getLogger()
     if not logger.hasHandlers():
         logging.basicConfig(
@@ -79,6 +79,6 @@ def get_root_logger(log_level=logging.INFO, rank=0):
     assert rank < world_size
     if rank >= 0:
         if global_rank == rank:
-            return logger
+            return logger.info(msg)
     elif rank == -1:
-        return logger
+        return logger.info(msg)

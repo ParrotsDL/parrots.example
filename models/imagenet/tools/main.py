@@ -61,10 +61,10 @@ def main():
 
     rank, global_size, local_rank = init()
 
-    logger(rank=-1).info("=> rank {} of {} jobs, in {}".format(
-        rank, global_size, socket.gethostname()))
+    logger("=> rank {} of {} jobs, in {}".format(
+        rank, global_size, socket.gethostname()), rank=-1)
     barrier()
-    logger().info("config file: \n{}".format(
+    logger("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
 
     if cfg.seed is not None:
@@ -72,7 +72,7 @@ def main():
         torch.manual_seed(cfg.seed)
         cudnn.deterministic = True
 
-    logger().info("=> creating model '{}'".format(cfg.net.type))
+    logger("=> creating model '{}'".format(cfg.net.type))
     model = models.__dict__[cfg.net.type](**cfg.net.kwargs)
     model.cuda()
 
@@ -82,12 +82,12 @@ def main():
     else:
         args.dist = False
     if cfg.net.syncbn == 1:
-        logger().info("=> syncbn mode")
+        logger("=> syncbn mode")
         model = build_syncbn(model, group.WORLD)
     if cfg.trainer.get('mixed_training', False):
         model = HalfModel(model, cfg.trainer.get('float_layers', None))
         args.mixed_training = True
-        logger().info("=> mix training mode")
+        logger("=> mix training mode")
     else:
         args.mixed_training = False
 
@@ -108,10 +108,10 @@ def main():
     if cfg.saver.resume_model:
         use_resume = True
         cfg_saver.checkpoint = cfg_saver.resume_model
-        logger().info('=> resume checkpoint "{}"'.format(cfg_saver.checkpoint))
+        logger('=> resume checkpoint "{}"'.format(cfg_saver.checkpoint))
     elif cfg_saver.pretrain_model:
         cfg_saver.checkpoint = cfg_saver.pretrain_model
-        logger().info('=> load checkpoint "{}"'.format(cfg_saver.checkpoint))
+        logger('=> load checkpoint "{}"'.format(cfg_saver.checkpoint))
 
     saver = Saver(cfg.net.type, cfg_saver.save_dir)
     if cfg_saver.checkpoint:
@@ -282,7 +282,7 @@ def test(test_loader, model, criterion, args):
 
             if i % args.log_freq == 0:
                 progress.print_log(i)
-    logger().info(' * All Loss {loss.avg:.4f} Prec@1 {top1.avg:.3f} Prec@5'
+    logger(' * All Loss {loss.avg:.4f} Prec@1 {top1.avg:.3f} Prec@5'
            ' {top5.avg:.3f}'.format(loss=losses, top1=top1, top5=top5))
     return losses.avg, top1.avg, top5.avg
 

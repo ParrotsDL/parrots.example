@@ -1,0 +1,126 @@
+2019-12-14 16:44:18,437 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,437 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,439 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,446 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,453 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,459 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,466 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:18,473 [32mINFO[0m: Parrots 0.4.0 | Git hash: 4ec10596 | Compute hash: 3ec76b2d[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 7 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 5 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 6 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 4 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 3 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 1 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 2 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,941 [32mINFO[0m: => rank 0 of 8 jobs, in SH-IDC1-10-5-31-30[0m
+2019-12-14 16:44:56,964 [32mINFO[0m: config file: 
+{
+  "seed": 99,
+  "net": {
+    "type": "resnet50",
+    "kwargs": {
+      "num_classes": 1000
+    }
+  },
+  "dataset": {
+    "train": {
+      "meta_file": "/mnt/lustre/share/images/meta/train.txt",
+      "image_dir": "/mnt/lustre/share/images/train",
+      "reader": "pillow",
+      "resize": null,
+      "random_crop": null,
+      "random_resize_crop": 224,
+      "colorjitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": true
+    },
+    "test": {
+      "meta_file": "/mnt/lustre/share/images/meta/val.txt",
+      "image_dir": "/mnt/lustre/share/images/val",
+      "reader": "pillow",
+      "resize": 256,
+      "center_crop": [
+        224,
+        224
+      ],
+      "colorjitter": null,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": false
+    },
+    "batch_size": 32,
+    "workers": 4
+  },
+  "trainer": {
+    "max_epoch": 120,
+    "test_freq": 1,
+    "log_freq": 100,
+    "label_smooth": null,
+    "optimizer": {
+      "type": "SGD",
+      "kwargs": {
+        "lr": 0.1,
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      }
+    },
+    "lr_scheduler": {
+      "warmup_epochs": 0,
+      "type": "MultiStepLR",
+      "kwargs": {
+        "milestones": [
+          30,
+          60,
+          90
+        ],
+        "gamma": 0.1
+      }
+    }
+  },
+  "saver": {
+    "pretrain_model": null,
+    "resume_model": null,
+    "save_dir": "checkpoints",
+    "save_epoch_freq": 1,
+    "save_latest": false,
+    "save_best": false,
+    "sync_bn_stats": false
+  },
+  "monitor": {
+    "type": "pavi",
+    "_taskid": null,
+    "kwargs": {
+      "project": "default",
+      "task": "resnet50",
+      "model": "resnet50"
+    }
+  }
+}[0m
+2019-12-14 16:44:57,086 [32mINFO[0m: => creating model 'resnet50'[0m
+2019-12-14 16:51:22,141 [32mINFO[0m: Epoch: [1/120] [   0/5005]	 2019-12-14 16:51:21	Time 370.047 (370.047)	Data 348.039 (348.039)	Loss 7.2225	Acc@1   0.00	Acc@5   0.00	LR 0.1000	Memory(MB) 3160[0m
+2019-12-14 16:51:46,304 [32mINFO[0m: Epoch: [1/120] [ 100/5005]	 2019-12-14 16:51:46	Time  0.193 ( 3.908)	Data  0.001 ( 3.468)	Loss 6.9758	Acc@1   0.00	Acc@5   0.78	LR 0.1000	Memory(MB) 3733[0m
+2019-12-14 16:52:17,639 [32mINFO[0m: Epoch: [1/120] [ 200/5005]	 2019-12-14 16:52:17	Time  0.213 ( 0.280)	Data  0.009 ( 0.066)	Loss 6.8663	Acc@1   0.00	Acc@5   0.00	LR 0.1000	Memory(MB) 3733[0m
+2019-12-14 16:52:48,803 [32mINFO[0m: Epoch: [1/120] [ 300/5005]	 2019-12-14 16:52:48	Time  0.202 ( 0.312)	Data  0.002 ( 0.107)	Loss 6.9127	Acc@1   0.00	Acc@5   1.17	LR 0.1000	Memory(MB) 3733[0m

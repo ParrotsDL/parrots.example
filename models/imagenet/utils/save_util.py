@@ -18,10 +18,10 @@ class Saver:
         ckpt_keys = set(ckpt_keys)
         missing_keys = own_keys - ckpt_keys
         for missing_k in missing_keys:
-            logger().info('caution: missing keys:{}'.format(missing_k))
+            logger('caution: missing keys:{}'.format(missing_k))
         unexpected_keys = ckpt_keys - own_keys
         if len(unexpected_keys) > 0:
-            logger().info('caution: {} unexpected keys. '.format(
+            logger('caution: {} unexpected keys. '.format(
                 len(unexpected_keys)))
         shared_keys = own_keys & ckpt_keys
         return shared_keys
@@ -44,14 +44,14 @@ class Saver:
 
     def load_state(self, model, cfg, strict=False):
         if cfg.checkpoint is None:
-            logger().info('=> no checkpoint found!')
+            logger('=> no checkpoint found!')
             return
         else:
             if not os.path.isfile(cfg.checkpoint):
-                logger().info('=> no checkpoint found at {}'.format(cfg.checkpoint))
+                logger('=> no checkpoint found at {}'.format(cfg.checkpoint))
                 return
             checkpoint = torch.load(cfg.checkpoint, map_location='cpu')
-            logger().info('=> load checkpoint from lustre......')
+            logger('=> load checkpoint from lustre......')
         checkpoint['best_acc1'] = torch.as_tensor(checkpoint['best_acc1'])
         if 'model' in checkpoint:
             state_dict = checkpoint['model']
@@ -62,16 +62,16 @@ class Saver:
         model_keys = model.state_dict().keys()
         state_dict = self.adapt_prefix(model_keys, state_dict, 'model.')
         share_keys = self.check_keys(model_keys, state_dict.keys())
-        logger().info('=> loading {} keys......'.format(len(share_keys)))
+        logger('=> loading {} keys......'.format(len(share_keys)))
         model.load_state_dict(state_dict, strict)
-        logger().info('=> loading checkpoint done!')
+        logger('=> loading checkpoint done!')
         self.checkpoint = checkpoint
 
     def load_optimizer(self, optimizer):
         best_acc1 = self.checkpoint['best_acc1'].cpu().cuda()
         start_epoch = self.checkpoint['epoch']
         optimizer.load_state_dict(self.checkpoint['optimizer'])
-        logger().info('=> also load optimizer from checkpoint')
+        logger('=> also load optimizer from checkpoint')
         return best_acc1, start_epoch
 
     def save_ckpt(self, save_writer, epoch, cfg_saver, model, optimizer,
