@@ -2,8 +2,6 @@ import mc
 from torch.utils.data import Dataset
 import io
 from PIL import Image
-import cv2
-import numpy as np
 
 
 def pil_loader(img_str):
@@ -50,7 +48,6 @@ class McDataset(Dataset):
         value_buf = mc.ConvertBuffer(value)
         assert self.reader == 'pillow', 'reader should be pillow.'
         img = pil_loader(value_buf)
-        
 
         # # raw-reading
         # with open(filename, 'rb') as value_str:

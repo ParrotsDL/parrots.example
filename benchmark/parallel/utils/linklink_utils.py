@@ -1,9 +1,7 @@
 import os
-import time
-
 import torch
-
 import linklink as link
+
 
 class DistModule(torch.nn.Module):
     def __init__(self, module, sync=False):
@@ -23,7 +21,7 @@ class DistModule(torch.nn.Module):
         self.module.train(mode)
 
     def _register_hooks(self):
-        for i,(name,p) in enumerate(self.named_parameters()):
+        for i, (name, p) in enumerate(self.named_parameters()):
             if p.requires_grad:
                 p_tmp = p.expand_as(p)
                 grad_acc = p_tmp.grad_fn.next_functions[0][0]
@@ -35,6 +33,7 @@ class DistModule(torch.nn.Module):
             link.allreduce_async(name, p.grad.data)
         return hook
 
+
 def reduce_gradients(model, sync=False):
     """ average gradients """
     if sync:
@@ -44,20 +43,22 @@ def reduce_gradients(model, sync=False):
     else:
         link.synchronize()
 
+
 def broadcast_params(model):
     """ broadcast model parameters """
-    for name,p in model.state_dict().items():
+    for name, p in model.state_dict().items():
         link.broadcast(p, 0)
+
 
 def dist_init():
     proc_id = int(os.environ['SLURM_PROCID'])
     ntasks = int(os.environ['SLURM_NTASKS'])
     node_list = os.environ['SLURM_NODELIST']
     num_gpus = torch.cuda.device_count()
-    torch.cuda.set_device(proc_id%num_gpus)
+    torch.cuda.set_device(proc_id % num_gpus)
 
     link.initialize()
     world_size = link.get_world_size()
     rank = link.get_rank()
-    
+
     return rank, world_size

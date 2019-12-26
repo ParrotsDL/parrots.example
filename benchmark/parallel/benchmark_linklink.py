@@ -12,9 +12,9 @@ import torch.backends as backends
 import torch.optim
 import torch.utils.data
 import torchvision.transforms as transforms
-import torchvision.datasets as datasets
 import torchvision.models as models
 
+import pape
 import linklink as link
 from utils.linklink_utils import dist_init, reduce_gradients, DistModule
 from utils.memcached_dataset import McDataset
@@ -161,8 +161,8 @@ def main():
             transforms.ToTensor(),
             normalize,
         ]))
-    
-    #train_sampler = pape.data.DistributedSampler(train_dataset, args.batch_size)
+
+    # train_sampler = pape.data.DistributedSampler(train_dataset, args.batch_size)
     train_sampler = None
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),
@@ -183,11 +183,11 @@ def main():
             normalize,
         ]))
 
-    #val_sampler = pape.data.DistributedSampler(val_dataset, args.batch_size)
+    # val_sampler = pape.data.DistributedSampler(val_dataset, args.batch_size)
     val_sampler = None
     val_loader = torch.utils.data.DataLoader(
         val_dataset, batch_size=args.batch_size, shuffle=(val_sampler is None),
-        num_workers=args.workers, pin_memory=True, sampler=val_sampler )
+        num_workers=args.workers, pin_memory=True, sampler=val_sampler)
 
     val_remain_dataset = McDataset(
         valdir, val_items[val_size:],
@@ -206,7 +206,7 @@ def main():
         return
 
     for epoch in range(args.start_epoch, args.epochs):
-        #train_sampler.set_epoch(epoch)
+        # train_sampler.set_epoch(epoch)
         adjust_learning_rate(optimizer, epoch, args)
 
         # train for one epoch
@@ -267,10 +267,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         target = target.cuda()
         if args.half:
             input = input.half()
-            
+
         # measure data loading time
         data_time.update(time.time() - end)
-
 
         # compute output
         output = model(input)
@@ -303,7 +302,7 @@ def validate(val_loader, val_remain_loader, val_full_size, model, criterion, arg
     # switch to evaluate mode
     model.eval()
 
-    start_time = time.time()
+    # start_time = time.time()
     with torch.no_grad():
         end = time.time()
         for i, (input, target) in enumerate(val_loader):
@@ -321,7 +320,7 @@ def validate(val_loader, val_remain_loader, val_full_size, model, criterion, arg
             top_sum[1] += acc5_cnt[0].item()
 
             # measure elapsed time
-            batch_time = time.time() - end
+            # batch_time = time.time() - end
             end = time.time()
 
             if args.rank == 0 and i % args.print_freq == 0:
@@ -356,8 +355,8 @@ def validate(val_loader, val_remain_loader, val_full_size, model, criterion, arg
         top_acc = top_sum.float() / val_full_size * 100
         if args.rank == 0:
             print(' * All Loss {} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(losses,
-                      top_acc[0], top_sum[0], val_full_size,
-                      top_acc[1], top_sum[1], val_full_size))
+                  top_acc[0], top_sum[0], val_full_size,
+                  top_acc[1], top_sum[1], val_full_size))
 
     return top_acc[0]
 

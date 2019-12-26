@@ -1,6 +1,6 @@
 import torch
 from parrotsconvert.caffe import BackendSet, CaffeNet
- 
+
 import torchvision.models as models
 
 net = models.__dict__['resnet18']()

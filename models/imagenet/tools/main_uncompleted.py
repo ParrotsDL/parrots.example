@@ -5,7 +5,6 @@ from addict import Dict
 import yaml
 import json
 import socket
-import logging
 
 import torch
 import torch.nn as nn

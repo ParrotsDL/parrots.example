@@ -12,6 +12,10 @@ from .inception_v2 import inception_v2
 from .inception_v3 import inception_v3
 from .inception_v4 import inception_v4
 from .inception_resnet import inception_resnet_v1, inception_resnet_v2
+from .densenet import densenet121, densenet169, densenet201, densenet161
+from .resnext import resnext50_32x4d, resnext101_32x8d
+from .nasnet import nasnetAlarge6_3072
+from .seresnext import SEResNeXt, seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
 
 
 __all__ = [
@@ -58,4 +62,15 @@ __all__ = [
     'inception_v4',
     'inception_resnet_v1',
     'inception_resnet_v2',
+    'densenet121',
+    'densenet169',
+    'densenet201',
+    'densenet161',
+    'resnext50_32x4d',
+    'resnext101_32x8d',
+    'nasnetAlarge6_3072',
+    'SEResNeXt',
+    'seresnext50_32x4d',
+    'seresnext101_32x4d',
+    'seresnext101_64x4d',
 ]

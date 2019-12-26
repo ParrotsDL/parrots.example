@@ -64,7 +64,6 @@ def build_syncbn(model, group, **kwargs):
 #         print(msg)
 
 
-
 def get_root_logger(msg, log_level=logging.INFO, rank=0):
     logger = logging.getLogger()
     if not logger.hasHandlers():

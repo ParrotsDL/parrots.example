@@ -18,9 +18,9 @@ print(init_method)
 
 torch.distributed.init_process_group("nccl", init_method=init_method,
                                      world_size=world_size, rank=rank)
-#os.environ['MASTER_ADDR'] = host_ip
-#os.environ['MASTER_PORT'] = port
-#torch.distributed.init_process_group("nccl", world_size=world_size, rank=rank)
+# os.environ['MASTER_ADDR'] = host_ip
+# os.environ['MASTER_PORT'] = port
+# torch.distributed.init_process_group("nccl", world_size=world_size, rank=rank)
 torch.cuda.set_device(local_rank)
 
 import pdb
