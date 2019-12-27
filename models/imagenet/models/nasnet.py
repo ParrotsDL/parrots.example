@@ -1,7 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from torch.autograd import Variable
 
 
 __all__ = ['nasnetamobile', 'nasnetalarge']
@@ -481,45 +479,45 @@ class NASNetAMobile(nn.Module):
         # 24 is default value for the architecture
 
         self.conv0 = nn.Sequential()
-        self.conv0.add_module('conv', nn.Conv2d(in_channels=3, out_channels=self.stem_filters, kernel_size=3, padding=0, stride=2,
-                                                bias=False))
+        self.conv0.add_module('conv', nn.Conv2d(in_channels=3, out_channels=self.stem_filters,
+                              kernel_size=3, padding=0, stride=2, bias=False))
         self.conv0.add_module('bn', nn.BatchNorm2d(self.stem_filters, eps=0.001, momentum=0.1, affine=True))
 
         self.cell_stem_0 = CellStem0(self.stem_filters, num_filters=filters // (filters_multiplier ** 2))
         self.cell_stem_1 = CellStem1(self.stem_filters, num_filters=filters // filters_multiplier)
 
-        self.cell_0 = FirstCell(in_channels_left=filters, out_channels_left=filters//2, # 1, 0.5
-                                in_channels_right=2*filters, out_channels_right=filters) # 2, 1
-        self.cell_1 = NormalCell(in_channels_left=2*filters, out_channels_left=filters, # 2, 1
-                                 in_channels_right=6*filters, out_channels_right=filters) # 6, 1
-        self.cell_2 = NormalCell(in_channels_left=6*filters, out_channels_left=filters, # 6, 1
-                                 in_channels_right=6*filters, out_channels_right=filters) # 6, 1
-        self.cell_3 = NormalCell(in_channels_left=6*filters, out_channels_left=filters, # 6, 1
-                                 in_channels_right=6*filters, out_channels_right=filters) # 6, 1
+        self.cell_0 = FirstCell(in_channels_left=filters, out_channels_left=filters // 2,  # 1, 0.5
+                                in_channels_right=2 * filters, out_channels_right=filters)  # 2, 1
+        self.cell_1 = NormalCell(in_channels_left=2 * filters, out_channels_left=filters,  # 2, 1
+                                 in_channels_right=6 * filters, out_channels_right=filters)  # 6, 1
+        self.cell_2 = NormalCell(in_channels_left=6 * filters, out_channels_left=filters,  # 6, 1
+                                 in_channels_right=6 * filters, out_channels_right=filters)  # 6, 1
+        self.cell_3 = NormalCell(in_channels_left=6 * filters, out_channels_left=filters,  # 6, 1
+                                 in_channels_right=6 * filters, out_channels_right=filters)  # 6, 1
 
-        self.reduction_cell_0 = ReductionCell0(in_channels_left=6*filters, out_channels_left=2*filters, # 6, 2
-                                               in_channels_right=6*filters, out_channels_right=2*filters) # 6, 2
+        self.reduction_cell_0 = ReductionCell0(in_channels_left=6 * filters, out_channels_left=2 * filters,  # 6, 2
+                                               in_channels_right=6 * filters, out_channels_right=2 * filters)  # 6, 2
 
-        self.cell_6 = FirstCell(in_channels_left=6*filters, out_channels_left=filters, # 6, 1
-                                in_channels_right=8*filters, out_channels_right=2*filters) # 8, 2
-        self.cell_7 = NormalCell(in_channels_left=8*filters, out_channels_left=2*filters, # 8, 2
-                                 in_channels_right=12*filters, out_channels_right=2*filters) # 12, 2
-        self.cell_8 = NormalCell(in_channels_left=12*filters, out_channels_left=2*filters, # 12, 2
-                                 in_channels_right=12*filters, out_channels_right=2*filters) # 12, 2
-        self.cell_9 = NormalCell(in_channels_left=12*filters, out_channels_left=2*filters, # 12, 2
-                                 in_channels_right=12*filters, out_channels_right=2*filters) # 12, 2
+        self.cell_6 = FirstCell(in_channels_left=6 * filters, out_channels_left=filters,  # 6, 1
+                                in_channels_right=8 * filters, out_channels_right=2 * filters)  # 8, 2
+        self.cell_7 = NormalCell(in_channels_left=8 * filters, out_channels_left=2 * filters,  # 8, 2
+                                 in_channels_right=12 * filters, out_channels_right=2 * filters)  # 12, 2
+        self.cell_8 = NormalCell(in_channels_left=12 * filters, out_channels_left=2 * filters,  # 12, 2
+                                 in_channels_right=12 * filters, out_channels_right=2 * filters)  # 12, 2
+        self.cell_9 = NormalCell(in_channels_left=12 * filters, out_channels_left=2 * filters,  # 12, 2
+                                 in_channels_right=12 * filters, out_channels_right=2 * filters)  # 12, 2
 
-        self.reduction_cell_1 = ReductionCell1(in_channels_left=12*filters, out_channels_left=4*filters, # 12, 4
-                                               in_channels_right=12*filters, out_channels_right=4*filters) # 12, 4
+        self.reduction_cell_1 = ReductionCell1(in_channels_left=12 * filters, out_channels_left=4 * filters,  # 12, 4
+                                               in_channels_right=12 * filters, out_channels_right=4 * filters)  # 12, 4
 
-        self.cell_12 = FirstCell(in_channels_left=12*filters, out_channels_left=2*filters, # 12, 2
-                                 in_channels_right=16*filters, out_channels_right=4*filters) # 16, 4
-        self.cell_13 = NormalCell(in_channels_left=16*filters, out_channels_left=4*filters, # 16, 4
-                                  in_channels_right=24*filters, out_channels_right=4*filters) # 24, 4
-        self.cell_14 = NormalCell(in_channels_left=24*filters, out_channels_left=4*filters, # 24, 4
-                                  in_channels_right=24*filters, out_channels_right=4*filters) # 24, 4
-        self.cell_15 = NormalCell(in_channels_left=24*filters, out_channels_left=4*filters, # 24, 4
-                                  in_channels_right=24*filters, out_channels_right=4*filters) # 24, 4
+        self.cell_12 = FirstCell(in_channels_left=12 * filters, out_channels_left=2 * filters,  # 12, 2
+                                 in_channels_right=16 * filters, out_channels_right=4 * filters)  # 16, 4
+        self.cell_13 = NormalCell(in_channels_left=16 * filters, out_channels_left=4 * filters,  # 16, 4
+                                  in_channels_right=24 * filters, out_channels_right=4 * filters)  # 24, 4
+        self.cell_14 = NormalCell(in_channels_left=24 * filters, out_channels_left=4 * filters,  # 24, 4
+                                  in_channels_right=24 * filters, out_channels_right=4 * filters)  # 24, 4
+        self.cell_15 = NormalCell(in_channels_left=24 * filters, out_channels_left=4 * filters,  # 24, 4
+                                  in_channels_right=24 * filters, out_channels_right=4 * filters)  # 24, 4
 
         self.relu = nn.ReLU()
         self.avg_pool = nn.AvgPool2d(7, stride=1, padding=0)
@@ -584,8 +582,8 @@ class NASNetALarge(nn.Module):
         # 24 is default value for the architecture
 
         self.conv0 = nn.Sequential()
-        self.conv0.add_module('conv', nn.Conv2d(in_channels=3, out_channels=self.stem_filters, kernel_size=3, padding=0, stride=2,
-                                                bias=False))
+        self.conv0.add_module('conv', nn.Conv2d(in_channels=3, out_channels=self.stem_filters,
+                              kernel_size=3, padding=0, stride=2, bias=False))
         self.conv0.add_module('bn', nn.BatchNorm2d(self.stem_filters, eps=0.001, momentum=0.1, affine=True))
 
         self.cell_stem_0 = CellStem0(self.stem_filters, num_filters=filters // (filters_multiplier ** 2))

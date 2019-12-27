@@ -14,7 +14,7 @@ from .inception_v4 import inception_v4
 from .inception_resnet import inception_resnet_v1, inception_resnet_v2
 from .densenet import densenet121, densenet169, densenet201, densenet161
 from .resnext import resnext50_32x4d, resnext101_32x8d
-from .seresnext import SEResNeXt, seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
+from .seresnext import seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
 from .nasnet import nasnetamobile, nasnetalarge
 
 
@@ -68,8 +68,6 @@ __all__ = [
     'densenet161',
     'resnext50_32x4d',
     'resnext101_32x8d',
-    'nasnetAlarge6_3072',
-    'SEResNeXt',
     'seresnext50_32x4d',
     'seresnext101_32x4d',
     'seresnext101_64x4d',

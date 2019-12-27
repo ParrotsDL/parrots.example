@@ -1,12 +1,9 @@
-import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from inspect import isfunction
 import math
 
 
-__all__ = ['round_channels', 'Swish', 'HSigmoid', 'HSwish', 'conv1x1','ConvBlock',
-           'conv1x1_block', 'conv7x7_block', 'SEBlock', 'ResNeXtBottleneck', 'ResInitBlock']
+__all__ = ['round_channels', 'conv1x1', 'ConvBlock', 'conv1x1_block', 'conv7x7_block',
+           'SEBlock', 'ResNeXtBottleneck', 'ResInitBlock']
 
 
 def round_channels(channels,
