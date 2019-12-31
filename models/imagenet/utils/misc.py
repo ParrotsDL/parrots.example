@@ -38,7 +38,6 @@ def accuracy(output, target, topk=(1,), raw=False):
         return res
 
 
-<<<<<<< HEAD
 class AverageMeter(object):
     """Computes and stores the average and current value
        When length < 0 , save all history data """
@@ -93,60 +92,3 @@ class ProgressMeter(object):
         num_digits = len(str(num_batches // 1))
         fmt = '{:' + str(num_digits) + 'd}'
         return '[' + fmt + '/' + fmt.format(num_batches) + ']'
-=======
-def build_syncbn(model, group, **kwargs):
-    for name, mod in model.named_modules():
-        if len(name) == 0:
-            continue
-        parent_module = model
-        for mod_name in name.split('.')[0:-1]:
-            parent_module = getattr(parent_module, mod_name)
-        last_name = name.split('.')[-1]
-        last_module = getattr(parent_module, last_name)
-        if isinstance(last_module, torch.nn.BatchNorm2d):
-            syncbn = SyncBatchNorm2d(
-                last_module.num_features,
-                eps=last_module.eps,
-                momentum=last_module.momentum,
-                affine=last_module.affine,
-                group=group,
-                **kwargs)
-            if last_module.affine:
-                syncbn.weight.data = last_module.weight.data.clone().detach()
-                syncbn.bias.data = last_module.bias.data.clone().detach()
-            syncbn.running_mean.data = last_module.running_mean.clone().detach(
-            )
-            syncbn.running_var.data = last_module.running_var.clone().detach()
-            parent_module.add_module(last_name, syncbn)
-    return model
-
-
-# def logger(msg, rank=0):
-#     world_size = get_world_size()
-#     global_rank = get_rank()
-#     assert rank < world_size
-#     if rank >= 0:
-#         if global_rank == rank:
-#             print(msg)
-#     elif rank == -1:
-#         print(msg)
-
-
-def get_root_logger(msg, log_level=logging.INFO, rank=0):
-    logger = logging.getLogger()
-    if not logger.hasHandlers():
-        logging.basicConfig(
-            format='%(asctime)s - %(levelname)s - %(message)s',
-            level=log_level)
-    # rank, _ = get_dist_info()
-    # if rank != 0:
-    #     logger.setLevel('ERROR')
-    world_size = get_world_size()
-    global_rank = get_rank()
-    assert rank < world_size
-    if rank >= 0:
-        if global_rank == rank:
-            return logger.info(msg)
-    elif rank == -1:
-        return logger.info(msg)
->>>>>>> d468c97484434eeb54ba320e84a3170ef0d3c79e
