@@ -30,26 +30,15 @@ def build_dataloader(cfg, world_size):
     test_aug = build_augmentation(cfg.test)
 
     train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
-    train_sampler = pdata.DistributedSampler(train_dataset, cfg.batch_size)
+    train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    with open(cfg.test.meta_file) as f:
-        test_items = [line.strip() for line in f.readlines()]
-    test_full_size = len(test_items)
-    test_remain_size = test_full_size % (cfg.batch_size * world_size)
-    test_size = test_full_size - test_remain_size
+    test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
 
-    test_dataset = pdata.McDataset(cfg.test.image_dir, test_items[0:test_size], test_aug)
-
-    test_sampler = pdata.DistributedSampler(test_dataset, cfg.batch_size)
+    test_sampler = pdata.DistributedSampler(test_dataset, round_up=False, shuffle=False)
     test_loader = torch.utils.data.DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=test_sampler)
-
-    test_remain_dataset = pdata.McDataset(cfg.test.image_dir, test_items[test_size:], test_aug)
-    test_remain_loader = torch.utils.data.DataLoader(
-        test_remain_dataset, batch_size=cfg.batch_size, shuffle=None,
-        num_workers=cfg.workers, pin_memory=True)
-    return train_loader, train_sampler, test_loader, test_remain_loader, test_full_size
+    return train_loader, train_sampler, test_loader, test_sampler

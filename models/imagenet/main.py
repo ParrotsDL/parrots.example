@@ -32,6 +32,7 @@ parser.add_argument('--test', dest='test', action='store_true',
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
+logger_all = logging.getLogger('all')
 
 
 def main():
@@ -41,12 +42,15 @@ def main():
 
     args.rank, args.world_size, args.local_rank = dist.init()
 
-    logger.setLevel(logging.INFO)
-    logger.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
+    if args.rank == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
+    logger_all.setLevel(logging.INFO)
+
+    logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
                 socket.gethostname()))
 
-    if args.rank != 0:
-        logger.setLevel(logging.ERROR)
 
     dist.barrier()
 
@@ -119,13 +123,11 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    (train_loader, train_sampler,
-     test_loader, test_remain_loader,
-     test_full_size) = build_dataloader(cfgs.dataset, args.world_size)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     # test mode
     if args.test:
-        test(test_loader, test_remain_loader, test_full_size, model, criterion, args)
+        test(test_loader, model, criterion, args)
         return
 
     # choose scheduler
@@ -151,7 +153,7 @@ def main():
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, test_remain_loader, test_full_size, model, criterion, args)
+            loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
             if args.rank == 0:
                 if monitor_writer:
@@ -238,19 +240,19 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
 
 
-def test(test_loader, test_remain_loader, test_full_size, model, criterion, args):
+def test(test_loader, model, criterion, args):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
     top5 = AverageMeter('Acc@5', ':.2f', -1)
-    top_sum = torch.Tensor([0, 0]).int()
+    stats_all = torch.Tensor([0, 0, 0]).long()
+    progress = ProgressMeter(len(test_loader), batch_time, losses, top1, top5,
+                             prefix="Test: ")
 
     # switch to evaluate mode
     model.eval()
     with torch.no_grad():
         end = time.time()
-        progress = ProgressMeter(len(test_loader), batch_time, losses, top1, top5,
-                                 prefix="Test: ")
         for i, (input, target) in enumerate(test_loader):
             input = input.cuda()
             target = target.cuda()
@@ -264,15 +266,11 @@ def test(test_loader, test_remain_loader, test_full_size, model, criterion, args
             # measure accuracy and record loss
             acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
 
-            dist.all_reduce(loss)
-            loss /= args.world_size
             losses.update(loss.item())
+            top1.update(acc1[0].item() * 100.0 / target.size(0))
+            top5.update(acc5[0].item() * 100.0 / target.size(0))
 
-            stats_all = torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).int()
-            dist.all_reduce(stats_all)
-            top1.update(stats_all[0].item() * 100.0 / stats_all[2].item())
-            top5.update(stats_all[1].item() * 100.0 / stats_all[2].item())
-            top_sum += stats_all[0:2]
+            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -281,39 +279,22 @@ def test(test_loader, test_remain_loader, test_full_size, model, criterion, args
             if i % args.log_freq == 0:
                 progress.display(i)
 
-        progress = ProgressMeter(len(test_remain_loader), losses, top1, top5,
-                                 prefix="Remain Test: ")
-        for i, (input, target) in enumerate(test_remain_loader):
-            input = input.cuda()
-            target = target.cuda()
-            if args.half:
-                input = input.half()
+        logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
+                        args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
+                        stats_all[2].item()))
 
-            # compute output
-            output = model(input)
-            loss = criterion(output, target)
+        loss = torch.tensor([losses.avg])
+        dist.all_reduce(loss)
+        loss_avg = loss.item() / args.world_size
+        dist.all_reduce(stats_all)
+        acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
+        acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 
-            # measure accuracy and record loss
-            acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
+        logger.info(' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
+                    acc1, stats_all[0].item(), stats_all[2].item(),
+                    acc5, stats_all[1].item(), stats_all[2].item()))
 
-            dist.all_reduce(loss)
-            loss /= args.world_size
-            losses.update(loss.item())
-
-            stats_all = torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).int()
-            dist.all_reduce(stats_all)
-            top1.update(stats_all[0].item() * 100.0 / stats_all[2].item())
-            top5.update(stats_all[1].item() * 100.0 / stats_all[2].item())
-            top_sum += stats_all[0:2]
-
-            progress.display(i)
-
-        top_acc = top_sum.float() * 100.0 / test_full_size
-        logger.info(' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(losses.avg,
-                    top_acc[0].item(), top_sum[0].item(), test_full_size,
-                    top_acc[1].item(), top_sum[1].item(), test_full_size))
-
-    return losses.avg, top_acc[0], top_acc[1]
+    return loss_avg, acc1, acc5
 
 
 if __name__ == '__main__':
