@@ -139,10 +139,12 @@ def main():
     if args.rank == 0 and cfgs.get('monitor', None):
         if cfgs.monitor.get('type', None) == 'pavi':
             from pavi import SummaryWriter
-            monitor_writer = SummaryWriter(
-                session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
             if cfgs.monitor.get("_taskid", None):
-                monitor_writer._taskid = cfgs.monitor._taskid
+                monitor_writer = SummaryWriter(
+                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs,taskid=cfgs.monitor._taskid)
+            else:
+                monitor_writer = SummaryWriter(
+                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
