@@ -27,15 +27,15 @@ dataset:
 trainer:
   max_epoch: 120
   test_freq: 1
-  log_freq: 100
+  log_freq: 20
   bn:
     syncbn: False
   mixed_precision:
     half: True
     loss_scale: 128.0
-    float_layers:  # define floating layers when mixed training
-      # loss:
-      #     float_out: True
+    float_bn: True
+    #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
+    #float_module_name: "{'fc':('float', 'half')}"
   optimizer:
     type: SGD
     kwargs:

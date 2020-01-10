@@ -27,7 +27,7 @@ dataset:
 trainer:
   max_epoch: 100
   test_freq: 1
-  log_freq: 100
+  log_freq: 20
   bn:
     syncbn: False
   mixed_precision:
