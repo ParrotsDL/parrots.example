@@ -185,6 +185,9 @@ def main():
         lr_scheduler.step()
 
 
+sfunc = None
+
+
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
@@ -199,6 +202,28 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
     # switch to train mode
     model.train()
+
+    from parrots.ir import Function
+    @Function.trace_on_call
+    def func(input, target):
+        # compute output
+        output = model(input)
+        loss = criterion(output, target)
+
+        # measure accuracy and record loss
+        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+
+        # compute gradient and do SGD step
+        if args.half:
+            loss *= optimizer.loss_scale
+        loss.backward()
+        model.average_gradients()
+        optimizer.step()
+        # XXX(lizhouyang): zero_grad is lazy. We do it after backward to trace.
+        optimizer.zero_grad()
+
+        return loss, acc1, acc5
+
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
@@ -207,13 +232,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input = input.cuda()
         target = target.cuda()
 
-        # compute output
-        output = model(input)
-        loss = criterion(output, target)
-
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
-
+        loss, acc1, acc5 = func(input, target)
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
@@ -222,14 +241,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        if args.half:
-            loss *= optimizer.loss_scale
-        loss.backward()
-        model.average_gradients()
-        optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
