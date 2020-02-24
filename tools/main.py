@@ -5,6 +5,7 @@ from addict import Dict
 import yaml
 import json
 import socket
+import os
 
 import torch
 import torch.nn as nn
@@ -64,12 +65,12 @@ def main():
     dist.barrier()
     logger("config file: \n{}".format(
         json.dumps(cfg, indent=2, ensure_ascii=False)))
-
+    
     if cfg.seed is not None:
         random.seed(cfg.seed)
         torch.manual_seed(cfg.seed)
         cudnn.deterministic = True
-
+    
     logger("=> creating model '{}'".format(cfg.net.type))
     model = models.__dict__[cfg.net.type](**cfg.net.kwargs)
     model.cuda()
@@ -156,7 +157,6 @@ def main():
         train(train_loader, model, criterion, optimizer, lr_scheduler, epoch,
               args, monitor_writer)
         cur_iter = (epoch + 1) * len(train_loader)
-
         # save checkpoint
         if (epoch + 1) % cfg_saver.save_epoch_freq == 0 or epoch + 1 == args.max_epoch:
             # if cfg_saver.sync_bn_stats:
@@ -210,6 +210,17 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
             timer.stop()
             timer.dump(Dict(args.config).net.type)
             logger('timer avg {:.3f} var {:.6f} len {}'.format(timer.avg(), timer.var(), len(timer)))
+            if rank == 0:
+                gpu_mem_log_path = "../../gpu_mem_log"
+                if not os.path.isdir(gpu_mem_log_path):
+                    os.mkdir(gpu_mem_log_path)
+                torch_version = 'pat' if torch.__version__ == 'parrots' else 'pt'
+                fp = open("{}/{}_gpu_mem.txt".format(gpu_mem_log_path, torch_version),'a')
+                #fp.write("{} ".format(Dict(args.config).net.type))
+                #print('gpu_mem : {}', torch.cuda.memory_allocated()/1024/1024)
+                fp.write('{} {} \n'.format(Dict(args.config).net.type,
+                            torch.cuda.max_memory_cached()/1024/1024))
+                fp.close()
             exit()
         elif i > 210:
             timer.step()
