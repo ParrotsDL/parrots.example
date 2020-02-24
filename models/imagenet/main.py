@@ -75,8 +75,12 @@ def main():
 
     args.half = False
     if cfgs.trainer.get('mixed_precision', None):
-        if cfgs.trainer.mixed_precision.get('half', False) is True:
-            model = HalfModel(model, cfgs.trainer.mixed_precision.get('float_layers', None))
+        mix_cfg = cfgs.trainer.mixed_precision
+        if mix_cfg.get('half', False) is True:
+            model = HalfModel(model, float_bn=mix_cfg.get("float_bn", True),
+                              float_module_type=eval(mix_cfg.get("float_module_type", "{}")),
+                              float_module_name=eval(mix_cfg.get("float_module_name", "{}"))
+                             )
             args.half = True
 
     model = DistributedModel(model)
@@ -201,8 +205,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         data_time.update(time.time() - end)
 
         input = input.cuda()
-        if args.half:
-            input = input.half()
         target = target.cuda()
 
         # compute output
@@ -258,8 +260,6 @@ def test(test_loader, model, criterion, args):
         for i, (input, target) in enumerate(test_loader):
             input = input.cuda()
             target = target.cuda()
-            if args.half:
-                input = input.half()
 
             # compute output
             output = model(input)
