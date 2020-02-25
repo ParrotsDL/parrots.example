@@ -2,7 +2,8 @@ import torch
 import torch.nn as nn
 
 
-__all__ = ['resnext50_32x4d', 'resnext101_32x8d']
+__all__ = ['resnext50_32x4d', 'resnext101_32x8d', 'resnext50d_32x4d', 'resnext101_32x8d',
+           'wide_resnet50_2', 'wide_resnet101_2', 'wide_resnet50d_2', 'wide_resnet101d_2']
 
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
@@ -26,9 +27,11 @@ class BasicBlock(nn.Module):
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
         if groups != 1 or base_width != 64:
-            raise ValueError('BasicBlock only supports groups=1 and base_width=64')
+            raise ValueError(
+                'BasicBlock only supports groups=1 and base_width=64')
         if dilation > 1:
-            raise NotImplementedError("Dilation > 1 not supported in BasicBlock")
+            raise NotImplementedError(
+                "Dilation > 1 not supported in BasicBlock")
         # Both self.conv1 and self.downsample layers downsample the input when stride != 1
         self.conv1 = conv3x3(inplanes, planes, stride)
         self.bn1 = norm_layer(planes)
@@ -103,16 +106,31 @@ class Bottleneck(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=1000, zero_init_residual=False,
-                 groups=1, width_per_group=64, replace_stride_with_dilation=None,
-                 norm_layer=None):
+    def __init__(self,
+                 block,
+                 layers,
+                 num_classes=1000,
+                 zero_init_residual=False,
+                 groups=1,
+                 width_per_group=64,
+                 replace_stride_with_dilation=None,
+                 norm_layer=None,
+                 deep_stem=False,
+                 avg_down=False,
+                 bn=None):
+
         super(ResNet, self).__init__()
+
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
+
         self._norm_layer = norm_layer
 
         self.inplanes = 64
         self.dilation = 1
+        self.deep_stem = deep_stem
+        self.avg_down = avg_down
+
         if replace_stride_with_dilation is None:
             # each element in the tuple indicates if we should replace
             # the 2x2 stride with a dilated convolution instead
@@ -122,8 +140,24 @@ class ResNet(nn.Module):
                              "or a 3-element tuple, got {}".format(replace_stride_with_dilation))
         self.groups = groups
         self.base_width = width_per_group
-        self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3,
-                               bias=False)
+
+        if self.deep_stem:
+            self.conv1 = nn.Sequential(
+                nn.Conv2d(3, 32, kernel_size=3, stride=2,
+                          padding=1, bias=False),
+                norm_layer(32),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(32, 32, kernel_size=3, stride=1,
+                          padding=1, bias=False),
+                norm_layer(32),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(32, 64, kernel_size=3, stride=1,
+                          padding=1, bias=False),
+            )
+        else:
+            self.conv1 = nn.Conv2d(3, 64, kernel_size=7,
+                                   stride=2, padding=3, bias=False)
+
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
@@ -139,8 +173,9 @@ class ResNet(nn.Module):
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+                nn.init.kaiming_normal_(
+                    m.weight, mode='fan_out', nonlinearity='relu')
+            elif isinstance(m, nn.BatchNorm2d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
 
@@ -162,10 +197,18 @@ class ResNet(nn.Module):
             self.dilation *= stride
             stride = 1
         if stride != 1 or self.inplanes != planes * block.expansion:
-            downsample = nn.Sequential(
-                conv1x1(self.inplanes, planes * block.expansion, stride),
-                norm_layer(planes * block.expansion),
-            )
+            if self.avg_down:
+                downsample = nn.Sequential(
+                    nn.AvgPool2d(stride, stride=stride,
+                                 ceil_mode=True, count_include_pad=False),
+                    conv1x1(self.inplanes, planes * block.expansion),
+                    norm_layer(planes * block.expansion),
+                )
+            else:
+                downsample = nn.Sequential(
+                    conv1x1(self.inplanes, planes * block.expansion, stride),
+                    norm_layer(planes * block.expansion),
+                )
 
         layers = []
         layers.append(block(self.inplanes, planes, stride, downsample, self.groups,
@@ -200,32 +243,53 @@ class ResNet(nn.Module):
         return self._forward_impl(x)
 
 
-def _resnet(arch, block, layers, **kwargs):
-    model = ResNet(block, layers, **kwargs)
+def resnext50_32x4d(**kwargs):
+    kwargs['groups'] = 32
+    kwargs['width_per_group'] = 4
+    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
     return model
 
 
-def resnext50_32x4d(pretrained=False, progress=True, **kwargs):
-    r"""ResNeXt-50 32x4d model from
-    `"Aggregated Residual Transformation for Deep Neural Networks" <https://arxiv.org/pdf/1611.05431.pdf>`_
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-    """
-    kwargs['groups'] = 32
-    kwargs['width_per_group'] = 4
-    return _resnet('resnext50_32x4d', Bottleneck, [3, 4, 6, 3], **kwargs)
-
-
-def resnext101_32x8d(pretrained=False, progress=True, **kwargs):
-    r"""ResNeXt-101 32x8d model from
-    `"Aggregated Residual Transformation for Deep Neural Networks" <https://arxiv.org/pdf/1611.05431.pdf>`_
-
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
-    """
+def resnext101_32x8d(**kwargs):
     kwargs['groups'] = 32
     kwargs['width_per_group'] = 8
-    return _resnet('resnext101_32x8d', Bottleneck, [3, 4, 23, 3], **kwargs)
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
+    return model
+
+
+def resnext50d_32x4d(**kwargs):
+    kwargs['groups'] = 32
+    kwargs['width_per_group'] = 4
+    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs, deep_stem=True, avg_down=True)
+    return model
+
+
+def resnext101d_32x8d(**kwargs):
+    kwargs['groups'] = 32
+    kwargs['width_per_group'] = 8
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs, deep_stem=True, avg_down=True)
+    return model
+
+
+def wide_resnet50_2(**kwargs):
+    kwargs['width_per_group'] = 64 * 2
+    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
+    return model
+
+
+def wide_resnet101_2(**kwargs):
+    kwargs['width_per_group'] = 64 * 2
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
+    return model
+
+
+def wide_resnet50d_2(**kwargs):
+    kwargs['width_per_group'] = 64 * 2
+    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs, deep_stem=True, avg_down=True)
+    return model
+
+
+def wide_resnet101d_2(**kwargs):
+    kwargs['width_per_group'] = 64 * 2
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs, deep_stem=True, avg_down=True)
+    return model

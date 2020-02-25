@@ -3,7 +3,7 @@ import math
 
 __all__ = [
     'ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet50c', 'resnet50d',
-    'resnet101', 'resnet152'
+    'resnet101', 'resnet101d', 'resnet152', 'resnet152d'
 ]
 
 
@@ -237,6 +237,18 @@ def resnet101(pretrained=False, **kwargs):
     return model
 
 
+def resnet101d(pretrained=False, **kwargs):
+    model = ResNet(
+        Bottleneck, [3, 4, 23, 3], **kwargs, deep_stem=True, avg_down=True)
+    return model
+
+
 def resnet152(pretrained=False, **kwargs):
     model = ResNet(Bottleneck, [3, 8, 36, 3], **kwargs)
+    return model
+
+
+def resnet152d(pretrained=False, **kwargs):
+    model = ResNet(
+        Bottleneck, [3, 8, 36, 3], **kwargs, deep_stem=True, avg_down=True)
     return model
