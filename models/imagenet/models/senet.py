@@ -5,7 +5,7 @@ import torch.nn as nn
 
 __all__ = [
     'SENet', 'senet154', 'se_resnet50', 'se_resnet101', 'se_resnet152',
-    'se_resnext50_32x4d', 'se_resnext101_32x4d'
+    'se_resnext50_32x4d', 'se_resnext101_32x4d', 'se_resnext101_64x4d'
 ]
 
 
@@ -357,6 +357,20 @@ def se_resnext101_32x4d(**kwargs):
     model = SENet(
         SEResNeXtBottleneck, [3, 4, 23, 3],
         groups=32,
+        reduction=16,
+        dropout_p=None,
+        inplanes=64,
+        input_3x3=False,
+        downsample_kernel_size=1,
+        downsample_padding=0,
+        **kwargs)
+    return model
+
+
+def se_resnext101_64x4d(**kwargs):
+    model = SENet(
+        SEResNeXtBottleneck, [3, 4, 23, 3],
+        groups=64,
         reduction=16,
         dropout_p=None,
         inplanes=64,

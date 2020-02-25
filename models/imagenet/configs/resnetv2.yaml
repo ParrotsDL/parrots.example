@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: resnet50_v2  # resnet50_v2, resnet101_v2, resnet152_v2, resnet200_v2
+    type: preact_resnet18 # preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
     kwargs:
         num_classes: 1000
     #bn:
