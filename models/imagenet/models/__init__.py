@@ -11,6 +11,7 @@ from .shuffle_v1 import shuffle_v1
 from .shuffle_v2 import shuffle_v2
 from .mobile_v1 import mobile_v1
 from .mobile_v2 import mobile_v2
+from .mobile_v3 import mobile_v3
 from .inception_v1 import inception_v1
 from .inception_v2 import inception_v2
 from .inception_v3 import inception_v3
@@ -75,6 +76,7 @@ __all__ = [
     'shuffle_v2',
     'mobile_v1',
     'mobile_v2',
+    'mobile_v3',
     'inception_v1',
     'inception_v2',
     'inception_v3',
