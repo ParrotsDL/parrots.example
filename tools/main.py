@@ -211,11 +211,8 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
             timer.dump(Dict(args.config).net.type)
             logger('timer avg {:.3f} var {:.6f} len {}'.format(timer.avg(), timer.var(), len(timer)))
             if rank == 0:
-                gpu_mem_log_path = "../../gpu_mem_log"
-                if not os.path.isdir(gpu_mem_log_path):
-                    os.mkdir(gpu_mem_log_path)
                 torch_version = 'pat' if torch.__version__ == 'parrots' else 'pt'
-                fp = open("{}/{}_gpu_mem.txt".format(gpu_mem_log_path, torch_version),'a')
+                fp = open("{}_gpu_mem.txt".format(torch_version),'a')
                 fp.write('{} {} \n'.format(Dict(args.config).net.type,
                             torch.cuda.max_memory_cached()/1024/1024))
                 fp.close()
