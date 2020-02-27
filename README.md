@@ -1,39 +1,45 @@
 ## Parrots2 examples
 Image Classification Training in Parrots and Pytorch.
 
-Get detailed documentation in http://confluence.sensetime.com/pages/viewpage.action?pageId=101886408
+Get detailed documentation in http://pape.parrots.sensetime.com/example_imagenet.html
 
 <hr>
 
 ### usage
 ##### Train
 ```
+# cd imagenet dir
+cd models/imagenet/
 # Modify config yaml as you want
-vim ./config/resnet.yaml
-cd scripts
-# sh main.sh [PartitionName] [NodeNum] [ConfigFileName]
-sh main.sh Test 8 resnet
+vim configs/resnet.yaml
+# start training
+# sh train.sh [ConfigFileName] [JobName] [PartitionName] [NodeNum]
+sh train.sh configs/resnet.yaml resnet Test 8
 ```
 ##### Test
 ```
-# Fill *pretrain\_model/resume\_model* in config file;
-vim config/resnet.yaml  
-# begin test
-cd scripts
-# sh eval.sh [Partition-Name] [NodeNum] [ConfigFileName] 
-sh eval.sh Test 1 resnet
+# cd imagenet dir
+cd models/imagenet/
+# Fill *pretrain\_model/resume\_model* in config file
+vim configs/resnet.yaml  
+# start testing
+# sh test.sh [ConfigFileName] [JobName] [PartitionName] [NodeNum]
+sh test.sh configs/resnet.yaml test Test 1
 ```
 <hr>
 
 ### Version
-version: 0.1
+version: 0.2
 
-update: 2019-8-27
+update: 2020-02-27
 <hr>
 
 ### Features
 ##### Mix Training
 ```
-cd scripts
-sh main.sh Test 8 resnet_mix
+sh train.sh configs/resnet50_mix.yaml resnet Test 8
+```
+##### Training with SyncBN
+```
+sh train.sh configs/resnet50_syncbn.yaml resnet Test 8
 ```
