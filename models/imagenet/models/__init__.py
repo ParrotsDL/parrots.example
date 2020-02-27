@@ -20,6 +20,10 @@ from .inception_resnet import inception_resnet_v1, inception_resnet_v2
 from .densenet import densenet121, densenet169, densenet201, densenet161
 from .seresnext import seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
 from .nasnet import nasnetamobile, nasnetalarge
+from .hrnet import HRNet
+from .mnasnet import mnasnet
+from .efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, \
+                          efficientnet_b5, efficientnet_b6, efficientnet_b7
 
 
 __all__ = [
@@ -92,4 +96,14 @@ __all__ = [
     'seresnext101_64x4d',
     'nasnetamobile',
     'nasnetalarge',
+    'HRNet',
+    'mnasnet',
+    'efficientnet_b0',
+    'efficientnet_b1',
+    'efficientnet_b2',
+    'efficientnet_b3',
+    'efficientnet_b4',
+    'efficientnet_b5',
+    'efficientnet_b6',
+    'efficientnet_b7',
 ]
