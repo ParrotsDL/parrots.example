@@ -60,6 +60,6 @@ monitor:
   type: pavi
   _taskid: # continue training
   kwargs:
-    project: default  # change to your own pavi project
+    project: pape_test  # change to your own pavi project
     task: mobile_v1
     model: mobile_v1
