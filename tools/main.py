@@ -74,20 +74,26 @@ def main():
     model = models.__dict__[cfg.net.type](**cfg.net.kwargs)
     model.cuda()
 
+    if cfg.net.syncbn == 1:
+        logger("=> syncbn mode")
+        model = build_syncbn(model, dist.group.WORLD)
+    if cfg.trainer.get('mixed_precision', None):
+        mix_cfg = cfg.trainer.mixed_precision
+        if mix_cfg.get('half', False) is True:
+            model = HalfModel(model, float_bn=mix_cfg.get("float_bn", True),
+                              float_module_type=eval(mix_cfg.get("float_module_type", "{}")),
+                              float_module_name=eval(mix_cfg.get("float_module_name", "{}")))
+            args.mixed_training = True
+            logger("=> mix training mode")
+        else:
+            args.mixed_training = False
+    else:
+        args.mixed_training = False
     if global_size > 1:
         args.dist = True
         model = DistributedModel(model)
     else:
         args.dist = False
-    if cfg.net.syncbn == 1:
-        logger("=> syncbn mode")
-        model = build_syncbn(model, dist.group.WORLD)
-    if cfg.trainer.get('mixed_training', False):
-        model = HalfModel(model, cfg.trainer.get('float_layers', None))
-        args.mixed_training = True
-        logger("=> mix training mode")
-    else:
-        args.mixed_training = False
 
     # define loss function (criterion), optimizer, and lr_scheduler
     criterion = nn.CrossEntropyLoss().cuda()
