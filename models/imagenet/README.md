@@ -16,12 +16,12 @@ source pat0.5.0rc0
 If you use your own PAPE, modify `PYTHONPATH` in `train.sh` to your path.
 
 ```bash
-# sh train.sh [ConfigFilePath] [JobName] [PartitionName] [NodeNum]
+# sh train.sh [ConfigFilePath] [JobName] [PartitionName] [GPUNum]
 sh train.sh configs/resnet.yaml resnet50 Platform 8
 ```
 
 ### 3. Test
 ```bash
-# sh test.sh [ConfigFilePath] [JobName] [PartitionName] [NodeNum]
+# sh test.sh [ConfigFilePath] [JobName] [PartitionName] [GPUNum]
 sh test.sh configs/resnet.yaml resnet50 Platform 8
 ```
