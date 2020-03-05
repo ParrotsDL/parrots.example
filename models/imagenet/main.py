@@ -62,8 +62,10 @@ def main():
         torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
 
-    model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model.cuda()
+    #model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    #model.cuda()
+
+    params = torch.load('train_params')
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
@@ -83,13 +85,13 @@ def main():
                              )
             args.half = True
 
-    model = DistributedModel(model)
-    logger.info("model\n{}".format(model))
+    # model = DistributedModel(model)
+    # logger.info("model\n{}".format(model))
 
     criterion = nn.CrossEntropyLoss().cuda()
     logger.info("loss\n{}".format(criterion))
 
-    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    optimizer = torch.optim.SGD(params, **cfgs.trainer.optimizer.kwargs)
     if args.half:
         optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
     logger.info("optimizer\n{}".format(optimizer))
@@ -155,7 +157,7 @@ def main():
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, params, criterion, optimizer, epoch, args, monitor_writer)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -170,7 +172,7 @@ def main():
                 checkpoint = {
                     'epoch': epoch + 1,
                     'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
+                    #'state_dict': model.state_dict(),
                     'best_acc1': best_acc1,
                     'optimizer': optimizer.state_dict()
                 }
@@ -185,10 +187,7 @@ def main():
         lr_scheduler.step()
 
 
-sfunc = None
-
-
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, params, criterion, optimizer, epoch, args, monitor_writer):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -201,28 +200,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                              memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
 
     # switch to train mode
-    model.train()
+    # model.train()
 
-    from parrots.ir import Function
-    @Function.trace_on_call
-    def func(input, target):
-        # compute output
-        output = model(input)
-        loss = criterion(output, target)
-
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
-
-        # compute gradient and do SGD step
-        if args.half:
-            loss *= optimizer.loss_scale
-        loss.backward()
-        model.average_gradients()
-        optimizer.step()
-        # XXX(lizhouyang): zero_grad is lazy. We do it after backward to trace.
-        optimizer.zero_grad()
-
-        return loss, acc1, acc5
+    from parrots import ir
+    func = ir.load('train_func')
 
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
@@ -232,7 +213,16 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input = input.cuda()
         target = target.cuda()
 
-        loss, acc1, acc5 = func(input, target)
+        optimizer.zero_grad()
+
+        output, loss, *grads = func(input, target, *params)
+
+        # measure accuracy and record loss
+        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+
+        for p, grad in zip(params, grads):
+            p.grad = grad
+
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
@@ -241,6 +231,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+
+        # compute gradient and do SGD step
+        if args.half:
+            loss *= optimizer.loss_scale
+        optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
