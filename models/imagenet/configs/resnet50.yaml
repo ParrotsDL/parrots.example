@@ -26,8 +26,8 @@ dataset:
  
 trainer:
   max_epoch: 100
-  test_freq: 1
-  log_freq: 20
+  test_freq: 101 #1
+  log_freq: 100 #20
   bn:
     syncbn: False
   mixed_precision:
@@ -54,10 +54,10 @@ saver:
   resume_model: 
   save_dir: checkpoints/resnet50   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid:  # continue training
-  kwargs:
-    project: zyh_imagenet  # change to your own pavi project
-    task: resnet50
-    model: resnet50
+#monitor:
+#  type: pavi
+#  _taskid:  # continue training
+#  kwargs:
+#    project: zyh_imagenet  # change to your own pavi project
+#    task: resnet50
+#    model: resnet50
