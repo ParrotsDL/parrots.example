@@ -23,6 +23,7 @@ from pape.half import HalfModel, HalfOptimizer
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+from utils.loss import OneHotNLLLoss
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -86,7 +87,8 @@ def main():
     model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
-    criterion = nn.CrossEntropyLoss().cuda()
+    # criterion = nn.CrossEntropyLoss().cuda()
+    criterion = OneHotNLLLoss(cfgs.net.kwargs.num_classes).cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
