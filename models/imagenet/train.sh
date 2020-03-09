@@ -1,7 +1,7 @@
 mkdir -p log
 now=$(date +"%Y%m%d_%H%M%S")
 
-export PYTHONPATH=/mnt/lustre/zhuyuanhao/pape/refactor/PAPExtension:$PYTHONPATH
+# export PYTHONPATH=/yourpathto/PAPExtension:$PYTHONPATH
 
 cfg=$1
 jobname=$2
