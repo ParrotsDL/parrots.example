@@ -11,14 +11,18 @@ from .shuffle_v1 import shuffle_v1
 from .shuffle_v2 import shuffle_v2
 from .mobile_v1 import mobile_v1
 from .mobile_v2 import mobile_v2
+from .mobile_v3 import mobile_v3
 from .inception_v1 import inception_v1
 from .inception_v2 import inception_v2
 from .inception_v3 import inception_v3
 from .inception_v4 import inception_v4
 from .inception_resnet import inception_resnet_v1, inception_resnet_v2
 from .densenet import densenet121, densenet169, densenet201, densenet161
-from .seresnext import seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
 from .nasnet import nasnetamobile, nasnetalarge
+from .hrnet import HRNet
+from .mnasnet import mnasnet
+from .efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, \
+                          efficientnet_b5, efficientnet_b6, efficientnet_b7
 
 
 __all__ = [
@@ -75,6 +79,7 @@ __all__ = [
     'shuffle_v2',
     'mobile_v1',
     'mobile_v2',
+    'mobile_v3',
     'inception_v1',
     'inception_v2',
     'inception_v3',
@@ -85,9 +90,16 @@ __all__ = [
     'densenet169',
     'densenet201',
     'densenet161',
-    'seresnext50_32x4d',
-    'seresnext101_32x4d',
-    'seresnext101_64x4d',
     'nasnetamobile',
     'nasnetalarge',
+    'HRNet',
+    'mnasnet',
+    'efficientnet_b0',
+    'efficientnet_b1',
+    'efficientnet_b2',
+    'efficientnet_b3',
+    'efficientnet_b4',
+    'efficientnet_b5',
+    'efficientnet_b6',
+    'efficientnet_b7',
 ]

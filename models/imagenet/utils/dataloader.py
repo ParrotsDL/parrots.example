@@ -10,9 +10,9 @@ def build_augmentation(cfg):
     if cfg.resize:
         compose_list.append(transforms.Resize(cfg.resize))
     if cfg.random_crop:
-       compose_list.append(transforms.RandomCrop(cfg.random_crop))
+        compose_list.append(transforms.RandomCrop(cfg.random_crop))
     if cfg.center_crop:
-       compose_list.append(transforms.CenterCrop(cfg.center_crop))
+        compose_list.append(transforms.CenterCrop(cfg.center_crop))
 
     if cfg.mirror:
         compose_list.append(transforms.RandomHorizontalFlip())
