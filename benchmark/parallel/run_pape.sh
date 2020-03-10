@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # test pape
-export PYTHONPATH=/mnt/lustre/zhuyuanhao/pape/refactor/PAPExtension/:$PYTHONPATH
+#export PYTHONPATH=/mnt/lustre/zhuyuanhao/pape/refactor/PAPExtension/:$PYTHONPATH
 p=$1
 g=$(($2<8?$2:8))
 #OMPI_MCA_mpi_warn_on_fork=0 srun --mpi=pmi2 -p $p --gres=gpu:$g -n $2 --ntasks-per-node=$g \
