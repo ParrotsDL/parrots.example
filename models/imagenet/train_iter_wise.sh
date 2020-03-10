@@ -13,5 +13,5 @@ g=$(($gpus<8?$gpus:8))
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
 srun --mpi=pmi2 -p $partition --job-name=$jobname \
     --gres=gpu:$g -n$gpus --ntasks-per-node=$g \
-    python -u main.py --config $cfg --test \
-    2>&1 | tee log/test_$jobname.log-$now
+    python -u main_iter_wise.py --config $cfg \
+    2>&1 | tee log/train_iter_wise_$jobname.log-$now

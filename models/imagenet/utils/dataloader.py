@@ -78,7 +78,7 @@ def build_augmentation(cfg):
     return transforms.Compose(compose_list)
 
 
-def build_dataloader(cfg, world_size):
+def build_dataloader(cfg, world_size, max_iter=5005):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
 
@@ -91,7 +91,10 @@ def build_dataloader(cfg, world_size):
         train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
         test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
 
-    train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
+    if cfg.iter_wise:
+        train_sampler = pdata.DistributedIterSampler(train_dataset, max_iter, batch_size=cfg.batch_size)
+    else:
+        train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)

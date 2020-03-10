@@ -1,0 +1,69 @@
+net:
+    arch: resnet50  # resnet18, resnet34, resnet50, resnet101, resnet152
+    kwargs:
+        num_classes: 1000
+ 
+dataset:
+  train:
+    meta_file: /mnt/lustre/share/images/meta/train.txt
+    image_dir: /mnt/lustre/share/images/train
+    random_resize_crop: 224
+    colorjitter: [0.2, 0.2, 0.2, 0.1]
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    mirror: True
+  test:
+    meta_file: /mnt/lustre/share/images/meta/val.txt
+    image_dir: /mnt/lustre/share/images/val
+    resize: 256
+    center_crop: [224, 224]
+    colorjitter:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    mirror: False
+  iter_wise: True
+  batch_size: 32
+  workers: 4
+ 
+trainer:
+  max_iter: 600600
+  test_freq: 5005
+  log_freq: 20
+  label_smooth: 0.1
+  bn:
+    syncbn: False
+  mixed_precision:
+    half: False
+    loss_scale: 128.0
+    float_bn: True # define floating layers when mixed training
+      # loss:
+      #     float_out: True
+  optimizer:
+    type: SGD
+    kwargs:
+      lr: 0.1
+      momentum: 0.9
+      weight_decay: 0.0001
+  lr_scheduler:
+    type: MultiStepLR
+    kwargs:
+      max_iter: 600600
+      milestones: [150150,300300,450450]
+      gamma: 0.1
+
+      base_lr: 0.01
+      warmup_lr: 0.1
+      warmup_steps: 5005
+ 
+saver:
+  pretrain_model: 
+  resume_model:
+  save_dir: checkpoints/resnet50_iter_wise   # save checkpoint locally
+ 
+monitor:
+  type: pavi
+  _taskid:  # continue training
+  kwargs:
+    project: hyc_cutout  # change to your own pavi project
+    task: resnet50_iter_wise
+    model: resnet50

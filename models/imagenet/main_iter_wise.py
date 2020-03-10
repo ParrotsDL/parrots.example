@@ -10,15 +10,15 @@ import logging
 from addict import Dict
 
 import torch
-import torch.nn as nn
 import torch.nn.parallel
-import torch.optim
 from torch.backends import cudnn
 
 import pape
 import pape.distributed as dist
 from pape.parallel import DistributedModel
 from pape.half import HalfModel, HalfOptimizer
+from pape.utils.lr_scheduler import build_scheduler
+from pape.utils.loss import LabelSmoothLoss
 
 import models
 from utils.dataloader import build_dataloader
@@ -84,7 +84,8 @@ def main():
     model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
-    criterion = nn.CrossEntropyLoss().cuda()
+    # criterion = nn.CrossEntropyLoss().cuda()
+    criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
@@ -94,23 +95,24 @@ def main():
 
     cudnn.benchmark = True
 
-    args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
-    args.max_epoch = cfgs.trainer.max_epoch
+    args.start_iter = 0
+    args.max_iter = cfgs.trainer.max_iter
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
+    args.best_acc1 = 0.0
 
-    best_acc1 = 0.0
     if cfgs.saver.resume_model:
         assert os.path.isfile(cfgs.saver.resume_model), 'Not found resume model: {}'.format(
             cfgs.saver.resume_model)
         checkpoint = torch.load(cfgs.saver.resume_model)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
-        args.start_epoch = checkpoint['epoch']
-        best_acc1 = checkpoint['best_acc1']
+        args.start_iter = checkpoint['iter']
+        args.max_iter -= args.start_iter
+        args.best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
-        logger.info("resume training from '{}' at epoch {}".format(
-            cfgs.saver.resume_model, checkpoint['epoch']))
+        logger.info("resume training from '{}' at iter {}".format(
+            cfgs.saver.resume_model, checkpoint['iter']))
     elif cfgs.saver.pretrain_model:
         assert os.path.isfile(cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
             cfgs.saver.pretrain_model)
@@ -125,7 +127,7 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.max_iter)
 
     # test mode
     if args.test:
@@ -133,9 +135,9 @@ def main():
         return
 
     # choose scheduler
-    lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
-                       optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
-                       **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
+    lr_cfg = cfgs.trainer.lr_scheduler
+    lr_cfg.kwargs.optimizer = optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer
+    lr_scheduler = build_scheduler(lr_cfg)
 
     monitor_writer = None
     if args.rank == 0 and cfgs.get('monitor', None):
@@ -148,42 +150,11 @@ def main():
                 monitor_writer = SummaryWriter(
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
-    # training
-    for epoch in range(args.start_epoch, args.max_epoch):
-        train_sampler.set_epoch(epoch)
-
-        # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
-
-        if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
-            # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, model, criterion, args)
-
-            if args.rank == 0:
-                if monitor_writer:
-                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, len(train_loader)*epoch)
-                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, len(train_loader)*epoch)
-                    monitor_writer.add_scalar('Test_loss', loss, len(train_loader)*epoch)
-
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
-                    'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict()
-                }
-
-                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
-
-        lr_scheduler.step()
+    # train max iter
+    train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, args, cfgs, monitor_writer)
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, args, cfgs, monitor_writer):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -192,18 +163,20 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
     memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
-                             memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
+    progress = ProgressMeter(args.max_iter, batch_time, data_time, losses, top1, top5,
+                             memory, prefix="Iter: ")
 
     # switch to train mode
     model.train()
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
+        cur_iter = args.start_iter + i
         # measure data loading time
         data_time.update(time.time() - end)
 
         input = input.cuda()
         target = target.cuda()
+        lr_scheduler.step(cur_iter)
 
         # compute output
         output = model(input)
@@ -233,13 +206,37 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         batch_time.update(time.time() - end)
         end = time.time()
 
-        if i % args.log_freq == 0:
-            progress.display(i)
+        if cur_iter % args.log_freq == 0:
+            progress.display(cur_iter)
             if args.rank == 0 and monitor_writer:
-                cur_iter = epoch * len(train_loader) + i
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
+
+        if (cur_iter + 1) % args.test_freq == 0 or (cur_iter + 1) == args.max_iter:
+            # evaluate on validation set
+            val_loss, acc1, acc5 = test(test_loader, model, criterion, args)
+
+            if args.rank == 0:
+                if monitor_writer:
+                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, cur_iter)
+                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, cur_iter)
+                    monitor_writer.add_scalar('Test_loss', val_loss, cur_iter)
+
+                checkpoint = {
+                    'iter': cur_iter,
+                    'arch': cfgs.net.arch,
+                    'state_dict': model.state_dict(),
+                    'best_acc1': args.best_acc1,
+                    'optimizer': optimizer.state_dict()
+                }
+
+                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_iter_{}.pth'.format(cur_iter))
+                best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
+                torch.save(checkpoint, ckpt_path)
+                if acc1 > args.best_acc1:
+                    args.best_acc1 = acc1
+                    shutil.copyfile(ckpt_path, best_ckpt_path)
 
 
 def test(test_loader, model, criterion, args):
@@ -293,6 +290,7 @@ def test(test_loader, model, criterion, args):
         logger.info(' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
                     acc1, stats_all[0].item(), stats_all[2].item(),
                     acc5, stats_all[1].item(), stats_all[2].item()))
+    model.train()
 
     return loss_avg, acc1, acc5
 
