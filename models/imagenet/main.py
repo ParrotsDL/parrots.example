@@ -138,17 +138,19 @@ def main():
     lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
                        optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
-
+    use_monitor = cfg.monitor
     monitor_writer = None
-    if args.rank == 0 and cfgs.get('monitor', None):
-        if cfgs.monitor.get('type', None) == 'pavi':
+    if rank == 0 and use_monitor:
+        if use_monitor.tensorboard_use:
+            from tensorboardX import SummaryWriter
+            monitor_writer = SummaryWriter(use_monitor.kwargs_tensorboard.logdir)
+            cfg_saver.save_pavi = False
+        elif use_monitor.pavi_use:
             from pavi import SummaryWriter
-            if cfgs.monitor.get("_taskid", None):
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs,taskid=cfgs.monitor._taskid)
-            else:
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
+            monitor_writer = SummaryWriter(
+                session_text=yaml.dump(args.config), **use_monitor.kwargs)
+            if use_monitor.get("_taskid", None):
+                monitor_writer._taskid = use_monitor._taskid
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
