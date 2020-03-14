@@ -136,11 +136,11 @@ def main():
     use_monitor = cfg.monitor
     monitor_writer = None
     if rank == 0 and use_monitor:
-        if use_monitor.type == 'tensorboard':
+        if use_monitor.tensorboard_use:
             from tensorboardX import SummaryWriter
-            monitor_writer = SummaryWriter(use_monitor.kwargs.logdir)
+            monitor_writer = SummaryWriter(use_monitor.kwargs_tensorboard.logdir)
             cfg_saver.save_pavi = False
-        elif use_monitor.type == 'pavi':
+        elif use_monitor.pavi_use:
             from pavi import SummaryWriter
             monitor_writer = SummaryWriter(
                 session_text=yaml.dump(args.config), **use_monitor.kwargs)
