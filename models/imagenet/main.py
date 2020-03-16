@@ -177,8 +177,10 @@ def main():
         # compute gradient and do SGD step
         if args.half:
             loss *= optimizer.loss_scale
+        optimizer.zero_grad()
         loss.backward()
         model.average_gradients()
+        optimizer.step()
         return loss, acc1, acc5
     tr_func = trace(tr_func_, tr_input, tr_target)
     tr_func.optimize(fusebnrelu=True)
@@ -272,8 +274,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             # compute gradient and do SGD step
             if args.half:
                 loss *= optimizer.loss_scale
+            optimizer.zero_grad()
             loss.backward()
             model.average_gradients()
+            optimizer.step()
 
 
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
@@ -284,10 +288,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
-
-        # compute gradient and do SGD step
-        optimizer.step()
-        optimizer.zero_grad()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
