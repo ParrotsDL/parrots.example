@@ -153,7 +153,7 @@ def main():
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
     # trace
-    logger("=> begin trace")
+    logger.info("==> begin trace")
     train_sampler.set_epoch(-1)
     # switch to train mode
     model.cuda().train()
@@ -175,14 +175,14 @@ def main():
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
         # compute gradient and do SGD step
-        if args.mixed_training:
+        if args.half:
             loss *= optimizer.loss_scale
         loss.backward()
         model.average_gradients()
         return loss, acc1, acc5
     tr_func = trace(tr_func_, tr_input, tr_target)
     tr_func.optimize(fusebnrelu=True)
-    logger("=> trace and optimize finish")
+    logger.info("=> trace and optimize finish")
 
     ca_input = None
     ca_target = None
@@ -198,14 +198,14 @@ def main():
             break
 
     ca_loss, ca_acc1, ca_acc5 = tr_func(ca_input, ca_target)
-    logger("=> trace func call test finish")
+    logger.info("=> trace func call test finish")
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, tr_func, tr_input)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -235,7 +235,7 @@ def main():
         lr_scheduler.step()
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, tr_func, tr_input):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -263,14 +263,14 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         if len(input) == len(tr_input):
             loss, acc1, acc5 = tr_func(input, target)
         else:
-            logger("=> run directly without tr_func cur_iter: {}".format(cur_iter))
+            logger.info("=> run directly without tr_func, {} iter in epoch".format(i))
             # compute output
             output = model(input)
             loss = criterion(output, target)
             # measure accuracy and record loss
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
             # compute gradient and do SGD step
-            if args.mixed_training:
+            if args.half:
                 loss *= optimizer.loss_scale
             loss.backward()
             model.average_gradients()
