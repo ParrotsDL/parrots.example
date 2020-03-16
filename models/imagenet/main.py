@@ -24,6 +24,8 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 
+from parrots.ir import trace
+
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
@@ -150,6 +152,54 @@ def main():
                 monitor_writer = SummaryWriter(
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
+    # trace
+    logger("=> begin trace")
+    train_sampler.set_epoch(-1)
+    # switch to train mode
+    model.cuda().train()
+    tr_input = None
+    tr_target = None
+    for i, (input, target) in enumerate(train_loader):
+        if i == 0:
+            input = input.cuda()
+            target = target.cuda()
+            tr_input = input
+            tr_target = target
+        else:
+            break
+
+    def tr_func_(input, target):
+        # compute output
+        output = model(input)
+        loss = criterion(output, target)
+        # measure accuracy and record loss
+        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+        # compute gradient and do SGD step
+        if args.mixed_training:
+            loss *= optimizer.loss_scale
+        loss.backward()
+        model.average_gradients()
+        return loss, acc1, acc5
+    tr_func = trace(tr_func_, tr_input, tr_target)
+    tr_func.optimize(fusebnrelu=True)
+    logger("=> trace and optimize finish")
+
+    ca_input = None
+    ca_target = None
+    for i, (input, target) in enumerate(train_loader):
+        if i == 0:
+            continue
+        elif i == 1:
+            input = input.cuda()
+            target = target.cuda()
+            ca_input = input
+            ca_target = target
+        else:
+            break
+
+    ca_loss, ca_acc1, ca_acc5 = tr_func(ca_input, ca_target)
+    logger("=> trace func call test finish")
+
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
@@ -207,12 +257,24 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input = input.cuda()
         target = target.cuda()
 
-        # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        loss = None
+        acc1 = None
+        acc5 = None
+        if len(input) == len(tr_input):
+            loss, acc1, acc5 = tr_func(input, target)
+        else:
+            logger("=> run directly without tr_func cur_iter: {}".format(cur_iter))
+            # compute output
+            output = model(input)
+            loss = criterion(output, target)
+            # measure accuracy and record loss
+            acc1, acc5 = accuracy(output, target, topk=(1, 5))
+            # compute gradient and do SGD step
+            if args.mixed_training:
+                loss *= optimizer.loss_scale
+            loss.backward()
+            model.average_gradients()
 
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
         dist.all_reduce(stats_all)
@@ -224,12 +286,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
-        optimizer.zero_grad()
-        if args.half:
-            loss *= optimizer.loss_scale
-        loss.backward()
-        model.average_gradients()
         optimizer.step()
+        optimizer.zero_grad()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
