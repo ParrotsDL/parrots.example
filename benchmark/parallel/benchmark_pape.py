@@ -1,3 +1,5 @@
+# flake8: noqa
+import logging
 import argparse
 import os
 import random
@@ -12,11 +14,17 @@ import torch.backends as backends
 import torch.optim
 import torch.utils.data
 import torchvision.transforms as transforms
+import torchvision.datasets as datasets
 import torchvision.models as models
 
 import pape
 import pape.distributed as dist
 from pape.data import McDataset
+from pape.utils.op import convert_syncbn
+
+logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger()
+logger_all = logging.getLogger('all')
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
@@ -61,12 +69,12 @@ parser.add_argument('--seed', default=None, type=int,
 
 # pape args
 parser.add_argument('--parallel', default='overlap',
-                    choices=['overlap', 'non_overlap'],
+                    choices=['overlap', 'nonoverlap'],
                     help='pape parallel type')
 parser.add_argument('--bucket_size', default=1., type=float,
                     help='pape bucket_size(MB)')
 parser.add_argument('--half', action='store_true', help='use pape half')
-parser.add_argument('--loss_scale', default=128., type=float,
+parser.add_argument('--loss_scale', default='dynamic', type=str,
                     help='pape half loss scale')
 parser.add_argument('--syncbn', action='store_true', help='use pape syncbn')
 
@@ -80,6 +88,12 @@ parser.add_argument('--max_iter', default=2000, type=int,
 def main():
     args = parser.parse_args()
     args.rank, args.world_size, args.local_rank = dist.init()
+
+    if args.rank == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
+    logger_all.setLevel(logging.INFO)
 
     if args.seed is not None:
         random.seed(args.seed)
@@ -102,7 +116,7 @@ def main():
     model.cuda()
 
     if args.syncbn:
-        model = pape.utils.op_util.convert_syncbn(model)
+        model = convert_syncbn(model)
 
     if args.half:
         model = pape.half.HalfModel(model)
@@ -124,6 +138,8 @@ def main():
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
     if args.half:
+        if args.loss_scale != 'dynamic':
+            args.loss_scale = float(args.loss_scale)
         optimizer = pape.half.HalfOptimizer(optimizer, loss_scale=args.loss_scale)
 
     # optionally resume from a checkpoint
@@ -162,20 +178,14 @@ def main():
             transforms.ToTensor(),
             normalize,
         ]))
-
-    train_sampler = pape.data.DistributedSampler(train_dataset, args.batch_size)
+    
+    train_sampler = pape.data.DistributedSampler(train_dataset, batch_size=args.batch_size)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),
         num_workers=args.workers, pin_memory=True, sampler=train_sampler)
 
-    with open(val_meta_file) as f:
-        val_items = [line.strip() for line in f.readlines()]
-    val_full_size = len(val_items)
-    val_remain_size = val_full_size % (args.batch_size * args.world_size)
-    val_size = val_full_size - val_remain_size
-
     val_dataset = McDataset(
-        valdir, val_items[0:val_size],
+        valdir, val_meta_file,
         transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
@@ -183,22 +193,10 @@ def main():
             normalize,
         ]))
 
-    val_sampler = pape.data.DistributedSampler(val_dataset, args.batch_size)
+    val_sampler = pape.data.DistributedSampler(val_dataset, round_up=False, shuffle=False)
     val_loader = torch.utils.data.DataLoader(
         val_dataset, batch_size=args.batch_size, shuffle=(val_sampler is None),
-        num_workers=args.workers, pin_memory=True, sampler=val_sampler)
-
-    val_remain_dataset = McDataset(
-        valdir, val_items[val_size:],
-        transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            normalize,
-        ]))
-    val_remain_loader = torch.utils.data.DataLoader(
-        val_remain_dataset, batch_size=args.batch_size, shuffle=None,
-        num_workers=args.workers, pin_memory=True)
+        num_workers=args.workers, pin_memory=True, sampler=val_sampler )
 
     if args.evaluate:
         validate(val_loader, model, criterion, args)
@@ -214,7 +212,7 @@ def main():
         if args.benchmark:
             return
         # evaluate on validation set
-        acc1 = validate(val_loader, val_remain_loader, val_full_size, model, criterion, args)
+        acc1 = validate(val_loader, model, criterion, args)
 
         # remember best acc@1 and save checkpoint
         is_best = acc1 > best_acc1
@@ -239,8 +237,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
     if args.benchmark:
         dummy_input = torch.rand([args.batch_size, 3, 224, 224]).cuda()
-        if args.half:
-            dummy_input = dummy_input.half()
         dummy_target = torch.randint(1000, (args.batch_size,), dtype=torch.long).cuda()
         max_iter = args.max_iter
         progress = ProgressMeter(max_iter, batch_time, prefix="Benchmark: ")
@@ -262,9 +258,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
         input = input.cuda()
         target = target.cuda()
-        if args.half:
-            input = input.half()
-
+            
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -281,7 +275,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         # compute gradient and do SGD step
         optimizer.zero_grad()
         if args.half:
-            loss *= args.loss_scale
+            loss = optimizer.scale_up_loss(loss)
         loss.backward()
         model.average_gradients()
         optimizer.step()
@@ -294,9 +288,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             progress.print(i)
 
 
-def validate(val_loader, val_remain_loader, val_full_size, model, criterion, args):
+def validate(val_loader, model, criterion, args):
     losses = AverageMeter('Loss', ':.4f')
-    top_sum = torch.Tensor([0, 0]).long()
+    top_sum = torch.Tensor([0, 0, 0]).long()
 
     # switch to evaluate mode
     model.eval()
@@ -307,8 +301,6 @@ def validate(val_loader, val_remain_loader, val_full_size, model, criterion, arg
         for i, (input, target) in enumerate(val_loader):
             input = input.cuda()
             target = target.cuda()
-            if args.half:
-                input = input.half()
 
             # compute output
             output = model(input)
@@ -319,6 +311,7 @@ def validate(val_loader, val_remain_loader, val_full_size, model, criterion, arg
             losses.update(loss.item())
             top_sum[0] += acc1_cnt[0].item()
             top_sum[1] += acc5_cnt[0].item()
+            top_sum[2] += target.size(0)
 
             # measure elapsed time
             batch_time = time.time() - end
@@ -332,34 +325,12 @@ def validate(val_loader, val_remain_loader, val_full_size, model, criterion, arg
                           acc5[0].item(), int(acc5_cnt[0].item()), batch_size))
 
         dist.all_reduce(top_sum, op=dist.ReduceOp.SUM)
-
-        for i, (input, target) in enumerate(val_remain_loader):
-            input = input.cuda()
-            target = target.cuda()
-            if args.half:
-                input = input.half()
-
-            # compute output
-            output = model(input)
-            loss = criterion(output, target)
-
-            # measure accuracy and record loss
-            acc1, acc5, acc1_cnt, acc5_cnt = accuracy(output, target, topk=(1, 5), need_raw=True)
-            losses.update(loss.item())
-            top_sum[0] += acc1_cnt[0].item()
-            top_sum[1] += acc5_cnt[0].item()
-            if args.rank == 0:
-                batch_size = target.size(0)
-                print('Remain Test [{}/{}] {} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(
-                          i, len(val_remain_loader), losses,
-                          acc1[0].item(), int(acc1_cnt[0].item()), batch_size,
-                          acc5[0].item(), int(acc5_cnt[0].item()), batch_size))
-
-        top_acc = top_sum.float() / val_full_size * 100
+        all_batch_size = top_sum[2].item()
+        top_acc = top_sum.float() / all_batch_size * 100
         if args.rank == 0:
             print(' * All Loss {} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(losses,
-                  top_acc[0], top_sum[0], val_full_size,
-                  top_acc[1], top_sum[1], val_full_size))
+                      top_acc[0], top_sum[0], all_batch_size,
+                      top_acc[1], top_sum[1], all_batch_size))
 
     return top_acc[0]
 
