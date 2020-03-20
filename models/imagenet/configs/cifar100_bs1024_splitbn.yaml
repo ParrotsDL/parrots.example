@@ -1,0 +1,63 @@
+net:
+    arch: ResNet18_splitbn  # wide_resnet28_10
+    kwargs:
+        num_classes: 100
+        num_groups: 8
+ 
+dataset:
+  train:
+    image_dir: /mnt/lustre/share/hanyachao/cifar100/ # /mnt/lustre/share/hanyachao/cifar100/
+    random_crop: 32
+    padding: 4
+    mirror: True
+    mean: [0.4914, 0.4822, 0.4465]
+    std: [0.2470, 0.2435, 0.2616]
+    cutout:
+      n_holes: 1
+      length: 16
+  test:
+    image_dir: /mnt/lustre/share/hanyachao/cifar100/ # /mnt/lustre/share/hanyachao/cifar100/
+    mean: [0.4914, 0.4822, 0.4465]
+    std: [0.2470, 0.2435, 0.2616]
+  type: cifar100 # cifar10
+  batch_size: 1024
+  workers: 4
+ 
+trainer:
+  max_epoch: 200
+  test_freq: 1
+  log_freq: 20
+  bn:
+    syncbn: False
+  mixed_precision:
+    half: False
+    loss_scale: 128.0
+    float_layers:  # define floating layers when mixed training
+      # loss:
+      #     float_out: True
+  optimizer:
+    type: SGD
+    kwargs:
+      lr: 0.1
+      momentum: 0.9
+      weight_decay: 0.0005
+      nesterov: True
+  lr_scheduler:
+    warmup_epochs: 0
+    type: MultiStepLR
+    kwargs:
+      milestones: [60,120,160]
+      gamma: 0.2
+ 
+saver:
+  pretrain_model: 
+  resume_model: 
+  save_dir: checkpoints/splitbn/cifar100_bs1024_splitbn8
+ 
+monitor:
+  type: pavi
+  _taskid:  # continue training
+  kwargs:
+    project: hyc_groupbn  # change to your own pavi project
+    task: cifar100_1024_splitbn8
+    model: resnet18
