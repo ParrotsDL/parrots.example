@@ -183,24 +183,8 @@ def main():
         optimizer.step()
         return loss, acc1, acc5
     tr_func = trace(tr_func_, tr_input, tr_target)
-    tr_func.optimize(fusebnrelu=True)
+    # tr_func.optimize(fusebnrelu=True)
     logger.info("=> trace and optimize finish")
-
-    ca_input = None
-    ca_target = None
-    for i, (input, target) in enumerate(train_loader):
-        if i == 0:
-            continue
-        elif i == 1:
-            input = input.cuda()
-            target = target.cuda()
-            ca_input = input
-            ca_target = target
-        else:
-            break
-
-    ca_loss, ca_acc1, ca_acc5 = tr_func(ca_input, ca_target)
-    logger.info("=> trace func call test finish")
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
