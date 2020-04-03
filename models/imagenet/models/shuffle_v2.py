@@ -155,6 +155,7 @@ class ShuffleNetV2(nn.Module):
                  in_channels=3,
                  num_classes=1000,
                  net_scale=1.0,
+                 stage_repeat=1,
                  splits_left=2):
         super(ShuffleNetV2, self).__init__()
         self.in_channels = in_channels
@@ -175,9 +176,14 @@ class ShuffleNetV2(nn.Module):
 
         self.ParimaryModule = ParimaryModule(in_channels, self.out_channels[0])
 
-        self.Stage1 = self.Stage(1, [1, 3])
-        self.Stage2 = self.Stage(2, [1, 7])
-        self.Stage3 = self.Stage(3, [1, 3])
+        if stage_repeat == 1:
+            self.Stage1 = self.Stage(1, [1, 3])
+            self.Stage2 = self.Stage(2, [1, 7])
+            self.Stage3 = self.Stage(3, [1, 3])
+        elif stage_repeat == 2:
+            self.Stage1 = self.Stage(1, [1, 7])
+            self.Stage2 = self.Stage(2, [1, 15])
+            self.Stage3 = self.Stage(3, [1, 7])
 
         self.FinalModule = FinalModule(self.out_channels[3],
                                        self.out_channels[4], num_classes)

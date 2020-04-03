@@ -51,8 +51,7 @@ def main():
     logger_all.setLevel(logging.INFO)
 
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
-                socket.gethostname()))
-
+                    socket.gethostname()))
 
     dist.barrier()
 
@@ -81,8 +80,7 @@ def main():
         if mix_cfg.get('half', False) is True:
             model = HalfModel(model, float_bn=mix_cfg.get("float_bn", True),
                               float_module_type=eval(mix_cfg.get("float_module_type", "{}")),
-                              float_module_name=eval(mix_cfg.get("float_module_name", "{}"))
-                             )
+                              float_module_name=eval(mix_cfg.get("float_module_name", "{}")))
             args.half = True
 
     model = DistributedModel(model)
@@ -147,7 +145,7 @@ def main():
             from pavi import SummaryWriter
             if cfgs.monitor.get("_taskid", None):
                 monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs,taskid=cfgs.monitor._taskid)
+                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs, taskid=cfgs.monitor._taskid)
             else:
                 monitor_writer = SummaryWriter(
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
