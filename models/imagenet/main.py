@@ -169,16 +169,15 @@ def main():
     def tr_func_(input, target):
         # compute output
         output = model(input)
-        loss = criterion(output, target)
         # measure accuracy and record loss
+        loss = criterion(output, target)
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
-        # compute gradient and do SGD step
+        # compute gradient
         if args.half:
             loss *= optimizer.loss_scale
         optimizer.zero_grad()
         loss.backward()
         model.average_gradients()
-        optimizer.step()
         return loss, acc1, acc5
     tr_func = trace(tr_func_, tr_input, tr_target)
     # tr_func.optimize(fusebnrelu=True)
@@ -250,18 +249,18 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             logger.info("=> run directly without tr_func, {} iter in epoch".format(i))
             # compute output
             output = model(input)
-            loss = criterion(output, target)
             # measure accuracy and record loss
+            loss = criterion(output, target)
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
-            # compute gradient and do SGD step
+            # compute gradient
             if args.half:
                 loss *= optimizer.loss_scale
             optimizer.zero_grad()
             loss.backward()
             model.average_gradients()
-            optimizer.step()
 
-
+        # do SGD step
+        optimizer.step()
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
