@@ -87,11 +87,14 @@ def build_dataloader(cfg, world_size, max_iter=5005):
                                          train=True, download=False, transform=train_aug)
         test_dataset = datasets.CIFAR10(root=cfg.test.image_dir,
                                         train=False, download=False, transform=test_aug)
+    elif cfg.get('read_from', 'mc') == 'ceph':
+        train_dataset = pdata.CephDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+        test_dataset = pdata.CephDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
     else:
         train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
         test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
 
-    if cfg.iter_wise:
+    if cfg.get('iter_wise', False):
         train_sampler = pdata.DistributedIterSampler(train_dataset, max_iter, batch_size=cfg.batch_size)
     else:
         train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)

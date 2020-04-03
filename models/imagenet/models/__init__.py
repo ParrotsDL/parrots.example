@@ -21,6 +21,7 @@ from .inception_resnet import inception_resnet_v1, inception_resnet_v2
 from .densenet import densenet121, densenet169, densenet201, densenet161
 from .seresnext import seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
 from .nasnet import nasnetamobile, nasnetalarge
+from .alexnet import alexnet
 
 
 __all__ = [
@@ -94,4 +95,5 @@ __all__ = [
     'seresnext101_64x4d',
     'nasnetamobile',
     'nasnetalarge',
+    'alexnet',
 ]
