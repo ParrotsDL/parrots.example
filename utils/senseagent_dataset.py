@@ -35,6 +35,7 @@ class AgentDataset(Dataset):
         self.blockShuffleRead = blockShuffleRead
         self.superblock_file = superblock_file
         self.superblock_meta = superblock_meta
+        self.in_list = []
         self.initialized = False
         with open(meta_file) as f:
             lines = f.readlines()
@@ -43,12 +44,17 @@ class AgentDataset(Dataset):
         for line in lines:
             path, cls = line.rstrip().split()
             self.metas.append((path, int(cls)))
+            short_image = path.rsplit("/", 1)[-1]
+            self.in_list.append(short_image)
         
     def __init_senseagent(self):
         if not self.initialized:
             self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
+            if self.blockShuffleRead:
+                self.agentclient.loadMetainfos()
+                self.agentclient.setBlockShuffleParameter(self.in_list, 16)
             if self.enableDistCache:
-                self.agentclient.loadMetainfos(self.superblock_meta)
+                self.agentclient.loadMetainfos()
                 my_rank = self.agentclient.startDistCache(0.5)
                 print("my rank is", my_rank)
             self.initialized = True
