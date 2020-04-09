@@ -58,7 +58,7 @@ class AgentDataset(Dataset):
         if self.blockShuffleRead:
             self.sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
             self.sacli_for_shuffle.loadMetainfos()
-            self.sacli_for_shuffle.setBlockShuffleParameter(self.in_list, 16)
+            self.sacli_for_shuffle.setBlockShuffleParameter(self.in_list, "", 16)
             # self._set_shuffle_idx()
         
     def __init_senseagent(self):
@@ -66,7 +66,7 @@ class AgentDataset(Dataset):
             self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
             if self.blockShuffleRead:
                 self.agentclient.loadMetainfos()
-                self.agentclient.setBlockShuffleParameter(self.in_list, 16)
+                self.agentclient.setBlockShuffleParameter(self.in_list, "", 16)
             if self.enableDistCache:
                 self.agentclient.loadMetainfos()
                 my_rank = self.agentclient.startDistCache(0.5)

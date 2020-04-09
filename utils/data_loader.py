@@ -54,9 +54,9 @@ class DistributedSampler(Sampler):
 class DistributedGivenIterationSampler(Sampler):
     def __init__(self, dataset, total_epoch, batch_size=None, world_size=None, rank=None):
         if world_size is None:
-            world_size = link.get_world_size()
+            world_size = dist.get_world_size()
         if rank is None:
-            rank = link.get_rank()
+            rank = dist.get_rank()
         assert rank < world_size
         self.dataset = dataset
         self.total_epoch = total_epoch
