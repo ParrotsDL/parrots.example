@@ -52,7 +52,7 @@ class DistributedSampler(Sampler):
 
 
 class DistributedGivenIterationSampler(Sampler):
-    def __init__(self, dataset, total_epoch, batch_size=None, world_size=None, rank=None):
+    def __init__(self, dataset, total_epoch, batch_size=None, world_size=None, rank=None, round_up=True):
         if world_size is None:
             world_size = dist.get_world_size()
         if rank is None:
@@ -63,6 +63,7 @@ class DistributedGivenIterationSampler(Sampler):
         self.batch_size = batch_size
         self.world_size = world_size
         self.rank = rank
+        self.round_up = round_up
         self.epoch = 0
 
         self.num_samples = int(
@@ -140,8 +141,9 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             cfg.meta_source,
             transforms.Compose(compose_list),
             cfg.reader)
+        round_up = True if training else False
         if senseagent_config.blockshuffleread == True:
-            data_sampler = DistributedGivenIterationSampler(data_set, total_epoch)
+            data_sampler = DistributedGivenIterationSampler(data_set, total_epoch, round_up=round_up)
         else:
             data_sampler = DistributedSampler(data_set, round_up=round_up)
         data_loader = DataLoader(
