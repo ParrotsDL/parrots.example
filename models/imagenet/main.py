@@ -7,6 +7,7 @@ import yaml
 import json
 import socket
 import logging
+import pickle
 from addict import Dict
 
 import torch
@@ -25,6 +26,8 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 
 from parrots.ir import trace
+from parrots.log_utils import (
+    set_debug_log, set_partial_logging, add_logging_part, clear_logging_part)
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -38,6 +41,9 @@ logger_all = logging.getLogger('all')
 
 
 def main():
+    add_logging_part('IR')
+    set_partial_logging(True)
+    set_debug_log(True)
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
@@ -165,6 +171,9 @@ def main():
             tr_target = target
         else:
             break
+    f = open('tr_data.pkl', 'wb')
+    pickle.dump((tr_input, tr_target), f)
+    logger.info("==> tr_data dumped")
 
     def tr_func_(input, target):
         # compute output
@@ -180,7 +189,9 @@ def main():
         model.average_gradients()
         return loss, acc1, acc5
     tr_func = trace(tr_func_, tr_input, tr_target)
-    # tr_func.optimize(fusebnrelu=True)
+    save(tr_func, 'tr_func.json')
+    logger.info("=> trace and tr_func saved")
+    tr_func.optimize(fusebnrelu=True)
     logger.info("=> trace and optimize finish")
 
     # training
@@ -216,6 +227,9 @@ def main():
                     shutil.copyfile(ckpt_path, best_ckpt_path)
 
         lr_scheduler.step()
+    set_debug_log(False)
+    set_partial_logging(False)
+    clear_logging_part()
 
 
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, tr_func, tr_input):
