@@ -117,7 +117,7 @@ def main():
 
     # Data loading code
     train_loader, train_sampler, test_loader, test_sampler = build_dataloader(
-        cfg.dataset, dataset_type=cfg.dataset.type)
+        cfg.dataset, dataset_type=cfg.dataset.type, total_epoch = args.max_epoch)
 
     # test mode
     if args.test:

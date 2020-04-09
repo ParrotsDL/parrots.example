@@ -36,16 +36,30 @@ class AgentDataset(Dataset):
         self.superblock_file = superblock_file
         self.superblock_meta = superblock_meta
         self.in_list = []
+        self.image_idx = {}
+        self.shuffle_idx = []
+        self.metas = []
+        self.metas_shuffle = []
         self.initialized = False
+
         with open(meta_file) as f:
             lines = f.readlines()
         self.num = len(lines)
+        counter = 0
         self.metas = []
         for line in lines:
             path, cls = line.rstrip().split()
             self.metas.append((path, int(cls)))
             short_image = path.rsplit("/", 1)[-1]
             self.in_list.append(short_image)
+            self.image_idx[short_image] = counter
+            counter = counter + 1 
+
+        if self.blockShuffleRead:
+            self.sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
+            self.sacli_for_shuffle.loadMetainfos()
+            self.sacli_for_shuffle.setBlockShuffleParameter(self.in_list, 16)
+            self._set_shuffle_idx()
         
     def __init_senseagent(self):
         if not self.initialized:
@@ -61,6 +75,19 @@ class AgentDataset(Dataset):
 	
     def __len__(self):
         return self.num
+
+    def _set_shuffle_idx(self):
+        self.shuffle_idx = []
+
+        out_list = self.sacli_for_shuffle.generateBlockShuffleRandomFileList(16)
+        for out in out_list:
+           self.shuffle_idx.append(self.image_idx[out])
+        for i in self.shuffle_idx:
+            self.metas_shuffle.append(self.metas[i])
+        self.metas = self.metas_shuffle
+
+    def get_shuffle_idx(self):
+        return self.shuffle_idx
 
           
     def __getitem__(self, idx):
