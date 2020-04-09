@@ -52,14 +52,13 @@ class DistributedSampler(Sampler):
 
 
 class DistributedGivenIterationSampler(Sampler):
-    def __init__(self, dataset, total_epoch, batch_size=None, world_size=None, rank=None, round_up=True):
+    def __init__(self, dataset, batch_size=None, world_size=None, rank=None, round_up=True):
         if world_size is None:
             world_size = dist.get_world_size()
         if rank is None:
             rank = dist.get_rank()
         assert rank < world_size
         self.dataset = dataset
-        self.total_epoch = total_epoch
         self.batch_size = batch_size
         self.world_size = world_size
         self.rank = rank
@@ -102,7 +101,7 @@ class DistributedGivenIterationSampler(Sampler):
         self.epoch = epoch
 
 
-def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dataset_type="memcached", total_epoch=1):
+def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dataset_type="memcached"):
     compose_list = []
     if training:
         if cfg.random_resize_crop:
@@ -143,7 +142,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             cfg.reader)
         round_up = True if training else False
         if senseagent_config.blockshuffleread == True:
-            data_sampler = DistributedGivenIterationSampler(data_set, total_epoch, round_up=round_up)
+            data_sampler = DistributedGivenIterationSampler(data_set, round_up=round_up)
         else:
             data_sampler = DistributedSampler(data_set, round_up=round_up)
         data_loader = DataLoader(
@@ -171,7 +170,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
 
 def build_dataloader(cfg, dataset_type="memcached", total_epoch=1):
     train_loader, train_sampler = build_loader(
-        cfg.train, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=True, dataset_type=dataset_type, total_epoch=total_epoch)
+        cfg.train, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=True, dataset_type=dataset_type)
     test_loader, test_sampler = build_loader(
-        cfg.test, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=False, dataset_type=dataset_type, total_epoch=total_epoch)
+        cfg.test, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=False, dataset_type=dataset_type)
     return train_loader, train_sampler, test_loader, test_sampler
