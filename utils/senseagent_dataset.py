@@ -59,7 +59,7 @@ class AgentDataset(Dataset):
             self.sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
             self.sacli_for_shuffle.loadMetainfos()
             self.sacli_for_shuffle.setBlockShuffleParameter(self.in_list, 16)
-            self._set_shuffle_idx()
+            # self._set_shuffle_idx()
         
     def __init_senseagent(self):
         if not self.initialized:
@@ -76,17 +76,18 @@ class AgentDataset(Dataset):
     def __len__(self):
         return self.num
 
-    def _set_shuffle_idx(self):
+    def _set_shuffle_idx(self, epoch):
         self.shuffle_idx = []
 
-        out_list = self.sacli_for_shuffle.generateBlockShuffleRandomFileList(16)
+        out_list = self.sacli_for_shuffle.generateBlockShuffleRandomFileList(16, epoch)
         for out in out_list:
            self.shuffle_idx.append(self.image_idx[out])
         for i in self.shuffle_idx:
             self.metas_shuffle.append(self.metas[i])
         self.metas = self.metas_shuffle
 
-    def get_shuffle_idx(self):
+    def get_shuffle_idx(self, epoch):
+        self._set_shuffle_idx(epoch)
         return self.shuffle_idx
 
           
