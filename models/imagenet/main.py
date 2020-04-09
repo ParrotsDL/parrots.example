@@ -25,7 +25,7 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 
-from parrots.ir import trace
+from parrots.ir import trace, save
 from parrots.log_utils import (
     set_debug_log, set_partial_logging, add_logging_part, clear_logging_part)
 
