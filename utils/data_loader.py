@@ -84,11 +84,11 @@ class DistributedGivenIterationSampler(Sampler):
         offset = self.num_samples * self.rank
         shuffle_idx = shuffle_idx[offset:offset + self.num_samples]
         if self.round_up or (not self.round_up and self.rank < self.world_size - 1):
-            assert len(indices) == self.num_samples
+            assert len(shuffle_idx) == self.num_samples
 
         print('gen_new_list', self.total_size)
 
-        return indices
+        return shuffle_idx
 
     def __len__(self):
         # note here we do not take last iter into consideration, since __len__
