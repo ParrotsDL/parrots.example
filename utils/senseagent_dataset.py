@@ -6,11 +6,13 @@ import io
 import cv2
 from PIL import Image
 
+
 def pil_loader2(b_data):
     buff = io.BytesIO(b_data)
     with Image.open(buff) as img:
     	img = img.convert('RGB')
     return img
+
 
 def cv2_loader2(img_buf):
     img_array = np.frombuffer(img_buf, np.uint8)
@@ -18,6 +20,7 @@ def cv2_loader2(img_buf):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = Image.fromarray(img)
     return img
+
 
 class AgentDataset(Dataset):
     def __init__(self, userKey, nameSpace, user, agentIp, agentPort, enableDistCache, blockShuffleRead, root_dir, meta_file, dataSet, superblock_file, superblock_meta, transform=None, reader='pillow'):
@@ -53,15 +56,12 @@ class AgentDataset(Dataset):
             short_image = path.rsplit("/", 1)[-1]
             self.in_list.append(short_image)
             self.image_idx[short_image] = counter
-            counter = counter + 1 
+            counter = counter + 1
 
-        if self.blockShuffleRead:
-           pass
-           # self._set_shuffle_idx()
-        
     def __init_senseagent(self):
         if not self.initialized:
-            self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
+            self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet,
+                                             self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
             if self.blockShuffleRead:
                 self.agentclient.loadMetainfos()
                 self.agentclient.setBlockShuffleParameter(self.in_list, "", 512)
@@ -70,16 +70,16 @@ class AgentDataset(Dataset):
                 my_rank = self.agentclient.startDistCache(0.5)
                 print("my rank is", my_rank)
             self.initialized = True
-	
+
     def __len__(self):
         return self.num
 
     def _set_shuffle_idx(self, epoch):
         self.shuffle_idx = []
-        sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
+        sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet,
+                                          self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
         sacli_for_shuffle.loadMetainfos()
         sacli_for_shuffle.setBlockShuffleParameter(self.in_list, "", 512)
- 
         out_list = sacli_for_shuffle.generateBlockShuffleRandomFileList(512, epoch)
         for out in out_list:
            self.shuffle_idx.append(self.image_idx[out])
@@ -92,7 +92,6 @@ class AgentDataset(Dataset):
         self._set_shuffle_idx(epoch)
         return self.shuffle_idx
 
-          
     def __getitem__(self, idx):
         filename = self.root_dir + '/' + self.metas[idx][0]
         cls = self.metas[idx][1]

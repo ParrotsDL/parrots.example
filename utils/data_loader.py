@@ -124,7 +124,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
         mean=cfg.get('mean', [0.485, 0.456, 0.406]),
         std=cfg.get('std', [0.229, 0.224, 0.225]))
     compose_list.append(data_normalize)
-    if (dataset_type=="senseagent"):
+    if (dataset_type == "senseagent"):
         data_set = AgentDataset(
             senseagent_config.userkey,
             senseagent_config.namespace,
@@ -155,7 +155,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             collate_fn=data_set.collate_fn)
     else:
         data_set = McDataset(cfg.image_dir, cfg.meta_file,
-                            transforms.Compose(compose_list), cfg.reader)
+                             transforms.Compose(compose_list), cfg.reader)
         round_up = True if training else False
         data_sampler = DistributedSampler(data_set, round_up=round_up)
         data_loader = DataLoader(
