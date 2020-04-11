@@ -118,7 +118,7 @@ def main():
 
     # generate a static sacli in main thread to enable dist cache
     if cfg.dataset.type == "senseagent":
-        if cfg.dataset.senseagent_config.distcache == True:
+        if cfg.dataset.senseagent_config.distcache:
             static_sacli = sa.SenseAgent(cfg.dataset.senseagent_config.userkey,
                                          cfg.dataset.senseagent_config.namespace,
                                          cfg.dataset.train.dataset_name,
