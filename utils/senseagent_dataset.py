@@ -64,7 +64,7 @@ class AgentDataset(Dataset):
             self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
             if self.blockShuffleRead:
                 self.agentclient.loadMetainfos()
-                self.agentclient.setBlockShuffleParameter(self.in_list, "", 16)
+                self.agentclient.setBlockShuffleParameter(self.in_list, "", 512)
             if self.enableDistCache:
                 self.agentclient.loadMetainfos()
                 my_rank = self.agentclient.startDistCache(0.5)
@@ -78,9 +78,9 @@ class AgentDataset(Dataset):
         self.shuffle_idx = []
         sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet, self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
         sacli_for_shuffle.loadMetainfos()
-        sacli_for_shuffle.setBlockShuffleParameter(self.in_list, "", 16)
+        sacli_for_shuffle.setBlockShuffleParameter(self.in_list, "", 512)
  
-        out_list = sacli_for_shuffle.generateBlockShuffleRandomFileList(16, epoch)
+        out_list = sacli_for_shuffle.generateBlockShuffleRandomFileList(512, epoch)
         for out in out_list:
            self.shuffle_idx.append(self.image_idx[out])
         for i in self.shuffle_idx:

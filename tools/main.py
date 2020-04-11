@@ -20,6 +20,7 @@ from utils.misc import logger, accuracy, build_syncbn
 import models
 from utils.dist_util import DistributedModel, HalfModel
 import utils.dist_util as dist
+from SenseAgentClient import SenseAgentClientNG as sa
 
 
 model_names = sorted(name for name in models.__dict__
@@ -115,9 +116,22 @@ def main():
     if cfg_saver.checkpoint:
         saver.load_state(model, cfg_saver, strict=False)
 
+    # generate a static sacli in main thread to enable dist cache
+    if cfg.dataset.type == "senseagent":
+        if cfg.dataset.senseagent_config.distcache == True:
+            static_sacli = sa.SenseAgent(cfg.dataset.senseagent_config.userkey,
+                                         cfg.dataset.senseagent_config.namespace,
+                                         cfg.dataset.train.dataset_name,
+                                         cfg.dataset.senseagent_config.user,
+                                         cfg.dataset.senseagent_config.ip,
+                                         cfg.dataset.senseagent_config.port)
+            static_sacli.loadMetainfos(cfg.dataset.train.meta_source)
+            my_rank = static_sacli.startDistCache(0.5)
+            print("my rank is", my_rank)
+
     # Data loading code
     train_loader, train_sampler, test_loader, test_sampler = build_dataloader(
-        cfg.dataset, dataset_type=cfg.dataset.type, total_epoch = args.max_epoch)
+        cfg.dataset, dataset_type=cfg.dataset.type, total_epoch=args.max_epoch)
 
     # test mode
     if args.test:
