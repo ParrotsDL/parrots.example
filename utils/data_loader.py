@@ -94,7 +94,7 @@ class DistributedGivenIterationSampler(Sampler):
         # note here we do not take last iter into consideration, since __len__
         # should only be used for displaying, the correct remaining size is
         # handled by dataloader
-        #return self.total_size - (self.last_iter+1)*self.batch_size
+        # return self.total_size - (self.last_iter+1)*self.batch_size
         return self.num_samples
 
     def set_epoch(self, epoch):
@@ -141,7 +141,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             transforms.Compose(compose_list),
             cfg.reader)
         round_up = True if training else False
-        if senseagent_config.blockshuffleread == True:
+        if senseagent_config.blockshuffleread:
             data_sampler = DistributedGivenIterationSampler(data_set, round_up=round_up)
         else:
             data_sampler = DistributedSampler(data_set, round_up=round_up)

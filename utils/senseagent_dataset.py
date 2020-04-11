@@ -10,7 +10,7 @@ from PIL import Image
 def pil_loader2(b_data):
     buff = io.BytesIO(b_data)
     with Image.open(buff) as img:
-    	img = img.convert('RGB')
+        img = img.convert('RGB')
     return img
 
 
@@ -82,7 +82,7 @@ class AgentDataset(Dataset):
         sacli_for_shuffle.setBlockShuffleParameter(self.in_list, "", 512)
         out_list = sacli_for_shuffle.generateBlockShuffleRandomFileList(512, epoch)
         for out in out_list:
-           self.shuffle_idx.append(self.image_idx[out])
+            self.shuffle_idx.append(self.image_idx[out])
         for i in self.shuffle_idx:
             self.metas_shuffle.append(self.metas[i])
         self.metas = self.metas_shuffle
