@@ -1,0 +1,81 @@
+apiVersion: supercomputer.sensetime.com/v1alpha1
+kind: Mpirun
+metadata:
+  name: ${INST_NAME}
+spec:
+  podNumber: ${NODE_NUM}
+  backoffLimit: 2
+  scheduleOpts:
+    block: true
+    topologyGPU: true
+  mpirunCmd: mpirun
+  mpirunArgs:
+    - --allow-run-as-root
+    - --hostfile
+    - /etc/mpirun.hosts
+    - --np
+    - "${TOTAL_NUM}"
+    - --npernode
+    - "${GPU_NUM}"
+  train:
+    script: /mnt/lustre/wangqian4/parrots.example/models/imagenet/mpirun_main.sh
+    args:
+      - resnet
+  podSpec:
+    schedulerName: sense-rubber
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #       - matchExpressions:
+    #         - key: kubernetes.io/hostname
+    #           operator: In
+    #           values:
+    #           - sh-idc1-10-198-8-130-10.198.8.130
+    volumes:
+      - name: dev
+        hostPath:
+          path: /dev
+      - name: memcached-server
+        hostPath:
+          path: /mnt/lustre/share/memcached_client/server_list.conf
+      - name: memcached-client
+        hostPath:
+          path: /mnt/lustre/share/memcached_client/client.conf
+      - name: imagenet
+        hostPath:
+          path: /mnt/lustre/share/images
+      - name: scripts
+        hostPath:
+          path: ${CODE_DIR}
+    containers:
+      - name: parrots
+        # image: registry.sensetime.com/share/platform/parrots/0.4.0b0:0.1
+        image: registry.sensetime.com/parrots/parrots:pat20200403-cuda9.0-cudnn7.6
+        workingDir: /mnt/lustre/wangqian4/parrots.example/models/imagenet/
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+        env:
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: "compute,utility"
+          - name: NVIDIA_REQUIRE_CUDA
+            value: "cuda>=8.0"
+          - name: MV2_ENABLE_AFFINITY
+            value: "0"
+        resources:
+          limits:
+            nvidia.com/gpu: ${GPU_NUM}
+            rdma/hca: 1 # requesting 1 RDMA device
+        volumeMounts:
+          - mountPath: /dev/shm
+            subPath: shm
+            name: dev
+          - mountPath: /mnt/lustre/share/images
+            name: imagenet
+          - mountPath: /mnt/lustre/wangqian4/parrots.example
+            name: scripts
+          - mountPath: /mnt/lustre/share/memcached_client/server_list.conf
+            name: memcached-server
+          - mountPath: /mnt/lustre/share/memcached_client/client.conf
+            name: memcached-client
