@@ -52,27 +52,35 @@ class DistributedSampler(Sampler):
 
 def build_loader(cfg, batch_size, workers, training=True):
     compose_list = []
+    cuda_transforms_list = []
+    from torch.utils.data import cuda_transform
     if training:
-        if cfg.random_resize_crop:
-            compose_list.append(
-                transforms.RandomResizedCrop(cfg.random_resize_crop))
-        else:
-            compose_list.append(transforms.Resize(cfg.get('resize', 256)))
-            compose_list.append(
-                transforms.RandomCrop(cfg.get('random_crop', 224)))
+        compose_list.append(
+            transforms.RandomResizedCrop(cfg.random_resize_crop))
+        compose_list.append(transforms.ToTensor())
+        cuda_transforms_list.append(cuda_transform.ToCuda())
+        cuda_transforms_list.append(cuda_transform.RandomHorizontalFlip())
+        cuda_transforms_list.append(cuda_transform.ColorJitter(*cfg.colorjitter))
+        cuda_transforms_list.append(cuda_transform.Normalize(
+            mean=cfg.get('mean', [0.485, 0.456, 0.406]),
+            std=cfg.get('std', [0.229, 0.224, 0.225])))
     else:
         compose_list.append(transforms.Resize(cfg.get('resize', 256)))
         compose_list.append(transforms.CenterCrop(cfg.get('center_crop', 224)))
-    if cfg.mirror:
-        compose_list.append(transforms.RandomHorizontalFlip())
-    if cfg.colorjitter:
-        compose_list.append(transforms.ColorJitter(*cfg.colorjitter))
+        compose_list.append(transforms.ToTensor())
+        data_normalize = transforms.Normalize(
+                mean=cfg.get('mean', [0.485, 0.456, 0.406]),
+                std=cfg.get('std', [0.229, 0.224, 0.225]))
+        compose_list.append(data_normalize)
 
-    compose_list.append(transforms.ToTensor())
-    data_normalize = transforms.Normalize(
-        mean=cfg.get('mean', [0.485, 0.456, 0.406]),
-        std=cfg.get('std', [0.229, 0.224, 0.225]))
-    compose_list.append(data_normalize)
+    def get_img_fn(batch):
+        return batch[0]
+
+    def set_img_fn(batch, img):
+        batch = list(batch)
+        batch[0] = img
+        return batch
+    cuda_transforms = cuda_transform.BatchCompose(cuda_transforms_list, get_img_fn, set_img_fn)
     data_set = McDataset(cfg.image_dir, cfg.meta_file,
                          transforms.Compose(compose_list), cfg.reader)
 
@@ -85,6 +93,7 @@ def build_loader(cfg, batch_size, workers, training=True):
         shuffle=(data_sampler is None),
         num_workers=workers,
         pin_memory=True,
+        cuda_transform=cuda_transforms,
         sampler=data_sampler)
     return data_loader, data_sampler
 
