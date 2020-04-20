@@ -21,7 +21,7 @@ import models
 from utils.dist_util import DistributedModel, HalfModel
 import utils.dist_util as dist
 from SenseAgentClient import SenseAgentClientNG as sa
-
+import utils.senseagent_dataset
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
@@ -117,8 +117,48 @@ def main():
         saver.load_state(model, cfg_saver, strict=False)
 
     # generate a static sacli in main thread to enable dist cache
+    train_unix_socket = ""
+    test_unix_socket = ""
     if cfg.dataset.type == "senseagent":
-        if cfg.dataset.senseagent_config.distcache:
+        if cfg.dataset.senseagent_config.blockshuffleread == True:
+            train_sacli = sa.SenseAgent(cfg.dataset.senseagent_config.userkey,
+                                        cfg.dataset.senseagent_config.namespace,
+                                        cfg.dataset.train.dataset_name,
+                                        cfg.dataset.senseagent_config.user,
+                                        cfg.dataset.senseagent_config.ip,
+                                        cfg.dataset.senseagent_config.port, True, True)
+            in_list = []
+            with open(cfg.dataset.train.meta_file) as f:
+                lines = f.readlines()
+            for line in lines:
+                path, cls = line.rstrip().split()
+                short_image = path.rsplit("/", 1)[-1]
+                in_list.append(short_image)
+            train_sacli.loadMetainfos(cfg.dataset.train.meta_source)
+            train_unix_socket = train_sacli.setBlockShuffleParameter(
+                in_list, cfg.dataset.train.meta_source, utils.senseagent_dataset.g_batch_size, "train", "")
+            print("train_unix_socket is", train_unix_socket)
+
+            test_sacli = sa.SenseAgent(cfg.dataset.senseagent_config.userkey,
+                                       cfg.dataset.senseagent_config.namespace,
+                                       cfg.dataset.test.dataset_name,
+                                       cfg.dataset.senseagent_config.user,
+                                       cfg.dataset.senseagent_config.ip,
+                                       cfg.dataset.senseagent_config.port, True, True)
+            in_list = []
+            with open(cfg.dataset.test.meta_file) as f:
+                lines = f.readlines()
+            for line in lines:
+                path, cls = line.rstrip().split()
+                short_image = path.rsplit("/", 1)[-1]
+                in_list.append(short_image)
+            test_sacli.loadMetainfos(cfg.dataset.test.meta_source)
+            test_unix_socket = test_sacli.setBlockShuffleParameter(
+                in_list, cfg.dataset.test.meta_source, utils.senseagent_dataset.g_batch_size, "val", "")
+            print("test_unix_socket is", test_unix_socket)
+            # my_rank = static_sacli.startDistCache(0.5)
+            # print("my rank is", my_rank)
+        elif cfg.dataset.senseagent_config.distcache == True:
             static_sacli = sa.SenseAgent(cfg.dataset.senseagent_config.userkey,
                                          cfg.dataset.senseagent_config.namespace,
                                          cfg.dataset.train.dataset_name,
@@ -131,7 +171,7 @@ def main():
 
     # Data loading code
     train_loader, train_sampler, test_loader, test_sampler = build_dataloader(
-        cfg.dataset, dataset_type=cfg.dataset.type, total_epoch=args.max_epoch)
+        cfg.dataset, dataset_type=cfg.dataset.type, total_epoch=args.max_epoch, socket_path1=train_unix_socket, socket_path2=test_unix_socket)
 
     # test mode
     if args.test:

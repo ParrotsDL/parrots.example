@@ -101,7 +101,7 @@ class DistributedGivenIterationSampler(Sampler):
         self.epoch = epoch
 
 
-def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dataset_type="memcached"):
+def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dataset_type="memcached", socket_path="unix_socket"):
     compose_list = []
     if training:
         if cfg.random_resize_crop:
@@ -133,6 +133,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             senseagent_config.port,
             senseagent_config.distcache,
             senseagent_config.blockshuffleread,
+            socket_path,
             cfg.image_dir,
             cfg.meta_file,
             cfg.dataset_name,
@@ -141,7 +142,7 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             transforms.Compose(compose_list),
             cfg.reader)
         round_up = True if training else False
-        if senseagent_config.blockshuffleread:
+        if senseagent_config.blockshuffleread == True:
             data_sampler = DistributedGivenIterationSampler(data_set, round_up=round_up)
         else:
             data_sampler = DistributedSampler(data_set, round_up=round_up)
@@ -152,7 +153,8 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
             num_workers=workers,
             pin_memory=True,
             sampler=data_sampler,
-            collate_fn=data_set.collate_fn)
+            collate_fn=data_set.collate_fn,
+            worker_init_fn=data_set.worker_init_fn)
     else:
         data_set = McDataset(cfg.image_dir, cfg.meta_file,
                              transforms.Compose(compose_list), cfg.reader)
@@ -168,9 +170,9 @@ def build_loader(cfg, batch_size, workers, senseagent_config, training=True, dat
     return data_loader, data_sampler
 
 
-def build_dataloader(cfg, dataset_type="memcached", total_epoch=1):
+def build_dataloader(cfg, dataset_type="memcached", total_epoch=1, socket_path1="unix_socket", socket_path2="unix_socket"):
     train_loader, train_sampler = build_loader(
-        cfg.train, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=True, dataset_type=dataset_type)
+        cfg.train, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=True, dataset_type=dataset_type, socket_path=socket_path1)
     test_loader, test_sampler = build_loader(
-        cfg.test, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=False, dataset_type=dataset_type)
+        cfg.test, cfg.batch_size, cfg.workers, cfg.senseagent_config, training=False, dataset_type=dataset_type, socket_path=socket_path2)
     return train_loader, train_sampler, test_loader, test_sampler

@@ -5,6 +5,10 @@ from torch.utils.data.dataloader import default_collate
 import io
 import cv2
 from PIL import Image
+from utils.misc import logger
+import sys
+
+g_batch_size = 1024
 
 
 def pil_loader2(b_data):
@@ -23,11 +27,12 @@ def cv2_loader2(img_buf):
 
 
 class AgentDataset(Dataset):
-    def __init__(self, userKey, nameSpace, user, agentIp, agentPort, enableDistCache, blockShuffleRead, root_dir, meta_file, dataSet, superblock_file, superblock_meta, transform=None, reader='pillow'):
+    def __init__(self, userKey, nameSpace, user, agentIp, agentPort, enableDistCache, blockShuffleRead, socket_path, root_dir, meta_file, dataSet, superblock_file, superblock_meta, transform=None, reader='pillow'):
         self.root_dir = root_dir
         self.transform = transform
         self.reader = reader
         self.agentclient = None
+        self.sacli_for_shuffle = None
         self.userKey = userKey
         self.nameSpace = nameSpace
         self.dataSet = dataSet
@@ -36,6 +41,8 @@ class AgentDataset(Dataset):
         self.agentPort = agentPort
         self.enableDistCache = enableDistCache
         self.blockShuffleRead = blockShuffleRead
+        self.socket_path = socket_path
+        print("fuck socket_path ", socket_path)
         self.superblock_file = superblock_file
         self.superblock_meta = superblock_meta
         self.in_list = []
@@ -61,13 +68,14 @@ class AgentDataset(Dataset):
     def __init_senseagent(self):
         if not self.initialized:
             self.agentclient = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet,
-                                             self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
+                                             self.user, self.agentIp, self.agentPort, self.blockShuffleRead, False)
             if self.blockShuffleRead:
-                self.agentclient.loadMetainfos()
-                self.agentclient.setBlockShuffleParameter(self.in_list, "", 512)
+                # self.agentclient.loadMetainfos(self.superblock_meta)
+                self.agentclient.setBlockShuffleParameter(
+                    self.in_list, self.superblock_meta, g_batch_size, "",  self.socket_path)
             if self.enableDistCache:
-                self.agentclient.loadMetainfos()
-                my_rank = self.agentclient.startDistCache(0.5)
+                self.agentclient.loadMetainfos(self.superblock_meta)
+                my_rank = self.agentclient.startDistCache(0.1)
                 print("my rank is", my_rank)
             self.initialized = True
 
@@ -77,15 +85,13 @@ class AgentDataset(Dataset):
     def _set_shuffle_idx(self, epoch):
         self.shuffle_idx = []
         sacli_for_shuffle = sa.SenseAgent(self.userKey, self.nameSpace, self.dataSet,
-                                          self.user, self.agentIp, self.agentPort, self.blockShuffleRead)
-        sacli_for_shuffle.loadMetainfos()
-        sacli_for_shuffle.setBlockShuffleParameter(self.in_list, "", 512)
-        out_list = sacli_for_shuffle.generateBlockShuffleRandomFileList(512, epoch)
+                                          self.user, self.agentIp, self.agentPort, self.blockShuffleRead, True)
+        sacli_for_shuffle.loadMetainfos(self.superblock_meta)
+        sacli_for_shuffle.setBlockShuffleParameter(self.in_list, self.superblock_meta, g_batch_size, "testshuffle", "")
+        out_list = sacli_for_shuffle.generateBlockShuffleRandomFileList(g_batch_size, epoch)
         for out in out_list:
             self.shuffle_idx.append(self.image_idx[out])
-        for i in self.shuffle_idx:
-            self.metas_shuffle.append(self.metas[i])
-        self.metas = self.metas_shuffle
+
         del sacli_for_shuffle
 
     def get_shuffle_idx(self, epoch):
@@ -100,6 +106,8 @@ class AgentDataset(Dataset):
     def collate_fn(self, data):
         self.__init_senseagent()
         file_names = [elem[0] for elem in data]
+        #print("collate_fn len ", len(file_names))
+        # sys.stdout.flush()
         img_pools = self.agentclient.batchReadFile(file_names)
         if self.reader == 'opencv':
             trans_pools = [self.transform(cv2_loader2(img)) for img in img_pools]
@@ -109,4 +117,9 @@ class AgentDataset(Dataset):
             assert self.reader == 'opencv' or self.reader == 'pillow', 'reader should be opencv or pillow.'
         cls_pools = [elem[1] for elem in data]
         img_cls_pool = list(zip(trans_pools, cls_pools))
+        # print(file_names)
         return default_collate(img_cls_pool)
+
+    def worker_init_fn(self, worker_id):
+        print("worker_init_fn ", worker_id)
+        self.__init_senseagent()
