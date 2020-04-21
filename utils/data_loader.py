@@ -51,13 +51,13 @@ class DistributedSampler(Sampler):
 
 
 def build_loader(cfg, batch_size, workers, training=True):
-    compose_list = []
+    cpu_compose_list = []
     cuda_transforms_list = []
     from torch.utils.data import cuda_transform
     if training:
-        compose_list.append(
+        cpu_compose_list.append(
             transforms.RandomResizedCrop(cfg.random_resize_crop))
-        compose_list.append(transforms.ToTensor())
+        cpu_compose_list.append(transforms.ToTensor())
         cuda_transforms_list.append(cuda_transform.ToCuda())
         cuda_transforms_list.append(cuda_transform.RandomHorizontalFlip())
         cuda_transforms_list.append(cuda_transform.ColorJitter(*cfg.colorjitter))
@@ -65,13 +65,13 @@ def build_loader(cfg, batch_size, workers, training=True):
             mean=cfg.get('mean', [0.485, 0.456, 0.406]),
             std=cfg.get('std', [0.229, 0.224, 0.225])))
     else:
-        compose_list.append(transforms.Resize(cfg.get('resize', 256)))
-        compose_list.append(transforms.CenterCrop(cfg.get('center_crop', 224)))
-        compose_list.append(transforms.ToTensor())
+        cpu_compose_list.append(transforms.Resize(cfg.get('resize', 256)))
+        cpu_compose_list.append(transforms.CenterCrop(cfg.get('center_crop', 224)))
+        cpu_compose_list.append(transforms.ToTensor())
         data_normalize = transforms.Normalize(
                 mean=cfg.get('mean', [0.485, 0.456, 0.406]),
                 std=cfg.get('std', [0.229, 0.224, 0.225]))
-        compose_list.append(data_normalize)
+        cpu_compose_list.append(data_normalize)
 
     def get_img_fn(batch):
         return batch[0]
@@ -82,7 +82,7 @@ def build_loader(cfg, batch_size, workers, training=True):
         return batch
     cuda_transforms = cuda_transform.BatchCompose(cuda_transforms_list, get_img_fn, set_img_fn)
     data_set = McDataset(cfg.image_dir, cfg.meta_file,
-                         transforms.Compose(compose_list), cfg.reader)
+                         transforms.Compose(cpu_compose_list), cfg.reader)
 
     round_up = True if training else False
     data_sampler = DistributedSampler(data_set, round_up=round_up)
