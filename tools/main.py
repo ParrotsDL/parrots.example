@@ -207,7 +207,10 @@ def train(train_loader, model, criterion, optimizer, lr_scheduler, epoch, args, 
 
     cur_iter = epoch * len(train_loader)
     end = time.time()
-    for i, (input, target) in enumerate(train_loader):
+    #for i, (input, target) in enumerate(train_loader):
+    for i in range(len(train_loader)):
+        input = torch.rand(32, 3, 224, 224)
+        target = torch.randint(0, 2, (32,))
         # measure data loading time
         data_time.update(time.time() - end)
 
