@@ -57,9 +57,9 @@ def build_loader(cfg, batch_size, workers, training=True):
     if training:
         cpu_compose_list.append(
             transforms.RandomResizedCrop(cfg.random_resize_crop))
+        cpu_compose_list.append(transforms.RandomHorizontalFlip())
         cpu_compose_list.append(transforms.ToTensor())
         cuda_transforms_list.append(cuda_transform.ToCuda())
-        cuda_transforms_list.append(cuda_transform.RandomHorizontalFlip())
         cuda_transforms_list.append(cuda_transform.ColorJitter(*cfg.colorjitter))
         cuda_transforms_list.append(cuda_transform.Normalize(
             mean=cfg.get('mean', [0.485, 0.456, 0.406]),
