@@ -23,9 +23,12 @@ from .hrnet import HRNet
 from .mnasnet import mnasnet
 from .efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, \
                           efficientnet_b5, efficientnet_b6, efficientnet_b7
+from .alexnet import alexnet,alexnet_bn
 
 
 __all__ = [
+    'alexnet',
+    'alexnet_bn',
     'vgg11',
     'vgg11_bn',
     'vgg13',

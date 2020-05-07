@@ -22,7 +22,9 @@ from pape.half import HalfModel, HalfOptimizer
 
 import models
 from utils.dataloader import build_dataloader
+from utils.larc import LARC
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+from utils.optimizer import *
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -60,7 +62,6 @@ def main():
         torch.manual_seed(cfgs.seed)
         torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
-
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
     model.cuda()
 
@@ -87,17 +88,21 @@ def main():
     criterion = nn.CrossEntropyLoss().cuda()
     logger.info("loss\n{}".format(criterion))
 
-    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    # optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    # optimizer = LARC(optimizer,trust_coefficient=0.001,clip=False)
+    args.sparse = cfgs.trainer.get("sparse", False)
+    optimizer = build_optimizer(cfgs.trainer, model, sparse=args.sparse)
     if args.half:
         optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
     logger.info("optimizer\n{}".format(optimizer))
 
     cudnn.benchmark = True
 
-    args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
+    args.start_epoch = 0
     args.max_epoch = cfgs.trainer.max_epoch
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
+    args.warmup_epoch = cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
 
     best_acc1 = 0.0
     if cfgs.saver.resume_model:
@@ -127,15 +132,23 @@ def main():
     # Data loading code
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
+    args.epoch_size = len(train_loader)
+
+
     # test mode
     if args.test:
         test(test_loader, model, criterion, args)
         return
 
     # choose scheduler
-    lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
-                       optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
-                       **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
+    # lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
+    #                    optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
+    #                    **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
+    from utils.scheduler import get_scheduler
+
+    lr_scheduler = get_scheduler(
+        optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
+        args.epoch_size, args.max_epoch, args.epoch_size*args.max_epoch, cfgs.trainer.lr_scheduler)
 
     monitor_writer = None
     if args.rank == 0 and cfgs.get('monitor', None):
@@ -149,11 +162,14 @@ def main():
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
     # training
+    # train_loader = list(train_loader)
+    # test_loader = list(test_loader)
     for epoch in range(args.start_epoch, args.max_epoch):
+        # random.shuffle(train_loader)
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer,lr_scheduler)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -180,25 +196,27 @@ def main():
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
 
-        lr_scheduler.step()
+        
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, lr_scheduler):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
     losses = AverageMeter('Loss', ':.4f', 50)
     top1 = AverageMeter('Acc@1', ':.2f', 50)
     top5 = AverageMeter('Acc@5', ':.2f', 50)
-
+    ex_time = AverageMeter('exTime', ':6.3f', 200)
     memory = AverageMeter('Memory(MB)', ':.0f')
+    cur_lr = AverageMeter('LR', ':6.4f', 1)
     progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
-                             memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
-
+                             ex_time, cur_lr,prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
+    batch_num = len(train_loader)*args.max_epoch
     # switch to train mode
     model.train()
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
+        lr_scheduler.step()
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -220,7 +238,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
-
+        cur_lr.update(lr_scheduler.get_lr()[0])
         # compute gradient and do SGD step
         optimizer.zero_grad()
         if args.half:
@@ -231,8 +249,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # measure elapsed time
         batch_time.update(time.time() - end)
+        ex_time.update((time.time() - end)*batch_num)
         end = time.time()
-
         if i % args.log_freq == 0:
             progress.display(i)
             if args.rank == 0 and monitor_writer:
@@ -279,9 +297,9 @@ def test(test_loader, model, criterion, args):
             if i % args.log_freq == 0:
                 progress.display(i)
 
-        logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
-                        args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
-                        stats_all[2].item()))
+        # logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
+        #                 args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
+        #                 stats_all[2].item()))
 
         loss = torch.tensor([losses.avg])
         dist.all_reduce(loss)

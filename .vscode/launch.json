@@ -1,0 +1,28 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python debug LST",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": true,
+            "program": "${workspaceRoot}/imagenet-LST/tools/main.py",
+            "cwd": "${workspaceRoot}",
+            // "console": "externalTerminal",
+            "env": {
+                "SLURM_PROCID":"0",
+                "SLURM_NTASKS":"2",
+                "SLURM_NODELIST":"SH-IDC1-10-198-4-153",
+                },
+            "envFile": "${workspaceRoot}/vscode.env",
+            "args": ["--config imagenet-LST/configs/alexnet.yaml"],
+            "debugOptions": [
+                // "WaitOnAbnormalExit",
+                // "WaitOnNormalExit"
+            ]
+        },
+    ]
+}
