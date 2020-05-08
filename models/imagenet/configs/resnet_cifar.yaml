@@ -1,0 +1,62 @@
+net:
+    arch: ResNet18  # wide_resnet28_10
+    kwargs:
+        num_classes: 10
+ 
+dataset:
+  train:
+    image_dir: /mnt/lustre/share/hanyachao/cifar10/cifar-10-python/
+    random_crop: 32
+    padding: 4
+    mirror: True
+    mean: [0.4914, 0.4822, 0.4465]
+    std: [0.2470, 0.2435, 0.2616]
+    cutout:
+      n_holes: 1
+      length: 16
+  test:
+    image_dir: /mnt/lustre/share/hanyachao/cifar10/cifar-10-python/
+    mean: [0.4914, 0.4822, 0.4465]
+    std: [0.2470, 0.2435, 0.2616]
+  type: cifar10
+  batch_size: 16
+  workers: 4
+ 
+trainer:
+  max_epoch: 200
+  test_freq: 1
+  log_freq: 40
+  bn:
+    syncbn: False
+  mixed_precision:
+    half: False
+    loss_scale: 128.0
+    float_layers:  # define floating layers when mixed training
+      # loss:
+      #     float_out: True
+  optimizer:
+    type: SGD
+    kwargs:
+      lr: 0.1
+      momentum: 0.9
+      weight_decay: 0.0005
+      nesterov: True
+  lr_scheduler:
+    warmup_epochs: 0
+    type: MultiStepLR
+    kwargs:
+      milestones: [60,120,160]
+      gamma: 0.2
+ 
+saver:
+  pretrain_model: 
+  resume_model: 
+  save_dir: checkpoints/resnet18_cifar10   # save checkpoint locally
+ 
+monitor:
+  type: pavi
+  _taskid:  # continue training
+  kwargs:
+    project: hyc_cutout  # change to your own pavi project
+    task: resnet18_cifar10
+    model: resnet18

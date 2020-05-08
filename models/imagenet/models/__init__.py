@@ -4,6 +4,8 @@ from .resnet_official import resnext50_32x4d, resnext101_32x8d, resnext50d_32x4d
                              wide_resnet50_2, wide_resnet101_2, wide_resnet50d_2, wide_resnet101d_2
 from .resnet_v2 import resnet50_v2, resnet50c_v2, resnet50d_v2, resnet101_v2, resnet152_v2, resnet200_v2
 from .preact_resnet import preact_resnet18, preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
+from .resnet_cifar import ResNet18
+from .wide_resnet_cifar import wide_resnet28_10
 from .dpn import dpn68, dpn68b, dpn92, dpn98, dpn131, dpn107
 from .senet import senet154, se_resnet50, se_resnet101, se_resnet152, se_resnext50_32x4d, \
                    se_resnext101_32x4d, se_resnext101_64x4d
@@ -19,6 +21,7 @@ from .inception_v4 import inception_v4
 from .inception_resnet import inception_resnet_v1, inception_resnet_v2
 from .densenet import densenet121, densenet169, densenet201, densenet161
 from .nasnet import nasnetamobile, nasnetalarge
+from .alexnet import alexnet
 from .hrnet import HRNet
 from .mnasnet import mnasnet
 from .efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, \
@@ -62,6 +65,8 @@ __all__ = [
     'wide_resnet50d_2',
     'wide_resnet101_2',
     'wide_resnet101d_2',
+    'ResNet18',
+    'wide_resnet28_10',
     'dpn68',
     'dpn68b',
     'dpn92',
@@ -92,6 +97,7 @@ __all__ = [
     'densenet161',
     'nasnetamobile',
     'nasnetalarge',
+    'alexnet',
     'HRNet',
     'mnasnet',
     'efficientnet_b0',
