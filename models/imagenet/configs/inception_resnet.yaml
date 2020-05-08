@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: inception_resnet_v1  # inception_resnet_v2
+    arch: inception_resnet_v1  # inception_resnet_v2
     kwargs:
         num_classes: 1000
  
@@ -8,7 +8,6 @@ dataset:
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
-    reader: pillow
     random_crop:
     random_resize_crop: 299
     colorjitter: [0.2, 0.2, 0.2, 0.1]
@@ -18,7 +17,6 @@ dataset:
   test:
     meta_file: /mnt/lustre/share/images/meta/val.txt
     image_dir: /mnt/lustre/share/images/val
-    reader: pillow
     resize: 341
     center_crop: [299, 299]
     colorjitter:
@@ -30,9 +28,16 @@ dataset:
  
 trainer:
   max_epoch: 120
-  test_freq: 2
-  log_freq: 100
-  label_smooth:
+  test_freq: 1
+  log_freq: 20
+  bn:
+    sync_bn: False
+  mixed_precision:
+    half: False
+    loss_scale: 128.0
+    float_bn: True
+    #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
+    #float_module_name: "{'fc':('float', 'half')}"
   optimizer:
     type: SGD
     kwargs:
@@ -41,21 +46,20 @@ trainer:
       weight_decay: 0.00004
   lr_scheduler:
     warmup_epochs: 0
-    type: CosineLR
+    type: MultiStepLR
     kwargs:
-      min_lr: 0.0
+      milestones: [30,60,90]
+      gamma: 0.1
  
 saver:
   pretrian_model: 
   resume_model: 
-  save_dir: checkpoints   # save checkpoint locally
-  save_epoch_freq: 1
-  save_latest: False
-  save_best: False
+  save_dir: checkpoints/inception_resnet_v1  # save checkpoint locally
  
 monitor:
   type: pavi
+  _taskid: # continue training
   kwargs:
-    project: default
+    project: default # change to your own pavi project
     task: inception_resnet_v1
     model: inception_resnet_v1
