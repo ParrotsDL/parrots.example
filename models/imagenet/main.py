@@ -197,20 +197,20 @@ def main():
                     shutil.copyfile(ckpt_path, best_ckpt_path)
 
         
+batch_time = AverageMeter('Time', ':.3f', 200)
+data_time = AverageMeter('Data', ':.3f', 200)
+
+losses = AverageMeter('Loss', ':.4f', 50)
+top1 = AverageMeter('Acc@1', ':.2f', 50)
+top5 = AverageMeter('Acc@5', ':.2f', 50)
+ex_time = AverageMeter('exTime', ':6.3f', 200)
+memory = AverageMeter('Memory(MB)', ':.0f')
+cur_lr = AverageMeter('LR', ':6.4f', 1)
 
 
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, lr_scheduler):
-    batch_time = AverageMeter('Time', ':.3f', 200)
-    data_time = AverageMeter('Data', ':.3f', 200)
-
-    losses = AverageMeter('Loss', ':.4f', 50)
-    top1 = AverageMeter('Acc@1', ':.2f', 50)
-    top5 = AverageMeter('Acc@5', ':.2f', 50)
-    ex_time = AverageMeter('exTime', ':6.3f', 200)
-    memory = AverageMeter('Memory(MB)', ':.0f')
-    cur_lr = AverageMeter('LR', ':6.4f', 1)
     progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
-                             ex_time, cur_lr,prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
+                            ex_time, cur_lr,prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
     batch_num = len(train_loader)*args.max_epoch
     # switch to train mode
     model.train()
@@ -249,9 +249,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # measure elapsed time
         batch_time.update(time.time() - end)
-        ex_time.update((time.time() - end)*batch_num)
+        if i>1:
+            ex_time.update((time.time() - end)*batch_num)
         end = time.time()
-        if i % args.log_freq == 0:
+        if i>1 and i % args.log_freq == 0:
             progress.display(i)
             if args.rank == 0 and monitor_writer:
                 cur_iter = epoch * len(train_loader) + i

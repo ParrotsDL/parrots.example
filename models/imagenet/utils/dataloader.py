@@ -1,6 +1,7 @@
 import torch
 import torchvision.transforms as transforms
 import pape.data as pdata
+from torch.utils.data import Dataset
 def build_augmentation(cfg):
     compose_list = []
     if cfg.random_resize_crop:
@@ -50,20 +51,108 @@ def build_augmentation(cfg):
 #         return img,cls
 
 
-def load_dataset_to_mem(dataset, indices, transform=None, workers=8):
-    import threading
-    mem_dataset = list(range(len(dataset)))
-    # thread_list = []
-    # dataset_len = len(indices)
-    for i in range(1, workers+1):
-        t = threading.Thread(target=get_item, args=(mem_dataset, dataset, indices[int(
-            dataset_len/workers*(i-1)):int(dataset_len/workers*(i))]))
-        t.start()
-        thread_list.append(t)
-    for i in thread_list:
-        i.join()
-    mem_dataset = MemDataset(mem_dataset, transform, indices)
-    return mem_dataset
+# def load_dataset_to_mem(dataset, indices, transform=None, workers=8):
+#     import threading
+#     mem_dataset = list(range(len(dataset)))
+#     # thread_list = []
+#     # dataset_len = len(indices)
+#     for i in range(1, workers+1):
+#         t = threading.Thread(target=get_item, args=(mem_dataset, dataset, indices[int(
+#             dataset_len/workers*(i-1)):int(dataset_len/workers*(i))]))
+#         t.start()
+#         thread_list.append(t)
+#     for i in thread_list:
+#         i.join()
+#     mem_dataset = MemDataset(mem_dataset, transform, indices)
+#     return mem_dataset
+
+class GPUDataset(Dataset):
+    r"""
+    Dataset using memcached to read data.
+
+    Arguments
+        * root (string): Root directory of the Dataset.
+        * meta_file (string): The meta file of the Dataset. Each line has a image path
+          and a label. Eg: ``nm091234/image_56.jpg 18``
+        * transform (callable, optional): A function/transform that takes in an PIL image
+          and returns a transformed image.
+    """
+    def __init__(self, root, meta_file):
+        self.root = root
+        with open(meta_file) as f:
+            meta_list = f.readlines()
+        self.num = len(meta_list)
+        self.metas = []
+        for line in meta_list:
+            path, cls = line.strip().split()
+            self.metas.append((path, int(cls)))
+        self.initialized = False
+        self.img_map = {}
+        
+
+    def __len__(self):
+        return self.num
+
+    def _init_memcached(self):
+        if not self.initialized:
+            server_list_config_file = "/mnt/lustre/share/memcached_client/server_list.conf"
+            client_config_file = "/mnt/lustre/share/memcached_client/client.conf"
+            self.mclient = mc.MemcachedClient.GetInstance(
+                server_list_config_file, client_config_file)
+            self.initialized = True
+
+    def __getitem__(self, index):
+        filename = self.root + '/' + self.metas[index][0]
+        cls = self.metas[index][1]
+
+        # cache in mem
+        in_mem = self.img_map.get(index, None)
+        if in_mem is not None:
+            img = in_mem
+            # print("in mem cache hit ", index)
+        else:
+            # memcached
+            self._init_memcached()
+            value = mc.pyvector()
+            self.mclient.Get(filename, value)
+            value_buf = mc.ConvertBuffer(value)
+            buff = io.BytesIO(value_buf)
+            with Image.open(buff) as img:
+                img = img.convert('RGB')
+                img = transforms.Resize((256, 256))(img)
+                img = transforms.ToTensor()(img)
+                self.img_map[index] = img
+        # transform
+        # if self.transform is not None:
+        #     img = self.transform(img)
+        return img, cls
+        
+    def _warmup_mem(self, indices):
+        for index in indices:
+            filename = self.root + '/' + self.metas[index][0]
+            cls = self.metas[index][1]
+            self._init_memcached()
+            value = mc.pyvector()
+            self.mclient.Get(filename, value)
+            value_buf = mc.ConvertBuffer(value)
+            buff = io.BytesIO(value_buf)
+            with Image.open(buff) as img:
+                img = img.convert('RGB')
+                self.img_map[index] = img
+            # img_map[index] = buff
+
+    def _parallel_warmup_mem(self, indices, workers=6):
+        import threading
+        thread_list = []
+        dataset_len = len(indices)
+        for i in range(1, workers+1):
+            # mc_client = self._create_new_memchache_client()
+            t = threading.Thread(target=McDataset._warmup_mem, args=(self, indices[int(
+                dataset_len/workers*(i-1)):int(dataset_len/workers*(i))]))
+            t.start()
+            thread_list.append(t)
+        for i in thread_list:
+            i.join()
 
 
 def build_dataloader(cfg, world_size):
