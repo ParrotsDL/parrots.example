@@ -117,3 +117,6 @@ cmake-build-debug/
 
 # sphinx docs
 docs/build
+models/imagenet/log/timeline/*.txt
+models/imagenet/log/timeline/auto.py
+models/imagenet/log/timeline/nccl_auto.py

@@ -38,6 +38,8 @@ def accuracy(output, target, topk=(1,), raw=False):
         return res
 
 
+
+
 class AverageMeter(object):
     """Computes and stores the average and current value
        When length < 0 , save all history data """

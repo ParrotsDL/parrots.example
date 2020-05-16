@@ -24,17 +24,17 @@ dataset:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
-  batch_size: 256 # resnet101 < 128
+  batch_size: 64 # resnet101 < 128
   workers: 4
  
 trainer:
   max_epoch: 100
-  test_freq: 1
+  test_freq: 100
   log_freq: 20
   bn:
     syncbn: False
   mixed_precision:
-    half: False
+    half: True
     loss_scale: 128.0
     float_bn: True
     #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
@@ -57,10 +57,10 @@ saver:
   resume_model:
   save_dir: checkpoints/resnet50   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: resnet50
-    model: resnet50
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: resnet50
+#     model: resnet50

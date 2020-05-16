@@ -161,17 +161,17 @@ def build_dataloader(cfg, world_size):
 
     train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
     train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size, manual_seed=99)
-    train_indices = list(train_sampler.__iter__())
-    train_dataset._parallel_warmup_mem(train_indices)
+    # train_indices = list(train_sampler.__iter__())
+    # train_dataset._parallel_warmup_mem(train_indices)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
-        num_workers=0, pin_memory=False, sampler=train_sampler)
+        num_workers=5, pin_memory=True, sampler=train_sampler)
 
     test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
     test_sampler = pdata.DistributedSampler(test_dataset, round_up=False, manual_seed=99)
-    test_indices = list(test_sampler.__iter__())
-    test_dataset._parallel_warmup_mem(test_indices)
+    # test_indices = list(test_sampler.__iter__())
+    # test_dataset._parallel_warmup_mem(test_indices)
     test_loader = torch.utils.data.DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
-        num_workers=0, pin_memory=True, sampler=test_sampler)
+        num_workers=5, pin_memory=True, sampler=test_sampler)
     return train_loader, train_sampler, test_loader, test_sampler

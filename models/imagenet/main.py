@@ -24,7 +24,7 @@ import models
 from utils.dataloader import build_dataloader
 from utils.larc import LARC
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
-from utils.optimizer import *
+from utils.optimizer import build_optimizer
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -36,13 +36,33 @@ logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
 
+args = parser.parse_args()
+args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
+cfgs = Dict(args.config)
+
+USE_OVP = False
+if cfgs.trainer.get("overlap", False):
+    from parrots import config, runtimeconfig
+    config.set_attr('engine', 'sche_mode', value='NAIVE')
+    USE_OVP = True
 
 def main():
-    args = parser.parse_args()
-    args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
-    cfgs = Dict(args.config)
+    if USE_OVP:
+        from parrots import config, runtimeconfig
+        runtimeconfig.get_device_memman(torch.cuda.current_device()).algorithm = 'LZY'
+    
 
     args.rank, args.world_size, args.local_rank = dist.init()
+
+    # PROFILE = False
+    # if os.getenv('PROFILE_ITER') is not None:
+    #     iters = os.environ['PROFILE_ITER'].split(',')
+    #     args.start = int(iters[0])
+    #     args.end = int(iters[1])
+    #     PROFILE = True
+    #     import parrots
+    # if PROFILE:
+    #     logger("Auto profile from {} to {} iter....".format(args.start, args.end))
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -82,7 +102,24 @@ def main():
                               float_module_name=eval(mix_cfg.get("float_module_name", "{}")))
             args.half = True
 
-    model = DistributedModel(model)
+    if cfgs.dataset.get('dummy',False):
+        args.dummy = True
+        logger.info("Dummy ImageNet Training, may take few mineuts to read images into CUDA")
+    else:
+        args.dummy = False
+    args.sparse = cfgs.trainer.sparse.get("type")
+    if args.sparse:
+        model = DistributedModel(model, USE_OVP, bucket_cap_mb=10,
+                            sparse=args.sparse,
+                            dropratio=cfgs.trainer.sparse.get('dropratio'),
+                            warmup_iter=cfgs.trainer.sparse.get('warmup_iters'))
+        if args.rank==0:
+            print('Sparse Training, drop %s, warm %s ' %(cfgs.trainer.sparse.get('dropratio'),cfgs.trainer.sparse.get('warmup_iters')))
+            # print(cfgs)
+    else:
+        model = DistributedModel(model, USE_OVP)
+        if args.rank==0:
+            print('Dense Training')
     logger.info("model\n{}".format(model))
 
     criterion = nn.CrossEntropyLoss().cuda()
@@ -90,10 +127,9 @@ def main():
 
     # optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
     # optimizer = LARC(optimizer,trust_coefficient=0.001,clip=False)
-    args.sparse = cfgs.trainer.get("sparse", False)
     optimizer = build_optimizer(cfgs.trainer, model, sparse=args.sparse)
-    if args.half:
-        optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
+    # if args.half:
+    #     optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
     logger.info("optimizer\n{}".format(optimizer))
 
     cudnn.benchmark = True
@@ -162,10 +198,14 @@ def main():
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
     # training
-    # train_loader = list(train_loader)
-    # test_loader = list(test_loader)
+    if args.dummy:
+        train_loader = list(train_loader)
+        test_loader = list(test_loader)
+        args.test_freq = 999999
     for epoch in range(args.start_epoch, args.max_epoch):
-        # random.shuffle(train_loader)
+        if args.dummy:
+            random.shuffle(train_loader)
+
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
@@ -203,7 +243,7 @@ data_time = AverageMeter('Data', ':.3f', 200)
 losses = AverageMeter('Loss', ':.4f', 50)
 top1 = AverageMeter('Acc@1', ':.2f', 50)
 top5 = AverageMeter('Acc@5', ':.2f', 50)
-ex_time = AverageMeter('exTime', ':6.3f', 200)
+ex_time = AverageMeter('exTime', ':.3f', 20000)
 memory = AverageMeter('Memory(MB)', ':.0f')
 cur_lr = AverageMeter('LR', ':6.4f', 1)
 
@@ -216,7 +256,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     model.train()
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
+        ex_time_start = time.time()
         lr_scheduler.step()
+        if args.sparse:
+            model.dropratio_schedule()
+
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -231,26 +275,35 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
-        dist.all_reduce(stats_all)
-        stats_all /= args.world_size
+        # dist.all_reduce(stats_all)
+        # stats_all /= args.world_size
 
         losses.update(stats_all[0].item())
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
-        memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+        # memory.update(torch.cuda.max_memory_allocated()/1024/1024)
         cur_lr.update(lr_scheduler.get_lr()[0])
         # compute gradient and do SGD step
-        optimizer.zero_grad()
         if args.half:
             loss *= optimizer.loss_scale
+        if args.world_size > 1:
+            loss /= args.world_size
+            
         loss.backward()
-        model.average_gradients()
+
+        
+        if args.sparse:
+            model.sparse_aggregate_gradients()
+        else:
+            # raise Exception('No dense')
+            model.average_gradients()
         optimizer.step()
+        optimizer.zero_grad()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
         if i>1:
-            ex_time.update((time.time() - end)*batch_num)
+            ex_time.update((time.time() - ex_time_start)*batch_num)
         end = time.time()
         if i>1 and i % args.log_freq == 0:
             progress.display(i)
@@ -298,9 +351,9 @@ def test(test_loader, model, criterion, args):
             if i % args.log_freq == 0:
                 progress.display(i)
 
-        # logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
-        #                 args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
-        #                 stats_all[2].item()))
+        logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
+                        args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
+                        stats_all[2].item()))
 
         loss = torch.tensor([losses.avg])
         dist.all_reduce(loss)
