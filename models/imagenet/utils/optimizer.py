@@ -6,8 +6,8 @@ from pape.half import HalfOptimizer
 
 def build_optimizer(cfg_trainer, model, sparse=False):
     if cfg_trainer.optimizer.type == 'LARS':
-        if not sparse and cfg_trainer.optimizer.kwargs.get('sparse', False):
-            cfg_trainer.optimizer.kwargs.sparse = False
+        # if not sparse and cfg_trainer.optimizer.kwargs.get('sparse', False):
+        #     cfg_trainer.optimizer.kwargs.sparse = False
         # filter params in bn, bias
         skip_list = []
         for name, mod in model.named_modules():

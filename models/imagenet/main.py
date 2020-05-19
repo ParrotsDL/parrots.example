@@ -54,15 +54,15 @@ def main():
 
     args.rank, args.world_size, args.local_rank = dist.init()
 
-    # PROFILE = False
-    # if os.getenv('PROFILE_ITER') is not None:
-    #     iters = os.environ['PROFILE_ITER'].split(',')
-    #     args.start = int(iters[0])
-    #     args.end = int(iters[1])
-    #     PROFILE = True
-    #     import parrots
-    # if PROFILE:
-    #     logger("Auto profile from {} to {} iter....".format(args.start, args.end))
+    PROFILE = False
+    if os.getenv('PROFILE_ITER') is not None:
+        iters = os.environ['PROFILE_ITER'].split(',')
+        args.start = int(iters[0])
+        args.end = int(iters[1])
+        PROFILE = True
+        import parrots
+    if PROFILE:
+        logger("Auto profile from {} to {} iter....".format(args.start, args.end))
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)

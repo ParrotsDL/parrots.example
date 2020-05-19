@@ -5,7 +5,7 @@ net:
         num_classes: 1000
  
 dataset:
-  dummy: False
+  dummy: True
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
@@ -41,10 +41,10 @@ trainer:
   #   float_layers:  # define floating layers when mixed training
       # loss:
       #     float_out: True
-  sparse:
-    type: True
-    dropratio: 0.7
-    warmup_iters: 100
+  # sparse:
+  #   type: False
+  #   dropratio: 0.7
+  #   warmup_iters: 100
   optimizer:
     type: LARS
     kwargs:
@@ -52,7 +52,7 @@ trainer:
       momentum: 0.9
       weight_decay: 0.0005
       eta: 0.001
-      sparse: False
+      # sparse: False
   lr_scheduler:
     warmup_epochs: 5
     base_lr: 0.5
