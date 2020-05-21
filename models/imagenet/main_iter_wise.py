@@ -10,6 +10,7 @@ import logging
 from addict import Dict
 
 import torch
+import torch.nn as nn
 import torch.nn.parallel
 from torch.backends import cudnn
 
@@ -23,6 +24,8 @@ from pape.utils.loss import LabelSmoothLoss
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+from utils.ema import EMA
+from utils.optimizer import build_optimizer
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -84,11 +87,14 @@ def main():
     model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
-    # criterion = nn.CrossEntropyLoss().cuda()
-    criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+    if cfgs.trainer.get('label_smooth', None):
+        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+    else:
+        criterion = nn.CrossEntropyLoss().cuda()
+
     logger.info("loss\n{}".format(criterion))
 
-    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    optimizer = build_optimizer(model, cfgs)
     if args.half:
         optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
     logger.info("optimizer\n{}".format(optimizer))
@@ -101,6 +107,13 @@ def main():
     args.log_freq = cfgs.trainer.log_freq
     args.best_acc1 = 0.0
 
+    # EMA
+    if cfgs.trainer.ema.enable:
+        cfgs.trainer.ema.kwargs.model = model
+        ema = EMA(**cfgs.trainer.ema.kwargs)
+    else:
+        ema = None
+
     if cfgs.saver.resume_model:
         assert os.path.isfile(cfgs.saver.resume_model), 'Not found resume model: {}'.format(
             cfgs.saver.resume_model)
@@ -111,6 +124,8 @@ def main():
         args.max_iter -= args.start_iter
         args.best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
+        if 'ema' in checkpoint.keys():
+            ema.load_state_dict(checkpoint['ema'])
         logger.info("resume training from '{}' at iter {}".format(
             cfgs.saver.resume_model, checkpoint['iter']))
     elif cfgs.saver.pretrain_model:
@@ -131,6 +146,8 @@ def main():
 
     # test mode
     if args.test:
+        if ema is not None:
+            ema.load_ema(model)
         test(test_loader, model, criterion, args)
         return
 
@@ -151,10 +168,10 @@ def main():
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
     # train max iter
-    train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, args, cfgs, monitor_writer)
+    train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, args, cfgs, monitor_writer, ema)
 
 
-def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, args, cfgs, monitor_writer):
+def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, args, cfgs, monitor_writer, ema):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -202,6 +219,9 @@ def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, 
         model.average_gradients()
         optimizer.step()
 
+        if ema is not None:
+            ema.step(model, curr_step=cur_iter)
+
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
@@ -216,12 +236,21 @@ def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, 
         if (cur_iter + 1) % args.test_freq == 0 or (cur_iter + 1) == args.max_iter:
             # evaluate on validation set
             val_loss, acc1, acc5 = test(test_loader, model, criterion, args)
-
+            if ema is not None:
+                ema.load_ema(model)
+                if args.rank == 0:
+                    print('============ EMA ============')
+                val_loss_ema, acc1_ema, acc5_ema = test(test_loader, model, criterion, args)
+                ema.recover(model)
             if args.rank == 0:
                 if monitor_writer:
                     monitor_writer.add_scalar('Accuracy_Test_top1', acc1, cur_iter)
                     monitor_writer.add_scalar('Accuracy_Test_top5', acc5, cur_iter)
                     monitor_writer.add_scalar('Test_loss', val_loss, cur_iter)
+                    if ema is not None:
+                        monitor_writer.add_scalar('EMA_Accuracy_Test_top1', acc1_ema, cur_iter)
+                        monitor_writer.add_scalar('EMA_Accuracy_Test_top5', acc5_ema, cur_iter)
+                        monitor_writer.add_scalar('EMA_Test_loss', val_loss_ema, cur_iter)
 
                 checkpoint = {
                     'iter': cur_iter,
@@ -230,6 +259,8 @@ def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, 
                     'best_acc1': args.best_acc1,
                     'optimizer': optimizer.state_dict()
                 }
+                if ema is not None:
+                    checkpoint['ema'] = ema.state_dict()
 
                 ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_iter_{}.pth'.format(cur_iter))
                 best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
