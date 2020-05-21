@@ -10,7 +10,6 @@ import logging
 from addict import Dict
 
 import torch
-import torch.nn.parallel
 from torch.backends import cudnn
 
 import pape
@@ -21,14 +20,19 @@ from pape.utils.lr_scheduler import build_scheduler
 from pape.utils.loss import LabelSmoothLoss
 
 import models
-from utils.dataloader import build_dataloader
-from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+from utils.dataloader import build_iter_dataloader, build_iter_dataloader_test
+from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter, \
+                       mixup_data, mixup_criterion
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
-parser.add_argument('--config', default='configs/resnet50.yaml',
+parser.add_argument('--config', default='configs/resnet.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--checkpoint', default='',
+                    type=str, help='path to model checkpoint')
+parser.add_argument('--resume', dest='resume', action='store_true',
+                    help='resume train from checkpoint')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -42,6 +46,10 @@ def main():
 
     args.rank, args.world_size, args.local_rank = dist.init()
 
+    if args.test is False and cfgs.get('gpus_need', None):
+        assert cfgs.gpus_need == args.world_size, 'Error: need gpu {}, but use gpu {}'.format(
+                                                  cfgs.gpus_need, args.world_size)
+
     if args.rank == 0:
         logger.setLevel(logging.INFO)
     else:
@@ -50,7 +58,6 @@ def main():
 
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
                     socket.gethostname()))
-
     dist.barrier()
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
@@ -61,77 +68,82 @@ def main():
         torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
 
+    cudnn.benchmark = True
+
+    logger.info("creating model '{}'".format(cfgs.net.arch))
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
     model.cuda()
 
-    logger.info("creating model '{}'".format(cfgs.net.arch))
-
-    args.syncbn = False
-    if cfgs.trainer.get('bn', None):
-        if cfgs.trainer.bn.get('syncbn', False) is True:
-            model = pape.utils.op.convert_syncbn(model)
-            args.syncbn = True
+    args.bn = 'bn'
+    if cfgs.net.get('bn', None):
+        bn_cfg = cfgs.net.bn
+        args.bn = bn_cfg.type
+        #if bn_cfg.type == 'syncbn':
+        #    model = pape.utils.op.convert_syncbn(model, **bn_cfg.kwargs)
 
     args.half = False
     if cfgs.trainer.get('mixed_precision', None):
         mix_cfg = cfgs.trainer.mixed_precision
-        if mix_cfg.get('half', False) is True:
+        if mix_cfg.type == 'half':
+            args.half = True
             model = HalfModel(model, float_bn=mix_cfg.get("float_bn", True),
                               float_module_type=eval(mix_cfg.get("float_module_type", "{}")),
                               float_module_name=eval(mix_cfg.get("float_module_name", "{}")))
-            args.half = True
 
     model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
-    # criterion = nn.CrossEntropyLoss().cuda()
-    criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+    if cfgs.trainer.get('label_smooth', None):
+        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes)
+    else:
+        criterion = nn.CrossEntropyLoss()
+    criterion = criterion.cuda()
     logger.info("loss\n{}".format(criterion))
 
-    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    args.mixup = cfgs.trainer.get('mixup', None)
+    logger.info("mixup: {}".format(args.mixup))
+
+    optimizer = torch.optim.__dict__[cfgs.trainer.optimizer.type](
+                    model.parameters(), **cfgs.trainer.optimizer.kwargs)
     if args.half:
-        optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
+        optimizer = HalfOptimizer(optimizer, loss_scale=mix_cfg.loss_scale)
     logger.info("optimizer\n{}".format(optimizer))
 
-    cudnn.benchmark = True
-
-    args.start_iter = 0
-    args.max_iter = cfgs.trainer.max_iter
+    args.start_iter = cfgs.trainer.start_iter
+    args.end_iter = cfgs.trainer.end_iter
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
     args.best_acc1 = 0.0
 
-    if cfgs.saver.resume_model:
-        assert os.path.isfile(cfgs.saver.resume_model), 'Not found resume model: {}'.format(
-            cfgs.saver.resume_model)
-        checkpoint = torch.load(cfgs.saver.resume_model)
+    if args.checkpoint:
+        assert os.path.isfile(args.checkpoint), 'Not found checkpoint: {}'.format(
+            args.checkpoint)
+        checkpoint = torch.load(args.checkpoint)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
-        args.start_iter = checkpoint['iter']
-        args.max_iter -= args.start_iter
-        args.best_acc1 = checkpoint['best_acc1']
-        optimizer.load_state_dict(checkpoint['optimizer'])
-        logger.info("resume training from '{}' at iter {}".format(
-            cfgs.saver.resume_model, checkpoint['iter']))
-    elif cfgs.saver.pretrain_model:
-        assert os.path.isfile(cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
-            cfgs.saver.pretrain_model)
-        checkpoint = torch.load(cfgs.saver.pretrain_model)
-        check_keys(model=model, checkpoint=checkpoint)
-        model.load_state_dict(checkpoint['state_dict'])
-        logger.info("pretrain training from '{}'".format(cfgs.saver.pretrain_model))
+        if args.resume:
+            args.start_iter = checkpoint['last_iter'] + 1
+            args.best_acc1 = checkpoint['best_acc1']
+            optimizer.load_state_dict(checkpoint['optimizer'])
+            logger.info("resume training from '{}' at iter {}".format(
+                args.checkpoint, args.start_iter))
+        else:
+            logger.info("load checkpoint from '{}'".format(args.checkpoint))
 
-    if args.rank == 0 and cfgs.saver.get('save_dir', None):
-        if not os.path.exists(cfgs.saver.save_dir):
-            os.makedirs(cfgs.saver.save_dir)
-            logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
+    args.save_dir = cfgs.trainer.get('save_dir', None)
+    if args.rank == 0 and args.save_dir:
+        if not os.path.exists(args.save_dir):
+            os.makedirs(args.save_dir)
+            logger.info("create checkpoint folder {}".format(args.save_dir))
 
-    # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.max_iter)
+    # build dataloader
+    train_loader, train_sampler, test_loader, _, _, test_dataset = build_iter_dataloader(cfgs.data, args.world_size, args.end_iter - args.start_iter + 1)
+
+    args.test_dataset = test_dataset
 
     # test mode
     if args.test:
-        test(test_loader, model, criterion, args)
+        test(test_loader, model, criterion, args, cfgs)
         return
 
     # choose scheduler
@@ -163,24 +175,30 @@ def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, 
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
     memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(args.max_iter, batch_time, data_time, losses, top1, top5,
-                             memory, prefix="Iter: ")
+    lr = AverageMeter('LR', ':.6f')
+    progress = ProgressMeter(args.end_iter, batch_time, data_time, losses, top1, top5,
+                             memory, lr, prefix="Iter: ")
 
     # switch to train mode
     model.train()
+    args.cur_iter = args.start_iter
     end = time.time()
-    for i, (input, target) in enumerate(train_loader):
-        cur_iter = args.start_iter + i
+    for input, target in train_loader:
         # measure data loading time
         data_time.update(time.time() - end)
+        lr_scheduler.step(args.cur_iter)
+        lr.update(lr_scheduler.get_lr()[0])
 
         input = input.cuda()
         target = target.cuda()
-        lr_scheduler.step(cur_iter)
 
-        # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        if args.mixup:
+            mixed_input, target_a, target_b, lam = mixup_data(input, target, args.mixup)
+            output = model(mixed_input)
+            loss = mixup_criterion(criterion, output, target_a, target_b, lam)
+        else:
+            output = model(input)
+            loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
@@ -197,7 +215,7 @@ def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, 
         # compute gradient and do SGD step
         optimizer.zero_grad()
         if args.half:
-            loss *= optimizer.loss_scale
+            loss = optimizer.scale_up_loss(loss)
         loss.backward()
         model.average_gradients()
         optimizer.step()
@@ -206,40 +224,42 @@ def train(train_loader, test_loader, model, criterion, optimizer, lr_scheduler, 
         batch_time.update(time.time() - end)
         end = time.time()
 
-        if cur_iter % args.log_freq == 0:
-            progress.display(cur_iter)
+        if args.cur_iter % args.log_freq == 0:
+            progress.display(args.cur_iter)
             if args.rank == 0 and monitor_writer:
-                monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
+                monitor_writer.add_scalar('Train_Loss', losses.avg, args.cur_iter)
+                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, args.cur_iter)
+                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, args.cur_iter)
 
-        if (cur_iter + 1) % args.test_freq == 0 or (cur_iter + 1) == args.max_iter:
+        if args.cur_iter % args.test_freq == 0 or args.cur_iter == args.end_iter:
             # evaluate on validation set
-            val_loss, acc1, acc5 = test(test_loader, model, criterion, args)
+            #val_loss, acc1, acc5 = test(test_loader, model, criterion, args, cfgs)
+            val_loss, acc1, acc5 = 1, 1, 1
 
             if args.rank == 0:
                 if monitor_writer:
-                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, cur_iter)
-                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, cur_iter)
-                    monitor_writer.add_scalar('Test_loss', val_loss, cur_iter)
+                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, args.cur_iter)
+                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, args.cur_iter)
+                    monitor_writer.add_scalar('Test_loss', val_loss, args.cur_iter)
 
                 checkpoint = {
-                    'iter': cur_iter,
+                    'last_iter': args.cur_iter,
                     'arch': cfgs.net.arch,
                     'state_dict': model.state_dict(),
                     'best_acc1': args.best_acc1,
                     'optimizer': optimizer.state_dict()
                 }
 
-                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_iter_{}.pth'.format(cur_iter))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
+                ckpt_path = os.path.join(args.save_dir, cfgs.net.arch + '_iter_{}.pth'.format(args.cur_iter))
+                best_ckpt_path = os.path.join(args.save_dir, cfgs.net.arch + '_best.pth')
                 torch.save(checkpoint, ckpt_path)
                 if acc1 > args.best_acc1:
                     args.best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
+        args.cur_iter += 1
 
 
-def test(test_loader, model, criterion, args):
+def test(test_loader, model, criterion, args, cfgs):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -248,7 +268,9 @@ def test(test_loader, model, criterion, args):
     progress = ProgressMeter(len(test_loader), batch_time, losses, top1, top5,
                              prefix="Test: ")
 
+    test_loader, _, = build_iter_dataloader_test(cfgs.data)
     # switch to evaluate mode
+    model.broadcast_model()
     model.eval()
     with torch.no_grad():
         end = time.time()
@@ -292,6 +314,7 @@ def test(test_loader, model, criterion, args):
                     acc5, stats_all[1].item(), stats_all[2].item()))
     model.train()
 
+    del test_loader
     return loss_avg, acc1, acc5
 
 

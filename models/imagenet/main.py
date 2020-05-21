@@ -125,7 +125,7 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.data, args.world_size)
 
     # test mode
     if args.test:

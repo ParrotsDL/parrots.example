@@ -1,7 +1,7 @@
 import torch
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-import pape.data as pdata
+import pape.data
 import numpy as np
 
 
@@ -54,6 +54,7 @@ def build_augmentation(cfg):
         compose_list.append(transforms.RandomResizedCrop(cfg.random_resize_crop))
     if cfg.resize:
         compose_list.append(transforms.Resize(cfg.resize))
+
     if cfg.random_crop:
         if cfg.padding:
             compose_list.append(transforms.RandomCrop(cfg.random_crop, padding=cfg.padding))
@@ -78,32 +79,75 @@ def build_augmentation(cfg):
     return transforms.Compose(compose_list)
 
 
-def build_dataloader(cfg, world_size, max_iter=5005):
+def build_epoch_dataloader(cfg, world_size):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
 
-    if cfg.type and cfg.type == 'cifar10':
+    data_type = cfg.get('type', 'mc')
+    if data_type == 'mc':
+        train_dataset = pape.data.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+        test_dataset = pape.data.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_type == 'ceph':
+        train_dataset = pape.data.CephDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+        test_dataset = pape.data.CephDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_type == 'cifar10':
         train_dataset = datasets.CIFAR10(root=cfg.train.image_dir,
                                          train=True, download=False, transform=train_aug)
         test_dataset = datasets.CIFAR10(root=cfg.test.image_dir,
                                         train=False, download=False, transform=test_aug)
-    elif cfg.get('read_from', 'mc') == 'ceph':
-        train_dataset = pdata.CephDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
-        test_dataset = pdata.CephDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
-    else:
-        train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
-        test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
 
-    if cfg.get('iter_wise', False):
-        train_sampler = pdata.DistributedIterSampler(train_dataset, max_iter, batch_size=cfg.batch_size)
-    else:
-        train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
+    train_sampler = pape.data.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
+        train_dataset, batch_size=cfg.batch_size, shuffle=False,
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    test_sampler = pdata.DistributedSampler(test_dataset, round_up=False, shuffle=False)
+    test_sampler = pape.data.DistributedSampler(test_dataset, round_up=False, shuffle=False)
     test_loader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
+        test_dataset, batch_size=cfg.batch_size, shuffle=False,
         num_workers=cfg.workers, pin_memory=True, sampler=test_sampler)
     return train_loader, train_sampler, test_loader, test_sampler
+
+def build_iter_dataloader(cfg, world_size, max_iter):
+    train_aug = build_augmentation(cfg.train)
+    test_aug = build_augmentation(cfg.test)
+
+    data_type = cfg.get('type', 'mc')
+    if data_type == 'mc':
+        train_dataset = pape.data.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+        test_dataset = pape.data.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_type == 'ceph':
+        train_dataset = pape.data.CephDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+        test_dataset = pape.data.CephDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_type == 'cifar10':
+        train_dataset = datasets.CIFAR10(root=cfg.train.image_dir,
+                                         train=True, download=False, transform=train_aug)
+        test_dataset = datasets.CIFAR10(root=cfg.test.image_dir,
+                                        train=False, download=False, transform=test_aug)
+    train_sampler = pape.data.DistributedIterSampler(train_dataset, max_iter, batch_size=cfg.batch_size)
+    train_loader = torch.utils.data.DataLoader(
+        train_dataset, batch_size=cfg.batch_size, shuffle=False,
+        num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
+
+    test_sampler = pape.data.DistributedSampler(test_dataset, round_up=False, shuffle=False)
+    test_loader = torch.utils.data.DataLoader(
+        test_dataset, batch_size=cfg.batch_size, shuffle=False,
+        num_workers=cfg.workers, pin_memory=True, sampler=test_sampler)
+    return train_loader, train_sampler, test_loader, test_sampler, train_dataset, test_dataset
+
+def build_iter_dataloader_test(cfg):
+    test_aug = build_augmentation(cfg.test)
+
+    data_type = cfg.get('type', 'mc')
+    if data_type == 'mc':
+        test_dataset = pape.data.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_type == 'ceph':
+        test_dataset = pape.data.CephDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_type == 'cifar10':
+        test_dataset = datasets.CIFAR10(root=cfg.test.image_dir,
+                                        train=False, download=False, transform=test_aug)
+
+    test_sampler = pape.data.DistributedSampler(test_dataset, round_up=False, shuffle=False)
+    test_loader = torch.utils.data.DataLoader(
+        test_dataset, batch_size=cfg.batch_size, shuffle=False,
+        num_workers=cfg.workers, pin_memory=True, sampler=test_sampler)
+    return test_loader, test_sampler

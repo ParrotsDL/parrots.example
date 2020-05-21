@@ -1,0 +1,72 @@
+gpus_need: 8
+
+net:
+  arch: resnet50d
+  kwargs:
+    num_classes: 1000
+  #bn:
+  #  type: syncbn # bn, splitbn
+  #  kwargs:
+  #     group_size: null
+  
+data:
+  type: mc # mc, ceph, cifar10
+  batch_size: 128
+  workers: 4
+  train:
+    image_dir: /mnt/lustre/share/images/train
+    meta_file: /mnt/lustre/share/images/meta/train.txt
+    random_resize_crop: 224
+    colorjitter: [0.2, 0.2, 0.2, 0.1]
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    mirror: True
+  test:
+    image_dir: /mnt/lustre/share/images/val
+    meta_file: /mnt/lustre/share/images/meta/val.txt
+    resize: 256
+    center_crop: [224, 224]
+    colorjitter:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    mirror: False
+ 
+trainer:
+  type: iter # epoch
+  start_iter: 1  # include
+  end_iter: 250000 # include
+  test_freq: 2500
+  save_dir: checkpoints/resnet50d-bs128   # save checkpoint locally
+  log_freq: 20
+  mixed_precision:
+    type: float # half
+    loss_scale: 128.0 # dynamic
+    float_bn: True
+    #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
+    #float_module_name: "{'fc':('float', 'half')}"
+  label_smooth: 0.1
+  mixup: 0.2
+  optimizer:
+    type: SGD
+    kwargs:
+      lr: 0.1
+      momentum: 0.9
+      weight_decay: 0.0001
+      nesterov: True
+  lr_scheduler:
+    warmup: 2500
+    type: CosineLR
+    kwargs:
+      base_lr: 0.1
+      warmup_lr: 0.4
+      warmup_steps: 2500
+      min_lr: 0.0
+      max_iter: 250000
+
+monitor:
+  type: pavi
+  _taskid: # continue training
+  kwargs:
+    project: default  # change to your own pavi project
+    task: resnet50d-bs128
+    model: resnet50d-bs128
