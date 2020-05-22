@@ -28,8 +28,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 2
-  test_freq: 3
+  max_epoch: 120
+  test_freq: 121
   log_freq: 200
   label_smooth:
   optimizer:
@@ -51,7 +51,7 @@ saver:
   # load_pavi:   # load pretrain/resume model from pavi
   # save_pavi:   # add snapshot to pavi
   save_dir: checkpoints/resnet18   # save checkpoint locally
-  save_epoch_freq: 2
+  save_epoch_freq: 10
   save_latest: False
   save_best: True
   sync_bn_stats: False
