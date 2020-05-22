@@ -55,11 +55,3 @@ saver:
   pretrain_model:
   resume_model:
   save_dir: checkpoints/alexnet_bn   # save checkpoint locally
- 
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: alexnet  # change to your own pavi project
-    task: alexnet
-    model: alexnet_bn
