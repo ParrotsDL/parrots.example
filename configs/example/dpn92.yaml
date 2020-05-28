@@ -1,20 +1,15 @@
 seed: 99
 net:
-    type: dpn92
+    arch: dpn92
     kwargs:
         num_classes: 1000
-    #bn:
-    #    group_size: 1
-    #fp16:
-    #    scale_factor: 1024
  
 dataset:
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
-    reader: opencv
-    resize: 256
-    random_crop: [224, 224]
+    reader: pillow
+    random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
@@ -22,20 +17,18 @@ dataset:
   test:
     meta_file: /mnt/lustre/share/images/meta/val.txt
     image_dir: /mnt/lustre/share/images/val
-    reader: opencv
+    reader: pillow
     resize: 256
     center_crop: [224, 224]
-    colorjitter:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
-    mirror: False
   batch_size: 32
   workers: 4
  
 trainer:
-  max_epoch: 100
-  test_freq: 100
-  log_freq: 100
+  max_epoch: 2
+  test_freq: 3
+  log_freq: 200
   label_smooth:
   optimizer:
     type: SGD
@@ -51,22 +44,21 @@ trainer:
       gamma: 0.1
  
 saver:
-  #pretrian_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
-  #resume_model: ckpt_e1.pth_02c603a7-3959-4b58-b089-723e39f75974
-  #load_pavi: True   # load pretrain/resume model from pavi
-  #save_pavi: True   # add snapshot to pavi
-  save_dir: checkpoints/dpn92  # save checkpoint locally
-  save_epoch_freq: 10
-  save_latest: True
+  # pretrian_model: 
+  # resume_model: 
+  # load_pavi:   # load pretrain/resume model from pavi
+  # save_pavi: True   # add snapshot to pavi
+  save_dir: checkpoints/dpn92   # save checkpoint locally
+  save_epoch_freq: 2
+  save_latest: False
   save_best: True
-  sync_bn_stats: False  
  
-monitor:
-  #type: pavi
-  #kwargs:
-  #  project: zhujuan_demo
-  #  task: dpn92
-  #  model: dpn92
+# monitor:
+  # type: pavi
+  # kwargs:
+  #   project: default
+  #   task: dpn92
+  #   model: dpn92
   # type: tensorboard
   # kwargs:
   #     logdir: tensorboard

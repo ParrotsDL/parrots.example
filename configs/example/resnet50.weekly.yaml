@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: resnet50
+    arch: resnet50
     kwargs:
         num_classes: 1000
  

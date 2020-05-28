@@ -1,0 +1,15 @@
+augment: stdmix
+
+data:
+    origin_train:
+        transform_batch:
+            name: cuda_remain_mixup
+            alpha: _ALPHATRION_DELETE_CONFIG_
+    nas_train:
+        transform_batch:
+            name: cuda_remain_mixup
+            alpha: _ALPHATRION_DELETE_CONFIG_
+    adabn:
+        transform_batch:
+            name: cuda_remain_mixup
+            alpha: _ALPHATRION_DELETE_CONFIG_

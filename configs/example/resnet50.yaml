@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: resnet50
+    arch: resnet50
     kwargs:
         num_classes: 1000
  
@@ -29,8 +29,8 @@ dataset:
  
 trainer:
   max_epoch: 120
-  test_freq: 120
-  log_freq: 100
+  test_freq: 121
+  log_freq: 200
   label_smooth:
   optimizer:
     type: SGD
@@ -46,17 +46,17 @@ trainer:
       gamma: 0.1
  
 saver:
-  pretrain_model:
-  resume_model:
+  # pretrain_model:
+  # resume_model:
   #load_pavi:   # load pretrain/resume model from pavi
   #save_pavi:   # add snapshot to pavi
   save_dir: checkpoints/resnet50   # save checkpoint locally
   save_epoch_freq: 10
   save_latest: False
-  save_best: False
+  save_best: True
   sync_bn_stats: False  
  
-monitor:
+# monitor:
   # type: pavi
   # _taskid: # continue training
   # kwargs:

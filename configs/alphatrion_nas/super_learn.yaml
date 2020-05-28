@@ -1,0 +1,22 @@
+py_file: super_learn.py
+run_name: '@{run_names.super_learn}'
+eval_names: [nas_valid, origin_valid]
+
+cudnn_benchmark: true
+image_size: '@{super_learn_image_size}'
+update_freq: 4
+
+data:
+    names: [train, adabn, nas_valid, origin_valid]
+    train: '@{data.nas_train}'
+
+network:
+    names: [main]
+
+metric:
+    names: [train, nas_valid, origin_valid]
+    nas_valid: '@{metric.valid}'
+    origin_valid: '@{metric.valid}'
+    critical_metric_names: [
+        nas_valid_top1, nas_valid_top5,
+    ]

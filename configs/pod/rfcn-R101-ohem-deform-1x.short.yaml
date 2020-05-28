@@ -30,8 +30,8 @@ dataset: # Required.
       iou_thresh: 0.5 
 
 trainer: # Required.
-  max_epoch: 1 #18       # total epochs for the training
-  test_freq: 2 #19
+  max_epoch: 0       # total epochs for the training
+  test_freq: 1
   optimizer:          # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
     kwargs:
@@ -46,9 +46,9 @@ trainer: # Required.
       gamma: 0.1          # decay rate
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
+  save_dir: checkpoints/rfcn-R101-ohem-deform-1x     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet101-5d3b4d8f.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/rfcn-R101-ohem-deform-1x  # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_dt:    # visualize detection results
   #    output_dir: vis_dt
   #    bbox_thresh: 0.3
@@ -118,7 +118,10 @@ net: # Required.
       initializer:
         method: msra
       cfg:
-        smooth_l1_sigma: 1.0      # set as 1000.0 to use L1-loss for bbox head
+        bbox_loss:
+          type: smooth_l1
+          kwargs:
+            sigma: 1.0
         roipooling:
           method: 'psroipool'     # choices=['roialignpool', 'psroipool', 'roipool']. note that 'psroipool' is for RFCN head
           pool_size: 7

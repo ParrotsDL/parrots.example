@@ -1,0 +1,160 @@
+pod_faster-rcnn-R50-FPN-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.53
+    bbox_ap: 0.354
+    seg_ap: None
+pod_faster-rcnn-R50-FPN-1x_mix: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.49
+    bbox_ap: 0.355
+    seg_ap: None
+pod_retinanet-R50-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.52
+    bbox_ap: 0.350
+    seg_ap: None
+pod_mask-rcnn-R50-FPN-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.62
+    bbox_ap: 0.362
+    seg_ap: 0.328
+pod_mask-rcnn-R50-FPN-1x_mix: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.59
+    bbox_ap: 0.363
+    seg_ap: 0.329
+pod_keypoint-rcnn-R50-FPN-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.71
+    bbox_ap: 0.541
+    seg_ap: 0.637
+pod_keypoint-rcnn-R50-FPN-1x_mix: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.57
+    bbox_ap: 0.542
+    seg_ap: 0.636
+pod_rfcn-R101-ohem-deform-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "Thanks"
+  thresh: # Required
+    iter_speed: 0.86
+    bbox_ap: 0.823
+    seg_ap: None
+pod_cascade-rcnn-R50-FPN-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.65
+    bbox_ap: 0.398
+    seg_ap: None
+pod_faster-rcnn-mobilenet-FPN-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.49
+    bbox_ap: 0.129
+    seg_ap: None
+pod_faster-rcnn-mobilenet-FPN-1x_mix: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.56
+    bbox_ap: 0.151
+    seg_ap: None
+pod_faster-rcnn-shufflenet-FPN-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.41
+    bbox_ap: 0.132
+    seg_ap: None
+pod_rfcn-mobilenet-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "Thanks"
+  thresh: # Required
+    iter_speed: 0.48
+    bbox_ap: 0.258
+    seg_ap: None
+pod_rfcn-shufflenet-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "Thanks"
+  thresh: # Required
+    iter_speed: 0.49
+    bbox_ap: 0.313
+    seg_ap: None
+pod_grid-rcnn-R50-FPN-2x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.66
+    bbox_ap: 0.384
+    seg_ap: None
+pod_retinanet-R50-ghm-1x: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 1.03
+    bbox_ap: 0.165
+    seg_ap: None
+pod_faster-rcnn-R50-FPN-1x-DCN@C3-C5: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.58
+    bbox_ap: 0.248
+    seg_ap: None
+pod_retinanet-R50-GN-FA: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.88
+    bbox_ap: 0.087
+    seg_ap: None
+pod_faster-rcnn-R50-NASFPN-1x_mix: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.9
+    bbox_ap: 0.393
+    seg_ap: None
+pod_faster-rcnn-R50-PAFPN-1x_mix: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.7
+    bbox_ap: 0.217
+    seg_ap: None

@@ -1,0 +1,18 @@
+py_file: normal_learn.py
+run_name: ${project}/normal_learn/${search_space}/epoch${num_epochs}_aug-${augment}
+num_epochs: 200
+eval_names: [valid]
+data:
+    names: [train, valid]
+    train: '@{data.origin_train}'
+    valid: '@{data.origin_valid}'
+
+network:
+    names: [main]
+    main:
+        kwargs:
+            search_space_path: configs/outcome/${search_space}.yaml
+
+metric:
+    names: [train, valid]
+    critical_metric_names: [valid_top1, valid_top5]
