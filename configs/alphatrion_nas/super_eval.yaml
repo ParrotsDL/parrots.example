@@ -1,0 +1,38 @@
+py_file: super_eval.py
+run_name: ${project}/super_eval/${common_setting}
+ckpt: ''
+num_epochs: '@{all_num_epochs.super_learn}'
+# eval_names: [
+#     max_nas_valid, ref_nas_valid, min_nas_valid,
+#     max_origin_valid, ref_origin_valid, min_origin_valid,
+# ]
+eval_names: [
+    ref_origin_valid,
+]
+data:
+    names: [
+        adabn,
+        max_nas_valid, ref_nas_valid, min_nas_valid,
+        max_origin_valid, ref_origin_valid, min_origin_valid,
+    ]
+    max_nas_valid: '@{data.nas_valid}'
+    ref_nas_valid: '@{data.nas_valid}'
+    min_nas_valid: '@{data.nas_valid}'
+    max_origin_valid: '@{data.origin_valid}'
+    ref_origin_valid: '@{data.origin_valid}'
+    min_origin_valid: '@{data.origin_valid}'
+metric:
+    names: [
+        max_nas_valid, ref_nas_valid, min_nas_valid,
+        max_origin_valid, ref_origin_valid, min_origin_valid,
+    ]
+    max_nas_valid: '@{metric.valid}'
+    ref_nas_valid: '@{metric.valid}'
+    min_nas_valid: '@{metric.valid}'
+    max_origin_valid: '@{metric.valid}'
+    ref_origin_valid: '@{metric.valid}'
+    min_origin_valid: '@{metric.valid}'
+network:
+    main:
+        init: ckpt
+        ckpt: '@{ckpt}'

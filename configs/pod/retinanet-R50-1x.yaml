@@ -34,24 +34,25 @@ trainer: # Required.
       momentum: 0.9
       weight_decay: 0.0001
   lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
-    warmup_epochs: 0         # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
+    warmup_epochs: 1         # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
       milestones: [8,11]     # epochs to decay lr
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints/pod/retinanet-R5-1x_2      # dir to save checkpoints
-  pretrain_model: /mnt/lustre/share/platform/model_zoo/resnet50.pth
-  results_dir: results_dir/pod/retinanet-R50-1x_2   # dir to save detection results. i.e., bboxes, masks, keypoints
+  save_dir: checkpoints/retinanet-R50-1x      # dir to save checkpoints
+  pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  results_dir: results_dir/retinanet-R50-1x   # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_gt:
   #  output_dir: vis_gt
   #vis_dt:
   #  output_dir: vis_dt
   #  bbox_thresh: 0.3
 
-bn:
-  freeze: true
+
+#fp16:
+#  keep_batchnorm_fp32: True
 
 net: # Required.
   - name: backbone            # backbone = resnet50(frozen_layers, out_layers, out_strides)
@@ -61,6 +62,8 @@ net: # Required.
       out_layers: [2,3,4]     # layer1...4, commonly named Conv2...5
       out_strides: [8,16,32]  # tell the strides of output features
       deformable: False       # set it as true if using deform for fpn
+      normalize:
+        type: freeze_bn
       # layer4:               # provide config for layer4 if using deform for fpn, do not use atrous' algorithm
       #   stride: 2
       #   dilation: 1
@@ -111,7 +114,7 @@ net: # Required.
           pre_nms_score_thresh: 0.05  # to reduce computation
           pre_nms_top_n: 6000
           post_nms_top_n: 1000
-          across_levels:            # merge multi-level proposals
+          across_levels:              # merge multi-level proposals
             top_n: 100
             nms:
               type: naive

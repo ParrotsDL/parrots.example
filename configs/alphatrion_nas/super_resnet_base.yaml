@@ -1,0 +1,37 @@
+lr: 0.4
+num_gpus: 8 #32
+local_batch_size: 32
+image_size: 512
+label_smooth: 0.1
+search_space: super_resnet_range1
+fp: 32
+env: pat0.4.0rc0
+#common_setting: ${search_space}/fp{fp}/epoch${num_epochs}_aug-${augment}_lsm${label_smooth}_${sandwich.strategy}_init_${network.main.init}_lr${lr} # _regulate${gradient_regulator.use:d}_scaleup${gradient_regulator.scale_up:d} # _cosdist${sandwich.cosine_distill:d}
+common_setting: ${search_space}/fp${fp}/epoch${num_epochs}_gpus${num_gpus}_bs${local_batch_size}/${env}
+all_num_epochs:
+    super_learn: 200
+    single_search: 100
+network:
+    names: [main]
+    main:
+        name: super_net
+        kwargs:
+            search_space: configs/alphatrion_nas/search/${search_space}.yaml
+            zero_gamma: true
+            num_classes: '@{num_classes}'
+            seed: '@{seed}'
+            dropout: 0.0
+        init: default
+        ckpt: null
+sandwich:
+    num_rand: 2
+    mean_grad: false
+    strategy: uniform
+    # strategy: schedule
+    # strategy: population
+    population_digests: ''
+    # init_gamma: 10
+    # cosine_distill: false
+# gradient_regulator:
+#     use: true
+#     scale_up: true

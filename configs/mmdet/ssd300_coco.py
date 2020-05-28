@@ -49,7 +49,7 @@ data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/'
 img_norm_cfg = dict(mean=[123.675, 116.28, 103.53], std=[1, 1, 1], to_rgb=True)
 data = dict(
     imgs_per_gpu=8,
-    workers_per_gpu=0,
+    workers_per_gpu=2,
     train=dict(
         type='RepeatDataset',
         times=5,

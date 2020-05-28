@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: mobile_v1
+    arch: mobile_v1
     kwargs:
         num_classes: 1000
         scale: 1.0
@@ -44,9 +44,10 @@ trainer:
       weight_decay: 0.00004
   lr_scheduler:
     warmup_epochs: 0
-    type: CosineLR
+    type: MultiStepLR
     kwargs:
-      min_lr: 0.0
+      milestones: [30,60,90]
+      gamma: 0.1
  
 saver:
   #pretrian_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth

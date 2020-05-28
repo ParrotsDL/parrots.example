@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: se_resnet50
+    arch: se_resnet50
     kwargs:
         num_classes: 1000
     #bn:
@@ -31,9 +31,9 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 100
-  test_freq: 100
-  log_freq: 100
+  max_epoch: 120
+  test_freq: 121
+  log_freq: 200
   label_smooth:
   optimizer:
     type: SGD
@@ -49,13 +49,13 @@ trainer:
       gamma: 0.1
  
 saver:
-  pretrian_model: 
-  resume_model: 
+  # pretrian_model: 
+  # resume_model: 
   #load_pavi: True   # load pretrain/resume model from pavi
   #save_pavi: True   # add snapshot to pavi
   save_dir: checkpoints/se_resnet50   # save checkpoint locally
-  save_epoch_freq: 10
-  save_latest: True
+  save_epoch_freq: 120
+  save_latest: False
   save_best: True
   sync_bn_stats: False  
  

@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: inception_v3
+    arch: inception_v3
     kwargs:
         num_classes: 1000
     #bn:
@@ -45,9 +45,10 @@ trainer:
       weight_decay: 0.0001
   lr_scheduler:
     warmup_epochs: 0
-    type: CosineLR
+    type: MultiStepLR
     kwargs:
-      min_lr: 0.0
+      milestones: [30,60,90]
+      gamma: 0.1
  
 saver:
   #pretrian_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth

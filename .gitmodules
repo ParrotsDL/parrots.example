@@ -1,6 +1,7 @@
 [submodule "models/pytorch-object-detection"]
 	path = models/pytorch-object-detection
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+	branch = pat0.6/v2.2.3
 [submodule "models/parrots.example"]
 	path = models/parrots.example
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/parrots.example.git
@@ -12,4 +13,26 @@
 	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
 [submodule "models/mmdetection-pro"]
 	path = models/mmdetection-pro
-	url = git@gitlab.bj.sensetime.com:AR3Dtools/mmdetection-pro.git
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/mmdetection-pro.git
+[submodule "models/ssd"]
+	path = models/ssd
+	url = git@gitlab.bj.sensetime.com:liuguangyu/ssd.git
+	branch = pat0.6
+[submodule "models/alphatrion"]
+	path = models/alphatrion
+	url = git@gitlab.bj.sensetime.com:liuguangyu/alphatrion.git
+	branch = pat0.6
+[submodule "models/alphatrion_nas"]
+	path = models/alphatrion_nas
+	url = git@gitlab.sz.sensetime.com:wangshiguang/alphatrion_nas.git
+	branch = pat0.6
+[submodule "models/Light_Nas_zpzhang"]
+	path = models/Light_Nas_zpzhang
+	url = git@gitlab.bj.sensetime.com:wangshiguang/Light_Nas_zpzhang.git
+	branch = pat0.6
+[submodule "models/srdemo"]
+	path = models/srdemo
+	url = git@gitlab.bj.sensetime.com:luopeichao/srdemo.git
+[submodule "tests/deploy/quantization/Famicom"]
+	path = tests/deploy/quantization/Famicom
+	url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git

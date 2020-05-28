@@ -1,0 +1,22 @@
+run_name: bag_of_tricks/mobilenet_v2/gpu8_batch32_0gamma_nodecay_smooth0.1_colorless_warmup5_coslr0.1_epoch50
+num_epochs: 50
+
+network:
+    main:
+        name: mobilenet_v2
+        kwargs:
+            zero_gamma: _ALPHATRION_DELETE_CONFIG_
+
+data:
+    train:
+        transform_image:
+            name: TrainColorless
+        transform_batch:
+            name: cuda_remain
+            alpha: _ALPHATRION_DELETE_CONFIG_
+
+optimizer:
+    main:
+        kwargs:
+            weight_decay: 0.00004
+

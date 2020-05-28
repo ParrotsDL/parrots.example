@@ -1,0 +1,16 @@
+py_file: super_learn.py
+run_name: ${project}/super_learn/${common_setting}_part_train
+num_epochs: '@{all_num_epochs.super_learn}'
+eval_names: [max_origin_valid, ref_origin_valid, min_origin_valid]
+data:
+    names: [train, adabn, max_origin_valid, ref_origin_valid, min_origin_valid]
+    train: '@{data.nas_train}'
+    max_origin_valid: '@{data.origin_valid}'
+    ref_origin_valid: '@{data.origin_valid}'
+    min_origin_valid: '@{data.origin_valid}'
+metric:
+    names: [train, max_origin_valid, ref_origin_valid, min_origin_valid]
+    max_origin_valid: '@{metric.valid}'
+    ref_origin_valid: '@{metric.valid}'
+    min_origin_valid: '@{metric.valid}'
+    critical_metric_names: []
