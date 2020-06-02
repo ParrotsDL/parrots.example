@@ -1,0 +1,84 @@
+model:
+  type: FaceModel
+  feature_dim: 256
+  backbone:
+    type: XMetaFaceNet
+  logits:
+    type: ArcFace
+
+lr_scheduler:
+  line_chain:
+    - mode: cosine
+      ratio: 0.1
+      start: 0.00001
+      target: 0.1  # total batch size is 128 * 8 = 1k
+    - mode: fixed
+      ratio: 0.3
+      target: 0.1
+    - mode: fixed
+      ratio: 0.6
+      target: 0.01
+    - mode: fixed
+      ratio: 0.9
+      target: 0.001
+    - mode: fixed
+      ratio: 1.0
+      target: 0.0001
+
+mimic_loss_scheduler:
+  - mode: fixed
+    ratio: 0.5
+    target: 1.0
+  - mode: linear
+    ratio: 0.8
+    target: 0.01
+
+cls_loss_scheduler:
+  - mode: fixed
+    ratio: 1.0
+    target: 0.01
+
+optimizer:
+  type: SGD
+  kwargs:
+    momentum: 0.9
+    weight_decay: 5.e-4
+  $ref: ../../models/mild/configs/optimizer/face_weight_decay_5e-4.yaml
+
+sync_batch_norm_2d:
+  bn_group_size: 1
+  bn_var_mode: L2
+  bn_sync_stats: True
+
+mimic_criterion:
+  type: NormalizedL2Loss
+
+cls_criterion:
+  type: CrossEntropyLoss
+
+dataset:
+  steps: 360000
+  batch_size: 64
+  num_workers: 1
+  print_frequency: 50
+  validate_frequency: 10000
+  dataset_train:
+    type: FaceTaskDataset
+    with_feature: True
+    feature_dim: 256
+    augmentation:
+      $ref: ../../models/mild/configs/augmentation/Face_110_15_224.yaml
+
+tasks:
+  - dataset:
+      dataset_train:
+        feature:
+        - /mnt/lustre/share_data/yuzhipeng/trillion/features/trillion_feat
+        list:
+        - /mnt/lustre/share_data/yuzhipeng/trillion/cleaned_TrillionPair_imagelist_v1_0.list
+        meta:
+        - /mnt/lustre/share_data/yuzhipeng/trillion/cleaned_TrillionPair_metalist_v1_0.list
+        name: trillion
+        prefix:
+        - /mnt/lustre/share_data/yuzhipeng/trillion/Images_aligned/
+    

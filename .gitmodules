@@ -36,3 +36,6 @@
 [submodule "tests/deploy/quantization/Famicom"]
 	path = tests/deploy/quantization/Famicom
 	url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git
+[submodule "mild"]
+	path = models/mild
+	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
