@@ -1,0 +1,27 @@
+mild_base_mbv2: # Required
+  func: mild_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    total_time: 35.0
+    iter_speed: 0.31
+    pre1: 0.1737
+    pre5: 0.3737
+mild_base_r100: # Required
+  func: mild_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    total_time: 35.0
+    iter_speed: 0.31
+    pre1: 0.1737
+    pre5: 0.3737
+mild_base_xmeta: # Required
+  func: mild_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    total_time: 35.0
+    iter_speed: 0.31
+    pre1: 0.1737
+    pre5: 0.3737

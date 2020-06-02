@@ -197,6 +197,18 @@ def ssd_func(done_flag="Pipeline is Done",
     return ret
 
 @register_callfunc
+def mild_func(done_flag="Pipeline is Done",
+             iter_speed_flag="Step 600/360000=0.2% (0/27), LR 0.0001, F-Time 0.04 (0.20), B-Time 0.07 (0.08), Data-Time 0.20 (0.01)",
+             acc_flag="Loss 1.33 (1.33), Cls Loss 50.43 (50.29), Weight 0.01, Mimic Loss 0.83 (0.82), Weight 1.00, Prec@1 0.00 (0.00), Prec@5 0.00 (0.00)"
+             ips_flag="hostname is:(.+)",
+             **args):
+    ret = {}
+    ret.update(**args)
+    for line in sys.stdin:
+        pass
+    return ret
+
+@register_callfunc
 def alphatrion_nas_func(done_flag="Pipeline is Done",
                  max_sce_flag="max_origin_valid_sce (\[.*\])",
                  max_top1_flag="max_origin_valid_top1 (\[.*\])",
