@@ -29,6 +29,7 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -140,15 +141,17 @@ def main():
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
     monitor_writer = None
-    if args.rank == 0 and cfgs.get('monitor', None):
+    if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
         if cfgs.monitor.get('type', None) == 'pavi':
-            from pavi import SummaryWriter
-            if cfgs.monitor.get("_taskid", None):
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs,taskid=cfgs.monitor._taskid)
+            if args.pavi:
+                monitor_kwargs = {'task': cfgs.net.arch}
             else:
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
+                monitor_kwargs = cfgs.monitor.kwargs
+                if hasattr(cfgs.monitor, '_taskid'):
+                    monitor_kwargs['taskid'] = cfgs.monitor._taskid
+            from pavi import SummaryWriter
+            monitor_writer = SummaryWriter(
+                session_text=yaml.dump(args.config), **cfgs.monitor_kwargs)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
