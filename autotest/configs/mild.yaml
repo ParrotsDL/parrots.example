@@ -3,8 +3,9 @@ mild_base_mbv2: # Required
   args:
     done_flag: "Pipeline is Done"
   thresh: # Required
-    total_time: 35.0
-    iter_speed: 0.31
+    fwd_iter_speed: 0.08
+    bwd_iter_speed: 0.15
+    data_iter_speed: 0.01
     cls_loss: 20
     mimic_loss: 0.7
 mild_base_r100: # Required
@@ -12,8 +13,9 @@ mild_base_r100: # Required
   args:
     done_flag: "Pipeline is Done"
   thresh: # Required
-    total_time: 35.0
-    iter_speed: 0.31
+    fwd_iter_speed: 0.08
+    bwd_iter_speed: 0.15
+    data_iter_speed: 0.01
     cls_loss: 20
     mimic_loss: 0.7
 mild_base_xmeta: # Required
@@ -21,7 +23,8 @@ mild_base_xmeta: # Required
   args:
     done_flag: "Pipeline is Done"
   thresh: # Required
-    total_time: 35.0
-    iter_speed: 0.31
+    fwd_iter_speed: 0.08
+    bwd_iter_speed: 0.15
+    data_iter_speed: 0.01
     cls_loss: 20
     mimic_loss: 0.7

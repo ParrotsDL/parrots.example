@@ -198,20 +198,28 @@ def ssd_func(done_flag="Pipeline is Done",
 
 @register_callfunc
 def mild_func(done_flag="Pipeline is Done",
-             iter_speed_flag="Step 600/360000=0.2% (0/27), LR 0.0001, F-Time 0.04 (0.20), B-Time 0.07 (0.08), Data-Time 0.20 (0.01)",
-             acc_flag="Loss 1.33 (1.33), Cls Loss 50.43 (50.29), Weight 0.01, Mimic Loss 0.83 (0.82), Weight 1.00, Prec@1 0.00 (0.00), Prec@5 0.00 (0.00)"
+             f_iter_speed_flag="F\-Time\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)",
+             b_iter_speed_flag="B\-Time\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)",
+             d_iter_speed_flag="Data\-Time\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)",
+             mimic_loss_flag='Mimic\ Loss\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)',
+             cls_loss_flag='Cls\ Loss\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)',
              ips_flag="hostname is:(.+)",
              **args):
     ret = {}
     ret.update(**args)
-    keys = ['iter_speed', 'pre1', 'pre5']
+    keys = ['is_done', 'fwd_iter_speed', 'bwd_iter_speed', 'data_iter_speed',
+            'mimic_loss', 'cls_loss', 'ips']
+    flags = [done_flag, f_iter_speed_flag, b_iter_speed_flag, d_iter_speed_flag,
+             mimic_loss_flag, cls_loss_flag, ips_flag]
+    for key in keys:
+        ret[key] = None
     for line in sys.stdin:
-        for key in keys:
-            val = ret.get(key, None)
-            if val is not None:
+        for key, flag in zip(keys, flags):
+            rv = re.search(flag, line)
+            if rv is None:
+                # not found flag in this line
                 continue
-            rv = re.search(iter_speed_flag, line)
-            ret[key] = val
+            ret[key] = rv.group(0)
     return ret
 
 @register_callfunc
