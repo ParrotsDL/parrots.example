@@ -12,7 +12,7 @@ import numpy as np
 callback_funcs = dict()
 
 if os.environ.get('LOG_STREAM_DEBUG') is not None:
-    log_stream = osp.open(os.environ.get('LOG_STREAM_DEBUG'), 'r').readlines()
+    log_stream = open(os.environ.get('LOG_STREAM_DEBUG'), 'r').readlines()
 else:
     log_stream = sys.stdin
 
@@ -201,6 +201,7 @@ def ssd_func(done_flag="Pipeline is Done",
         ret['total_time'] = total_time
     return ret
 
+
 @register_callfunc
 def alphatrion_nas_func(done_flag="Pipeline is Done",
                  max_sce_flag="max_origin_valid_sce (\[.*\])",
@@ -317,6 +318,46 @@ def alphatrion_nas_func(done_flag="Pipeline is Done",
     iter_speeds = [float(t) for t in iter_speeds]
     ret['iter_speed'] = np.mean(iter_speeds)
     return ret
+
+
+@register_callfunc
+def nas_lite_func(done_flag="Pipeline is Done",
+                  iter_speed_flag="INFO] Iter: \[100\/.*]	Time [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)	Data",
+                  prec_flag="Prec@1 [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)	Prec@5 [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)",
+                  ips_flag="node_list: (.+)",
+                  **args):
+    """ log_file: read from stdin as default
+        iter_speed_flag: flag for 100 iter time
+        prec_flag: flag for Prec@1 and Prec@5
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['prec1'] = 'none'
+    ret['prec5'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        # print(line)
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(1)
+        prec = re.search(prec_flag, line)
+        if prec is not None:
+            ret['prec1'] = prec.group(1)
+            ret['prec5'] = prec.group(2)
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
+
 
 def callback_wapper(func_name, **args):
     ret_dict = callback_funcs[func_name](**args)

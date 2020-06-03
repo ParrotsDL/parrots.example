@@ -29,7 +29,7 @@ common:
         warmup_lr: 0.2
         warmup_steps: 2500
         min_lr: 0.0
-        max_iter: 250000
+        max_iter: 2500 #250000
 
     optimizer:
         type: SGD
