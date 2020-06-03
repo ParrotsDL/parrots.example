@@ -11,8 +11,8 @@ import numpy as np
 
 callback_funcs = dict()
 
-if os.env.get('LOG_STREAM_DEBUG') is not None:
-    log_stream = osp.open(os.env.get('LOG_STREAM_DEBUG'), 'r').readlines()
+if os.environ.get('LOG_STREAM_DEBUG') is not None:
+    log_stream = osp.open(os.environ.get('LOG_STREAM_DEBUG'), 'r').readlines()
 else:
     log_stream = sys.stdin
 
