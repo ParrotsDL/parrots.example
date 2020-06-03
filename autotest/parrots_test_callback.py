@@ -11,6 +11,11 @@ import numpy as np
 
 callback_funcs = dict()
 
+if os.environ.get('LOG_STREAM_DEBUG') is not None:
+    log_stream = osp.open(os.environ.get('LOG_STREAM_DEBUG'), 'r').readlines()
+else:
+    log_stream = sys.stdin
+
 
 def register_callfunc(func):
     callback_funcs[func.__name__] = func
@@ -38,7 +43,7 @@ def pod_func(done_flag="copypaste:|Thanks",
     ret['bbox_ap'] = 'none'
     ret['seg_ap'] = 'none'
     ret['ips'] = 'none'
-    for line in sys.stdin:
+    for line in log_stream:
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
@@ -74,7 +79,7 @@ def alphatrion_func(done_flag="Pipeline is Done",
     ret['valid_top1'] = 'none'
     ret['start'] = 'none'
     ret['ips'] = 'none'
-    for line in sys.stdin:
+    for line in log_stream:
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
@@ -112,7 +117,7 @@ def seg_nas_func(done_flag="Pipeline is Done",
     ret['end'] = 'none'
     ret['ips'] = 'none'
     ret['total_time'] = 'none'
-    for line in sys.stdin:
+    for line in log_stream:
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
@@ -161,7 +166,7 @@ def ssd_func(done_flag="Pipeline is Done",
     ret['end'] = 'none'
     ret['ips'] = 'none'
     ret['total_time'] = 'none'
-    for line in sys.stdin:
+    for line in log_stream:
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
@@ -233,7 +238,7 @@ def alphatrion_nas_func(done_flag="Pipeline is Done",
     ret['total_time'] = 'none'
 
     iter_speeds = []
-    for line in sys.stdin:
+    for line in log_stream:
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
