@@ -112,6 +112,7 @@ def main():
         args.start_epoch = checkpoint['epoch']
         best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
+        args.taskid = checkpoint['taskid']
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
@@ -147,11 +148,14 @@ def main():
                 monitor_kwargs = {'task': cfgs.net.arch}
             else:
                 monitor_kwargs = cfgs.monitor.kwargs
-                if hasattr(cfgs.monitor, '_taskid'):
+                if hasattr(args, 'taskid'):
+                    monitor_kwargs['taskid'] = args.taskid
+                elif hasattr(cfgs.monitor, '_taskid'):
                     monitor_kwargs['taskid'] = cfgs.monitor._taskid
             from pavi import SummaryWriter
             monitor_writer = SummaryWriter(
-                session_text=yaml.dump(args.config), **cfgs.monitor_kwargs)
+                session_text=yaml.dump(args.config), **monitor_kwargs)
+            args.taskid = monitor_writer.taskid
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -175,7 +179,8 @@ def main():
                     'arch': cfgs.net.arch,
                     'state_dict': model.state_dict(),
                     'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict()
+                    'optimizer': optimizer.state_dict(),
+                    'taskid': args.taskid
                 }
 
                 ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
