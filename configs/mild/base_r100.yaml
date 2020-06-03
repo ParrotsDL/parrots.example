@@ -5,6 +5,7 @@ model:
     type: MR100ResNet
   logits:
     type: ArcFace
+    m: 0.1
 
 lr_scheduler:
   line_chain:
