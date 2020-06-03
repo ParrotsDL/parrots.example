@@ -5,24 +5,26 @@ args:
     - type: nested
       name: model
       value: [
-                # (un)commit your config here
-                # pod
-                {'framework': 'pod', 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'model': 'rfcn-shufflenet-1x', 'py_args': '--pavi'},
-                # mmdet
-                # 'fast_rcnn_r50_fpn_1x_speed',
-                # 'mask_rcnn_r50_fpn_1x_speed',
-                # alphatrion
-                {'framework': 'alphatrion', 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
-                # seg_nas
-                {'framework': 'seg_nas', 'model': 'single_path_oneshot', 'py_args': '--pavi'},
-                # ssd
-                {'framework': 'ssd', 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true'},
-                {'framework': 'ssd', 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true'},
-                # alphatrion_nas
-                {'framework': 'alphatrion_nas', 'model': 'super_resnet_range1', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion_nas', 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
+                # # (un)commit your config here
+                # # pod
+                # {'framework': 'pod', 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi'},
+                # {'framework': 'pod', 'model': 'rfcn-shufflenet-1x', 'py_args': '--pavi'},
+                # # mmdet
+                # # 'fast_rcnn_r50_fpn_1x_speed',
+                # # 'mask_rcnn_r50_fpn_1x_speed',
+                # # alphatrion
+                # {'framework': 'alphatrion', 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
+                # {'framework': 'alphatrion', 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
+                # # seg_nas
+                # {'framework': 'seg_nas', 'model': 'single_path_oneshot', 'py_args': '--pavi'},
+                # # ssd
+                # {'framework': 'ssd', 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true'},
+                # {'framework': 'ssd', 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true'},
+                # # alphatrion_nas
+                # {'framework': 'alphatrion_nas', 'model': 'super_resnet_range1', 'py_args': '--pavi.use true'},
+                # {'framework': 'alphatrion_nas', 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
+                # nas-lite
+                {'framework': 'springnas-lite', 'model': 'proxyless_search', 'py_args': '--pavi'},
              ]
 # Optional
 # callback: "cat"
