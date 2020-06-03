@@ -204,8 +204,14 @@ def mild_func(done_flag="Pipeline is Done",
              **args):
     ret = {}
     ret.update(**args)
+    keys = ['iter_speed', 'pre1', 'pre5']
     for line in sys.stdin:
-        pass
+        for key in keys:
+            val = ret.get(key, None)
+            if val is not None:
+                continue
+            rv = re.search(iter_speed_flag, line)
+            ret[key] = val
     return ret
 
 @register_callfunc
