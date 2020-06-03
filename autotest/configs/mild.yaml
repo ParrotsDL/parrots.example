@@ -5,8 +5,8 @@ mild_base_mbv2: # Required
   thresh: # Required
     total_time: 35.0
     iter_speed: 0.31
-    pre1: 0.1737
-    pre5: 0.3737
+    cls_loss: 20
+    mimic_loss: 0.7
 mild_base_r100: # Required
   func: mild_func
   args:
@@ -14,8 +14,8 @@ mild_base_r100: # Required
   thresh: # Required
     total_time: 35.0
     iter_speed: 0.31
-    pre1: 0.1737
-    pre5: 0.3737
+    cls_loss: 20
+    mimic_loss: 0.7
 mild_base_xmeta: # Required
   func: mild_func
   args:
@@ -23,5 +23,5 @@ mild_base_xmeta: # Required
   thresh: # Required
     total_time: 35.0
     iter_speed: 0.31
-    pre1: 0.1737
-    pre5: 0.3737
+    cls_loss: 20
+    mimic_loss: 0.7
