@@ -1,30 +1,30 @@
 # Required (change partition, num_gpus or others where necessary)
-template: "sh runner/{framework}/train.sh platform_test 8 {model} {py_args}"
+template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
 # Required
 args:
     - type: nested
       name: model
       value: [
-                # # (un)commit your config here
-                # # pod
-                # {'framework': 'pod', 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi'},
-                # {'framework': 'pod', 'model': 'rfcn-shufflenet-1x', 'py_args': '--pavi'},
-                # # mmdet
-                # # 'fast_rcnn_r50_fpn_1x_speed',
-                # # 'mask_rcnn_r50_fpn_1x_speed',
-                # # alphatrion
-                # {'framework': 'alphatrion', 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
-                # {'framework': 'alphatrion', 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
-                # # seg_nas
-                # {'framework': 'seg_nas', 'model': 'single_path_oneshot', 'py_args': '--pavi'},
-                # # ssd
-                # {'framework': 'ssd', 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true'},
-                # {'framework': 'ssd', 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true'},
-                # # alphatrion_nas
-                # {'framework': 'alphatrion_nas', 'model': 'super_resnet_range1', 'py_args': '--pavi.use true'},
-                # {'framework': 'alphatrion_nas', 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
-                # nas-lite
-                {'framework': 'springnas-lite', 'model': 'proxyless_search', 'py_args': '--pavi'},
+                # (un)commit your config here
+                # pod
+                {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi'},
+                {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--pavi'},
+                # mmdet
+                # 'fast_rcnn_r50_fpn_1x_speed',
+                # 'mask_rcnn_r50_fpn_1x_speed',
+                # alphatrion
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
+                # seg_nas
+                {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi'},
+                # ssd
+                {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true'},
+                {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true'},
+                # alphatrion_nas
+                {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
+                # nas_lite
+                {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
              ]
 # Optional
 # callback: "cat"
