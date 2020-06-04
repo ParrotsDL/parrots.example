@@ -24,9 +24,9 @@ args:
                 {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1', 'py_args': '--pavi.use true'},
                 {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
                 # mild
-                {'framework': 'mild', 'gpus': 8, 'model': 'mild_base_mbv2', 'py_args': '--pavi'},
-                {'framework': 'mild', 'gpus': 8, 'model': 'mild_base_r100', 'py_args': '--pavi'},
-                {'framework': 'mild', 'gpus': 8, 'model': 'mild_base_xmeta', 'py_args': '--pavi'},
+                {'framework': 'mild', 'gpus': 8, 'model': 'base_mbv2', 'py_args': '--pavi'},
+                {'framework': 'mild', 'gpus': 8, 'model': 'base_r100', 'py_args': '--pavi'},
+                {'framework': 'mild', 'gpus': 8, 'model': 'base_xmeta', 'py_args': '--pavi'},
                 # nas_lite
                 {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
              ]
