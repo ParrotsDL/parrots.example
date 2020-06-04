@@ -1,5 +1,5 @@
 # Required (change partition, num_gpus or others where necessary)
-template: "sh runner/{framework}/train.sh platform_test {gpus} {model} {py_args}"
+template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
 # Required
 args:
     - type: nested
@@ -27,6 +27,8 @@ args:
                 {'framework': 'mild', 'gpus': 8, 'model': 'mild_base_mbv2', 'py_args': '--pavi'},
                 {'framework': 'mild', 'gpus': 8, 'model': 'mild_base_r100', 'py_args': '--pavi'},
                 {'framework': 'mild', 'gpus': 8, 'model': 'mild_base_xmeta', 'py_args': '--pavi'},
+                # nas_lite
+                {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
              ]
 # Optional
 # callback: "cat"

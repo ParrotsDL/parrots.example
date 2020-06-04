@@ -36,6 +36,9 @@
 [submodule "tests/deploy/quantization/Famicom"]
 	path = tests/deploy/quantization/Famicom
 	url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git
+[submodule "models/springnas-lite"]
+	path = models/springnas-lite
+	url = git@gitlab.bj.sensetime.com:wangshiguang/springnas-lite.git
 [submodule "mild"]
 	path = models/mild
 	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
