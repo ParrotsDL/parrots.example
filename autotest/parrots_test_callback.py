@@ -219,7 +219,7 @@ def mild_func(done_flag="Pipeline is Done",
              mimic_loss_flag, cls_loss_flag, ips_flag]
     for key in keys:
         ret[key] = None
-    for line in sys.stdin:
+    for line in log_stream:
         for key, flag in zip(keys, flags):
             rv = re.search(flag, line)
             if rv is None:
