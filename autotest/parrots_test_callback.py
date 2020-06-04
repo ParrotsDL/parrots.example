@@ -203,6 +203,32 @@ def ssd_func(done_flag="Pipeline is Done",
 
 
 @register_callfunc
+def mild_func(done_flag="Pipeline is Done",
+             f_iter_speed_flag="F\-Time\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)",
+             b_iter_speed_flag="B\-Time\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)",
+             d_iter_speed_flag="Data\-Time\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)",
+             mimic_loss_flag='Mimic\ Loss\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)',
+             cls_loss_flag='Cls\ Loss\ \d{1,5}\.\d{2}\ \(\d{1,5}\.\d{2}\)',
+             ips_flag="hostname is:(.+)",
+             **args):
+    ret = {}
+    ret.update(**args)
+    keys = ['is_done', 'fwd_iter_speed', 'bwd_iter_speed', 'data_iter_speed',
+            'mimic_loss', 'cls_loss', 'ips']
+    flags = [done_flag, f_iter_speed_flag, b_iter_speed_flag, d_iter_speed_flag,
+             mimic_loss_flag, cls_loss_flag, ips_flag]
+    for key in keys:
+        ret[key] = None
+    for line in log_stream:
+        for key, flag in zip(keys, flags):
+            rv = re.search(flag, line)
+            if rv is None:
+                # not found flag in this line
+                continue
+            ret[key] = rv.group(0)
+    return ret
+
+@register_callfunc
 def alphatrion_nas_func(done_flag="Pipeline is Done",
                  max_sce_flag="max_origin_valid_sce (\[.*\])",
                  max_top1_flag="max_origin_valid_top1 (\[.*\])",
