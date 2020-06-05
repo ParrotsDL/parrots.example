@@ -25,6 +25,8 @@ args:
                 {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
                 # nas_lite
                 {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
+                # example
+                {'framework': 'example', 'gpus': 8, 'mpdel': "resnet50", 'py_args': '--pavi'},
              ]
 # Optional
 # callback: "cat"

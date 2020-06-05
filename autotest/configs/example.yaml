@@ -1,0 +1,8 @@
+resnet50: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "* All Loss"
+  thresh: # Required
+    iter_speed: 0.2464
+    prec1: 75.77
+    prec5: None
