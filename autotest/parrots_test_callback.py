@@ -360,7 +360,7 @@ def nas_lite_func(done_flag="Pipeline is Done",
 
 
 @register_callfunc
-def example_func(done_flag="* All Loss.*",
+def example_func(done_flag="All Loss",
                  iter_speed_flag="Epoch: \[1\/.*] \[1000\/.*]    Time  [0-9]*.[0-9]* \( (.*)\)    Data",
                  acc_flag="\* All Loss [0-9]*.[0-9]* Acc@1 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\) Acc@5 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\)",
                  ips_flag="jobs, in (.+)",
@@ -387,10 +387,10 @@ def example_func(done_flag="* All Loss.*",
             iter_speed = re.search(iter_speed_flag, line)
             if iter_speed is not None:
                 ret['iter_speed'] = iter_speed.group(1)
-        prec = re.search(prec_flag, line)
-        if prec is not None:
-            ret['acc1'] = prec.group(1)
-            ret['acc5'] = prec.group(2)
+        acc = re.search(acc_flag, line)
+        if acc is not None:
+            ret['acc1'] = acc.group(1)
+            ret['acc5'] = acc.group(2)
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)
             if ips is not None:
