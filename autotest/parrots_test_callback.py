@@ -361,9 +361,9 @@ def nas_lite_func(done_flag="Pipeline is Done",
 
 @register_callfunc
 def example_func(done_flag="All Loss",
-                 iter_speed_flag="Epoch: \[1\/.*] \[1000\/.*]    Time  [0-9]*.[0-9]* \( (.*)\)    Data",
+                 iter_speed_flag="Epoch: \[1\/.*]\[1000\/.*] Time [0-9]*.[0-9]* \((.*)\) Data",
                  acc_flag="\* All Loss [0-9]*.[0-9]* Acc@1 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\) Acc@5 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\)",
-                 ips_flag="jobs, in (.+)",
+                 ips_flag="jobs, in ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
                  **args):
     """ log_file: read from stdin as default
         iter_speed_flag: flag for 100 iter time

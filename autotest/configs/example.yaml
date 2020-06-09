@@ -6,3 +6,259 @@ example_resnet50: # Required.
     iter_speed: 0.2464
     acc1: 75.77
     acc5: None
+example_resnet50_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2784
+    acc1: 75.625
+    acc5: None
+example_se_resnet50: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.3157
+    acc1: 76.009
+    acc5: None
+example_se_resnet50_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2088
+    acc1: 76.312
+    acc5: None
+example_inception_v4: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.6688
+    acc1: 79.602
+    acc5: None
+example_inception_v4_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.3528
+    acc1: 78.25
+    acc5: None
+example_shuffle_v2: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.1848
+    acc1: 64.71
+    acc5: None
+example_shuffle_v2_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2736
+    acc1: 64.71
+    acc5: None
+example_mobile_v2: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.1914
+    acc1: 68.78
+    acc5: None
+example_mobile_v2_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2748
+    acc1: 68.75
+    acc5: None
+example_resnet18: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.1837
+    acc1: 30
+    acc5: None
+example_resnet18_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2688
+    acc1: 30
+    acc5: None
+example_resnet101: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.3883
+    acc1: 30
+    acc5: None
+example_resnet101_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2784
+    acc1: 30
+    acc5: None
+example_resnet152: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.6182
+    acc1: 20
+    acc5: None
+example_resnet152_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.6182
+    acc1: 20
+    acc5: None
+example_inception_v2: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2363
+    acc1: 34
+    acc5: None
+example_inception_v2_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2724
+    acc1: 33
+    acc5: None
+example_inception_v3: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.3740
+    acc1: 30
+    acc5: None
+example_inception_v3_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.3528
+    acc1: 31
+    acc5: None
+example_dpn92: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.558
+    acc1: 34
+    acc5: None
+example_dpn92_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.250
+    acc1: 34
+    acc5: None
+example_inception_resnet: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.599
+    acc1: 35
+    acc5: None
+example_inception_resnet_mix: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.327
+    acc1: 35
+    acc5: None
+example_inceptionv3_daily: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.305
+    acc1: 56.0
+    acc5: 76.5
+example_mobile_v1_daily: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: 41.869
+    acc5: 67.407
+example_resnet50_daily: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.206
+    acc1: 37.0
+    acc5: 63.0
+example_resnet50_weekly: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.238
+    acc1: 75.77
+    acc5: None
+example_resnet50_mix_weekly: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.179
+    acc1: 75.625
+    acc5: None
+example_se_resnet50_mix_weekly: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.308
+    acc1: 76.312
+    acc5: None
+example_inception_v4_weekly: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.6688
+    acc1: 78.0
+    acc5: None
+example_shuffle_v2_weekly: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.192
+    acc1: 64.028
+    acc5: None
+example_mobile_v2_weekly: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: 68.261
+    acc5: None
