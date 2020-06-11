@@ -1,0 +1,19 @@
+# Required (change partition, num_gpus or others where necessary)
+template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+# Required
+args:
+    - type: nested
+      name: model
+      value: [
+                # (un)commit your config here
+                # seg_nas
+                {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi'},
+             ]
+# Optional
+# callback: "cat"
+callback: "python autotest/parrots_test_callback.py {framework} {model}"
+# Optional
+pavi:
+    compare:
+        name: parrots.test
+

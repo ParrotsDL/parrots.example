@@ -18,6 +18,12 @@ case $name in
          --config=configs/seg_nas/single_path_oneshot/config.yaml \
          --step=$step"
       ;; 
+    "single_path_oneshot_benchmark")
+      step=evolution
+      PYTHON_ARGS="python -u models/Light_Nas_zpzhang/main.py \
+         --config=configs/seg_nas/single_path_oneshot/config.benchmark.yaml \
+         --step=$step"
+      ;; 
     *)
       echo "invalid $name"
       exit 1
