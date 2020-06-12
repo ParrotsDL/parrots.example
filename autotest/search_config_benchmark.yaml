@@ -1,5 +1,5 @@
 # Required (change partition, num_gpus or others where necessary)
-template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
 # Required
 args:
     - type: nested
