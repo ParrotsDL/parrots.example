@@ -8,6 +8,8 @@ args:
                 # (un)commit your config here
                 # seg_nas
                 {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi'},
+                # nas_lite
+                {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search_benchmark', 'py_args': '--pavi'},
              ]
 # Optional
 # callback: "cat"
