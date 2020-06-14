@@ -58,6 +58,58 @@ case $name in
       --resume '' \
       -cfg configs/alphatrion/resnet101_fp16.yaml  "
     ;;
+    "mobilenet_v2_fp32_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/base_fp32.yaml \
+      configs/alphatrion/mobilenet_v2.yaml  "
+    ;;
+    "mobilenet_v2_fp16_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/base_fp16.yaml \
+      configs/alphatrion/mobilenet_v2.yaml  "
+    ;;
+    "se_resnet50_fp32_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/base_fp32.yaml \
+      configs/alphatrion/se_resnet50.yaml  "
+    ;;
+    "se_resnet50_fp16_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/base_fp16.yaml \
+      configs/alphatrion/se_resnet50.yaml  "
+    ;;
+    "resnet50_fp32_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/resnet50_fp32.yaml  "
+    ;;
+    "resnet50_fp16_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/resnet50_fp16.yaml  "
+    ;;
+    "resnet101_fp32_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/resnet101_fp32.yaml  "
+    ;;
+    "resnet101_fp16_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion/alphatrion-example/bag_of_tricks/learn.py \
+      --resume '' \
+      --num_epochs 1 \
+      -cfg configs/alphatrion/resnet101_fp16.yaml  "
+    ;;
     *)
       echo "invalid $name"
       exit 1

@@ -39,6 +39,32 @@ case $name in
       --fp 16 --mixed.train true --mixed.valid true --mixed.adabn false --mixed.loss_scale 512 \
       --resume ''"
     ;;
+    "super_resnet_range1_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion_nas/code/super_learn.py \
+      -cfg configs/alphatrion_nas/base.yaml \
+      configs/alphatrion_nas/super_resnet_base.yaml \
+      configs/alphatrion_nas/augment_randaugment.yaml \
+      configs/alphatrion_nas/super_learn_part_train.yaml \
+      --search_space super_resnet_range1 \
+      --RA.M 11 --all_num_epochs.super_learn 1 \
+      --local_batch_size 128 --num_gpus $2 \
+      --lr 0.8 \
+      --fp 32 --mixed.train false --mixed.valid false --mixed.adabn false \
+      --resume ''"
+    ;;
+    "super_resnet_range1_fp16_benchmark")
+      PYTHON_ARGS="python -u models/alphatrion_nas/code/super_learn.py \
+      -cfg configs/alphatrion_nas/base.yaml \
+      configs/alphatrion_nas/super_resnet_base.yaml \
+      configs/alphatrion_nas/augment_randaugment.yaml \
+      configs/alphatrion_nas/super_learn_part_train.yaml \
+      --search_space super_resnet_range1 \
+      --RA.M 11 --all_num_epochs.super_learn 1 \
+      --local_batch_size 128 --num_gpus $2 \
+      --lr 0.8 \
+      --fp 16 --mixed.train true --mixed.valid true --mixed.adabn false --mixed.loss_scale 512 \
+      --resume ''"
+    ;;
     *)
       echo "invalid $name, only support: [super_resnet_range1, super_resnet_range1_fp16]"
       exit 1
