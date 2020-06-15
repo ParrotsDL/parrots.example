@@ -1,0 +1,92 @@
+TASK_NAME: coco896-FSAF-Res50
+SAVE_DIR: runs
+RESUME: ''
+SEED: 1024
+PORT: 13333
+VERBOSE: False
+
+PRIORS: &p
+  ANCHORFREE: True
+  MATCH_THRESHOLD: [0.2, 0.2] # lower and upper threshold for gt & prior matching
+  SCALE: 1
+  CLIP: False
+
+MODEL:
+  TYPE: Retina
+  IMAGE_SIZE: 896
+  BASE: resnet50()
+  EXTRA: fpn_extra_wrapper(output_channels=[256, 256], batch_norm=False, relu=False)
+  HEADS: conv_stack_head_wrapper(interc=[256, 256, 256, 256], bn=False)
+
+
+LOSS:
+  TYPE: bcefocal_iou # cefocal/ bcefocal/ multibox
+  ALPHA: 0.25
+  GAMMA: 2
+  LOCALIZATION_WEIGHT: 1.0 # weight factor for localization loss
+  CLS_PREACT: Sigmoid()
+  LOC_PREACT: ReLU(inplace=True)
+
+
+TRAIN:
+  PRETRAIN: /mnt/lustre/share/fundamental-support/models/alphatrion/resnet50.pth
+  BATCH_SIZE: 32
+
+VALID:
+  EPOCH: 1
+  BATCH_SIZE: 32 
+  VOC07: False
+  TOP_K: 100
+  NMS_CONF: 0.05 # used in nms
+  NMS_IOU: 0.5 # used in nms
+  VAL_IOU: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+  CLS_PREACT: Sigmoid()
+  LOC_PREACT: ReLU(inplace=True)
+  METRICS: [DetectionAPMeterCOCO]
+
+
+SOLVER:
+  TYPE: SGD
+  LR: 0.02
+  LR_POLICY: step
+  LR_DECAY: 0.1
+  LR_STEPS: [10, 13]
+  LR_WARMUP_STEP: 1
+  FREEZE_LAYERS: ['base.conv1', 'base.bn1', 'base.layer1']
+  CLIP_GRAD: 10
+  MOMENTUM: 0.9
+  WEIGHT_DECAY: 0.0001
+  MAX_EPOCH: 1
+
+BN:
+  FREEZE: True
+
+DATA:
+  NUM_CLASSES: 80
+  NUM_WORKERS: 4
+  TRAIN:
+    ANNOTATION: models/ssd/ssd.triondet/examples/coco-opencv/datalist/coco_train2017.txt
+    #ANNOTATION: datalist/coco_val_mini.txt
+    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017
+    AUGMENTATION: RetinaAugmentationFixSizeTrain
+  VALID:
+    ANNOTATION: models/ssd/ssd.triondet/examples/coco-opencv/datalist/coco_val2017.txt
+    #ANNOTATION: datalist/coco_val_mini.txt
+    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017
+    AUGMENTATION: RetinaAugmentationFixSizeVal
+  TEST:
+    ANNOTATION: models/ssd/ssd.triondet/examples/coco-opencv/datalist/coco_val_mini.txt
+    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017
+    AUGMENTATION: RetinaAugmentationFixSizeVal
+
+RECORD:
+  TENSOR_BOARD: True
+  CKPT: 2
+  WINDOW_SIZE: 20 
+  PLAIN_FREQ: 20 # steps to record on the screen output
+  CURVE_FREQ: 100 # steps to record on tensorboard
+
+PAVI:
+  USE: False
+  WRITER:
+      TASK: 'ssd_FSAF_pat'
