@@ -5,3 +5,11 @@ seg_nas_single_path_oneshot: # Required
   thresh: # Required
     total_time: 38.0
     acc: 0.530
+
+seg_nas_single_path_oneshot_benchmark: # Required
+  func: seg_nas_func # Required
+  args:
+    done_flag: "over the evolution"
+  thresh: # Required
+    total_time: 38.0
+    acc: 0.530
