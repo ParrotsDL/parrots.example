@@ -1,0 +1,32 @@
+# Required (change partition, num_gpus or others where necessary)
+template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+# Required
+args:
+    - type: nested
+      name: model
+      value: [
+                # (un)commit your config here
+                # alphatrion
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp16_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp16_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16_benchmark', 'py_args': '--pavi.use true'},
+                # ssd
+                {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true'},
+                {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true'},
+                # alphatrion_nas
+                {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true'},             
+             ]
+# Optional
+# callback: "cat"
+callback: "python autotest/parrots_test_callback.py {framework} {model}"
+# Optional
+pavi:
+    compare:
+        name: parrots.test
+
