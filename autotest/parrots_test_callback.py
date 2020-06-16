@@ -385,6 +385,45 @@ def nas_lite_func(done_flag="Pipeline is Done",
     return ret
 
 
+@register_callfunc
+def example_func(done_flag="All Loss",
+                 iter_speed_flag="Epoch: \[1\/.*]\[1000\/.*] Time [0-9]*.[0-9]* \((.*)\) Data",
+                 acc_flag="\* All Loss [0-9]*.[0-9]* Acc@1 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\) Acc@5 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\)",
+                 ips_flag="jobs, in ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
+                 **args):
+    """ log_file: read from stdin as default
+        iter_speed_flag: flag for 100 iter time
+        prec_flag: flag for Prec@1 and Prec@5
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['acc1'] = 'none'
+    ret['acc5'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        # print(line)
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(1)
+        acc = re.search(acc_flag, line)
+        if acc is not None:
+            ret['acc1'] = acc.group(1)
+            ret['acc5'] = acc.group(2)
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
+
+
 def callback_wapper(func_name, **args):
     ret_dict = callback_funcs[func_name](**args)
     # Required: encoding to yaml format and output to stdout,
