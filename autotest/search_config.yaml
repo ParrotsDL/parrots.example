@@ -29,6 +29,8 @@ args:
                 {'framework': 'mild', 'gpus': 8, 'model': 'base_xmeta', 'py_args': '--pavi'},
                 # nas_lite
                 {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
+                # example
+                {'framework': 'example', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi'},
              ]
 # Optional
 # callback: "cat"
