@@ -14,7 +14,13 @@ args:
                 # 'mask_rcnn_r50_fpn_1x_speed',
                 # alphatrion
                 {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16', 'py_args': '--pavi.use true'},
                 {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp16', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp16', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32', 'py_args': '--pavi.use true'},
+                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16', 'py_args': '--pavi.use true'},
                 # seg_nas
                 {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi'},
                 # ssd

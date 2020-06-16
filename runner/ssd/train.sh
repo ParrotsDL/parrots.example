@@ -6,20 +6,28 @@ name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
 
-export PYTHONPATH=$./models/ssd/ssd.triondet/examples/coco-opencv/:$PYTHONPATH
-export PYTHONPATH=$./models/ssd/ssd.triondet/:$PYTHONPATH
-export PYTHONPATH=$./models/ssd/ssd.triondet/triondet/:$PYTHONPATH
+export PYTHONPATH=$../../models/ssd/ssd.triondet/examples/coco-opencv/:$PYTHONPATH
+export PYTHONPATH=$../../models/ssd/ssd.triondet/:$PYTHONPATH
+export PYTHONPATH=$../../models/ssd/ssd.triondet/triondet/:$PYTHONPATH
 
 
 ########Arguments#########
 case $name in
     "ssd_FSAF")
       PYTHON_ARGS="python -u models/ssd/ssd.triondet/examples/tools/train.py \
-       -cfg configs/ssd/coco896-FSAF-Res50.yaml"
+      -cfg configs/ssd/coco896-FSAF-Res50.yaml"
     ;;
     "ssd_Retina")
       PYTHON_ARGS="python -u models/ssd/ssd.triondet/examples/tools/train.py \
       -cfg configs/ssd/coco896-Retina-R50-ce-e14.yaml"  
+    ;;
+    "ssd_FSAF_benchmark")
+      PYTHON_ARGS="python -u models/ssd/ssd.triondet/examples/tools/train.py \
+      -cfg configs/ssd/coco896-FSAF-Res50.benchmark.yaml"
+    ;;
+    "ssd_Retina_benchmark")
+      PYTHON_ARGS="python -u models/ssd/ssd.triondet/examples/tools/train.py \
+      -cfg configs/ssd/coco896-Retina-R50-ce-e14.benchmark.yaml"
     ;;
     *)
       echo "invalid $name"

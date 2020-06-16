@@ -190,8 +190,8 @@ def ssd_func(done_flag="Pipeline is Done",
             if ips is not None:
                 ret['ips'] = ips.group(1)
     if ret['start'] != 'none' and ret['end'] != 'none':
-        date1 = time.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
-        date2 = time.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+        date1 = time.strptime(ret['start'], "%Y-%m-%d-%H:%M:%S")
+        date2 = time.strptime(ret['end'], "%Y-%m-%d-%H:%M:%S")
         date1 = datetime.datetime(
             date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
         date2 = datetime.datetime(
