@@ -7,11 +7,13 @@ import yaml
 import json
 import socket
 import logging
+import numpy as np
 from addict import Dict
 
 import torch
 import torch.nn as nn
 import torch.nn.parallel
+import torch.distributed as dist
 import torch.optim
 from torch.backends import cudnn
 
@@ -37,6 +39,8 @@ logger_all = logging.getLogger('all')
 
 
 def main():
+    start_time = time.time()
+    iter_time_list = []
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
@@ -143,26 +147,35 @@ def main():
 
     monitor_writer = None
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
-        if cfgs.monitor.get('type', None) == 'pavi':
-            if args.pavi:
-                monitor_kwargs = {'task': cfgs.net.arch}
-            else:
-                monitor_kwargs = cfgs.monitor.kwargs
-                if hasattr(args, 'taskid'):
-                    monitor_kwargs['taskid'] = args.taskid
-                elif hasattr(cfgs.monitor, '_taskid'):
-                    monitor_kwargs['taskid'] = cfgs.monitor._taskid
-            from pavi import SummaryWriter
-            monitor_writer = SummaryWriter(
-                session_text=yaml.dump(args.config), **monitor_kwargs)
-            args.taskid = monitor_writer.taskid
+       # if cfgs.monitor.get('type', None) == 'pavi':
+        if args.pavi:
+            monitor_kwargs = {'task': cfgs.net.arch}
+        else:
+            monitor_kwargs = cfgs.monitor.kwargs
+            if hasattr(args, 'taskid'):
+                monitor_kwargs['taskid'] = args.taskid
+            elif hasattr(cfgs.monitor, '_taskid'):
+                monitor_kwargs['taskid'] = cfgs.monitor._taskid
+        from pavi import SummaryWriter
+        monitor_writer = SummaryWriter(
+            session_text=yaml.dump(args.config), **monitor_kwargs)
+        args.taskid = monitor_writer.taskid
 
+    run_time = time.time()
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list)
+        
+        mem = torch.cuda.max_memory_allocated()
+        mem_mb = torch.tensor([mem / (1024 * 1024)],
+                       dtype=torch.int,
+                       device=torch.device('cuda'))
+        if  args.world_size > 1:
+            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+            mem_max = mem_mb.item() 
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -191,9 +204,15 @@ def main():
                     shutil.copyfile(ckpt_path, best_ckpt_path)
 
         lr_scheduler.step()
+    end_time = time.time()
+    if args.rank == 0 and monitor_writer:
+        monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
+        monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
+        monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
+        monitor_writer.add_scalar('__benchmark gpu_mem(mb)',mem_max,1)
+        monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
-
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -209,6 +228,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     model.train()
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
+        iter_start_time = time.time()
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -242,6 +262,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
+        iter_end_time = time.time()
+        iter_time_list.append(iter_end_time - iter_start_time)
 
         if i % args.log_freq == 0:
             progress.display(i)
