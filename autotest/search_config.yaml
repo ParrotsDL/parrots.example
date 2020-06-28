@@ -1,10 +1,10 @@
-# Required (change partition, num_gpus or others where necessary)
-template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
-# Required
-args:
-    - type: nested
-      name: model
-      value: [
+task:
+    # Required (change partition, num_gpus or others where necessary)
+    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+    # Required
+    search_args:
+        - type: Nested
+          value: [
                 # (un)commit your config here
                 # pod
                 {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
@@ -78,10 +78,23 @@ args:
                 {'framework': 'example', 'gpus': 8, 'model': "se_resnet50", 'py_args': '--pavi'},
                 {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix", 'py_args': '--pavi'},
                 {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi'},
-             ]
-# Optional
-# callback: "cat"
-callback: "python autotest/parrots_test_callback.py {framework} {model}"
+            ]
+    # Optional
+    # callback: "cat"
+    callback: "python autotest/parrots_test_callback.py {framework} {model}"
+
+searcher:
+    # Support GridSearcher, RandomSearcher, SkoptSearcher
+    type: GridSearcher
+    # Required
+    reward_attribute: acc
+
+scheduler:
+    type: FIFO
+    parallel_size: 8
+    stop_criterion:
+        max_tries: 100
+
 # Optional
 pavi:
     compare:
