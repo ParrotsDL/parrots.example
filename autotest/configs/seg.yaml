@@ -1,0 +1,15 @@
+seg_pspnet: # Required.
+  func: seg_func_1 # Required
+  thresh: # Required
+    iter_speed: 1.2
+    mIoU: 0.9
+seg_deeplab: # Required.
+  func: seg_func_1 # Required
+  thresh: # Required
+    iter_speed: 1.2
+    mIoU: 0.9
+seg_mobilenet_v2_plus: # Required.
+  func: seg_func_2 # Required
+  thresh: # Required
+    iter_speed: 1.2
+    mIoU: 0.9

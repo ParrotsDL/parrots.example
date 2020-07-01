@@ -1,44 +1,20 @@
-task:
-    # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
-    # Required
-    search_args:
-        - type: Nested
-          value: [
+# Required (change partition, num_gpus or others where necessary)
+template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+# Required
+args:
+    - type: nested
+      name: model
+      value: [
                 # (un)commit your config here
                 # pod
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'cascade-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-mobilenet-FPN-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-mobilenet-FPN-1x_mix', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-shufflenet-FPN-1x', 'py_args': '--pavi'},
                 {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi'},
                 {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-ghm-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x-DCN@C3-C5', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-GN-FA', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-NASFPN-1x_mix', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-PAFPN-1x_mix', 'py_args': '--pavi'},
                 # mmdet
                 # 'fast_rcnn_r50_fpn_1x_speed',
                 # 'mask_rcnn_r50_fpn_1x_speed',
                 # alphatrion
                 {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16', 'py_args': '--pavi.use true'},
                 {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp16', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp16', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16', 'py_args': '--pavi.use true'},
                 # seg_nas
                 {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi'},
                 # ssd
@@ -53,48 +29,15 @@ task:
                 {'framework': 'mild', 'gpus': 8, 'model': 'base_xmeta', 'py_args': '--pavi'},
                 # nas_lite
                 {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
-                # example
-                {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "dpn92", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_resnet_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_resnet", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_v2_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_v2", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_v3_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_v3", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_v4_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "inception_v4", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "mobile_v2_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "mobile_v2", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet101_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet101", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet152_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet152", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet18_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet18", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet50_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "se_resnet50_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "se_resnet50", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix", 'py_args': '--pavi'},
-                {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi'},
-            ]
-    # Optional
-    # callback: "cat"
-    callback: "python autotest/parrots_test_callback.py {framework} {model}"
-
-searcher:
-    # Support GridSearcher, RandomSearcher, SkoptSearcher
-    type: GridSearcher
-    # Required
-    reward_attribute: acc
-
-scheduler:
-    type: FIFO
-    parallel_size: 8
-    stop_criterion:
-        max_tries: 100
-
+                # seg
+                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi'},
+                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi'},
+                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi'},
+                
+             ]
+# Optional
+# callback: "cat"
+callback: "python autotest/parrots_test_callback.py {framework} {model}"
 # Optional
 pavi:
     compare:
