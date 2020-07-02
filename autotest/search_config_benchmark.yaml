@@ -93,5 +93,5 @@ pavi:
     compare:
         name: parrots.test.benchmark
 
-slurm_job_id_monitor: true
+# slurm_job_id_monitor: true
 
