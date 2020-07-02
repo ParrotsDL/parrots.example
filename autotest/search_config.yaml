@@ -100,4 +100,4 @@ pavi:
     compare:
         name: parrots.test
 
-slurm_job_id_monitor: true
+# slurm_job_id_monitor: true
