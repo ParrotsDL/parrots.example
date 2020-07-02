@@ -1,0 +1,2164 @@
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-158
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:15,799 [32mINFO[0m: Parrots 0.6.0 | Git hash: c59bcc36 | Compute hash: b4b006c0[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 4 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 0 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 6 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 2 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 1 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 5 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 7 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:17,653 [32mINFO[0m: rank 3 of 8 jobs, in SH-IDC1-10-198-4-158[0m
+2020-07-02 14:54:21,246 [32mINFO[0m: config
+{
+  "seed": 99,
+  "net": {
+    "arch": "resnet50",
+    "kwargs": {
+      "num_classes": 1000
+    }
+  },
+  "dataset": {
+    "train": {
+      "meta_file": "/mnt/lustre/share/images/meta/train.txt",
+      "image_dir": "/mnt/lustre/share/images/train",
+      "random_resize_crop": 224,
+      "colorjitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": true
+    },
+    "test": {
+      "meta_file": "/mnt/lustre/share/images/meta/val.txt",
+      "image_dir": "/mnt/lustre/share/images/val",
+      "resize": 256,
+      "center_crop": [
+        224,
+        224
+      ],
+      "colorjitter": null,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": false
+    },
+    "batch_size": 32,
+    "workers": 4
+  },
+  "trainer": {
+    "max_epoch": 100,
+    "test_freq": 1,
+    "log_freq": 20,
+    "bn": {
+      "syncbn": false
+    },
+    "mixed_precision": {
+      "half": false,
+      "loss_scale": 128.0,
+      "float_bn": true
+    },
+    "optimizer": {
+      "type": "SGD",
+      "kwargs": {
+        "lr": 0.1,
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      }
+    },
+    "lr_scheduler": {
+      "warmup_epochs": 0,
+      "type": "MultiStepLR",
+      "kwargs": {
+        "milestones": [
+          30,
+          60,
+          90
+        ],
+        "gamma": 0.1
+      }
+    }
+  },
+  "saver": {
+    "pretrain_model": null,
+    "resume_model": null,
+    "save_dir": "checkpoints/resnet50"
+  },
+  "monitor": {
+    "type": "pavi",
+    "_taskid": null,
+    "kwargs": {
+      "project": "pape_test",
+      "task": "resnet50",
+      "model": "resnet50"
+    }
+  }
+}[0m
+2020-07-02 14:54:21,566 [32mINFO[0m: creating model 'resnet50'[0m
+convert module: conv1
+convert module: conv1
+convert module: conv1
+convert module: conv1
+convert module: conv1
+convert module: conv1
+convert module: conv1
+convert module: conv1
+convert module: bn1
+convert module: relu
+convert module: maxpool
+convert module: layer1.0.conv1
+convert module: layer1.0.bn1
+convert module: layer1.0.conv2
+convert module: layer1.0.bn2
+convert module: layer1.0.conv3
+convert module: layer1.0.bn3
+convert module: layer1.0.relu
+convert module: layer1.0.downsample.0
+convert module: layer1.0.downsample.1
+convert module: layer1.1.conv1
+convert module: layer1.1.bn1
+convert module: layer1.1.conv2
+convert module: layer1.1.bn2
+convert module: layer1.1.conv3
+convert module: layer1.1.bn3
+convert module: layer1.1.relu
+convert module: layer1.2.conv1
+convert module: layer1.2.bn1
+convert module: bn1
+convert module: layer1.2.conv2
+convert module: bn1
+convert module: layer1.2.bn2
+convert module: relu
+convert module: layer1.2.conv3
+convert module: maxpool
+convert module: layer1.2.bn3
+convert module: relu
+convert module: layer1.0.conv1
+convert module: layer1.2.relu
+convert module: maxpool
+convert module: layer2.0.conv1
+convert module: layer1.0.bn1
+convert module: layer1.0.conv1
+convert module: layer2.0.bn1
+convert module: layer1.0.conv2
+convert module: layer1.0.bn1
+convert module: layer2.0.conv2
+convert module: layer1.0.bn2
+convert module: layer1.0.conv2
+convert module: layer2.0.bn2
+convert module: layer1.0.bn2
+convert module: layer2.0.conv3
+convert module: layer1.0.conv3
+convert module: layer2.0.bn3
+convert module: layer1.0.conv3
+convert module: layer1.0.bn3
+convert module: layer2.0.relu
+convert module: layer1.0.bn3
+convert module: layer1.0.relu
+convert module: layer2.0.downsample.0
+convert module: layer1.0.relu
+convert module: layer1.0.downsample.0
+convert module: layer2.0.downsample.1
+convert module: layer1.0.downsample.0
+convert module: layer2.1.conv1
+convert module: layer1.0.downsample.1
+convert module: layer1.0.downsample.1
+convert module: layer2.1.bn1
+convert module: layer1.1.conv1
+convert module: layer1.1.conv1
+convert module: layer2.1.conv2
+convert module: layer1.1.bn1
+convert module: layer1.1.bn1
+convert module: layer2.1.bn2
+convert module: layer1.1.conv2
+convert module: layer2.1.conv3
+convert module: layer1.1.conv2
+convert module: layer1.1.bn2
+convert module: layer2.1.bn3
+convert module: layer1.1.conv3
+convert module: layer1.1.bn2
+convert module: layer2.1.relu
+convert module: layer1.1.bn3
+convert module: layer1.1.conv3
+convert module: layer2.2.conv1
+convert module: layer1.1.relu
+convert module: layer2.2.bn1
+convert module: layer1.1.bn3
+convert module: layer2.2.conv2
+convert module: layer1.2.conv1
+convert module: layer1.1.relu
+convert module: layer2.2.bn2
+convert module: layer1.2.bn1
+convert module: layer1.2.conv1
+convert module: layer1.2.conv2
+convert module: layer2.2.conv3
+convert module: layer1.2.bn1
+convert module: layer1.2.bn2
+convert module: layer2.2.bn3
+convert module: layer1.2.conv3
+convert module: layer2.2.relu
+convert module: layer1.2.conv2
+convert module: layer1.2.bn3
+convert module: layer2.3.conv1
+convert module: layer1.2.bn2
+convert module: layer1.2.relu
+convert module: layer2.3.bn1
+convert module: layer1.2.conv3
+convert module: layer2.0.conv1
+convert module: layer2.3.conv2
+convert module: layer2.0.bn1
+convert module: layer1.2.bn3
+convert module: layer2.3.bn2
+convert module: layer2.0.conv2
+convert module: layer2.3.conv3
+convert module: layer1.2.relu
+convert module: layer2.0.bn2
+convert module: layer2.3.bn3
+convert module: layer2.0.conv1
+convert module: layer2.0.conv3
+convert module: layer2.3.relu
+convert module: layer2.0.bn1
+convert module: layer2.0.bn3
+convert module: layer3.0.conv1
+convert module: layer2.0.relu
+convert module: layer2.0.conv2
+convert module: layer3.0.bn1
+convert module: layer2.0.downsample.0
+convert module: layer3.0.conv2
+convert module: layer2.0.bn2
+convert module: layer2.0.downsample.1
+convert module: layer2.0.conv3
+convert module: layer2.1.conv1
+convert module: layer3.0.bn2
+convert module: layer2.1.bn1
+convert module: layer2.0.bn3
+convert module: layer3.0.conv3
+convert module: layer2.1.conv2
+convert module: layer2.0.relu
+convert module: layer3.0.bn3
+convert module: layer2.1.bn2
+convert module: layer2.0.downsample.0
+convert module: layer3.0.relu
+convert module: layer2.1.conv3
+convert module: layer3.0.downsample.0
+convert module: layer2.0.downsample.1
+convert module: layer2.1.bn3
+convert module: layer3.0.downsample.1
+convert module: layer2.1.conv1
+convert module: layer2.1.relu
+convert module: layer3.1.conv1
+convert module: layer2.2.conv1
+convert module: layer2.1.bn1
+convert module: layer3.1.bn1
+convert module: layer2.2.bn1
+convert module: layer2.1.conv2
+convert module: layer3.1.conv2
+convert module: layer2.2.conv2
+convert module: layer2.1.bn2
+convert module: layer3.1.bn2
+convert module: layer2.2.bn2
+convert module: bn1
+convert module: layer3.1.conv3
+convert module: layer2.1.conv3
+convert module: layer2.2.conv3
+convert module: layer3.1.bn3
+convert module: relu
+convert module: layer2.2.bn3
+convert module: layer2.1.bn3
+convert module: layer3.1.relu
+convert module: maxpool
+convert module: layer2.2.relu
+convert module: layer2.1.relu
+convert module: layer3.2.conv1
+convert module: layer2.3.conv1
+convert module: layer1.0.conv1
+convert module: bn1
+convert module: layer2.2.conv1
+convert module: bn1
+convert module: layer3.2.bn1
+convert module: layer2.3.bn1
+convert module: layer1.0.bn1
+convert module: layer2.2.bn1
+convert module: relu
+convert module: layer2.3.conv2
+convert module: layer3.2.conv2
+convert module: relu
+convert module: layer1.0.conv2
+convert module: maxpool
+convert module: layer2.3.bn2
+convert module: layer2.2.conv2
+convert module: layer3.2.bn2
+convert module: maxpool
+convert module: layer1.0.conv1
+convert module: layer1.0.bn2
+convert module: layer2.3.conv3
+convert module: layer3.2.conv3
+convert module: layer2.2.bn2
+convert module: layer1.0.conv1
+convert module: layer1.0.bn1
+convert module: layer2.3.bn3
+convert module: layer3.2.bn3
+convert module: layer1.0.conv3
+convert module: layer2.2.conv3
+convert module: layer1.0.bn1
+convert module: layer2.3.relu
+convert module: layer1.0.conv2
+convert module: layer3.2.relu
+convert module: layer1.0.bn3
+convert module: layer2.2.bn3
+convert module: layer3.0.conv1
+convert module: layer1.0.conv2
+convert module: layer3.3.conv1
+convert module: layer1.0.bn2
+convert module: layer1.0.relu
+convert module: layer3.3.bn1
+convert module: layer2.2.relu
+convert module: layer3.0.bn1
+convert module: layer1.0.conv3
+convert module: layer1.0.bn2
+convert module: layer1.0.downsample.0
+convert module: layer2.3.conv1
+convert module: layer3.3.conv2
+convert module: layer3.0.conv2
+convert module: layer1.0.bn3
+convert module: layer1.0.conv3
+convert module: layer2.3.bn1
+convert module: layer3.3.bn2
+convert module: layer1.0.downsample.1
+convert module: layer1.0.relu
+convert module: layer1.0.bn3
+convert module: layer3.3.conv3
+convert module: layer1.1.conv1
+convert module: layer2.3.conv2
+convert module: layer1.0.downsample.0
+convert module: layer3.0.bn2
+convert module: layer1.0.relu
+convert module: layer2.3.bn2
+convert module: layer1.1.bn1
+convert module: layer1.0.downsample.1
+convert module: layer3.0.conv3
+convert module: layer1.0.downsample.0
+convert module: layer2.3.conv3
+convert module: layer3.3.bn3
+convert module: layer1.1.conv2
+convert module: layer3.0.bn3
+convert module: layer1.1.conv1
+convert module: layer1.0.downsample.1
+convert module: layer3.3.relu
+convert module: layer3.0.relu
+convert module: layer1.1.bn1
+convert module: layer2.3.bn3
+convert module: layer1.1.bn2
+convert module: layer3.4.conv1
+convert module: layer3.0.downsample.0
+convert module: layer1.1.conv1
+convert module: layer1.1.conv2
+convert module: layer1.1.conv3
+convert module: layer3.4.bn1
+convert module: layer2.3.relu
+convert module: layer3.0.downsample.1
+convert module: layer1.1.bn2
+convert module: layer1.1.bn1
+convert module: layer1.1.bn3
+convert module: layer3.0.conv1
+convert module: layer3.4.conv2
+convert module: layer3.1.conv1
+convert module: layer1.1.conv3
+convert module: layer1.1.conv2
+convert module: layer3.0.bn1
+convert module: layer3.1.bn1
+convert module: layer1.1.relu
+convert module: layer3.4.bn2
+convert module: layer1.1.bn3
+convert module: layer1.1.bn2
+convert module: layer1.2.conv1
+convert module: layer3.1.conv2
+convert module: layer3.4.conv3
+convert module: layer1.1.relu
+convert module: layer3.0.conv2
+convert module: layer1.1.conv3
+convert module: layer3.1.bn2
+convert module: layer1.2.bn1
+convert module: layer3.4.bn3
+convert module: layer1.2.conv1
+convert module: layer3.1.conv3
+convert module: layer1.1.bn3
+convert module: layer3.4.relu
+convert module: layer1.2.conv2
+convert module: layer1.2.bn1
+convert module: layer3.0.bn2
+convert module: layer3.5.conv1
+convert module: layer3.1.bn3
+convert module: layer1.1.relu
+convert module: layer1.2.conv2
+convert module: layer3.0.conv3
+convert module: layer3.5.bn1
+convert module: layer3.1.relu
+convert module: layer1.2.bn2
+convert module: layer1.2.conv1
+convert module: layer1.2.bn2
+convert module: layer3.2.conv1
+convert module: layer3.5.conv2
+convert module: layer3.0.bn3
+convert module: layer1.2.conv3
+convert module: layer1.2.conv3
+convert module: layer1.2.bn1
+convert module: layer3.2.bn1
+convert module: layer3.5.bn2
+convert module: layer1.2.bn3
+convert module: layer3.0.relu
+convert module: layer1.2.bn3
+convert module: layer1.2.conv2
+convert module: layer3.5.conv3
+convert module: layer3.2.conv2
+convert module: layer3.0.downsample.0
+convert module: layer1.2.relu
+convert module: layer1.2.relu
+convert module: layer3.5.bn3
+convert module: layer3.2.bn2
+convert module: layer2.0.conv1
+convert module: layer3.0.downsample.1
+convert module: layer1.2.bn2
+convert module: layer2.0.conv1
+convert module: layer3.5.relu
+convert module: layer3.2.conv3
+convert module: layer2.0.bn1
+convert module: layer1.2.conv3
+convert module: layer4.0.conv1
+convert module: layer3.1.conv1
+convert module: layer2.0.bn1
+convert module: layer3.2.bn3
+convert module: layer2.0.conv2
+convert module: layer1.2.bn3
+convert module: layer4.0.bn1
+convert module: layer3.1.bn1
+convert module: layer3.2.relu
+convert module: layer2.0.conv2
+convert module: layer2.0.bn2
+convert module: layer3.3.conv1
+convert module: layer1.2.relu
+convert module: layer4.0.conv2
+convert module: layer3.1.conv2
+convert module: layer2.0.conv3
+convert module: layer2.0.bn2
+convert module: layer3.3.bn1
+convert module: layer2.0.conv1
+convert module: layer4.0.bn2
+convert module: layer3.1.bn2
+convert module: layer2.0.bn3
+convert module: layer3.3.conv2
+convert module: layer2.0.conv3
+convert module: layer2.0.bn1
+convert module: layer4.0.conv3
+convert module: layer2.0.relu
+convert module: layer3.1.conv3
+convert module: layer3.3.bn2
+convert module: layer2.0.bn3
+convert module: layer2.0.downsample.0
+convert module: layer4.0.bn3
+convert module: layer2.0.conv2
+convert module: layer3.1.bn3
+convert module: layer3.3.conv3
+convert module: layer2.0.relu
+convert module: layer2.0.downsample.1
+convert module: layer4.0.relu
+convert module: layer3.1.relu
+convert module: layer2.0.bn2
+convert module: layer4.0.downsample.0
+convert module: layer2.0.downsample.0
+convert module: layer2.1.conv1
+convert module: layer2.0.conv3
+convert module: layer3.2.conv1
+convert module: layer2.0.downsample.1
+convert module: layer2.1.bn1
+convert module: layer3.3.bn3
+convert module: layer2.0.bn3
+convert module: layer3.2.bn1
+convert module: layer2.1.conv2
+convert module: layer2.1.conv1
+convert module: layer3.3.relu
+convert module: layer4.0.downsample.1
+convert module: layer3.4.conv1
+convert module: layer2.0.relu
+convert module: layer2.1.bn2
+convert module: layer3.2.conv2
+convert module: layer4.1.conv1
+convert module: layer2.1.bn1
+convert module: layer2.0.downsample.0
+convert module: layer3.4.bn1
+convert module: layer2.1.conv3
+convert module: layer3.2.bn2
+convert module: layer4.1.bn1
+convert module: layer2.1.conv2
+convert module: layer3.4.conv2
+convert module: layer2.0.downsample.1
+convert module: layer2.1.bn3
+convert module: layer4.1.conv2
+convert module: layer3.2.conv3
+convert module: layer2.1.bn2
+convert module: layer3.4.bn2
+convert module: layer2.1.relu
+convert module: layer2.1.conv1
+convert module: layer4.1.bn2
+convert module: layer3.2.bn3
+convert module: layer2.1.conv3
+convert module: layer3.4.conv3
+convert module: layer2.2.conv1
+convert module: layer4.1.conv3
+convert module: layer2.1.bn1
+convert module: layer3.2.relu
+convert module: layer3.4.bn3
+convert module: layer2.2.bn1
+convert module: layer2.1.bn3
+convert module: layer2.1.conv2
+convert module: layer3.4.relu
+convert module: layer3.3.conv1
+convert module: layer4.1.bn3
+convert module: layer2.2.conv2
+convert module: layer2.1.relu
+convert module: layer3.5.conv1
+convert module: layer2.1.bn2
+convert module: layer4.1.relu
+convert module: layer2.2.conv1
+convert module: layer2.2.bn2
+convert module: layer3.3.bn1
+convert module: layer3.5.bn1
+convert module: layer4.2.conv1
+convert module: layer2.1.conv3
+convert module: layer3.3.conv2
+convert module: layer2.2.conv3
+convert module: layer2.2.bn1
+convert module: layer3.5.conv2
+convert module: layer4.2.bn1
+convert module: layer3.3.bn2
+convert module: layer3.5.bn2
+convert module: layer2.2.bn3
+convert module: layer2.1.bn3
+convert module: layer4.2.conv2
+convert module: layer2.2.conv2
+convert module: layer3.5.conv3
+convert module: layer2.2.relu
+convert module: layer2.1.relu
+convert module: layer3.3.conv3
+convert module: layer4.2.bn2
+convert module: layer2.2.bn2
+convert module: layer2.3.conv1
+convert module: layer3.5.bn3
+convert module: layer2.2.conv1
+convert module: layer4.2.conv3
+convert module: layer2.2.conv3
+convert module: layer2.3.bn1
+convert module: layer3.5.relu
+convert module: layer4.2.bn3
+convert module: layer2.2.bn1
+convert module: layer4.0.conv1
+convert module: layer2.3.conv2
+convert module: layer3.3.bn3
+convert module: layer2.2.bn3
+convert module: layer4.2.relu
+convert module: layer2.2.conv2
+convert module: layer2.3.bn2
+convert module: layer4.0.bn1
+convert module: layer3.3.relu
+convert module: avgpool
+convert module: layer2.2.relu
+convert module: fc
+convert module: layer2.3.conv3
+convert module: layer2.2.bn2
+convert module: layer4.0.conv2
+convert module: layer3.4.conv1
+convert module: layer2.3.conv1
+convert module: layer2.3.bn3
+convert module: layer4.0.bn2
+convert module: layer2.2.conv3
+convert module: layer3.4.bn1
+convert module: layer2.3.relu
+convert module: layer2.3.bn1
+convert module: layer4.0.conv3
+convert module: layer2.2.bn3
+convert module: layer3.4.conv2
+convert module: layer3.0.conv1
+convert module: layer4.0.bn3
+convert module: layer2.2.relu
+convert module: layer2.3.conv2
+convert module: layer3.4.bn2
+convert module: layer4.0.relu
+convert module: layer3.0.bn1
+convert module: layer2.3.conv1
+convert module: layer2.3.bn2
+convert module: layer4.0.downsample.0
+convert module: layer3.4.conv3
+convert module: layer3.0.conv2
+convert module: layer2.3.bn1
+convert module: layer2.3.conv3
+convert module: layer3.4.bn3
+convert module: layer2.3.conv2
+convert module: layer2.3.bn3
+convert module: layer3.4.relu
+convert module: layer2.3.bn2
+convert module: layer3.5.conv1
+convert module: layer2.3.relu
+convert module: layer4.0.downsample.1
+convert module: layer3.0.bn2
+convert module: layer2.3.conv3
+convert module: layer3.0.conv1
+convert module: layer4.1.conv1
+convert module: layer3.0.conv3
+convert module: layer3.5.bn1
+convert module: layer2.3.bn3
+convert module: layer4.1.bn1
+convert module: layer3.0.bn1
+convert module: layer3.0.bn3
+convert module: layer3.5.conv2
+convert module: layer2.3.relu
+convert module: layer4.1.conv2
+convert module: layer3.0.relu
+convert module: layer3.0.conv2
+convert module: layer3.5.bn2
+convert module: layer3.0.conv1
+convert module: layer4.1.bn2
+convert module: layer3.0.downsample.0
+convert module: layer3.5.conv3
+convert module: layer4.1.conv3
+convert module: layer3.0.downsample.1
+convert module: layer3.0.bn1
+convert module: layer3.0.bn2
+convert module: layer4.1.bn3
+convert module: layer3.5.bn3
+convert module: layer3.1.conv1
+convert module: layer3.0.conv2
+convert module: layer3.0.conv3
+convert module: layer3.1.bn1
+convert module: layer3.5.relu
+convert module: layer4.1.relu
+convert module: layer4.0.conv1
+convert module: layer3.0.bn3
+convert module: layer4.2.conv1
+convert module: layer3.1.conv2
+convert module: layer3.0.bn2
+convert module: layer4.2.bn1
+convert module: layer3.1.bn2
+convert module: layer3.0.relu
+convert module: layer4.0.bn1
+convert module: layer3.0.conv3
+convert module: layer4.2.conv2
+convert module: layer3.1.conv3
+convert module: layer3.0.downsample.0
+convert module: layer4.0.conv2
+convert module: layer4.2.bn2
+convert module: layer3.1.bn3
+convert module: layer3.0.bn3
+convert module: layer3.0.downsample.1
+convert module: layer4.0.bn2
+convert module: layer4.2.conv3
+convert module: layer3.1.relu
+convert module: layer3.0.relu
+convert module: layer3.1.conv1
+convert module: layer3.2.conv1
+convert module: layer4.0.conv3
+convert module: layer4.2.bn3
+convert module: layer3.0.downsample.0
+convert module: layer3.1.bn1
+convert module: layer4.2.relu
+convert module: layer3.2.bn1
+convert module: layer4.0.bn3
+convert module: layer3.0.downsample.1
+convert module: avgpool
+convert module: layer3.1.conv2
+convert module: layer3.2.conv2
+convert module: fc
+convert module: layer4.0.relu
+convert module: layer3.1.conv1
+convert module: layer3.1.bn2
+convert module: layer4.0.downsample.0
+convert module: layer3.2.bn2
+convert module: layer3.1.bn1
+convert module: layer3.1.conv3
+convert module: layer3.2.conv3
+convert module: layer3.1.conv2
+convert module: layer3.2.bn3
+convert module: layer3.1.bn3
+convert module: layer4.0.downsample.1
+convert module: layer3.1.bn2
+convert module: layer3.2.relu
+convert module: layer3.1.relu
+convert module: layer3.3.conv1
+convert module: layer3.2.conv1
+convert module: layer3.1.conv3
+convert module: layer4.1.conv1
+convert module: layer3.3.bn1
+convert module: layer3.1.bn3
+convert module: layer4.1.bn1
+convert module: layer3.2.bn1
+convert module: layer3.3.conv2
+convert module: layer3.2.conv2
+convert module: layer3.1.relu
+convert module: layer4.1.conv2
+convert module: layer3.3.bn2
+convert module: layer3.2.bn2
+convert module: layer3.2.conv1
+convert module: layer4.1.bn2
+convert module: layer3.3.conv3
+convert module: layer3.2.bn1
+convert module: layer4.1.conv3
+convert module: layer3.2.conv3
+convert module: layer3.2.conv2
+convert module: layer3.3.bn3
+convert module: layer4.1.bn3
+convert module: layer3.2.bn3
+convert module: layer3.2.bn2
+convert module: layer3.3.relu
+convert module: layer3.2.relu
+convert module: layer4.1.relu
+convert module: layer3.4.conv1
+convert module: layer3.2.conv3
+convert module: layer3.3.conv1
+convert module: layer4.2.conv1
+convert module: layer3.4.bn1
+convert module: layer3.2.bn3
+convert module: layer3.3.bn1
+convert module: layer4.2.bn1
+convert module: layer3.4.conv2
+convert module: layer3.2.relu
+convert module: layer3.3.conv2
+convert module: layer3.4.bn2
+convert module: layer4.2.conv2
+convert module: layer3.3.conv1
+convert module: layer3.4.conv3
+convert module: layer3.3.bn2
+convert module: layer4.2.bn2
+convert module: layer3.3.bn1
+convert module: layer3.4.bn3
+convert module: layer3.3.conv3
+convert module: layer4.2.conv3
+convert module: layer3.3.conv2
+convert module: layer3.4.relu
+convert module: layer3.5.conv1
+convert module: layer4.2.bn3
+convert module: layer3.3.bn2
+convert module: layer3.5.bn1
+convert module: layer4.2.relu
+convert module: layer3.3.bn3
+convert module: layer3.3.conv3
+convert module: layer3.5.conv2
+convert module: avgpool
+convert module: layer3.3.relu
+convert module: layer3.5.bn2
+convert module: fc
+convert module: layer3.4.conv1
+convert module: layer3.3.bn3
+convert module: layer3.5.conv3
+convert module: layer3.4.bn1
+convert module: layer3.5.bn3
+convert module: layer3.3.relu
+convert module: layer3.5.relu
+convert module: layer3.4.conv2
+convert module: layer3.4.conv1
+convert module: layer4.0.conv1
+convert module: layer3.4.bn2
+convert module: layer3.4.bn1
+convert module: layer4.0.bn1
+convert module: layer3.4.conv2
+convert module: layer3.4.conv3
+convert module: layer4.0.conv2
+convert module: layer3.4.bn2
+convert module: layer4.0.bn2
+convert module: layer3.4.bn3
+convert module: layer3.4.conv3
+convert module: layer4.0.conv3
+convert module: layer3.4.relu
+convert module: layer4.0.bn3
+convert module: layer3.4.bn3
+convert module: layer3.5.conv1
+convert module: layer4.0.relu
+convert module: layer3.4.relu
+convert module: layer3.5.bn1
+convert module: layer4.0.downsample.0
+convert module: layer3.5.conv1
+convert module: layer3.5.conv2
+convert module: layer3.5.bn1
+convert module: layer3.5.bn2
+convert module: layer3.5.conv2
+convert module: layer4.0.downsample.1
+convert module: layer3.5.conv3
+convert module: layer4.1.conv1
+convert module: layer3.5.bn2
+convert module: layer4.1.bn1
+convert module: layer3.5.bn3
+convert module: layer3.5.conv3
+convert module: layer4.1.conv2
+convert module: layer3.5.relu
+convert module: layer3.5.bn3
+convert module: layer4.0.conv1
+convert module: layer4.1.bn2
+convert module: layer3.5.relu
+convert module: layer4.1.conv3
+convert module: layer4.0.conv1
+convert module: layer4.0.bn1
+convert module: layer4.1.bn3
+convert module: layer4.0.bn1
+convert module: layer4.0.conv2
+convert module: layer4.1.relu
+convert module: layer4.0.conv2
+convert module: layer4.2.conv1
+convert module: layer4.0.bn2
+convert module: layer4.2.bn1
+convert module: layer4.0.bn2
+convert module: layer4.0.conv3
+convert module: layer4.2.conv2
+convert module: layer4.0.conv3
+convert module: layer4.2.bn2
+convert module: layer4.0.bn3
+convert module: layer4.0.bn3
+convert module: layer4.2.conv3
+convert module: layer4.0.relu
+convert module: layer4.0.relu
+convert module: layer4.0.downsample.0
+convert module: layer4.2.bn3
+convert module: layer4.0.downsample.0
+convert module: layer4.2.relu
+convert module: avgpool
+convert module: fc
+convert module: layer4.0.downsample.1
+convert module: layer4.0.downsample.1
+convert module: layer4.1.conv1
+convert module: layer4.1.conv1
+convert module: layer4.1.bn1
+convert module: layer4.1.bn1
+convert module: layer4.1.conv2
+convert module: layer4.1.conv2
+convert module: layer4.1.bn2
+convert module: layer4.1.bn2
+convert module: layer4.1.conv3
+convert module: layer4.1.conv3
+convert module: layer4.1.bn3
+convert module: layer4.1.bn3
+convert module: layer4.1.relu
+convert module: layer4.1.relu
+convert module: layer4.2.conv1
+convert module: layer4.2.conv1
+convert module: layer4.2.bn1
+convert module: layer4.2.bn1
+convert module: layer4.2.conv2
+convert module: layer4.2.conv2
+convert module: layer4.2.bn2
+convert module: layer4.2.bn2
+convert module: layer4.2.conv3
+convert module: layer4.2.conv3
+convert module: layer4.2.bn3
+convert module: layer4.2.bn3
+convert module: layer4.2.relu
+convert module: layer4.2.relu
+convert module: avgpool
+convert module: avgpool
+convert module: fc
+convert module: fc
+convert module: bn1
+convert module: relu
+convert module: maxpool
+convert module: layer1.0.conv1
+convert module: layer1.0.bn1
+convert module: layer1.0.conv2
+convert module: layer1.0.bn2
+convert module: layer1.0.conv3
+convert module: layer1.0.bn3
+convert module: layer1.0.relu
+convert module: layer1.0.downsample.0
+convert module: layer1.0.downsample.1
+convert module: layer1.1.conv1
+convert module: layer1.1.bn1
+convert module: layer1.1.conv2
+convert module: bn1
+convert module: layer1.1.bn2
+convert module: layer1.1.conv3
+convert module: relu
+convert module: layer1.1.bn3
+convert module: maxpool
+convert module: layer1.1.relu
+convert module: layer1.0.conv1
+convert module: layer1.2.conv1
+convert module: layer1.0.bn1
+convert module: layer1.2.bn1
+convert module: layer1.0.conv2
+convert module: layer1.2.conv2
+convert module: layer1.0.bn2
+convert module: layer1.2.bn2
+convert module: layer1.0.conv3
+convert module: layer1.2.conv3
+convert module: layer1.0.bn3
+convert module: layer1.2.bn3
+convert module: layer1.0.relu
+convert module: layer1.2.relu
+convert module: layer2.0.conv1
+convert module: layer1.0.downsample.0
+convert module: layer2.0.bn1
+convert module: layer1.0.downsample.1
+convert module: layer2.0.conv2
+convert module: layer1.1.conv1
+convert module: layer2.0.bn2
+convert module: layer1.1.bn1
+convert module: layer2.0.conv3
+convert module: layer1.1.conv2
+convert module: layer2.0.bn3
+convert module: layer1.1.bn2
+convert module: layer2.0.relu
+convert module: layer1.1.conv3
+convert module: layer2.0.downsample.0
+convert module: layer1.1.bn3
+convert module: layer2.0.downsample.1
+convert module: layer1.1.relu
+convert module: layer2.1.conv1
+convert module: layer1.2.conv1
+convert module: layer1.2.bn1
+convert module: layer2.1.bn1
+convert module: layer1.2.conv2
+convert module: layer2.1.conv2
+convert module: layer2.1.bn2
+convert module: layer1.2.bn2
+convert module: layer2.1.conv3
+convert module: layer1.2.conv3
+convert module: layer2.1.bn3
+convert module: layer1.2.bn3
+convert module: layer1.2.relu
+convert module: layer2.1.relu
+convert module: layer2.2.conv1
+convert module: layer2.0.conv1
+convert module: layer2.0.bn1
+convert module: layer2.2.bn1
+convert module: layer2.0.conv2
+convert module: layer2.2.conv2
+convert module: layer2.0.bn2
+convert module: layer2.2.bn2
+convert module: layer2.0.conv3
+convert module: layer2.2.conv3
+convert module: layer2.0.bn3
+convert module: layer2.2.bn3
+convert module: layer2.0.relu
+convert module: layer2.2.relu
+convert module: layer2.0.downsample.0
+convert module: layer2.3.conv1
+convert module: layer2.0.downsample.1
+convert module: layer2.3.bn1
+convert module: layer2.1.conv1
+convert module: layer2.3.conv2
+convert module: layer2.1.bn1
+convert module: layer2.3.bn2
+convert module: layer2.1.conv2
+convert module: layer2.3.conv3
+convert module: layer2.1.bn2
+convert module: layer2.3.bn3
+convert module: layer2.1.conv3
+convert module: layer2.3.relu
+convert module: layer2.1.bn3
+convert module: layer3.0.conv1
+convert module: layer2.1.relu
+convert module: layer3.0.bn1
+convert module: layer2.2.conv1
+convert module: layer3.0.conv2
+convert module: layer2.2.bn1
+convert module: layer2.2.conv2
+convert module: layer2.2.bn2
+convert module: layer2.2.conv3
+convert module: layer2.2.bn3
+convert module: layer2.2.relu
+convert module: layer2.3.conv1
+convert module: layer2.3.bn1
+convert module: layer2.3.conv2
+convert module: layer2.3.bn2
+convert module: layer2.3.conv3
+convert module: layer2.3.bn3
+convert module: layer2.3.relu
+convert module: layer3.0.conv1
+convert module: layer3.0.bn1
+convert module: layer3.0.bn2
+convert module: layer3.0.conv2
+convert module: layer3.0.conv3
+convert module: layer3.0.bn3
+convert module: layer3.0.relu
+convert module: layer3.0.downsample.0
+convert module: layer3.0.downsample.1
+convert module: layer3.1.conv1
+convert module: layer3.1.bn1
+convert module: layer3.1.conv2
+convert module: layer3.1.bn2
+convert module: layer3.1.conv3
+convert module: layer3.0.bn2
+convert module: layer3.1.bn3
+convert module: layer3.0.conv3
+convert module: layer3.1.relu
+convert module: layer3.0.bn3
+convert module: layer3.2.conv1
+convert module: layer3.0.relu
+convert module: layer3.0.downsample.0
+convert module: layer3.2.bn1
+convert module: layer3.2.conv2
+convert module: layer3.0.downsample.1
+convert module: layer3.2.bn2
+convert module: layer3.1.conv1
+convert module: layer3.2.conv3
+convert module: layer3.1.bn1
+convert module: layer3.2.bn3
+convert module: layer3.1.conv2
+convert module: layer3.2.relu
+convert module: layer3.1.bn2
+convert module: layer3.3.conv1
+convert module: layer3.1.conv3
+convert module: layer3.3.bn1
+convert module: layer3.1.bn3
+convert module: layer3.3.conv2
+convert module: layer3.1.relu
+convert module: layer3.3.bn2
+convert module: layer3.2.conv1
+convert module: layer3.3.conv3
+convert module: layer3.2.bn1
+convert module: layer3.2.conv2
+convert module: layer3.2.bn2
+convert module: layer3.2.conv3
+convert module: layer3.2.bn3
+convert module: layer3.2.relu
+convert module: layer3.3.conv1
+convert module: layer3.3.bn1
+convert module: layer3.3.conv2
+convert module: layer3.3.bn2
+convert module: layer3.3.conv3
+convert module: layer3.3.bn3
+convert module: layer3.3.relu
+convert module: layer3.4.conv1
+convert module: layer3.4.bn1
+convert module: layer3.4.conv2
+convert module: layer3.4.bn2
+convert module: layer3.3.bn3
+convert module: layer3.4.conv3
+convert module: layer3.3.relu
+convert module: layer3.4.bn3
+convert module: layer3.4.conv1
+convert module: layer3.4.relu
+convert module: layer3.5.conv1
+convert module: layer3.4.bn1
+convert module: layer3.4.conv2
+convert module: layer3.5.bn1
+convert module: layer3.4.bn2
+convert module: layer3.5.conv2
+convert module: layer3.5.bn2
+convert module: layer3.4.conv3
+convert module: layer3.5.conv3
+convert module: layer3.4.bn3
+convert module: layer3.5.bn3
+convert module: layer3.4.relu
+convert module: layer3.5.relu
+convert module: layer3.5.conv1
+convert module: layer4.0.conv1
+convert module: layer3.5.bn1
+convert module: layer4.0.bn1
+convert module: layer3.5.conv2
+convert module: layer4.0.conv2
+convert module: layer3.5.bn2
+convert module: layer4.0.bn2
+convert module: layer3.5.conv3
+convert module: layer4.0.conv3
+convert module: layer3.5.bn3
+convert module: layer4.0.bn3
+convert module: layer3.5.relu
+convert module: layer4.0.conv1
+convert module: layer4.0.relu
+convert module: layer4.0.downsample.0
+convert module: layer4.0.bn1
+convert module: layer4.0.conv2
+convert module: layer4.0.bn2
+convert module: layer4.0.conv3
+convert module: layer4.0.bn3
+convert module: layer4.0.relu
+convert module: layer4.0.downsample.0
+convert module: layer4.0.downsample.1
+convert module: layer4.1.conv1
+convert module: layer4.1.bn1
+convert module: layer4.1.conv2
+convert module: layer4.1.bn2
+convert module: layer4.1.conv3
+convert module: layer4.0.downsample.1
+convert module: layer4.1.bn3
+convert module: layer4.1.relu
+convert module: layer4.1.conv1
+convert module: layer4.1.bn1
+convert module: layer4.2.conv1
+convert module: layer4.1.conv2
+convert module: layer4.2.bn1
+convert module: layer4.1.bn2
+convert module: layer4.2.conv2
+convert module: layer4.2.bn2
+convert module: layer4.1.conv3
+convert module: layer4.2.conv3
+convert module: layer4.1.bn3
+convert module: layer4.1.relu
+convert module: layer4.2.bn3
+convert module: layer4.2.relu
+convert module: layer4.2.conv1
+convert module: avgpool
+convert module: layer4.2.bn1
+convert module: fc
+convert module: layer4.2.conv2
+convert module: layer4.2.bn2
+convert module: layer4.2.conv3
+convert module: layer4.2.bn3
+convert module: layer4.2.relu
+convert module: avgpool
+convert module: fc
+2020-07-02 14:54:37,687 [32mINFO[0m: model
+DistributedParrotsModel
+ResNet(
+  (conv1): Conv2d(
+    3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False
+    (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+  )
+  (bn1): BatchNorm2d(
+    64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+    (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+  )
+  (relu): ReLU(
+    inplace
+    (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+  )
+  (maxpool): MaxPool2d(
+    kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False
+    (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+  )
+  (layer1): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(
+        64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (downsample): Sequential(
+        (0): Conv2d(
+          64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+        (1): BatchNorm2d(
+          256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(
+        256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(
+        256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+  )
+  (layer2): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(
+        256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (downsample): Sequential(
+        (0): Conv2d(
+          256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+        (1): BatchNorm2d(
+          512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(
+        512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(
+        512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (3): Bottleneck(
+      (conv1): Conv2d(
+        512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+  )
+  (layer3): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(
+        512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (downsample): Sequential(
+        (0): Conv2d(
+          512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+        (1): BatchNorm2d(
+          1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(
+        1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(
+        1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (3): Bottleneck(
+      (conv1): Conv2d(
+        1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (4): Bottleneck(
+      (conv1): Conv2d(
+        1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (5): Bottleneck(
+      (conv1): Conv2d(
+        1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+  )
+  (layer4): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(
+        1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (downsample): Sequential(
+        (0): Conv2d(
+          1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+        (1): BatchNorm2d(
+          2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+          (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+        )
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(
+        2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(
+        2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn1): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv2): Conv2d(
+        512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn2): BatchNorm2d(
+        512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (conv3): Conv2d(
+        512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (bn3): BatchNorm2d(
+        2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+      (relu): ReLU(
+        inplace
+        (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+      )
+    )
+  )
+  (avgpool): AvgPool2d(
+    kernel_size=7, stride=1, padding=0
+    (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+  )
+  (fc): Linear(
+    in_features=2048, out_features=1000, bias=True
+    (output_quant): FakeLinearQuantization(mode=ASYMMETRIC_UNSIGNED, num_bits=8, ema_decay=0.9990))
+  )
+)[0m
+2020-07-02 14:54:37,821 [32mINFO[0m: loss
+CrossEntropyLoss()[0m
+2020-07-02 14:54:37,822 [32mINFO[0m: optimizer
+SGD (
+Parameter Group 0
+    dampening: 0
+    hold_grads: False
+    lr: 0.1
+    momentum: 0.9
+    nesterov: False
+    weight_decay: 0.0001
+)[0m
+2020-07-02 14:54:37,843 [32mINFO[0m: create checkpoint folder checkpoints/resnet50[0m
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4444)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f41827d05b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f41827b5bc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f41827b6108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f4182646678]++.so.6(+0xb8678) [0x7f4182646678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f418b052e25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f418ad8034d]
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4442)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f3b8f3a05b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f3b8f385bc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f3b8f386108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f3b8f216678]++.so.6(+0xb8678) [0x7f3b8f216678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f3b97c22e25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f3b9795034d]
+[SH-IDC1-10-198-4-158:3307932] *** Process received signal ***
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4444)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f65afd255b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f65afd0abc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f65afd0b108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f65afb9b678]++.so.6(+0xb8678) [0x7f65afb9b678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f65b85a7e25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f65b82d534d]
+[SH-IDC1-10-198-4-158:3307933] *** Process received signal ***
+[SH-IDC1-10-198-4-158:3307934] *** Process received signal ***
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4442)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f0c3066c5b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f0c30651bc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f0c30652108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f0c304e2678]++.so.6(+0xb8678) [0x7f0c304e2678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f0c38eeee25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f0c38c1c34d]
+[SH-IDC1-10-198-4-158:3307935] *** Process received signal ***
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4442)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f8f7d56b5b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f8f7d550bc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f8f7d551108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f8f7d3e1678]++.so.6(+0xb8678) [0x7f8f7d3e1678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f8f85dede25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f8f85b1b34d]
+[SH-IDC1-10-198-4-158:3307936] *** Process received signal ***
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4442)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f75652585b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f756523dbc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f756523e108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f75650ce678]++.so.6(+0xb8678) [0x7f75650ce678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f756dadae25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f756d80834d]
+[SH-IDC1-10-198-4-158:3307937] *** Process received signal ***
+[SH-IDC1-10-198-4-158:3307937] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307937] Signal code:  (-6)
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4440)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7f033c5015b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7f033c4e6bc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7f033c4e7108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7f033c377678]++.so.6(+0xb8678) [0x7f033c377678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7f0344d83e25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7f0344ab134d]
+[SH-IDC1-10-198-4-158:3307938] *** Process received signal ***
+[SH-IDC1-10-198-4-158:3307938] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307938] Signal code:  (-6)
+terminate called after throwing an instance of 'parrots::KeyNotFound'
+[SH-IDC1-10-198-4-158:3307932] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307932] Signal code:  (-6)
+[SH-IDC1-10-198-4-158:3307933] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307933] Signal code:  (-6)
+[SH-IDC1-10-198-4-158:3307934] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307934] Signal code:  (-6)
+[SH-IDC1-10-198-4-158:3307935] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307935] Signal code:  (-6)
+[SH-IDC1-10-198-4-158:3307936] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307936] Signal code:  (-6)
+  what():  Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (338). Key not found: Storage not exists for reads[0] of div(4442)
+Opcode: div
+(in0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+(in1) arch: cpu; shape: (1, ); value type: Float32;
+(out0) arch: device; shape: (32, 64, 112, 112, ); value type: Float32;
+
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::processRealOp(parrots::Opcode const&)+0xe42) [0x7ff84d8dd5b2]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::executeOpcode(parrots::Opcode const&)+0xe1) [0x7ff84d8c2bc1]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::work()+0x288) [0x7ff84d8c3108]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0xb8678) [0x7ff84d753678]++.so.6(+0xb8678) [0x7ff84d753678]
+5 /usr/lib64/libpthread.so.0(+0x7e25) [0x7ff85615fe25]
+6 /usr/lib64/libc.so.6(clone+0x6d) [0x7ff855e8d34d]
+[SH-IDC1-10-198-4-158:3307931] *** Process received signal ***
+[SH-IDC1-10-198-4-158:3307931] Signal: Aborted (6)
+[SH-IDC1-10-198-4-158:3307931] Signal code:  (-6)
+[SH-IDC1-10-198-4-158:3307931] [SH-IDC1-10-198-4-158:3307932] [ 0] [SH-IDC1-10-198-4-158:3307933] [ 0] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f65b85af5e0]
+[SH-IDC1-10-198-4-158:3307933] [ 1] [SH-IDC1-10-198-4-158:3307938] [ 0] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f0344d8b5e0]
+[SH-IDC1-10-198-4-158:3307938] [ 1] [ 0] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7ff8561675e0]
+[SH-IDC1-10-198-4-158:3307931] [ 1] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f418b05a5e0]
+[SH-IDC1-10-198-4-158:3307932] [ 1] [SH-IDC1-10-198-4-158:3307934] [ 0] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f3b97c2a5e0]
+[SH-IDC1-10-198-4-158:3307934] [ 1] [SH-IDC1-10-198-4-158:3307935] [ 0] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f0c38ef65e0]
+[SH-IDC1-10-198-4-158:3307935] [ 1] [SH-IDC1-10-198-4-158:3307936] [ 0] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f8f85df55e0]
+[SH-IDC1-10-198-4-158:3307936] [ 1] [SH-IDC1-10-198-4-158:3307937] [ 0] /usr/lib64/libc.so.6(gsignal+0x37)[0x7ff855dca1f7]
+[SH-IDC1-10-198-4-158:3307931] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7ff855dcb8e8]
+[SH-IDC1-10-198-4-158:3307931] [ 3] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f418acbd1f7]
+[SH-IDC1-10-198-4-158:3307932] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7f418acbe8e8]
+[SH-IDC1-10-198-4-158:3307932] [ 3] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f65b82121f7]
+[SH-IDC1-10-198-4-158:3307933] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7f65b82138e8]
+[SH-IDC1-10-198-4-158:3307933] [ 3] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f3b9788d1f7]
+[SH-IDC1-10-198-4-158:3307934] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7f3b9788e8e8]
+[SH-IDC1-10-198-4-158:3307934] [ 3] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f8f85a581f7]
+[SH-IDC1-10-198-4-158:3307936] [ 2] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f03449ee1f7]
+[SH-IDC1-10-198-4-158:3307938] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7f03449ef8e8]
+[SH-IDC1-10-198-4-158:3307938] [ 3] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f0c38b591f7]
+[SH-IDC1-10-198-4-158:3307935] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7f0c38b5a8e8]
+[SH-IDC1-10-198-4-158:3307935] [ 3] /usr/lib64/libc.so.6(abort+0x148)[0x7f8f85a598e8]
+[SH-IDC1-10-198-4-158:3307936] [ 3] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f418262c3df]
+[SH-IDC1-10-198-4-158:3307932] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f65afb813df]
+[SH-IDC1-10-198-4-158:3307933] [ 4] /usr/lib64/libpthread.so.0(+0xf5e0)[0x7f756dae25e0]
+[SH-IDC1-10-198-4-158:3307937] [ 1] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7ff84d7393df]
+[SH-IDC1-10-198-4-158:3307931] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f3b8f1fc3df]
+[SH-IDC1-10-198-4-158:3307934] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f0c304c83df]
+[SH-IDC1-10-198-4-158:3307935] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f033c35d3df]
+[SH-IDC1-10-198-4-158:3307938] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7ff84d737b16]
+[SH-IDC1-10-198-4-158:3307931] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f418262ab16]
+[SH-IDC1-10-198-4-158:3307932] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f65afb7fb16]
+[SH-IDC1-10-198-4-158:3307933] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f3b8f1fab16]
+[SH-IDC1-10-198-4-158:3307934] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f8f7d3c73df]
+[SH-IDC1-10-198-4-158:3307936] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f65afb7ef91]
+[SH-IDC1-10-198-4-158:3307933] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f0c304c6b16]
+[SH-IDC1-10-198-4-158:3307935] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f033c35bb16]
+[SH-IDC1-10-198-4-158:3307938] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7ff84d736f91]
+[SH-IDC1-10-198-4-158:3307931] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f4182629f91]
+[SH-IDC1-10-198-4-158:3307932] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f3b8f1f9f91]
+[SH-IDC1-10-198-4-158:3307934] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f8f7d3c5b16]
+[SH-IDC1-10-198-4-158:3307936] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7ff84d73779d]
+[SH-IDC1-10-198-4-158:3307931] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7ff85685ef56]
+[SH-IDC1-10-198-4-158:3307931] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f65afb7f79d]
+[SH-IDC1-10-198-4-158:3307933] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f65b8ca6f56]
+[SH-IDC1-10-198-4-158:3307933] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f65b8ca73e9]
+[SH-IDC1-10-198-4-158:3307933] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f0c304c5f91]
+[SH-IDC1-10-198-4-158:3307935] [ 6] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7ff85685f3e9]
+[SH-IDC1-10-198-4-158:3307931] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f418262a79d]
+[SH-IDC1-10-198-4-158:3307932] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f418b751f56]
+[SH-IDC1-10-198-4-158:3307932] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f418b7523e9]
+[SH-IDC1-10-198-4-158:3307932] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f3b8f1fa79d]
+[SH-IDC1-10-198-4-158:3307934] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f3b98321f56]
+[SH-IDC1-10-198-4-158:3307934] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f3b983223e9]
+[SH-IDC1-10-198-4-158:3307934] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f033c35af91]
+[SH-IDC1-10-198-4-158:3307938] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f0c304c679d]
+[SH-IDC1-10-198-4-158:3307935] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f0c395edf56]
+[SH-IDC1-10-198-4-158:3307935] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f0c395ee3e9]
+[SH-IDC1-10-198-4-158:3307935] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f8f7d3c4f91]
+[SH-IDC1-10-198-4-158:3307936] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7ff83bc8d101]
+[SH-IDC1-10-198-4-158:3307931] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f659e0d5101]
+[SH-IDC1-10-198-4-158:3307933] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f033c35b79d]
+[SH-IDC1-10-198-4-158:3307938] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f0345482f56]
+[SH-IDC1-10-198-4-158:3307938] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f03454833e9]
+[SH-IDC1-10-198-4-158:3307938] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7ff83bc8d15d]
+[SH-IDC1-10-198-4-158:3307931] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f4170b80101]
+[SH-IDC1-10-198-4-158:3307932] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f4170b8015d]
+[SH-IDC1-10-198-4-158:3307932] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f659e0d515d]
+[SH-IDC1-10-198-4-158:3307933] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f659e0d6e98]
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f3b7d750101]
+[SH-IDC1-10-198-4-158:3307934] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f3b7d75015d]
+[SH-IDC1-10-198-4-158:3307934] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f8f7d3c579d]
+[SH-IDC1-10-198-4-158:3307936] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f8f864ecf56]
+[SH-IDC1-10-198-4-158:3307936] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f8f864ed3e9]
+[SH-IDC1-10-198-4-158:3307936] [ 9] /usr/lib64/libc.so.6(gsignal+0x37)[0x7f756d7451f7]
+[SH-IDC1-10-198-4-158:3307937] [ 2] /usr/lib64/libc.so.6(abort+0x148)[0x7f756d7468e8]
+[SH-IDC1-10-198-4-158:3307937] [ 3] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7ff83bc8ee98]
+[SH-IDC1-10-198-4-158:3307931] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7ff83bce7929]
+[SH-IDC1-10-198-4-158:3307931] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f4170b81e98]
+[SH-IDC1-10-198-4-158:3307932] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f4170bda929]
+[SH-IDC1-10-198-4-158:3307932] [13] [SH-IDC1-10-198-4-158:3307933] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f659e12f929]
+[SH-IDC1-10-198-4-158:3307933] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f3b7d751e98]
+[SH-IDC1-10-198-4-158:3307934] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f0c1ea1c101]
+[SH-IDC1-10-198-4-158:3307935] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f0c1ea1c15d]
+[SH-IDC1-10-198-4-158:3307935] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f0c1ea1de98]
+[SH-IDC1-10-198-4-158:3307935] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f0c1ea76929]
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7ff83bc7fca0]
+[SH-IDC1-10-198-4-158:3307931] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f4170b72ca0]
+[SH-IDC1-10-198-4-158:3307932] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f659e0c7ca0]
+[SH-IDC1-10-198-4-158:3307933] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f659e1bca32]
+[SH-IDC1-10-198-4-158:3307933] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f3b7d7aa929]
+[SH-IDC1-10-198-4-158:3307934] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f3b7d742ca0]
+[SH-IDC1-10-198-4-158:3307934] [14] [SH-IDC1-10-198-4-158:3307935] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f0c1ea0eca0]
+[SH-IDC1-10-198-4-158:3307935] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f8f6b91b101]
+[SH-IDC1-10-198-4-158:3307936] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f8f6b91b15d]
+[SH-IDC1-10-198-4-158:3307936] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f032a8b1101]
+[SH-IDC1-10-198-4-158:3307938] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f032a8b115d]
+[SH-IDC1-10-198-4-158:3307938] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f032a8b2e98]
+[SH-IDC1-10-198-4-158:3307938] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7ff83bd74a32]
+[SH-IDC1-10-198-4-158:3307931] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f4170c67a32]
+[SH-IDC1-10-198-4-158:3307932] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f0c1eb03a32]
+[SH-IDC1-10-198-4-158:3307935] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f8f6b91ce98]
+[SH-IDC1-10-198-4-158:3307936] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0xbc)[0x7f75650b43df]
+[SH-IDC1-10-198-4-158:3307937] [ 4] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f3b7d837a32]
+[SH-IDC1-10-198-4-158:3307934] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f8f6b975929]
+[SH-IDC1-10-198-4-158:3307936] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9cb16)[0x7f75650b2b16]
+[SH-IDC1-10-198-4-158:3307937] [ 5] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f032a90b929]
+[SH-IDC1-10-198-4-158:3307938] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f032a8a3ca0]
+[SH-IDC1-10-198-4-158:3307938] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f8f6b90dca0]
+[SH-IDC1-10-198-4-158:3307936] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f032a998a32]
+[SH-IDC1-10-198-4-158:3307938] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f8f6ba02a32]
+[SH-IDC1-10-198-4-158:3307936] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(+0x9bf91)[0x7f75650b1f91]
+[SH-IDC1-10-198-4-158:3307937] [ 6] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/libstdc++.so.6(__gxx_personality_v0+0x33e)[0x7f75650b279d]
+[SH-IDC1-10-198-4-158:3307937] [ 7] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(+0xcf56)[0x7f756e1d9f56]
+[SH-IDC1-10-198-4-158:3307937] [ 8] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/../lib/libgcc_s.so.1(_Unwind_Resume+0x61)[0x7f756e1da3e9]
+[SH-IDC1-10-198-4-158:3307937] [ 9] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x120101)[0x7f7553608101]
+[SH-IDC1-10-198-4-158:3307937] [10] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12015d)[0x7f755360815d]
+[SH-IDC1-10-198-4-158:3307937] [11] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x121e98)[0x7f7553609e98]
+[SH-IDC1-10-198-4-158:3307937] [12] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv+0x39)[0x7f7553662929]
+[SH-IDC1-10-198-4-158:3307937] [13] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x112ca0)[0x7f75535faca0]
+[SH-IDC1-10-198-4-158:3307937] [14] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x207a32)[0x7f75536efa32]
+[SH-IDC1-10-198-4-158:3307937] [15] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x55d9a47f8f25]
+[SH-IDC1-10-198-4-158:3307931] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x5568745ccf25]
+[SH-IDC1-10-198-4-158:3307932] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x55f93d3baf25]
+[SH-IDC1-10-198-4-158:3307933] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x562e06130f25]
+[SH-IDC1-10-198-4-158:3307935] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x5585182adf25]
+[SH-IDC1-10-198-4-158:3307936] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x555f3a1bbf25]
+[SH-IDC1-10-198-4-158:3307938] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x555f3a22e705]
+[SH-IDC1-10-198-4-158:3307938] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x55d9a486b705]
+[SH-IDC1-10-198-4-158:3307931] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x55687463f705]
+[SH-IDC1-10-198-4-158:3307932] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x55f93d42d705]
+[SH-IDC1-10-198-4-158:3307933] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x561ec3614f25]
+[SH-IDC1-10-198-4-158:3307934] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x9ef25)[0x556b07496f25]
+[SH-IDC1-10-198-4-158:3307937] [16] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x556b07509705]
+[SH-IDC1-10-198-4-158:3307937] [17] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x555f3a2b542c]
+[SH-IDC1-10-198-4-158:3307938] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x55d9a48f242c]
+[SH-IDC1-10-198-4-158:3307931] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x5568746c642c]
+[SH-IDC1-10-198-4-158:3307932] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x55f93d4b442c]
+[SH-IDC1-10-198-4-158:3307933] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x561ec3687705]
+[SH-IDC1-10-198-4-158:3307934] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x562e061a3705]
+[SH-IDC1-10-198-4-158:3307935] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x562e0622a42c]
+[SH-IDC1-10-198-4-158:3307935] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyCFunction_FastCallDict+0x115)[0x558518320705]
+[SH-IDC1-10-198-4-158:3307936] [17] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x5585183a742c]
+[SH-IDC1-10-198-4-158:3307936] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x55d9a491738a]
+[SH-IDC1-10-198-4-158:3307931] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x5568746eb38a]
+[SH-IDC1-10-198-4-158:3307932] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x55f93d4d938a]
+[SH-IDC1-10-198-4-158:3307933] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x561ec370e42c]
+[SH-IDC1-10-198-4-158:3307934] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x562e0624f38a]
+[SH-IDC1-10-198-4-158:3307935] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x5585183cc38a]
+[SH-IDC1-10-198-4-158:3307936] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x19842c)[0x556b0759042c]
+[SH-IDC1-10-198-4-158:3307937] [18] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x555f3a2da38a]
+[SH-IDC1-10-198-4-158:3307938] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x555f3a2ae8e4]
+[SH-IDC1-10-198-4-158:3307938] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x55d9a48eb8e4]
+[SH-IDC1-10-198-4-158:3307931] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x55d9a48ec771]
+[SH-IDC1-10-198-4-158:3307931] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x5568746bf8e4]
+[SH-IDC1-10-198-4-158:3307932] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x5568746c0771]
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x55f93d4ad8e4]
+[SH-IDC1-10-198-4-158:3307933] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x55f93d4ae771]
+[SH-IDC1-10-198-4-158:3307933] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x561ec373338a]
+[SH-IDC1-10-198-4-158:3307934] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x562e062238e4]
+[SH-IDC1-10-198-4-158:3307935] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x562e06224771]
+[SH-IDC1-10-198-4-158:3307935] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x5585183a08e4]
+[SH-IDC1-10-198-4-158:3307936] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x5585183a1771]
+[SH-IDC1-10-198-4-158:3307936] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x556b075b538a]
+[SH-IDC1-10-198-4-158:3307937] [19] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x555f3a2af771]
+[SH-IDC1-10-198-4-158:3307938] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x555f3a2b5505]
+[SH-IDC1-10-198-4-158:3307938] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x55d9a48f2505]
+[SH-IDC1-10-198-4-158:3307931] [22] [SH-IDC1-10-198-4-158:3307932] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x5568746c6505]
+[SH-IDC1-10-198-4-158:3307932] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x55f93d4b4505]
+[SH-IDC1-10-198-4-158:3307933] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x561ec37078e4]
+[SH-IDC1-10-198-4-158:3307934] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x5585183a7505]
+[SH-IDC1-10-198-4-158:3307936] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x556b075898e4]
+[SH-IDC1-10-198-4-158:3307937] [20] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x55d9a4918147]
+[SH-IDC1-10-198-4-158:3307931] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x5568746ec147]
+[SH-IDC1-10-198-4-158:3307932] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x55f93d4da147]
+[SH-IDC1-10-198-4-158:3307933] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x55f93d4ad8e4]
+[SH-IDC1-10-198-4-158:3307933] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x561ec3708771]
+[SH-IDC1-10-198-4-158:3307934] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x562e0622a505]
+[SH-IDC1-10-198-4-158:3307935] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x562e06250147]
+[SH-IDC1-10-198-4-158:3307935] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x5585183cd147]
+[SH-IDC1-10-198-4-158:3307936] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x5585183a08e4]
+[SH-IDC1-10-198-4-158:3307936] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x556b0758a771]
+[SH-IDC1-10-198-4-158:3307937] [21] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x555f3a2db147]
+[SH-IDC1-10-198-4-158:3307938] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x555f3a2ae8e4]
+[SH-IDC1-10-198-4-158:3307938] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x555f3a2af771]
+[SH-IDC1-10-198-4-158:3307938] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x55d9a48eb8e4]
+[SH-IDC1-10-198-4-158:3307931] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x55d9a48ec771]
+[SH-IDC1-10-198-4-158:3307931] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x5568746bf8e4]
+[SH-IDC1-10-198-4-158:3307932] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x5568746c0771]
+[SH-IDC1-10-198-4-158:3307932] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x55f93d4ae771]
+[SH-IDC1-10-198-4-158:3307933] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x55f93d4b4505]
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x561ec370e505]
+[SH-IDC1-10-198-4-158:3307934] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x562e062238e4]
+[SH-IDC1-10-198-4-158:3307935] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x562e06224771]
+[SH-IDC1-10-198-4-158:3307935] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x556b07590505]
+[SH-IDC1-10-198-4-158:3307937] [22] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x55d9a48f2505]
+[SH-IDC1-10-198-4-158:3307931] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x5568746c6505]
+[SH-IDC1-10-198-4-158:3307932] [26] [SH-IDC1-10-198-4-158:3307933] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x55f93d4d938a]
+[SH-IDC1-10-198-4-158:3307933] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x561ec3734147]
+[SH-IDC1-10-198-4-158:3307934] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x562e0622a505]
+[SH-IDC1-10-198-4-158:3307935] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x5585183a1771]
+[SH-IDC1-10-198-4-158:3307936] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x5585183a7505]
+[SH-IDC1-10-198-4-158:3307936] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x5585183cc38a]
+[SH-IDC1-10-198-4-158:3307936] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x10c7)[0x556b075b6147]
+[SH-IDC1-10-198-4-158:3307937] [23] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x555f3a2b5505]
+[SH-IDC1-10-198-4-158:3307938] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x555f3a2da38a]
+[SH-IDC1-10-198-4-158:3307938] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x555f3a2aea76]
+[SH-IDC1-10-198-4-158:3307938] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x55d9a491738a]
+[SH-IDC1-10-198-4-158:3307931] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x55d9a48eba76]
+[SH-IDC1-10-198-4-158:3307931] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x5568746eb38a]
+[SH-IDC1-10-198-4-158:3307932] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x5568746bfa76]
+[SH-IDC1-10-198-4-158:3307932] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x55f93d4ada76]
+[SH-IDC1-10-198-4-158:3307933] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x55f93d4aee6a]
+[SH-IDC1-10-198-4-158:3307933] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x561ec37078e4]
+[SH-IDC1-10-198-4-158:3307934] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x562e0624f38a]
+[SH-IDC1-10-198-4-158:3307935] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x562e06223a76]
+[SH-IDC1-10-198-4-158:3307935] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x5585183a0a76]
+[SH-IDC1-10-198-4-158:3307936] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x5585183a1e6a]
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x1918e4)[0x556b075898e4]
+[SH-IDC1-10-198-4-158:3307937] [24] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x556b0758a771]
+[SH-IDC1-10-198-4-158:3307937] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x55d9a48ece6a]
+[SH-IDC1-10-198-4-158:3307931] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x5568746c0e6a]
+[SH-IDC1-10-198-4-158:3307932] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x192771)[0x561ec3708771]
+[SH-IDC1-10-198-4-158:3307934] [25] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x562e06224e6a]
+[SH-IDC1-10-198-4-158:3307935] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x562e061a3b0f]
+[SH-IDC1-10-198-4-158:3307935] *** End of error message ***
+[SH-IDC1-10-198-4-158:3307936] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x558518320b0f]
+[SH-IDC1-10-198-4-158:3307936] *** End of error message ***
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x555f3a2afe6a]
+[SH-IDC1-10-198-4-158:3307938] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x555f3a22eb0f]
+[SH-IDC1-10-198-4-158:3307938] *** End of error message ***
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x55d9a486bb0f]
+[SH-IDC1-10-198-4-158:3307931] *** End of error message ***
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x55687463fb0f]
+[SH-IDC1-10-198-4-158:3307932] *** End of error message ***
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x55f93d42db0f]
+[SH-IDC1-10-198-4-158:3307933] *** End of error message ***
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x561ec370e505]
+[SH-IDC1-10-198-4-158:3307934] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x198505)[0x556b07590505]
+[SH-IDC1-10-198-4-158:3307937] [26] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x561ec373338a]
+[SH-IDC1-10-198-4-158:3307934] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyEval_EvalFrameDefault+0x30a)[0x556b075b538a]
+[SH-IDC1-10-198-4-158:3307937] [27] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x556b07589a76]
+[SH-IDC1-10-198-4-158:3307937] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(+0x191a76)[0x561ec3707a76]
+[SH-IDC1-10-198-4-158:3307934] [28] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x556b0758ae6a]
+[SH-IDC1-10-198-4-158:3307937] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x556b07509b0f]
+[SH-IDC1-10-198-4-158:3307937] *** End of error message ***
+/mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyFunction_FastCallDict+0x3da)[0x561ec3708e6a]
+[SH-IDC1-10-198-4-158:3307934] [29] /mnt/cache/share/platform/env/miniconda3.6/envs/pat0.6.0rc0/bin/python(_PyObject_FastCallDict+0x26f)[0x561ec3687b0f]
+[SH-IDC1-10-198-4-158:3307934] *** End of error message ***
+srun: error: SH-IDC1-10-198-4-158: tasks 1-7: Aborted
+srun: error: SH-IDC1-10-198-4-158: task 0: Aborted

@@ -23,6 +23,7 @@ from pape.half import HalfModel, HalfOptimizer
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+import famicom
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -81,7 +82,18 @@ def main():
                               float_module_name=eval(mix_cfg.get("float_module_name", "{}")))
             args.half = True
 
-    model = DistributedModel(model)
+    from famicom.transform import ModuleTransformer
+    quant_params = {
+    'bits_weights': 8,
+    'bits_acts': 8,
+    'algorithm': 'ASYMMETRIC_UNSIGNED',
+    'ema_decay': 0.999,
+    'with_float_weight': True,
+    }
+
+    T = ModuleTransformer(quant_params)
+    #T.transform(model.cpu()) 
+    model = DistributedModel(model.cuda())
     logger.info("model\n{}".format(model))
 
     criterion = nn.CrossEntropyLoss().cuda()
