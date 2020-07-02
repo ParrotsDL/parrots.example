@@ -14,6 +14,14 @@ example_resnet50.short: # Required.
     iter_speed: 0.2464
     acc1: 75.77
     acc5: None
+example_resnet50_sync.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.156
+    acc1: 37.0
+    acc5: None
 example_resnet50_mix: # Required.
   func: example_func # Required
   args:
@@ -453,4 +461,12 @@ example_mobile_v2_weekly: # Required.
   thresh: # Required
     iter_speed: 0.198
     acc1: 68.261
+    acc5: None
+example_mobile_v1.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: 41.869
     acc5: None

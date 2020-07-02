@@ -318,3 +318,11 @@ pod_faster-rcnn-R50-PAFPN-1x_mix.short: # Required.
     iter_speed: 0.7
     bbox_ap: 0.217
     seg_ap: None
+pod_faster-rcnn-R50-C4-1x.short: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.789
+    bbox_ap: 0.035
+    seg_ap: None
