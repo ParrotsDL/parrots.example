@@ -92,7 +92,7 @@ def main():
     }
 
     T = ModuleTransformer(quant_params)
-    #T.transform(model.cpu()) 
+    T.transform(model.cpu()) 
     model = DistributedModel(model.cuda())
     logger.info("model\n{}".format(model))
 
