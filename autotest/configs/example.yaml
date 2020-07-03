@@ -502,3 +502,11 @@ example_mobile_v1.benchmark: # Required.
     iter_speed: 0.198
     acc1: 41.869
     acc5: None
+example_inceptionv3.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.305
+    acc1: 56.0
+    acc5: 76.5
