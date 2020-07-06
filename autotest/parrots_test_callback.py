@@ -457,39 +457,6 @@ def example_func(done_flag="All Loss",
                  ips_flag="jobs, in ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
                  **args):
     """ log_file: read from stdin as default
-        ret(dict): results of analysis metrics
-    """
-    ret = {}
-    ret.update(**args)
-    ret['is_done'] = False
-    ret['iter_speed'] = 'none'
-    ret['mIoU'] = 'none'
-    ret['ips'] = 'none'
-    for line in log_stream:
-        if ret['is_done'] is False:
-            is_done = re.search(done_flag, line)
-            if is_done is not None:
-                ret['is_done'] = True
-        if ret['iter_speed'] == 'none':
-            iter_speed = re.search(iter_speed_flag, line)
-            if iter_speed is not None:
-                ret['iter_speed'] = iter_speed.group(2)
-        mIoU = re.search(mIoU_flag, line)
-        if acc1 is not None:
-            ret['mIoU'] = mIoU.group()
-        if ret['ips'] == 'none':
-            ips = re.search(ips_flag, line)
-            if ips is not None:
-                ret['ips'] = ips.group(1)
-    return ret
-
-@register_callfunc
-def nas_lite_func(done_flag="Pipeline is Done",
-                  iter_speed_flag="INFO] Iter: \[100\/.*]	Time [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)	Data",
-                  prec_flag="Prec@1 [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)	Prec@5 [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)",
-                  ips_flag="node_list: (.+)",
-                  **args):
-    """ log_file: read from stdin as default
         iter_speed_flag: flag for 100 iter time
         prec_flag: flag for Prec@1 and Prec@5
         ret(dict): results of analysis metrics
@@ -498,8 +465,8 @@ def nas_lite_func(done_flag="Pipeline is Done",
     ret.update(**args)
     ret['is_done'] = False
     ret['iter_speed'] = 'none'
-    ret['prec1'] = 'none'
-    ret['prec5'] = 'none'
+    ret['acc1'] = 'none'
+    ret['acc5'] = 'none'
     ret['ips'] = 'none'
     for line in log_stream:
         # print(line)
