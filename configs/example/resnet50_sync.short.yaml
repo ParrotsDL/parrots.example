@@ -28,9 +28,9 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 1
-  test_freq: 2
-  log_freq: 200
+  max_epoch: 4
+  test_freq: 5
+  log_freq: 100
   label_smooth:
   optimizer:
     type: SGD
@@ -51,7 +51,7 @@ saver:
   #load_pavi:   # load pretrain/resume model from pavi
   #save_pavi:   # add snapshot to pavi
   save_dir: checkpoints/resnet50   # save checkpoint locally
-  save_epoch_freq: 10
+  save_epoch_freq: 4
   save_latest: False
   save_best: True
   sync_bn_stats: False  
