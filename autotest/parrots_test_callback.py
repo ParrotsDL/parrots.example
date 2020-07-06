@@ -190,8 +190,8 @@ def ssd_func(done_flag="Pipeline is Done",
             if ips is not None:
                 ret['ips'] = ips.group(1)
     if ret['start'] != 'none' and ret['end'] != 'none':
-        date1 = time.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
-        date2 = time.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+        date1 = time.strptime(ret['start'], "%Y-%m-%d-%H:%M:%S")
+        date2 = time.strptime(ret['end'], "%Y-%m-%d-%H:%M:%S")
         date1 = datetime.datetime(
             date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
         date2 = datetime.datetime(
@@ -347,6 +347,44 @@ def alphatrion_nas_func(done_flag="Pipeline is Done",
 
 
 @register_callfunc
+def nas_lite_func(done_flag="Pipeline is Done",
+                  iter_speed_flag="INFO] Iter: \[100\/.*]	Time [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)	Data",
+                  prec_flag="Prec@1 [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)	Prec@5 [0-9]*.[0-9]* \(([0-9]*.[0-9]*)\)",
+                  ips_flag="node_list: (.+)",
+                  **args):
+    """ log_file: read from stdin as default
+        iter_speed_flag: flag for 100 iter time
+        prec_flag: flag for Prec@1 and Prec@5
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['prec1'] = 'none'
+    ret['prec5'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        # print(line)
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(1)
+        prec = re.search(prec_flag, line)
+        if prec is not None:
+            ret['prec1'] = prec.group(1)
+            ret['prec5'] = prec.group(2)
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
+
+@register_callfunc
 def seg_func_1(done_flag="Eval result:",
              iter_speed_flag="Progress:\[100\.0\%\](.*)batch_time:[0-9]*.[0-9]*\(([0-9]*.[0-9]*)\)",
              mIoU_flag="Eval result: mIoU/mAcc/allAcc (\d\.\d+)/",
@@ -378,7 +416,6 @@ def seg_func_1(done_flag="Eval result:",
             if ips is not None:
                 ret['ips'] = ips.group(1)
     return ret
-
 
 @register_callfunc
 def seg_func_2(done_flag="End of training",
@@ -413,6 +450,38 @@ def seg_func_2(done_flag="End of training",
                 ret['ips'] = ips.group(1)
     return ret
 
+@register_callfunc
+def example_func(done_flag="All Loss",
+                 iter_speed_flag="Epoch: \[1\/.*]\[1000\/.*] Time [0-9]*.[0-9]* \((.*)\) Data",
+                 acc_flag="\* All Loss [0-9]*.[0-9]* Acc@1 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\) Acc@5 ([0-9]*.[0-9]*) \([0-9]*\/[0-9]*\)",
+                 ips_flag="jobs, in ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
+                 **args):
+    """ log_file: read from stdin as default
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['mIoU'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(2)
+        mIoU = re.search(mIoU_flag, line)
+        if acc1 is not None:
+            ret['mIoU'] = mIoU.group()
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
 
 @register_callfunc
 def nas_lite_func(done_flag="Pipeline is Done",
