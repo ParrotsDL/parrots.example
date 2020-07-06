@@ -28,20 +28,20 @@ task:
                     # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-NASFPN-1x_mix.benchmark', 'py_args': '--pavi'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-PAFPN-1x_mix.benchmark', 'py_args': '--pavi'},
                     # alphatrion
-                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32_benchmark', 'py_args': '--pavi.use true'},
-                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16_benchmark', 'py_args': '--pavi.use true'},
-                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32_benchmark', 'py_args': '--pavi.use true'},
-                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp16_benchmark', 'py_args': '--pavi.use true'},
-                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32_benchmark', 'py_args': '--pavi.use true'},
-                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp16_benchmark', 'py_args': '--pavi.use true'},
-                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32_benchmark', 'py_args': '--pavi.use true'},
-                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16_benchmark', 'py_args': '--pavi.use true'},
+                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # ssd
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true'},
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
                     # alphatrion_nas
-                    {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true'},
-                    {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true'},             
+                    {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},             
                     # seg_nas
                     {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi'},
                     # nas_lite
