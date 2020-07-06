@@ -1,0 +1,42 @@
+task:
+    # Required (change partition, num_gpus or others where necessary)
+    template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    # Required
+    search_args:
+        - type: Nested
+          value: [
+                    # (un)commit your config here
+                    # pod
+                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short', 'py_args': '--pavi'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short', 'py_args': '--pavi'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x.short', 'py_args': '--pavi'},
+                    # example
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi'},
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix", 'py_args': '--pavi'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi'},
+                ]
+    # Optional
+    # callback: "cat"
+    callback: "python autotest/parrots_test_callback.py {framework} {model}"
+
+searcher:
+    # Support GridSearcher, RandomSearcher, SkoptSearcher
+    type: GridSearcher
+    # Required
+    reward_attribute: acc
+
+scheduler:
+    type: FIFO
+    parallel_size: 8
+    stop_criterion:
+        max_tries: 100
+
+# Optional
+pavi:
+    compare:
+        name: parrots.test.benchmark
+
+# slurm_job_id_monitor: true
+

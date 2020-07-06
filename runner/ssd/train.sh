@@ -9,6 +9,7 @@ EXTRA_ARGS=${@:4}
 export PYTHONPATH=$../../models/ssd/ssd.triondet/examples/coco-opencv/:$PYTHONPATH
 export PYTHONPATH=$../../models/ssd/ssd.triondet/:$PYTHONPATH
 export PYTHONPATH=$../../models/ssd/ssd.triondet/triondet/:$PYTHONPATH
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 
 ########Arguments#########
@@ -36,7 +37,7 @@ case $name in
 esac
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} \
+srun -K -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} ${SRUN_ARGS}\
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/ssd/train.${name}.log.$T
 

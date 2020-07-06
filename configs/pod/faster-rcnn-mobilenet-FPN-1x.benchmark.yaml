@@ -25,7 +25,7 @@ dataset: # Required.
       iou_types: [bbox]      # calcuate AP_bbox only
 
 trainer: # Required.
-  max_epoch: 1               # total epochs for the training
+  max_epoch: 0 #13              # total epochs for the training
   test_freq: 1
   optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
@@ -34,24 +34,25 @@ trainer: # Required.
       momentum: 0.9
       weight_decay: 0.0001
   lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
-    warmup_epochs: 0         # set to be 0 to disable warmup. When warmup,  target_lr = init_lr * total_batch_size
+    warmup_epochs: 1         # set to be 0 to disable warmup. When warmup,  target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
       milestones: [8,11]     # epochs to decay lr
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints      # dir to save checkpoints
+  save_dir: checkpoints/faster-rcnn-mobilenet-FPN-1x      # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/mobilenet_v2/mobilenet_v2_1.0.pth
-  results_dir: results_dir   # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/faster-rcnn-mobilenet-FPN-1x   # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_gt:
   #  output_dir: vis_gt
   #vis_dt:
   #  output_dir: vis_dt
   #  bbox_thresh: 0.3
 
-bn:
-  freeze: true
+
+#fp16:
+#  keep_batchnorm_fp32: True
 
 net: # Required.
   - name: backbone
@@ -59,6 +60,8 @@ net: # Required.
     kwargs:
       out_strides: [4,8,16,32]  # tell the strides of output features
       width_mult: 1.0
+      normalize:
+        type: freeze_bn
   - name: neck
     prev: backbone
     type: pod.models.necks.fpn.FPN
@@ -81,7 +84,7 @@ net: # Required.
         method: normal
         std: 0.01
       cfg:
-        cls_loss: softmax # use softmax cls loss
+        cls_loss: softmax         # use softmax cls loss
         anchor_ratios: [0.5,1,2]  # anchor strides are provided as feature strides by feature extractor
         anchor_scales: [8]        # scale of anchors relative to feature map
         nms:
@@ -102,7 +105,7 @@ net: # Required.
           pre_nms_score_thresh: 0.00  # to reduce computation
           pre_nms_top_n: 2000         # number of rois before nms. (within each level if fpn)
           post_nms_top_n: 2000        # number of rois after nms. (within each level if fpn)
-          across_levels:            # merge multi-level proposals
+          across_levels:              # merge multi-level proposals
             nms:
               type: naive
               nms_iou_thresh: -1      # Required in RetinaNet. DO not nms in FPN across levels 
@@ -111,21 +114,21 @@ net: # Required.
           pre_nms_score_thresh: 0.0   # to reduce computation
           pre_nms_top_n: 1000
           post_nms_top_n: 1000
-          across_levels:            # merge multi-level proposals
+          across_levels:              # merge multi-level proposals
             nms:
               type: naive
               nms_iou_thresh: -1      # Required in RetinaNet. DO not nms in FPN across levels 
-            top_n: 1000     # number of rois to keep after merging rois from all levels
+            top_n: 1000           # number of rois to keep after merging rois from all levels
   - name: bbox_head
     prev: neck
     type: pod.models.heads.bbox_head.FC
     kwargs:
       feat_planes: 1024
-      num_classes: 81       # number of classification classes
+      num_classes: 81             # number of classification classes
       initializer:
         method: msra
       cfg:
-        smooth_l1_sigma: 1.0
+        smooth_l1_sigma: 1.0      # set as 1000.0 to use L1-loss for bbox head
         fpn:
           fpn_levels: [0,1,2,3]   # indices of fpn features used for this stage. these levels are supposed to be continuous
           base_scale: 56          # target level of a RoI is floor(log2((w*h)**0.5/base_scale))
@@ -152,4 +155,4 @@ net: # Required.
             type: naive
             nms_iou_thresh: 0.5     # test only
           bbox_score_thresh: 0.0    # test only
-          top_n: 100        # test only, number of bboxes to keep
+          top_n: 100                # test only, number of bboxes to keep

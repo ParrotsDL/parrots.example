@@ -11,6 +11,7 @@ pyroot=$ROOT/models/alphatrion_nas
 alphatrion_deps=$ROOT/models/alphatrion/alphatrion
 export PYTHONPATH=$pyroot:$alphatrion_deps:$PYTHONPATH
 g=$(($2<8?$2:8))
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 case $name in
     "super_resnet_range1")
@@ -72,6 +73,6 @@ case $name in
 esac
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=${name} \
+srun -K -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=alphatrion_nas_${name} ${SRUN_ARGS}\
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/alphatrion_nas/train.${name}.log.$T

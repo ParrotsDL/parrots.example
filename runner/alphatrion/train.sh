@@ -12,6 +12,7 @@ EXTRA_ARGS=${array[@]:3:$len}
 
 pyroot=$ROOT/models/alphatrion/alphatrion
 export PYTHONPATH=$pyroot:$PYTHONPATH
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 case $name in
     "mobilenet_v2_fp32")
@@ -117,7 +118,7 @@ case $name in
 esac
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} \
+srun -K -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=alphatrion_${name} ${SRUN_ARGS}\
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/alphatrion/train.${name}.log.$T
                                                              

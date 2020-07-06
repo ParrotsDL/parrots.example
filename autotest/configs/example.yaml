@@ -14,6 +14,30 @@ example_resnet50.short: # Required.
     iter_speed: 0.2464
     acc1: 75.77
     acc5: None
+example_resnet50.benchmark: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2464
+    acc1: 75.77
+    acc5: None
+example_resnet50_sync.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.156
+    acc1: 37.0
+    acc5: None
+example_resnet50_sync.benchmark: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.156
+    acc1: 37.0
+    acc5: None
 example_resnet50_mix: # Required.
   func: example_func # Required
   args:
@@ -22,7 +46,7 @@ example_resnet50_mix: # Required.
     iter_speed: 0.2784
     acc1: 75.625
     acc5: None
-example_resnet50_mix.short: # Required.
+example_resnet50_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -38,7 +62,7 @@ example_se_resnet50: # Required.
     iter_speed: 0.3157
     acc1: 76.009
     acc5: None
-example_se_resnet50.short: # Required.
+example_se_resnet50.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -54,7 +78,7 @@ example_se_resnet50_mix: # Required.
     iter_speed: 0.2088
     acc1: 76.312
     acc5: None
-example_se_resnet50_mix.short: # Required.
+example_se_resnet50_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -70,7 +94,7 @@ example_inception_v4: # Required.
     iter_speed: 0.6688
     acc1: 79.602
     acc5: None
-example_inception_v4.short: # Required.
+example_inception_v4.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -86,7 +110,7 @@ example_inception_v4_mix: # Required.
     iter_speed: 0.3528
     acc1: 78.25
     acc5: None
-example_inception_v4_mix.short: # Required.
+example_inception_v4_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -102,7 +126,7 @@ example_shuffle_v2: # Required.
     iter_speed: 0.1848
     acc1: 64.71
     acc5: None
-example_shuffle_v2.short: # Required.
+example_shuffle_v2.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -118,7 +142,7 @@ example_shuffle_v2_mix: # Required.
     iter_speed: 0.2736
     acc1: 64.71
     acc5: None
-example_shuffle_v2_mix.short: # Required.
+example_shuffle_v2_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -134,7 +158,7 @@ example_mobile_v2: # Required.
     iter_speed: 0.1914
     acc1: 68.78
     acc5: None
-example_mobile_v2.short: # Required.
+example_mobile_v2.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -150,7 +174,7 @@ example_mobile_v2_mix: # Required.
     iter_speed: 0.2748
     acc1: 68.75
     acc5: None
-example_mobile_v2_mix.short: # Required.
+example_mobile_v2_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -166,7 +190,7 @@ example_resnet18: # Required.
     iter_speed: 0.1837
     acc1: 30
     acc5: None
-example_resnet18.short: # Required.
+example_resnet18.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -182,7 +206,7 @@ example_resnet18_mix: # Required.
     iter_speed: 0.2688
     acc1: 30
     acc5: None
-example_resnet18_mix.short: # Required.
+example_resnet18_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -198,7 +222,7 @@ example_resnet101: # Required.
     iter_speed: 0.3883
     acc1: 30
     acc5: None
-example_resnet101.short: # Required.
+example_resnet101.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -214,7 +238,7 @@ example_resnet101_mix: # Required.
     iter_speed: 0.2784
     acc1: 30
     acc5: None
-example_resnet101_mix.short: # Required.
+example_resnet101_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -230,7 +254,7 @@ example_resnet152: # Required.
     iter_speed: 0.6182
     acc1: 20
     acc5: None
-example_resnet152.short: # Required.
+example_resnet152.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -246,7 +270,7 @@ example_resnet152_mix: # Required.
     iter_speed: 0.6182
     acc1: 20
     acc5: None
-example_resnet152_mix.short: # Required.
+example_resnet152_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -262,7 +286,7 @@ example_inception_v2: # Required.
     iter_speed: 0.2363
     acc1: 34
     acc5: None
-example_inception_v2.short: # Required.
+example_inception_v2.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -278,7 +302,7 @@ example_inception_v2_mix: # Required.
     iter_speed: 0.2724
     acc1: 33
     acc5: None
-example_inception_v2_mix.short: # Required.
+example_inception_v2_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -302,6 +326,14 @@ example_inception_v3.short: # Required.
     iter_speed: 0.3740
     acc1: 30
     acc5: None
+example_inception_v3.benchmark: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.3740
+    acc1: 30
+    acc5: None
 example_inception_v3_mix: # Required.
   func: example_func # Required
   args:
@@ -310,7 +342,7 @@ example_inception_v3_mix: # Required.
     iter_speed: 0.3528
     acc1: 31
     acc5: None
-example_inception_v3_mix.short: # Required.
+example_inception_v3_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -326,7 +358,7 @@ example_dpn92: # Required.
     iter_speed: 0.558
     acc1: 34
     acc5: None
-example_dpn92.short: # Required.
+example_dpn92.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -342,7 +374,7 @@ example_dpn92_mix: # Required.
     iter_speed: 0.250
     acc1: 34
     acc5: None
-example_dpn92_mix.short: # Required.
+example_dpn92_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -358,7 +390,7 @@ example_inception_resnet: # Required.
     iter_speed: 0.599
     acc1: 35
     acc5: None
-example_inception_resnet.short: # Required.
+example_inception_resnet.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -374,7 +406,7 @@ example_inception_resnet_mix: # Required.
     iter_speed: 0.327
     acc1: 35
     acc5: None
-example_inception_resnet_mix.short: # Required.
+example_inception_resnet_mix.benchmark: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
@@ -454,3 +486,27 @@ example_mobile_v2_weekly: # Required.
     iter_speed: 0.198
     acc1: 68.261
     acc5: None
+example_mobile_v1.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: 41.869
+    acc5: None
+example_mobile_v1.benchmark: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: 41.869
+    acc5: None
+example_inceptionv3.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.305
+    acc1: 56.0
+    acc5: 76.5

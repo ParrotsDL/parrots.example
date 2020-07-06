@@ -1,6 +1,6 @@
 seed: 99
 net:
-    arch: resnet50
+    arch: resnet18
     kwargs:
         num_classes: 1000
  
@@ -28,9 +28,9 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 4 
-  test_freq: 5
-  log_freq: 100
+  max_epoch: 1
+  test_freq: 2
+  log_freq: 200
   label_smooth:
   optimizer:
     type: SGD
@@ -46,23 +46,23 @@ trainer:
       gamma: 0.1
  
 saver:
-  pretrain_model:
-  resume_model:
-  #load_pavi:   # load pretrain/resume model from pavi
-  #save_pavi:   # add snapshot to pavi
-  save_dir: checkpoints/short/resnet50   # save checkpoint locally
-  save_epoch_freq: 4
+  # pretrain_model:
+  # resume_model:
+  # load_pavi:   # load pretrain/resume model from pavi
+  # save_pavi:   # add snapshot to pavi
+  save_dir: checkpoints/resnet18   # save checkpoint locally
+  save_epoch_freq: 2
   save_latest: False
   save_best: True
-  sync_bn_stats: False  
+  sync_bn_stats: False
  
-#monitor:
- #  type: pavi
- #  _taskid: # continue training
- #  kwargs:
- #    project: rabbit
- #    task: resnet50
- #    model: resnet50
+# monitor:
+  # type: pavi
+  # _taskid: # continue training
+  # kwargs:
+  #   project: rabbit
+  #   task: resnet50
+  #   model: resnet50
   # type: tensorboard
   # kwargs:
   #     logdir: tensorboard

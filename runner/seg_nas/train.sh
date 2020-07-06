@@ -10,6 +10,7 @@ EXTRA_ARGS=${@:4}
 pyroot=$ROOT/models/Light_Nas_zpzhang
 export PYTHONPATH=$pyroot:$PYTHONPATH
 g=$(($2<8?$2:8))
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 case $name in
     "single_path_oneshot")
@@ -32,6 +33,6 @@ esac
 
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=${name} \
+srun -K --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=seg_nas_${name} ${SRUN_ARGS}\
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/Light_Nas_zpzhang/train.${name}.${step}.log.$T
