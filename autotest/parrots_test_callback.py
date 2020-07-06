@@ -15,7 +15,6 @@ if os.environ.get('LOG_STREAM_DEBUG') is not None:
     log_stream = open(os.environ.get('LOG_STREAM_DEBUG'), 'r').readlines()
 else:
     log_stream = sys.stdin
-#export LOG_STREAM_DEBUG=*.log
 
 def register_callfunc(func):
     callback_funcs[func.__name__] = func

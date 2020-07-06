@@ -9,6 +9,7 @@ ROOT=.
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 pyroot=$ROOT/models/Light_Seg
 export PYTHONPATH=$pyroot:$PYTHONPATH
@@ -30,7 +31,7 @@ case $name in
 esac
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} \
+srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} ${SRUN_ARGS}\
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/seg/train.${name}.log.$T
                                                              
