@@ -478,10 +478,10 @@ def example_func(done_flag="All Loss",
             iter_speed = re.search(iter_speed_flag, line)
             if iter_speed is not None:
                 ret['iter_speed'] = iter_speed.group(1)
-        prec = re.search(prec_flag, line)
-        if prec is not None:
-            ret['prec1'] = prec.group(1)
-            ret['prec5'] = prec.group(2)
+        acc = re.search(acc_flag, line)
+        if acc is not None:
+            ret['acc1'] = acc.group(1)
+            ret['acc5'] = acc.group(2)
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)
             if ips is not None:

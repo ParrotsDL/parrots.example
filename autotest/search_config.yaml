@@ -1,10 +1,10 @@
-# Required (change partition, num_gpus or others where necessary)
-template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
-# Required
-args:
-    - type: nested
-      name: model
-      value: [
+task:
+    # Required (change partition, num_gpus or others where necessary)
+    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+    # Required
+    search_args:
+        - type: Nested
+          value: [
                 # (un)commit your config here
                 # pod
                 {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
@@ -98,7 +98,6 @@ scheduler:
     parallel_size: 8
     stop_criterion:
         max_tries: 100
-        
 # Optional
 pavi:
     compare:
