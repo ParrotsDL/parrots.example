@@ -211,6 +211,7 @@ pavi:
     use: false
     writer:
         task: '@{run_name}'
+        project: 'default'
 
 mixed:
     train: true
