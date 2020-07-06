@@ -90,3 +90,4 @@ PAVI:
   USE: False
   WRITER:
       TASK: 'ssd_FSAF_pat'
+      PROJECT: 'default'
