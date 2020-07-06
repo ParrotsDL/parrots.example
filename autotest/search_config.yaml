@@ -7,39 +7,6 @@ args:
       value: [
                 # (un)commit your config here
                 # pod
-<<<<<<< HEAD
-                {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi'},
-                {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--pavi'},
-                # mmdet
-                # 'fast_rcnn_r50_fpn_1x_speed',
-                # 'mask_rcnn_r50_fpn_1x_speed',
-                # alphatrion
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32', 'py_args': '--pavi.use true'},
-                # seg_nas
-                {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi'},
-                # ssd
-                {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true'},
-                {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true'},
-                # alphatrion_nas
-                {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1', 'py_args': '--pavi.use true'},
-                {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true'},
-                # mild
-                {'framework': 'mild', 'gpus': 8, 'model': 'base_mbv2', 'py_args': '--pavi'},
-                {'framework': 'mild', 'gpus': 8, 'model': 'base_r100', 'py_args': '--pavi'},
-                {'framework': 'mild', 'gpus': 8, 'model': 'base_xmeta', 'py_args': '--pavi'},
-                # nas_lite
-                {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi'},                
-                # seg
-                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi'},
-                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi'},
-                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi'},
-                
-             ]
-# Optional
-# callback: "cat"
-callback: "python autotest/parrots_test_callback.py {framework} {model}"
-=======
                 {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--pavi'},
                 {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi'},
                 {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-1x', 'py_args': '--pavi'},
@@ -111,6 +78,10 @@ callback: "python autotest/parrots_test_callback.py {framework} {model}"
                 # {'framework': 'example', 'gpus': 8, 'model': "se_resnet50", 'py_args': '--pavi'},
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix", 'py_args': '--pavi'},
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi'},
+                # seg
+                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi'},
+                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi'},
+                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi'},
             ]
     # Optional
     # callback: "cat"
@@ -127,8 +98,7 @@ scheduler:
     parallel_size: 8
     stop_criterion:
         max_tries: 100
-
->>>>>>> 4f6a5ee64e1cf39000dfceeb98adb7d242ed293b
+        
 # Optional
 pavi:
     compare:
