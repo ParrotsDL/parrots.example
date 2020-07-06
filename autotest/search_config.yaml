@@ -99,6 +99,7 @@ scheduler:
     stop_criterion:
         max_tries: 100
 # Optional
+
 pavi:
     compare:
         name: parrots.test
