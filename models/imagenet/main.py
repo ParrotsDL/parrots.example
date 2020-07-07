@@ -187,21 +187,6 @@ def main():
                     monitor_writer.add_scalar('Accuracy_Test_top5', acc5, len(train_loader)*epoch)
                     monitor_writer.add_scalar('Test_loss', loss, len(train_loader)*epoch)
 
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
-                    'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict(),
-                    'taskid': args.taskid
-                }
-
-                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
 
         lr_scheduler.step()
     end_time = time.time()
@@ -227,7 +212,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
-    for i, (input, target) in enumerate(train_loader):
+    input_, target = next(iter(train_loader))
+    # for i, (input, target) in enumerate(train_loader):
+    for i in range(len(train_loader)):
+        input = input_.detach()
+        input.requires_grad = True
         iter_start_time = time.time()
         # measure data loading time
         data_time.update(time.time() - end)
@@ -287,7 +276,8 @@ def test(test_loader, model, criterion, args):
     model.eval()
     with torch.no_grad():
         end = time.time()
-        for i, (input, target) in enumerate(test_loader):
+        input, target = next(iter(test_loader))
+        for i in range(len(test_loader)):
             input = input.cuda()
             target = target.cuda()
 
