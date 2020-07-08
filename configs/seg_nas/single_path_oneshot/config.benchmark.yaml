@@ -109,7 +109,7 @@ step: # Required.
     sync_bn: True
     ckpt: /mnt/lustre/share_data/wangshiguang/platform_test/Light_Nas_zpzhang/ckpt_search/70.pth
     max_iterations: 1
-    population: 1
+    population: 20
     top_k: 10
     mutate_prob: 0.1
   retrain:
