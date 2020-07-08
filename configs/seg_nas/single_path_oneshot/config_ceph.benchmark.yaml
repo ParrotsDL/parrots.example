@@ -1,16 +1,16 @@
-io_backend: disk
+io_backend: petrel
 dataset: # Required.
   type: cityscapes
   search_retrain:
     train:
-      data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
-      data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_train.txt
+      data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt
       crop:
         type: rand
         size: [449, 897] # crop image with HxW size
     val:
-      data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
-      data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
       crop:
         type: center
         size: [449, 897] # crop image with HxW size
@@ -25,14 +25,14 @@ dataset: # Required.
     ignore_label: 255
   evolution:
     train:
-      data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
-      data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_train.txt # Not enough data in cityscapes, use train as bn_adjust
+      data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt # Not enough data in cityscapes, use train as bn_adjust
       crop:
         type: rand
         size: [449, 897] # crop image with HxW size
     val:
-      data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
-      data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
       crop:
         type: center
         size: [449, 897] # crop image with HxW size
@@ -56,7 +56,7 @@ task_info: # Unnecessary for cityscapes dataset, define whatever you like
 
 trainer: # Required.
   search:
-    epochs: 500
+    epochs: 1
     start_epochs: 0
     optimizer:
       type: SGD
@@ -70,7 +70,7 @@ trainer: # Required.
         power: 0.9
     criterion: ce
   retrain:
-    epochs: 200
+    epochs: 1
     start_epochs: 0
     optimizer:
       type: SGD
@@ -107,9 +107,9 @@ step: # Required.
     ckpt_dir: ''
   evolution:
     sync_bn: True
-    ckpt: /mnt/lustre/share_data/wangshiguang/platform_test/Light_Nas_zpzhang/ckpt_search/70.pth
-    max_iterations: 20
-    population: 50
+    ckpt: s3://parrots_data/wangshiguang/platform_test/Light_Nas_zpzhang/ckpt_search/70.pth
+    max_iterations: 1
+    population: 1
     top_k: 10
     mutate_prob: 0.1
   retrain:
