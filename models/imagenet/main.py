@@ -32,6 +32,7 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
+parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -149,7 +150,7 @@ def main():
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
        # if cfgs.monitor.get('type', None) == 'pavi':
         if args.pavi:
-            monitor_kwargs = {'task': cfgs.net.arch}
+            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
         else:
             monitor_kwargs = cfgs.monitor.kwargs
             if hasattr(args, 'taskid'):
