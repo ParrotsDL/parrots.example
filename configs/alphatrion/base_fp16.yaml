@@ -17,8 +17,9 @@ num_classes: 1000
 num_sub_epochs: 1
 resume: ../checkpoint/latest.pth
 eval_names: [valid]
-imagenet_train_root: /mnt/lustre/share/images/train
-imagenet_valid_root: /mnt/lustre/share/images/val
+data_reader: MemcachedReader   # CephReader
+imagenet_train_root: /mnt/lustre/share/images/train  # s3://parrots_data/images/train
+imagenet_valid_root: /mnt/lustre/share/images/val   # s3://parrots_data/images/val
 
 mixed:
     use: true
@@ -37,7 +38,7 @@ data:
         imglist_type: ListImglist
         imglist_path: /mnt/lustre/share/images/meta/train.txt
         root: '@{imagenet_train_root}'
-        reader: MemcachedReader
+        reader: '@{data_reader}'
         skip_broken: false
         dataset_debug_kwargs: 
             maxlen: null
@@ -63,7 +64,7 @@ data:
     valid:
         imglist_type: ListImglist
         imglist_path: /mnt/lustre/share/images/meta/val.txt
-        root: '@{imagenet_valid_root}'
+        root: '@{data_reader}'
         reader: MemcachedReader
         skip_broken: false
         dataset_debug_kwargs:
