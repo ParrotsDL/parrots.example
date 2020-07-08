@@ -11,11 +11,11 @@ task:
                     {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short', 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x.short', 'py_args': '--pavi --pavi-project parrots_test'},
                     # example
-                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi'},
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test'},
                 ]
     # Optional
     # callback: "cat"
