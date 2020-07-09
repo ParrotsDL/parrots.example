@@ -31,6 +31,7 @@ LOSS:
 
 TRAIN:
   PRETRAIN: /mnt/lustre/share/fundamental-support/models/alphatrion/resnet50.pth
+  CEPH_PRETRAIN: s3://parrots_data/fundamental-support/models/alphatrion/resnet50.pth
   BATCH_SIZE: 32
 
 VALID:
@@ -68,16 +69,19 @@ DATA:
   TRAIN:
     ANNOTATION: models/ssd/ssd.triondet/examples/coco-opencv/datalist/coco_train2017.txt
     #ANNOTATION: datalist/coco_val_mini.txt
-    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017  # s3://parrots_data/DSK/datasets/mscoco2017
+    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017
+    CEPH_ROOT: s3://parrots_data/DSK/datasets/mscoco2017
     AUGMENTATION: RetinaAugmentationFixSizeTrain
   VALID:
     ANNOTATION: models/ssd/ssd.triondet/examples/coco-opencv/datalist/coco_val2017.txt
     #ANNOTATION: datalist/coco_val_mini.txt
-    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017   # s3://parrots_data/DSK/datasets/mscoco2017
+    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017
+    CEPH_ROOT: s3://parrots_data/DSK/datasets/mscoco2017
     AUGMENTATION: RetinaAugmentationFixSizeVal
   TEST:
     ANNOTATION: models/ssd/ssd.triondet/examples/coco-opencv/datalist/coco_val_mini.txt
-    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017   # s3://parrots_data/DSK/datasets/mscoco2017
+    ROOT: /mnt/lustre/share/DSK/datasets/mscoco2017
+    CEPH_ROOT: s3://parrots_data/DSK/datasets/mscoco2017
     AUGMENTATION: RetinaAugmentationFixSizeVal
 
 RECORD:
