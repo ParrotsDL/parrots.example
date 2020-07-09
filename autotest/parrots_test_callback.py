@@ -423,6 +423,42 @@ def example_func(done_flag="All Loss",
                 ret['ips'] = ips.group(1)
     return ret
 
+@register_callfunc
+def seg_mem_func(done_flag="total",
+                iter_speed_flag="Epoch: 1, iter: 460, batch_loss: [0-9]*.[0-9]*\, batch_time: ([0-9]*.[0-9]*)",
+                dice_flag="total, avg_dice: ([0-9]*.[0-9]*)",
+                ips_flag="ip_name: ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
+                **args):
+    """ log_file: read from stdin as default
+        iter_speed_flag: flag for one iter time
+        prec_flag:dice
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['dice'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(1)
+        if ret['dice'] == 'none':
+            dice = re.search(dice_flag, line)
+            if dice is not None:
+                ret['dice'] = dice.group(1)
+        if ret['ips']=='none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
+
 
 def callback_wapper(func_name, **args):
     ret_dict = callback_funcs[func_name](**args)
@@ -437,6 +473,7 @@ def collect_config(framework, model_name):
     configs = dict()
     for f in os.listdir(configs_dir):
         config_path = osp.join(configs_dir, f)
+        #print(config_path)
         configs.update(
             **yaml.load(open(config_path, 'r'), Loader=yaml.Loader))
     key = framework + '_' + model_name
@@ -444,7 +481,9 @@ def collect_config(framework, model_name):
 
 
 if __name__ == '__main__':
+    #print(len(sys.argv))
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
+        #print(config)
         callback_wapper(config['func'], **config['args'],
                         thresh=config['thresh'])

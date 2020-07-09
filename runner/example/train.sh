@@ -1,6 +1,6 @@
 mkdir -p log/example
 now=$(date +"%Y%m%d_%H%M%S")
-
+set -x
 ROOT=.
 pyroot=$ROOT/models/parrots.example
 export PYTHONPATH=$pyroot:$PYTHONPATH
