@@ -24,18 +24,6 @@ case $name in
       PYTHON_ARGS="python -u models/Light_Nas_zpzhang/main.py \
          --config=configs/seg_nas/single_path_oneshot/config.benchmark.yaml \
          --step=$step"
-      ;; 
-    "single_path_oneshot_ceph_benchmark")
-      step=evolution
-      PYTHON_ARGS="python -u models/Light_Nas_zpzhang/main.py \
-         --config=configs/seg_nas/single_path_oneshot/config_ceph.benchmark.yaml \
-         --step=$step"
-      ;;
-    "single_path_oneshot_ceph")
-      step=evolution
-      PYTHON_ARGS="python -u models/Light_Nas_zpzhang/main.py \
-         --config=configs/seg_nas/single_path_oneshot/config_ceph.yaml \
-         --step=$step"
       ;;
     *)
       echo "invalid $name"

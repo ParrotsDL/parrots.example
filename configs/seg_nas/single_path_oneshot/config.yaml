@@ -1,16 +1,19 @@
-io_backend: disk
 dataset: # Required.
   type: cityscapes
   search_retrain:
     train:
       data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
       data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_train.txt
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt
       crop:
         type: rand
         size: [449, 897] # crop image with HxW size
     val:
       data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
       data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
       crop:
         type: center
         size: [449, 897] # crop image with HxW size
@@ -27,12 +30,16 @@ dataset: # Required.
     train:
       data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
       data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_train.txt # Not enough data in cityscapes, use train as bn_adjust
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt # Not enough data in cityscapes, use train as bn_adjust
       crop:
         type: rand
         size: [449, 897] # crop image with HxW size
     val:
       data_root: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes
       data_list: /mnt/lustre/share_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
       crop:
         type: center
         size: [449, 897] # crop image with HxW size
@@ -108,6 +115,7 @@ step: # Required.
   evolution:
     sync_bn: True
     ckpt: /mnt/lustre/share_data/wangshiguang/platform_test/Light_Nas_zpzhang/ckpt_search/70.pth
+    ceph_ckpt: s3://parrots_data/wangshiguang/platform_test/Light_Nas_zpzhang/ckpt_search/70.pth
     max_iterations: 20
     population: 50
     top_k: 10
