@@ -42,12 +42,7 @@
 [submodule "mild"]
 	path = models/mild
 	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
-[submodule "pat_test"]
-	path = pat_test
-	url = git@gitlab.bj.sensetime.com:wuwenli1/pat_test.git
-[submodule "Multi_organ_seg_HR"]
-	path = Multi_organ_seg_HR
-	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
 [submodule "models/Multi_organ_seg_HR"]
 	path = models/Multi_organ_seg_HR
 	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
+	branch = pat0.6
