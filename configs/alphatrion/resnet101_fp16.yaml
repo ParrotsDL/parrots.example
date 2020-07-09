@@ -20,8 +20,8 @@ eval_names: [valid]
 data_reader: MemcachedReader   # CephReader
 ceph_imagenet_train_root: s3://parrots_data/images/train
 ceph_imagenet_valid_root: s3://parrots_data/images/val
-imagenet_train_root: /mnt/lustre/share/images/train  # s3://parrots_data/images/train
-imagenet_valid_root: /mnt/lustre/share/images/val  # s3://parrots_data/images/val
+imagenet_train_root: /mnt/lustre/share/images/train
+imagenet_valid_root: /mnt/lustre/share/images/val
 
 mixed:
     use: true
