@@ -1,7 +1,7 @@
 BASE:
     data_dir: '/mnt/lustre/share_data/huangrui/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_b32'
     test_data_dir: '/mnt/lustre/share_data/huangrui/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_whole'
-    checkpoint_dir: /mnt/lustre/wuwenli1/pat_test/checkpoint
+    checkpoint_dir: /mnt/lustre/wuwenli1/Multi_organ_seg_HR/checkpoint
     model: 'PSPNet'  
     num_classes: 7
     organ_weight: [0.5, 1, 1, 1, 5, 5, 5]  

@@ -365,7 +365,6 @@ def nas_lite_func(done_flag="Pipeline is Done",
     ret['prec5'] = 'none'
     ret['ips'] = 'none'
     for line in log_stream:
-        # print(line)
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
@@ -404,7 +403,6 @@ def example_func(done_flag="All Loss",
     ret['acc5'] = 'none'
     ret['ips'] = 'none'
     for line in log_stream:
-        # print(line)
         if ret['is_done'] is False:
             is_done = re.search(done_flag, line)
             if is_done is not None:
@@ -473,7 +471,6 @@ def collect_config(framework, model_name):
     configs = dict()
     for f in os.listdir(configs_dir):
         config_path = osp.join(configs_dir, f)
-        #print(config_path)
         configs.update(
             **yaml.load(open(config_path, 'r'), Loader=yaml.Loader))
     key = framework + '_' + model_name
@@ -481,9 +478,7 @@ def collect_config(framework, model_name):
 
 
 if __name__ == '__main__':
-    #print(len(sys.argv))
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
-        #print(config)
         callback_wapper(config['func'], **config['args'],
                         thresh=config['thresh'])
