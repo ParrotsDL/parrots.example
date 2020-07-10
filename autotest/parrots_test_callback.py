@@ -423,7 +423,7 @@ def example_func(done_flag="All Loss",
 
 @register_callfunc
 def seg_mem_func(done_flag="total",
-                iter_speed_flag="Epoch: 1, iter: 460, batch_loss: [0-9]*.[0-9]*\, batch_time: ([0-9]*.[0-9]*)",
+                iter_speed_flag="Epoch: 2, iter: 0, batch_loss: [0-9]*.[0-9]*\, batch_time: ([0-9]*.[0-9]*)",
                 dice_flag="total, avg_dice: ([0-9]*.[0-9]*)",
                 ips_flag="ip_name: ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
                 **args):
