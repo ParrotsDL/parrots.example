@@ -78,3 +78,4 @@ PAVI:
   USE: False
   WRITER:
       TASK: 'ssd_Retina_pat'
+      PROJECT: 'default'

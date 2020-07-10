@@ -14,17 +14,17 @@ task:
                     {'framework': 'pod', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-NASFPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test'},
                     # ssd
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true'},
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
                     # alphatrion
-                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32', 'py_args': '--pavi.use true'},
+                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # example
-                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v2", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_mix", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "inception_v4", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "se_resnet50_mix", 'py_args': '--pavi'},
-                    {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi'},
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v2", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_mix", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inception_v4", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "se_resnet50_mix", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                 ]
     # Optional
     # callback: "cat"
