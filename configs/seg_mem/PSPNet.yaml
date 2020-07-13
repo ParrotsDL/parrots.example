@@ -1,0 +1,23 @@
+BASE:
+    data_dir: '/mnt/lustre/share_data/huangrui/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_b32'
+    test_data_dir: '/mnt/lustre/share_data/huangrui/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_whole'
+    checkpoint_dir: /mnt/lustre/wuwenli1/Multi_organ_seg_HR/checkpoint
+    model: 'PSPNet'  
+    num_classes: 7
+    organ_weight: [0.5, 1, 1, 1, 5, 5, 5]  
+    print_freq: 10
+    val_freq: 1
+    save_freq: 10
+    depth_input: 32
+TRAIN:
+    lr: 0.05 # 0.05
+    lr_mode: 'step' # step cosine
+    epochs: 40
+    step: '20,35'
+    epoch_ce: 0
+    warmup_epochs: 0
+    batch_size: 1
+    optim: 'SGD'
+    
+
+
