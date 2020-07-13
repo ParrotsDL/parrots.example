@@ -25,7 +25,7 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 
-from parrots.ir import trace, save
+from parrots.aot import trace, save
 from parrots.log_utils import (
     set_debug_log, set_partial_logging, add_logging_part, clear_logging_part)
 
@@ -191,8 +191,8 @@ def main():
     tr_func = trace(tr_func_, tr_input, tr_target)
     save(tr_func, 'tr_func.json')
     logger.info("=> trace and tr_func saved")
-    tr_func.optimize(fusebnrelu=True)
-    logger.info("=> trace and optimize finish")
+    # tr_func.optimize(fusebnrelu=True)
+    # logger.info("=> optimize finish")
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -248,6 +248,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     model.train()
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
+        # early quit
+        if i == 1500:
+            break
         # measure data loading time
         data_time.update(time.time() - end)
 

@@ -1,6 +1,6 @@
 seed: 99
 net:
-    arch: efficientnet_b0 # efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, efficientnet_b5, efficientnet_b6, efficientnet_b7
+    arch: efficientnet_b1 # efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, efficientnet_b5, efficientnet_b6, efficientnet_b7
     kwargs:
         bn:
             use_sync_bn: False
@@ -28,7 +28,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 100
+  max_epoch: 1
   test_freq: 1
   log_freq: 20
   bn:
@@ -57,10 +57,10 @@ saver:
   resume_model:
   save_dir: checkpoints/efficientnet_b0   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: efficientnet_b0
-    model: efficientnet_b0
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: efficientnet_b0
+#     model: efficientnet_b0

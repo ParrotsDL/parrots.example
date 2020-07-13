@@ -1,6 +1,6 @@
 seed: 99
 net:
-    arch: dpn92 # dpn68, dpn68b, dpn98, dpn131, dpn107
+    arch: dpn107 # dpn68, dpn68b, dpn98, dpn131, dpn107
     kwargs:
         num_classes: 1000
  
@@ -25,7 +25,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
+  max_epoch: 1
   test_freq: 1
   log_freq: 20
   bn:
@@ -54,10 +54,10 @@ saver:
   resume_model: 
   save_dir: checkpoints/dpn92   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default # change to your own pavi project
-    task: dpn92
-    model: dpn92
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default # change to your own pavi project
+#     task: dpn92
+#     model: dpn92

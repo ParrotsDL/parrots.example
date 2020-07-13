@@ -1,6 +1,6 @@
 seed: 99
 net:
-    arch: preact_resnet18 # preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
+    arch: preact_resnet152 # preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
     kwargs:
         num_classes: 1000
  
@@ -26,7 +26,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
+  max_epoch: 1
   test_freq: 1
   log_freq: 20
   bn:
@@ -55,10 +55,10 @@ saver:
   resume_model: 
   save_dir: checkpoints/resnet50v2   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default
-    task: resnet50_v2
-    model: resnet50_v2
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default
+#     task: resnet50_v2
+#     model: resnet50_v2

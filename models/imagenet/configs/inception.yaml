@@ -1,6 +1,6 @@
 seed: 99
 net:
-    arch: inception_v3  # inception_v1, inception_v2, inception_v3
+    arch: inception_v4  # inception_v1, inception_v2, inception_v3
     kwargs:
         num_classes: 1000
  
@@ -26,7 +26,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 160
+  max_epoch: 1
   test_freq: 1
   log_freq: 20
   bn:
@@ -55,10 +55,10 @@ saver:
   resume_model: 
   save_dir: checkpoints/inception_v3   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: inception_v3
-    model: inception_v3
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: inception_v3
+#     model: inception_v3

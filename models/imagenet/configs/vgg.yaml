@@ -1,6 +1,6 @@
 seed: 99
 net:
-    arch: vgg16 # vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16_bn, vgg19, vgg19_bn
+    arch: vgg19_bn # vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16_bn, vgg19, vgg19_bn
     kwargs:
         num_classes: 1000
  
@@ -26,7 +26,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
+  max_epoch: 1
   test_freq: 1
   log_freq: 20
   bn:
@@ -55,10 +55,10 @@ saver:
   resume_model:
   save_dir: checkpoints/vgg16   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: vgg16
-    model: vgg16
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: vgg16
+#     model: vgg16

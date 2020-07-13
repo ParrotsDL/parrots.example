@@ -33,7 +33,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 100
+  max_epoch: 1
   test_freq: 1
   log_freq: 20
   bn:
@@ -62,10 +62,10 @@ saver:
   resume_model:
   save_dir: checkpoints/mobile_v3   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: mobile_v3
-    model: mobile_v3
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: mobile_v3
+#     model: mobile_v3
