@@ -35,6 +35,8 @@ task:
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "se_resnet50.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "vgg16.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "shuffle_v1.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                 ]
     # Optional
     # callback: "cat"
