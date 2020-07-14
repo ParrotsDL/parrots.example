@@ -43,7 +43,7 @@ task:
                     {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader'},
                     {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader'},             
                     # seg_nas
-                    {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi --pavi_project parrots_test --data_reader MemcachedReader'},
                     # nas_lite
                     {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search_benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # example
