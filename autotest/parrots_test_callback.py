@@ -407,7 +407,7 @@ def seg_func_1(done_flag="Eval result:",
             if iter_speed is not None:
                 ret['iter_speed'] = iter_speed.group(2)
         mIoU = re.search(mIoU_flag, line)
-        if acc1 is not None:
+        if mIoU is not None:
             ret['mIoU'] = mIoU.group()
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)
@@ -440,7 +440,7 @@ def seg_func_2(done_flag="End of training",
             if iter_speed is not None:
                 ret['iter_speed'] = iter_speed.group(2)
         mIoU = re.search(mIoU_flag, line)
-        if acc1 is not None:
+        if mIoU is not None:
             ret['mIoU'] = mIoU.group()
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)

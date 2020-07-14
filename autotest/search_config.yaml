@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh platform_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -42,7 +42,7 @@ task:
                 # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader'},
                 # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader'},
                 # # seg_nas
-                {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi --pavi_project parrots_test --data_reader MemcachedReader'},
+                #{'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi --pavi_project parrots_test --data_reader MemcachedReader'},
                 # # ssd
                 # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader'},
                 # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader'},
