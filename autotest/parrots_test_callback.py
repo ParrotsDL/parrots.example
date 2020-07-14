@@ -386,8 +386,8 @@ def nas_lite_func(done_flag="Pipeline is Done",
 def seg_pspnet(done_flag="Save Checkpoint",
              mIoU_flag="Eval result: mIoU/mAcc/allAcc (\d\.\d+)/",
              ips_flag="IP:(.+)",
-             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),[0-9]*-rk0-train.py#180:iter = 200",
-             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),[0-9]*-rk0-train.py#180:iter = 300",
+             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 200",
+             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 300",
              **args):
     """ log_file: read from stdin as default
         ret(dict): results of analysis metrics
@@ -415,20 +415,16 @@ def seg_pspnet(done_flag="Save Checkpoint",
         if ret['start'] == 'none':
             start = re.search(start_flag, line)
             if start is not None:
-                ret['start'] = start.group()
+                ret['start'] = start.group(1)
         end = re.search(end_flag, line)
         if end is not None:
-            ret['end'] = end.group()
+            ret['end'] = end.group(1)
         if ret['start'] != 'none' and ret['end'] != 'none' and ret['iter_speed'] == 'none':
-            date1 = time.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
-            date2 = time.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
-            date1 = datetime.datetime(
-            date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
-            date2 = datetime.datetime(
-            date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
-            total_time = date2-date1
-            total_time = total_time.days*24+total_time.seconds/3600
-            iter_speed = total_time/100
+            date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
+            date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+            total_interval_time = (date2 - date1).total_seconds()
+            print(total_interval_time)
+            iter_speed = total_interval_time/100
             ret['iter_speed'] = iter_speed
     return ret
 
@@ -436,8 +432,8 @@ def seg_pspnet(done_flag="Save Checkpoint",
 def seg_deeplab(done_flag="Save Checkpoint",
              mIoU_flag="Eval result: mIoU/mAcc/allAcc (\d\.\d+)/",
              ips_flag="IP:(.+)",
-             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),[0-9]*-rk0-train.py#180:iter = 200",
-             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),[0-9]*-rk0-train.py#180:iter = 300",
+             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 200",
+             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 300",
              **args):
     """ log_file: read from stdin as default
         ret(dict): results of analysis metrics
@@ -465,20 +461,16 @@ def seg_deeplab(done_flag="Save Checkpoint",
         if ret['start'] == 'none':
             start = re.search(start_flag, line)
             if start is not None:
-                ret['start'] = start.group()
+                ret['start'] = start.group(1)
         end = re.search(end_flag, line)
         if end is not None:
-            ret['end'] = end.group()
+            ret['end'] = end.group(1)
         if ret['start'] != 'none' and ret['end'] != 'none' and ret['iter_speed'] == 'none':
-            date1 = time.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
-            date2 = time.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
-            date1 = datetime.datetime(
-            date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
-            date2 = datetime.datetime(
-            date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
-            total_time = date2-date1
-            total_time = total_time.days*24+total_time.seconds/3600
-            iter_speed = total_time/100
+            date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
+            date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+            total_interval_time = (date2 - date1).total_seconds()
+            print(total_interval_time)
+            iter_speed = total_interval_time/100
             ret['iter_speed'] = iter_speed
     return ret
 
@@ -486,8 +478,8 @@ def seg_deeplab(done_flag="Save Checkpoint",
 def seg_mobilenet_v2_plus(done_flag="Save Checkpoint",
              mIoU_flag="the best val result is: (\d\.\d+)",
              ips_flag="IP:(.+)",
-             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),[0-9]*-rk0-train.py#180:iter = 200",
-             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),[0-9]*-rk0-train.py#180:iter = 300",
+             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 200",
+             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 300",
              **args):
     """ log_file: read from stdin as default
         ret(dict): results of analysis metrics
@@ -515,20 +507,16 @@ def seg_mobilenet_v2_plus(done_flag="Save Checkpoint",
         if ret['start'] == 'none':
             start = re.search(start_flag, line)
             if start is not None:
-                ret['start'] = start.group()
+                ret['start'] = start.group(1)
         end = re.search(end_flag, line)
         if end is not None:
-            ret['end'] = end.group()
+            ret['end'] = end.group(1)
         if ret['start'] != 'none' and ret['end'] != 'none' and ret['iter_speed'] == 'none':
-            date1 = time.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
-            date2 = time.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
-            date1 = datetime.datetime(
-            date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
-            date2 = datetime.datetime(
-            date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
-            total_time = date2-date1
-            total_time = total_time.days*24+total_time.seconds/3600
-            iter_speed = total_time/100
+            date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
+            date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+            total_interval_time = (date2 - date1).total_seconds()
+            print(total_interval_time)
+            iter_speed = total_interval_time/100
             ret['iter_speed'] = iter_speed
     return ret
 
@@ -628,5 +616,4 @@ def collect_config(framework, model_name):
 if __name__ == '__main__':
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
-        callback_wapper(config['func'], **config['args'],
-                        thresh=config['thresh'])
+        callback_wapper(config['func'], args=config['args'], thresh=config['thresh'])
