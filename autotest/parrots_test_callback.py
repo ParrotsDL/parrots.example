@@ -423,7 +423,6 @@ def seg_pspnet(done_flag="Save Checkpoint",
             date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
             date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
             total_interval_time = (date2 - date1).total_seconds()
-            print(total_interval_time)
             iter_speed = total_interval_time/100
             ret['iter_speed'] = iter_speed
     return ret
@@ -469,7 +468,6 @@ def seg_deeplab(done_flag="Save Checkpoint",
             date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
             date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
             total_interval_time = (date2 - date1).total_seconds()
-            print(total_interval_time)
             iter_speed = total_interval_time/100
             ret['iter_speed'] = iter_speed
     return ret
@@ -515,7 +513,6 @@ def seg_mobilenet_v2_plus(done_flag="Save Checkpoint",
             date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
             date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
             total_interval_time = (date2 - date1).total_seconds()
-            print(total_interval_time)
             iter_speed = total_interval_time/100
             ret['iter_speed'] = iter_speed
     return ret
