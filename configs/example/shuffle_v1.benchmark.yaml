@@ -56,12 +56,12 @@ saver:
   save_latest: False
   save_best: False
  
-monitor:
-  type: pavi
-  kwargs:
-    project: default
-    task: shuffle_v1_1x
-    model: shuffle_v1_1x
+# monitor:
+  # type: pavi
+  # kwargs:
+    # project: default
+    # task: shuffle_v1_1x
+    # model: shuffle_v1_1x
   # type: tensorboard
   # kwargs:
   #     logdir: tensorboard
