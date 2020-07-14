@@ -27,7 +27,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
+  max_epoch: 1
   test_freq: 2
   log_freq: 100
   label_smooth:
@@ -54,12 +54,12 @@ saver:
   save_latest: True
   save_best: True
  
-monitor:
-  type: pavi
-  kwargs:
-    project: default
-    task: vgg16
-    model: vgg16
+# monitor:
+  # type: pavi
+  # kwargs:
+    # project: default
+    # task: vgg16
+    # model: vgg16
   # type: tensorboard
   # kwargs:
   #     logdir: tensorboard
