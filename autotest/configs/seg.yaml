@@ -1,33 +1,21 @@
 seg_pspnet: # Required. {framework}_{model}
-  func: seg_func_1 # Required
+  func: seg_pspnet # Required
   args:
-    start_flag: "Start pspnet pipeline:"
-    done_flag: "Pipeline is Done: "
-    iter_speed_flag: "iter_speed: "
-    mIoU_flag: "acc_flag= "
-    ips_flag: "ips_flag= "
+    done_flag: "Save Checkpoint "
   thresh: # Required
     iter_speed: 0.88
     mIoU: 73.8
 seg_deeplab: # Required.
-  func: seg_func_1 # Required
+  func: seg_deeplab # Required
   args:
-    start_flag: "Start deeplab pipeline:"
-    done_flag: "Pipeline is Done: "
-    iter_speed_flag: "iter_speed: "
-    mIoU_flag: "acc_flag= "
-    ips_flag: "ips_flag= "
+    done_flag: "Save Checkpoint"
   thresh: # Required
     iter_speed: 1.31
     mIoU: 76.1
 seg_mobilenet_v2_plus: # Required.
-  func: seg_func_2 # Required
+  func: seg_mobilenet_v2_plus # Required
   args:
-    start_flag: "Start mobilenet_v2_plus pipeline:"
-    done_flag: "Pipeline is Done: "
-    iter_speed_flag: "iter_speed: "
-    mIoU_flag: "acc_flag= "
-    ips_flag: "ips_flag= "
+    done_flag: "Pipeline is done"
   thresh: # Required
     iter_speed: 0.74
     mIoU: 67.8
