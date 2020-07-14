@@ -16,7 +16,6 @@ if os.environ.get('LOG_STREAM_DEBUG') is not None:
 else:
     log_stream = sys.stdin
 
-
 def register_callfunc(func):
     callback_funcs[func.__name__] = func
 
@@ -383,6 +382,71 @@ def nas_lite_func(done_flag="Pipeline is Done",
                 ret['ips'] = ips.group(1)
     return ret
 
+@register_callfunc
+def seg_func_1(done_flag="Eval result:",
+             iter_speed_flag="Progress:\[100\.0\%\](.*)batch_time:[0-9]*.[0-9]*\(([0-9]*.[0-9]*)\)",
+             mIoU_flag="Eval result: mIoU/mAcc/allAcc (\d\.\d+)/",
+             ips_flag="IP:(.+)",
+             **args):
+    """ log_file: read from stdin as default
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['mIoU'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(2)
+        mIoU = re.search(mIoU_flag, line)
+        if acc1 is not None:
+            ret['mIoU'] = mIoU.group()
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
+
+@register_callfunc
+def seg_func_2(done_flag="End of training",
+             iter_speed_flag="Progress:\[100\.0\%\](.*)batch_time:[0-9]*.[0-9]*\(([0-9]*.[0-9]*)\)",
+             mIoU_flag="the best val result is: (\d\.\d+)",
+             ips_flag="IP:(.+)",
+             **args):
+    """ log_file: read from stdin as default
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['mIoU'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(2)
+        mIoU = re.search(mIoU_flag, line)
+        if acc1 is not None:
+            ret['mIoU'] = mIoU.group()
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
 
 @register_callfunc
 def example_func(done_flag="All Loss",
