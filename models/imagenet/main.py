@@ -231,8 +231,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     model.train()
     end = time.time()
     if args.dummy_test:
-         input_, target_  = next(iter(train_loader))
-         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()     
+        input_, target_  = next(iter(train_loader))
+        train_loader = [(i, i) for i in range(len(train_loader))].__iter__()     
     for i, (input, target) in enumerate(train_loader):
         iter_start_time = time.time()
         # measure data loading time
