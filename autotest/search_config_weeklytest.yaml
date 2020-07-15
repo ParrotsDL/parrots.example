@@ -14,10 +14,10 @@ task:
                     {'framework': 'pod', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--pavi --pavi-project parrots_test --seed 0'},
                     {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-NASFPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test --seed 0'},
                     # ssd
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader'},
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader --SEED 1024'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader --SEED 1024'},
                     # alphatrion
-                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader'},
+                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # example
                     {'framework': 'example', 'gpus': 8, 'model': "mobile_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50_mix", 'py_args': '--pavi --pavi-project parrots_test'},
