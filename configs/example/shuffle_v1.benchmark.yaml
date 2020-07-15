@@ -1,6 +1,6 @@
 seed: 99
 net:
-    type: shuffle_v1
+    arch: shuffle_v1
     kwargs:
         num_classes: 1000
         groups: 3
@@ -47,11 +47,11 @@ trainer:
       min_lr: 0.0
  
 saver:
-  pretrian_model: 
-  resume_model: 
-  load_pavi:   # load pretrain/resume model from pavi
-  save_pavi: True   # add snapshot to pavi
-  save_dir: checkpoints   # save checkpoint locally
+  # pretrian_model: 
+  # resume_model: 
+  # load_pavi:   # load pretrain/resume model from pavi
+  # save_pavi: True   # add snapshot to pavi
+  save_dir: checkpoints/shuffle_v1   # save checkpoint locally
   save_epoch_freq: 1
   save_latest: False
   save_best: False
