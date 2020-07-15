@@ -42,9 +42,10 @@ trainer:
       weight_decay: 0.00004
   lr_scheduler:
     warmup_epochs: 0
-    type: CosineLR
+    type: MultiStepLR
     kwargs:
-      min_lr: 0.0
+      milestones: [30,60,90]
+      gamma: 0.1
  
 saver:
   # pretrian_model: 
