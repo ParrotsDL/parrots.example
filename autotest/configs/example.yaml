@@ -510,3 +510,19 @@ example_inceptionv3.short: # Required.
     iter_speed: 0.305
     acc1: 56.0
     acc5: 76.5
+example_vgg16.benchmark: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.305
+    acc1: 56.0
+    acc5: 76.5
+example_shuffle_v1.benchmark: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.305
+    acc1: 56.0
+    acc5: 76.5
