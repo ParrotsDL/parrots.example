@@ -42,3 +42,6 @@
 [submodule "mild"]
 	path = models/mild
 	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
+[submodule "models/mmaction"]
+	path = models/mmaction
+	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction-lite.git

@@ -7,9 +7,9 @@ task:
           value: [
                     # (un)commit your config here
                     # pod
-                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x_mix.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x_mix.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x_mix.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
@@ -28,8 +28,8 @@ task:
                     # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-NASFPN-1x_mix.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-PAFPN-1x_mix.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # alphatrion
-                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
-                    {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'se_resnet50_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
@@ -37,19 +37,19 @@ task:
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
                     # ssd
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
-                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
+                    # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
+                    # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test'},
                     # alphatrion_nas
-                    {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
-                    {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},             
+                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},
+                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test'},             
                     # seg_nas
-                    {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi --pavi_project parrots_test --data_reader MemcachedReader'},
+                    # {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot_benchmark', 'py_args': '--pavi --pavi_project parrots_test --data_reader MemcachedReader'},
                     # nas_lite
-                    {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search_benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search_benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
                     # example
-                    {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "dpn92.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "inception_resnet_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'example', 'gpus': 8, 'model': "dpn92.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # {'framework': 'example', 'gpus': 8, 'model': "inception_resnet_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_resnet.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_v2_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_v2.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
@@ -71,6 +71,10 @@ task:
                     # {'framework': 'example', 'gpus': 8, 'model': "se_resnet50.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # mmaction
+                    {'framework': 'mmaction', 'gpus': 8, 'model': 'i3d_r50_video_32x2x1_100e_kinetics400_rgb.benchmark', 'py_args': '--validate --pavi --pavi_project parrots_test'},
+                    {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_1x1x8_100e_kinetics400_rgb.benchmark', 'py_args': '--validate --pavi --pavi_project parrots_test'},
+                    {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_dense_1x1x8_100e_kinetics400_rgb.benchmark', 'py_args': '--validate --pavi --pavi_project parrots_test'},
                 ]
     # Optional
     # callback: "cat"
