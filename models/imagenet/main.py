@@ -136,12 +136,12 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    #train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     # test mode
-    if args.test:
-        test(test_loader, model, criterion, args)
-        return
+    #if args.test:
+    #    test(test_loader, model, criterion, args)
+    #    return
 
     # choose scheduler
     lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
@@ -167,18 +167,20 @@ def main():
     run_time = time.time()
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        train_sampler.set_epoch(epoch)
+        #train_sampler.set_epoch(epoch)
 
         # train for one epoch
+        #input_, target_  = next(iter(train_loader))
+        train_loader = [(i, i) for i in range(5005)]
         train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list)
-
+        
         mem = torch.cuda.max_memory_allocated()
         mem_mb = torch.tensor([mem / (1024 * 1024)],
                        dtype=torch.int,
                        device=torch.device('cuda'))
         if  args.world_size > 1:
             dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
-            mem_max = mem_mb.item()
+            mem_max = mem_mb.item() 
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -230,17 +232,16 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
-    if args.dummy_test:
-        input_, target_  = next(iter(train_loader))
-        train_loader = [(i, i) for i in range(len(train_loader))].__iter__()     
-    for i, (input, target) in enumerate(train_loader):
+    input_ = torch.randn(32, 3, 224, 224, requires_grad=True)
+    target_ = torch.ones(32).long()
+    for i, (input, target) in enumerate(train_loader.__iter__()):
         iter_start_time = time.time()
         # measure data loading time
         data_time.update(time.time() - end)
-        if args.dummy_test:
-            input = input_.detach()
-            input.requires_grad = True
-            target = target_
+
+        input = input_.detach()
+        input.requires_grad = True
+        target = target_
         input = input.cuda()
         target = target.cuda()
 
