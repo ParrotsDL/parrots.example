@@ -28,6 +28,7 @@ from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from parrots.aot import trace, save
 from parrots.log_utils import (
     set_debug_log, set_partial_logging, add_logging_part, clear_logging_part)
+from parrots.runtimeconfig import runtime
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -41,9 +42,10 @@ logger_all = logging.getLogger('all')
 
 
 def main():
-    add_logging_part('IR')
-    set_partial_logging(True)
-    set_debug_log(True)
+    # runtime.exec_mode = 'SYNC'
+    # add_logging_part('IR')
+    # set_partial_logging(True)
+    # set_debug_log(True)
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
@@ -188,6 +190,7 @@ def main():
         loss.backward()
         model.average_gradients()
         return loss, acc1, acc5
+    # tr_func = tr_func_
     tr_func = trace(tr_func_, tr_input, tr_target)
     save(tr_func, 'tr_func.json')
     logger.info("=> trace and tr_func saved")

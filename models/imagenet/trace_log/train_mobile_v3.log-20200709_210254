@@ -1,0 +1,546 @@
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:02,200 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 1 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 3 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 2 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 4 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 7 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 5 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,750 [32mINFO[0m: rank 6 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:03,751 [32mINFO[0m: rank 0 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 21:03:09,664 [32mINFO[0m: config
+{
+  "seed": 99,
+  "net": {
+    "arch": "mobile_v3",
+    "kwargs": {
+      "num_classes": 1000,
+      "scale": 0.75,
+      "dropout": 0.2,
+      "mode": "small",
+      "bn": {
+        "use_sync_bn": false,
+        "kwargs": {
+          "momentum": 0.99
+        }
+      }
+    }
+  },
+  "dataset": {
+    "train": {
+      "meta_file": "/mnt/lustre/share/images/meta/train.txt",
+      "image_dir": "/mnt/lustre/share/images/train",
+      "random_resize_crop": 224,
+      "colorjitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": true
+    },
+    "test": {
+      "meta_file": "/mnt/lustre/share/images/meta/val.txt",
+      "image_dir": "/mnt/lustre/share/images/val",
+      "resize": 256,
+      "center_crop": [
+        224,
+        224
+      ],
+      "colorjitter": null,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": false
+    },
+    "batch_size": 32,
+    "workers": 4
+  },
+  "trainer": {
+    "max_epoch": 1,
+    "test_freq": 1,
+    "log_freq": 20,
+    "bn": {
+      "syncbn": false
+    },
+    "mixed_precision": {
+      "half": false,
+      "loss_scale": 128.0,
+      "float_bn": true
+    },
+    "optimizer": {
+      "type": "SGD",
+      "kwargs": {
+        "lr": 0.1,
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      }
+    },
+    "lr_scheduler": {
+      "warmup_epochs": 0,
+      "type": "MultiStepLR",
+      "kwargs": {
+        "milestones": [
+          30,
+          60,
+          90
+        ],
+        "gamma": 0.1
+      }
+    }
+  },
+  "saver": {
+    "pretrain_model": null,
+    "resume_model": null,
+    "save_dir": "checkpoints/mobile_v3"
+  }
+}[0m
+2020-07-09 21:03:09,689 [32mINFO[0m: creating model 'mobile_v3'[0m
+2020-07-09 21:03:09,759 [32mINFO[0m: model
+DistributedParrotsModel
+MobileNetV3(
+  (features): Sequential(
+    (0): Sequential(
+      (0): Conv2d(3, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Hswish()
+    )
+    (1): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=16, bias=False)
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=16, out_features=4, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=4, out_features=16, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (3): ReLU(inplace)
+        (4): Conv2d(16, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (5): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(16, 56, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(56, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace)
+        (3): Conv2d(56, 56, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), groups=56, bias=False)
+        (4): BatchNorm2d(56, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): Identity()
+        (6): ReLU(inplace)
+        (7): Conv2d(56, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (3): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(24, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace)
+        (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64, bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): Identity()
+        (6): ReLU(inplace)
+        (7): Conv2d(64, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (4): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(24, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(72, 72, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2), groups=72, bias=False)
+        (4): BatchNorm2d(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=72, out_features=18, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=18, out_features=72, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(72, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (5): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(32, 184, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(184, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(184, 184, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=184, bias=False)
+        (4): BatchNorm2d(184, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=184, out_features=46, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=46, out_features=184, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(184, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (6): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(32, 184, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(184, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(184, 184, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=184, bias=False)
+        (4): BatchNorm2d(184, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=184, out_features=46, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=46, out_features=184, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(184, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (7): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(32, 88, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(88, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(88, 88, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=88, bias=False)
+        (4): BatchNorm2d(88, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=88, out_features=22, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=22, out_features=88, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(88, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (8): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(40, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(112, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(112, 112, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=112, bias=False)
+        (4): BatchNorm2d(112, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=112, out_features=28, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=28, out_features=112, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(112, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (9): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(40, 216, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(216, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(216, 216, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2), groups=216, bias=False)
+        (4): BatchNorm2d(216, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=216, out_features=54, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=54, out_features=216, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(216, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (10): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(72, 432, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(432, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(432, 432, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=432, bias=False)
+        (4): BatchNorm2d(432, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=432, out_features=108, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=108, out_features=432, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(432, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (11): InvertedResidual(
+      (conv): Sequential(
+        (0): Conv2d(72, 432, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(432, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): Hswish()
+        (3): Conv2d(432, 432, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=432, bias=False)
+        (4): BatchNorm2d(432, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): SEModule(
+          (avg_pool): AdaptiveAvgPool2d()
+          (fc): Sequential(
+            (0): Linear(in_features=432, out_features=108, bias=False)
+            (1): ReLU(inplace)
+            (2): Linear(in_features=108, out_features=432, bias=False)
+            (3): Hsigmoid()
+          )
+        )
+        (6): Hswish()
+        (7): Conv2d(432, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (8): BatchNorm2d(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (12): Sequential(
+      (0): Conv2d(72, 432, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): BatchNorm2d(432, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Hswish()
+    )
+    (13): AdaptiveAvgPool2d()
+    (14): Conv2d(432, 1280, kernel_size=(1, 1), stride=(1, 1))
+    (15): Hswish()
+  )
+  (classifier): Sequential(
+    (0): Dropout(p=0.2)
+    (1): Linear(in_features=1280, out_features=1000, bias=True)
+  )
+)[0m
+2020-07-09 21:03:09,759 [32mINFO[0m: loss
+CrossEntropyLoss()[0m
+2020-07-09 21:03:09,760 [32mINFO[0m: optimizer
+SGD (
+Parameter Group 0
+    dampening: 0
+    hold_grads: False
+    lr: 0.1
+    momentum: 0.9
+    nesterov: False
+    weight_decay: 0.0001
+)[0m
+2020-07-09 21:03:09,761 [32mINFO[0m: create checkpoint folder checkpoints/mobile_v3[0m
+2020-07-09 21:03:11,584 [32mINFO[0m: ==> begin trace[0m
+2020-07-09 21:03:22,632 [32mINFO[0m: ==> tr_data dumped[0m
+2020-07-09 21:03:23,038 [32mINFO[0m: => trace and tr_func saved[0m
+2020-07-09 21:03:31,442 [32mINFO[0m: Epoch: [1/1][   0/5005] Time 8.403 (8.403) Data 5.181 (5.181) Loss 6.9078 (6.9078) Acc@1 0.00 (0.00) Acc@5 0.39 (0.39) Memory(MB) 1549[0m
+2020-07-09 21:03:32,944 [32mINFO[0m: Epoch: [1/1][  20/5005] Time 0.069 (0.472) Data 0.002 (0.253) Loss 6.8895 (6.9045) Acc@1 0.00 (0.11) Acc@5 1.56 (0.61) Memory(MB) 1549[0m
+2020-07-09 21:03:37,037 [32mINFO[0m: Epoch: [1/1][  40/5005] Time 0.068 (0.341) Data 0.000 (0.200) Loss 6.8946 (6.9016) Acc@1 0.39 (0.13) Acc@5 0.39 (0.63) Memory(MB) 1549[0m
+2020-07-09 21:03:41,000 [32mINFO[0m: Epoch: [1/1][  60/5005] Time 0.069 (0.294) Data 0.000 (0.179) Loss 6.8346 (6.8848) Acc@1 0.00 (0.17) Acc@5 0.78 (0.83) Memory(MB) 1549[0m
+2020-07-09 21:03:44,846 [32mINFO[0m: Epoch: [1/1][  80/5005] Time 0.054 (0.269) Data 0.000 (0.168) Loss 6.7771 (6.8397) Acc@1 0.39 (0.24) Acc@5 1.95 (1.14) Memory(MB) 1549[0m
+2020-07-09 21:03:48,309 [32mINFO[0m: Epoch: [1/1][ 100/5005] Time 0.063 (0.250) Data 0.000 (0.157) Loss 6.7685 (6.7805) Acc@1 0.39 (0.31) Acc@5 1.56 (1.48) Memory(MB) 1549[0m
+2020-07-09 21:03:52,287 [32mINFO[0m: Epoch: [1/1][ 120/5005] Time 0.066 (0.242) Data 0.000 (0.154) Loss 6.7296 (6.7287) Acc@1 0.39 (0.34) Acc@5 1.56 (1.59) Memory(MB) 1549[0m
+2020-07-09 21:03:55,768 [32mINFO[0m: Epoch: [1/1][ 140/5005] Time 0.071 (0.232) Data 0.000 (0.147) Loss 6.6274 (6.6882) Acc@1 0.00 (0.37) Acc@5 1.56 (1.59) Memory(MB) 1549[0m
+2020-07-09 21:03:59,735 [32mINFO[0m: Epoch: [1/1][ 160/5005] Time 0.060 (0.228) Data 0.000 (0.146) Loss 6.6437 (6.6584) Acc@1 1.17 (0.41) Acc@5 1.95 (1.66) Memory(MB) 1549[0m
+2020-07-09 21:04:03,313 [32mINFO[0m: Epoch: [1/1][ 180/5005] Time 0.074 (0.222) Data 0.000 (0.143) Loss 6.5385 (6.6203) Acc@1 1.17 (0.49) Acc@5 2.34 (1.91) Memory(MB) 1549[0m
+2020-07-09 21:04:07,097 [32mINFO[0m: Epoch: [1/1][ 200/5005] Time 0.071 (0.178) Data 0.000 (0.116) Loss 6.5384 (6.5757) Acc@1 0.00 (0.60) Acc@5 2.73 (2.31) Memory(MB) 1549[0m
+2020-07-09 21:04:10,391 [32mINFO[0m: Epoch: [1/1][ 220/5005] Time 0.072 (0.187) Data 0.000 (0.125) Loss 6.5199 (6.5380) Acc@1 0.78 (0.66) Acc@5 4.69 (2.67) Memory(MB) 1549[0m
+2020-07-09 21:04:13,800 [32mINFO[0m: Epoch: [1/1][ 240/5005] Time 0.070 (0.184) Data 0.000 (0.120) Loss 6.3880 (6.5151) Acc@1 1.56 (0.70) Acc@5 5.47 (2.87) Memory(MB) 1549[0m
+2020-07-09 21:04:17,102 [32mINFO[0m: Epoch: [1/1][ 260/5005] Time 0.074 (0.180) Data 0.000 (0.116) Loss 6.5571 (6.4846) Acc@1 1.95 (0.84) Acc@5 3.91 (3.42) Memory(MB) 1549[0m
+2020-07-09 21:04:20,344 [32mINFO[0m: Epoch: [1/1][ 280/5005] Time 0.063 (0.177) Data 0.000 (0.112) Loss 6.4152 (6.4654) Acc@1 1.17 (0.90) Acc@5 1.95 (3.51) Memory(MB) 1549[0m
+2020-07-09 21:04:23,812 [32mINFO[0m: Epoch: [1/1][ 300/5005] Time 0.094 (0.177) Data 0.051 (0.111) Loss 6.4287 (6.4249) Acc@1 1.56 (0.91) Acc@5 4.69 (3.76) Memory(MB) 1549[0m
+2020-07-09 21:04:27,163 [32mINFO[0m: Epoch: [1/1][ 320/5005] Time 0.072 (0.174) Data 0.006 (0.106) Loss 6.3752 (6.3927) Acc@1 1.17 (0.92) Acc@5 5.08 (4.01) Memory(MB) 1549[0m
+2020-07-09 21:04:30,588 [32mINFO[0m: Epoch: [1/1][ 340/5005] Time 0.069 (0.174) Data 0.000 (0.105) Loss 6.3010 (6.3649) Acc@1 1.95 (1.02) Acc@5 4.69 (4.12) Memory(MB) 1549[0m
+2020-07-09 21:04:33,993 [32mINFO[0m: Epoch: [1/1][ 360/5005] Time 0.071 (0.171) Data 0.000 (0.101) Loss 6.3376 (6.3424) Acc@1 0.78 (1.08) Acc@5 2.34 (4.12) Memory(MB) 1549[0m
+2020-07-09 21:04:37,383 [32mINFO[0m: Epoch: [1/1][ 380/5005] Time 0.072 (0.170) Data 0.000 (0.100) Loss 6.2499 (6.3190) Acc@1 1.95 (1.18) Acc@5 4.30 (4.38) Memory(MB) 1549[0m
+2020-07-09 21:04:40,787 [32mINFO[0m: Epoch: [1/1][ 400/5005] Time 0.071 (0.168) Data 0.000 (0.098) Loss 6.2669 (6.3065) Acc@1 1.95 (1.21) Acc@5 4.30 (4.42) Memory(MB) 1549[0m
+2020-07-09 21:04:43,959 [32mINFO[0m: Epoch: [1/1][ 420/5005] Time 0.063 (0.168) Data 0.000 (0.097) Loss 6.1957 (6.2840) Acc@1 0.39 (1.18) Acc@5 6.64 (4.72) Memory(MB) 1549[0m
+2020-07-09 21:04:47,534 [32mINFO[0m: Epoch: [1/1][ 440/5005] Time 0.070 (0.168) Data 0.000 (0.095) Loss 6.2491 (6.2552) Acc@1 0.39 (1.27) Acc@5 2.73 (4.94) Memory(MB) 1549[0m
+2020-07-09 21:04:50,947 [32mINFO[0m: Epoch: [1/1][ 460/5005] Time 0.072 (0.169) Data 0.001 (0.096) Loss 6.2733 (6.2233) Acc@1 0.39 (1.41) Acc@5 3.52 (5.26) Memory(MB) 1549[0m
+2020-07-09 21:04:54,409 [32mINFO[0m: Epoch: [1/1][ 480/5005] Time 0.075 (0.170) Data 0.000 (0.094) Loss 6.1013 (6.1895) Acc@1 1.56 (1.44) Acc@5 7.03 (5.45) Memory(MB) 1549[0m
+2020-07-09 21:04:57,784 [32mINFO[0m: Epoch: [1/1][ 500/5005] Time 0.074 (0.170) Data 0.000 (0.093) Loss 6.1363 (6.1518) Acc@1 0.78 (1.41) Acc@5 6.64 (5.73) Memory(MB) 1549[0m
+2020-07-09 21:05:01,046 [32mINFO[0m: Epoch: [1/1][ 520/5005] Time 0.069 (0.169) Data 0.000 (0.093) Loss 6.0053 (6.1326) Acc@1 1.95 (1.55) Acc@5 6.64 (6.18) Memory(MB) 1549[0m
+2020-07-09 21:05:04,550 [32mINFO[0m: Epoch: [1/1][ 540/5005] Time 0.077 (0.170) Data 0.000 (0.095) Loss 6.0032 (6.1040) Acc@1 1.17 (1.77) Acc@5 6.25 (6.65) Memory(MB) 1549[0m
+2020-07-09 21:05:07,797 [32mINFO[0m: Epoch: [1/1][ 560/5005] Time 0.069 (0.169) Data 0.000 (0.094) Loss 6.1269 (6.0771) Acc@1 2.73 (1.83) Acc@5 7.03 (6.81) Memory(MB) 1549[0m
+2020-07-09 21:05:11,127 [32mINFO[0m: Epoch: [1/1][ 580/5005] Time 0.073 (0.169) Data 0.000 (0.093) Loss 6.1013 (6.0814) Acc@1 1.56 (1.70) Acc@5 7.42 (6.84) Memory(MB) 1549[0m
+2020-07-09 21:05:14,527 [32mINFO[0m: Epoch: [1/1][ 600/5005] Time 0.069 (0.169) Data 0.000 (0.089) Loss 5.9853 (6.0723) Acc@1 1.95 (1.86) Acc@5 10.55 (7.32) Memory(MB) 1549[0m
+2020-07-09 21:05:17,842 [32mINFO[0m: Epoch: [1/1][ 620/5005] Time 0.066 (0.169) Data 0.000 (0.088) Loss 5.9483 (6.0273) Acc@1 2.34 (2.15) Acc@5 9.77 (8.15) Memory(MB) 1549[0m
+2020-07-09 21:05:21,289 [32mINFO[0m: Epoch: [1/1][ 640/5005] Time 0.073 (0.169) Data 0.000 (0.086) Loss 6.1303 (6.0140) Acc@1 1.56 (2.25) Acc@5 6.25 (8.18) Memory(MB) 1549[0m
+2020-07-09 21:05:24,626 [32mINFO[0m: Epoch: [1/1][ 660/5005] Time 0.074 (0.168) Data 0.000 (0.076) Loss 5.9668 (6.0056) Acc@1 2.34 (2.05) Acc@5 7.03 (7.93) Memory(MB) 1549[0m
+2020-07-09 21:05:28,131 [32mINFO[0m: Epoch: [1/1][ 680/5005] Time 0.073 (0.168) Data 0.000 (0.069) Loss 6.0802 (5.9779) Acc@1 1.17 (2.05) Acc@5 6.25 (7.95) Memory(MB) 1549[0m
+2020-07-09 21:05:31,728 [32mINFO[0m: Epoch: [1/1][ 700/5005] Time 0.071 (0.170) Data 0.000 (0.060) Loss 6.0418 (5.9756) Acc@1 2.73 (2.04) Acc@5 9.38 (7.97) Memory(MB) 1549[0m
+2020-07-09 21:05:35,185 [32mINFO[0m: Epoch: [1/1][ 720/5005] Time 0.069 (0.171) Data 0.000 (0.051) Loss 5.9463 (5.9684) Acc@1 1.56 (2.02) Acc@5 8.59 (8.33) Memory(MB) 1549[0m
+2020-07-09 21:05:38,554 [32mINFO[0m: Epoch: [1/1][ 740/5005] Time 0.065 (0.170) Data 0.003 (0.041) Loss 6.0733 (5.9497) Acc@1 1.95 (2.07) Acc@5 5.47 (8.55) Memory(MB) 1549[0m
+2020-07-09 21:05:42,225 [32mINFO[0m: Epoch: [1/1][ 760/5005] Time 0.073 (0.172) Data 0.000 (0.032) Loss 5.8775 (5.9296) Acc@1 2.34 (2.17) Acc@5 9.38 (8.71) Memory(MB) 1549[0m
+2020-07-09 21:05:45,440 [32mINFO[0m: Epoch: [1/1][ 780/5005] Time 0.068 (0.171) Data 0.000 (0.022) Loss 6.0117 (5.9145) Acc@1 3.12 (2.12) Acc@5 7.81 (8.80) Memory(MB) 1549[0m
+2020-07-09 21:05:48,771 [32mINFO[0m: Epoch: [1/1][ 800/5005] Time 0.073 (0.171) Data 0.000 (0.016) Loss 5.8383 (5.9051) Acc@1 1.95 (2.40) Acc@5 8.59 (8.93) Memory(MB) 1549[0m
+2020-07-09 21:05:52,009 [32mINFO[0m: Epoch: [1/1][ 820/5005] Time 0.070 (0.171) Data 0.000 (0.008) Loss 5.9914 (5.8883) Acc@1 0.78 (2.55) Acc@5 8.59 (9.12) Memory(MB) 1549[0m
+2020-07-09 21:05:55,287 [32mINFO[0m: Epoch: [1/1][ 840/5005] Time 0.075 (0.170) Data 0.000 (0.003) Loss 5.8321 (5.8822) Acc@1 2.34 (2.57) Acc@5 8.20 (9.24) Memory(MB) 1549[0m
+2020-07-09 21:05:58,525 [32mINFO[0m: Epoch: [1/1][ 860/5005] Time 0.072 (0.169) Data 0.000 (0.003) Loss 5.7507 (5.8839) Acc@1 3.91 (2.62) Acc@5 10.94 (9.34) Memory(MB) 1549[0m
+2020-07-09 21:06:01,824 [32mINFO[0m: Epoch: [1/1][ 880/5005] Time 0.073 (0.168) Data 0.000 (0.003) Loss 6.0198 (5.8787) Acc@1 1.95 (2.59) Acc@5 7.42 (9.26) Memory(MB) 1549[0m
+2020-07-09 21:06:05,216 [32mINFO[0m: Epoch: [1/1][ 900/5005] Time 0.065 (0.167) Data 0.002 (0.003) Loss 5.7024 (5.8548) Acc@1 5.47 (2.83) Acc@5 14.06 (9.71) Memory(MB) 1549[0m
+2020-07-09 21:06:08,899 [32mINFO[0m: Epoch: [1/1][ 920/5005] Time 0.072 (0.168) Data 0.000 (0.003) Loss 5.8976 (5.8350) Acc@1 2.34 (3.02) Acc@5 8.98 (9.98) Memory(MB) 1549[0m
+2020-07-09 21:06:12,408 [32mINFO[0m: Epoch: [1/1][ 940/5005] Time 0.073 (0.169) Data 0.000 (0.003) Loss 5.8468 (5.8273) Acc@1 1.95 (3.03) Acc@5 8.20 (9.98) Memory(MB) 1549[0m
+2020-07-09 21:06:15,929 [32mINFO[0m: Epoch: [1/1][ 960/5005] Time 0.066 (0.168) Data 0.000 (0.003) Loss 5.8482 (5.8074) Acc@1 2.34 (2.96) Acc@5 9.38 (10.23) Memory(MB) 1549[0m
+2020-07-09 21:06:19,602 [32mINFO[0m: Epoch: [1/1][ 980/5005] Time 0.071 (0.171) Data 0.000 (0.003) Loss 5.7219 (5.7866) Acc@1 4.69 (2.84) Acc@5 13.28 (10.44) Memory(MB) 1549[0m
+2020-07-09 21:06:23,408 [32mINFO[0m: Epoch: [1/1][1000/5005] Time 0.069 (0.173) Data 0.000 (0.003) Loss 5.6542 (5.7607) Acc@1 3.91 (3.12) Acc@5 12.11 (11.00) Memory(MB) 1549[0m
+2020-07-09 21:06:26,935 [32mINFO[0m: Epoch: [1/1][1020/5005] Time 0.071 (0.174) Data 0.000 (0.003) Loss 5.7418 (5.7484) Acc@1 2.34 (3.11) Acc@5 10.55 (10.73) Memory(MB) 1549[0m
+2020-07-09 21:06:30,575 [32mINFO[0m: Epoch: [1/1][1040/5005] Time 0.073 (0.176) Data 0.000 (0.003) Loss 5.7328 (5.7533) Acc@1 5.47 (3.19) Acc@5 10.55 (10.76) Memory(MB) 1549[0m
+2020-07-09 21:06:33,776 [32mINFO[0m: Epoch: [1/1][1060/5005] Time 0.072 (0.176) Data 0.001 (0.002) Loss 5.7707 (5.7329) Acc@1 4.30 (3.31) Acc@5 12.11 (10.97) Memory(MB) 1549[0m
+2020-07-09 21:06:37,053 [32mINFO[0m: Epoch: [1/1][1080/5005] Time 0.065 (0.176) Data 0.000 (0.003) Loss 5.8799 (5.7438) Acc@1 1.17 (3.16) Acc@5 6.64 (11.15) Memory(MB) 1549[0m
+2020-07-09 21:06:40,229 [32mINFO[0m: Epoch: [1/1][1100/5005] Time 0.064 (0.175) Data 0.000 (0.003) Loss 5.7035 (5.7257) Acc@1 3.12 (3.12) Acc@5 10.55 (11.04) Memory(MB) 1549[0m
+2020-07-09 21:06:43,468 [32mINFO[0m: Epoch: [1/1][1120/5005] Time 0.063 (0.173) Data 0.000 (0.003) Loss 5.5176 (5.7294) Acc@1 5.08 (3.27) Acc@5 14.06 (11.60) Memory(MB) 1549[0m
+2020-07-09 21:06:46,868 [32mINFO[0m: Epoch: [1/1][1140/5005] Time 0.068 (0.172) Data 0.000 (0.003) Loss 5.6717 (5.7027) Acc@1 5.08 (3.50) Acc@5 12.89 (11.86) Memory(MB) 1549[0m
+2020-07-09 21:06:50,205 [32mINFO[0m: Epoch: [1/1][1160/5005] Time 0.057 (0.171) Data 0.001 (0.003) Loss 5.6652 (5.6935) Acc@1 4.30 (3.72) Acc@5 13.67 (12.27) Memory(MB) 1549[0m
+2020-07-09 21:06:53,758 [32mINFO[0m: Epoch: [1/1][1180/5005] Time 0.073 (0.171) Data 0.000 (0.003) Loss 5.6305 (5.6836) Acc@1 5.86 (3.76) Acc@5 14.45 (12.09) Memory(MB) 1549[0m
+2020-07-09 21:06:57,325 [32mINFO[0m: Epoch: [1/1][1200/5005] Time 0.073 (0.169) Data 0.000 (0.003) Loss 5.5979 (5.6680) Acc@1 4.30 (3.48) Acc@5 14.06 (12.15) Memory(MB) 1549[0m
+2020-07-09 21:07:00,798 [32mINFO[0m: Epoch: [1/1][1220/5005] Time 0.071 (0.169) Data 0.000 (0.003) Loss 5.5259 (5.6484) Acc@1 2.73 (3.57) Acc@5 14.84 (12.45) Memory(MB) 1549[0m
+2020-07-09 21:07:04,220 [32mINFO[0m: Epoch: [1/1][1240/5005] Time 0.066 (0.168) Data 0.001 (0.003) Loss 5.6768 (5.6413) Acc@1 5.47 (3.63) Acc@5 13.67 (12.49) Memory(MB) 1549[0m
+2020-07-09 21:07:07,586 [32mINFO[0m: Epoch: [1/1][1260/5005] Time 0.065 (0.169) Data 0.000 (0.003) Loss 5.4535 (5.6230) Acc@1 3.52 (3.98) Acc@5 15.62 (12.89) Memory(MB) 1549[0m
+2020-07-09 21:07:10,857 [32mINFO[0m: Epoch: [1/1][1280/5005] Time 0.074 (0.169) Data 0.000 (0.004) Loss 5.5829 (5.6125) Acc@1 7.81 (4.26) Acc@5 18.36 (12.95) Memory(MB) 1549[0m
+2020-07-09 21:07:14,310 [32mINFO[0m: Epoch: [1/1][1300/5005] Time 0.072 (0.170) Data 0.000 (0.010) Loss 5.5160 (5.5944) Acc@1 5.86 (4.70) Acc@5 14.45 (13.70) Memory(MB) 1549[0m
+2020-07-09 21:07:17,788 [32mINFO[0m: Epoch: [1/1][1320/5005] Time 0.070 (0.171) Data 0.000 (0.012) Loss 5.5651 (5.6090) Acc@1 3.12 (4.41) Acc@5 12.50 (13.78) Memory(MB) 1549[0m
+2020-07-09 21:07:21,075 [32mINFO[0m: Epoch: [1/1][1340/5005] Time 0.074 (0.171) Data 0.000 (0.015) Loss 5.6520 (5.5936) Acc@1 2.34 (4.12) Acc@5 14.45 (13.69) Memory(MB) 1549[0m
+2020-07-09 21:07:24,902 [32mINFO[0m: Epoch: [1/1][1360/5005] Time 0.071 (0.173) Data 0.000 (0.025) Loss 5.6970 (5.5974) Acc@1 3.52 (4.11) Acc@5 14.45 (13.20) Memory(MB) 1549[0m
+2020-07-09 21:07:28,079 [32mINFO[0m: Epoch: [1/1][1380/5005] Time 0.075 (0.171) Data 0.000 (0.034) Loss 5.4835 (5.5925) Acc@1 3.12 (4.29) Acc@5 14.06 (13.45) Memory(MB) 1549[0m
+2020-07-09 21:07:31,503 [32mINFO[0m: Epoch: [1/1][1400/5005] Time 0.074 (0.171) Data 0.000 (0.045) Loss 5.7446 (5.5636) Acc@1 3.91 (4.59) Acc@5 10.94 (13.93) Memory(MB) 1549[0m
+2020-07-09 21:07:35,102 [32mINFO[0m: Epoch: [1/1][1420/5005] Time 0.072 (0.171) Data 0.000 (0.054) Loss 5.4354 (5.5416) Acc@1 4.30 (4.54) Acc@5 16.80 (14.09) Memory(MB) 1549[0m
+2020-07-09 21:07:38,406 [32mINFO[0m: Epoch: [1/1][1440/5005] Time 0.065 (0.171) Data 0.000 (0.060) Loss 5.4447 (5.5324) Acc@1 5.47 (4.46) Acc@5 12.11 (13.88) Memory(MB) 1549[0m
+2020-07-09 21:07:42,161 [32mINFO[0m: Epoch: [1/1][1460/5005] Time 0.065 (0.173) Data 0.000 (0.064) Loss 5.5586 (5.5300) Acc@1 5.47 (4.39) Acc@5 13.28 (14.20) Memory(MB) 1549[0m
+2020-07-09 21:07:45,628 [32mINFO[0m: Epoch: [1/1][1480/5005] Time 0.071 (0.174) Data 0.000 (0.062) Loss 5.3468 (5.5166) Acc@1 7.03 (4.49) Acc@5 19.53 (14.32) Memory(MB) 1549[0m
+2020-07-09 21:07:54,390 [32mINFO[0m: Test: [  0/196] Time 3.223 (3.223) Loss 4.7666 (4.7666) Acc@1 9.38 (9.38) Acc@5 28.12 (28.12)[0m
+2020-07-09 21:07:57,010 [32mINFO[0m: Test: [ 20/196] Time 0.445 (0.143) Loss 5.1690 (5.2560) Acc@1 9.38 (6.25) Acc@5 25.00 (18.60)[0m
+2020-07-09 21:07:59,484 [32mINFO[0m: Test: [ 40/196] Time 0.465 (0.152) Loss 4.7190 (5.2362) Acc@1 6.25 (6.17) Acc@5 28.12 (19.82)[0m
+2020-07-09 21:08:02,409 [32mINFO[0m: Test: [ 60/196] Time 0.028 (0.156) Loss 5.2137 (5.2375) Acc@1 3.12 (6.05) Acc@5 15.62 (18.95)[0m
+2020-07-09 21:08:04,908 [32mINFO[0m: Test: [ 80/196] Time 0.026 (0.108) Loss 5.8691 (5.2685) Acc@1 3.12 (6.02) Acc@5 12.50 (18.36)[0m
+2020-07-09 21:08:07,643 [32mINFO[0m: Test: [100/196] Time 0.147 (0.127) Loss 5.3393 (5.2698) Acc@1 9.38 (6.16) Acc@5 21.88 (18.10)[0m
+2020-07-09 21:08:10,169 [32mINFO[0m: Test: [120/196] Time 0.343 (0.130) Loss 4.9529 (5.2569) Acc@1 9.38 (6.04) Acc@5 28.12 (18.16)[0m
+2020-07-09 21:08:12,740 [32mINFO[0m: Test: [140/196] Time 0.381 (0.139) Loss 5.1494 (5.2645) Acc@1 9.38 (5.98) Acc@5 15.62 (18.06)[0m
+2020-07-09 21:08:15,218 [32mINFO[0m: Test: [160/196] Time 0.031 (0.123) Loss 5.4360 (5.2741) Acc@1 6.25 (5.86) Acc@5 15.62 (18.05)[0m
+2020-07-09 21:08:17,873 [32mINFO[0m: Test: [180/196] Time 0.118 (0.128) Loss 5.5737 (5.2722) Acc@1 0.00 (5.96) Acc@5 0.00 (18.04)[0m
+2020-07-09 21:08:21,329 [32mINFO[0m:  Rank 2 Loss 5.3007 Acc@1 344 Acc@5 1061 total_size 6250[0m
+2020-07-09 21:08:21,514 [32mINFO[0m:  Rank 0 Loss 5.2784 Acc@1 373 Acc@5 1124 total_size 6250[0m
+2020-07-09 21:08:21,670 [32mINFO[0m:  Rank 7 Loss 5.3137 Acc@1 347 Acc@5 1034 total_size 6250[0m
+2020-07-09 21:08:21,827 [32mINFO[0m:  Rank 4 Loss 5.3240 Acc@1 353 Acc@5 1045 total_size 6250[0m
+2020-07-09 21:08:21,874 [32mINFO[0m:  Rank 1 Loss 5.3071 Acc@1 332 Acc@5 1056 total_size 6250[0m
+2020-07-09 21:08:21,979 [32mINFO[0m:  Rank 6 Loss 5.3353 Acc@1 340 Acc@5 1024 total_size 6250[0m
+2020-07-09 21:08:22,358 [32mINFO[0m:  Rank 5 Loss 5.3378 Acc@1 319 Acc@5 1009 total_size 6250[0m
+2020-07-09 21:08:22,847 [32mINFO[0m:  Rank 3 Loss 5.2891 Acc@1 351 Acc@5 1064 total_size 6250[0m
+2020-07-09 21:08:22,849 [32mINFO[0m:  * All Loss 5.3108 Acc@1 5.518 (2759/50000) Acc@5 16.834 (8417/50000)[0m

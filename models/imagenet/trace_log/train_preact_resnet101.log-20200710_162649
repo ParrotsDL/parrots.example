@@ -1,0 +1,694 @@
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-51
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:57,333 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 7 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 1 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 2 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 3 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 4 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 5 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,706 [32mINFO[0m: rank 6 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:26:58,707 [32mINFO[0m: rank 0 of 8 jobs, in SH-IDC1-10-198-4-51[0m
+2020-07-10 16:27:05,115 [32mINFO[0m: config
+{
+  "seed": 99,
+  "net": {
+    "arch": "preact_resnet101",
+    "kwargs": {
+      "num_classes": 1000
+    }
+  },
+  "dataset": {
+    "train": {
+      "meta_file": "/mnt/lustre/share/images/meta/train.txt",
+      "image_dir": "/mnt/lustre/share/images/train",
+      "random_resize_crop": 224,
+      "colorjitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": true
+    },
+    "test": {
+      "meta_file": "/mnt/lustre/share/images/meta/val.txt",
+      "image_dir": "/mnt/lustre/share/images/val",
+      "resize": 256,
+      "center_crop": [
+        224,
+        224
+      ],
+      "random_resize_crop": null,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": false
+    },
+    "batch_size": 32,
+    "workers": 4
+  },
+  "trainer": {
+    "max_epoch": 1,
+    "test_freq": 1,
+    "log_freq": 20,
+    "bn": {
+      "syncbn": false
+    },
+    "mixed_precision": {
+      "half": false,
+      "loss_scale": 128.0,
+      "float_bn": true
+    },
+    "optimizer": {
+      "type": "SGD",
+      "kwargs": {
+        "lr": 0.1,
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      }
+    },
+    "lr_scheduler": {
+      "warmup_epochs": 0,
+      "type": "MultiStepLR",
+      "kwargs": {
+        "milestones": [
+          30,
+          60,
+          90
+        ],
+        "gamma": 0.1
+      }
+    }
+  },
+  "saver": {
+    "pretrian_model": null,
+    "resume_model": null,
+    "save_dir": "checkpoints/resnet50v2"
+  }
+}[0m
+2020-07-10 16:27:05,184 [32mINFO[0m: creating model 'preact_resnet101'[0m
+2020-07-10 16:27:06,471 [32mINFO[0m: model
+DistributedParrotsModel
+PreactResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): PreactBottleneck(
+      (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+      (downsample): Sequential(
+        (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      )
+    )
+    (1): PreactBottleneck(
+      (pre_bn): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (2): PreactBottleneck(
+      (pre_bn): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+  )
+  (layer2): Sequential(
+    (0): PreactBottleneck(
+      (pre_bn): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      )
+    )
+    (1): PreactBottleneck(
+      (pre_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (2): PreactBottleneck(
+      (pre_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (3): PreactBottleneck(
+      (pre_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+  )
+  (layer3): Sequential(
+    (0): PreactBottleneck(
+      (pre_bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+      (downsample): Sequential(
+        (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      )
+    )
+    (1): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (2): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (3): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (4): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (5): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (6): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (7): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (8): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (9): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (10): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (11): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (12): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (13): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (14): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (15): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (16): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (17): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (18): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (19): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (20): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (21): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (22): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+  )
+  (layer4): Sequential(
+    (0): PreactBottleneck(
+      (pre_bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+      (downsample): Sequential(
+        (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      )
+    )
+    (1): PreactBottleneck(
+      (pre_bn): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+    (2): PreactBottleneck(
+      (pre_bn): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pre_relu): ReLU(inplace)
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (relu1): ReLU(inplace)
+      (relu2): ReLU(inplace)
+    )
+  )
+  (final_bn): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (final_relu): ReLU(inplace)
+  (avgpool): AvgPool2d(kernel_size=7, stride=1, padding=0)
+  (fc): Linear(in_features=2048, out_features=1000, bias=True)
+)[0m
+2020-07-10 16:27:06,472 [32mINFO[0m: loss
+CrossEntropyLoss()[0m
+2020-07-10 16:27:06,474 [32mINFO[0m: optimizer
+SGD (
+Parameter Group 0
+    dampening: 0
+    hold_grads: False
+    lr: 0.1
+    momentum: 0.9
+    nesterov: False
+    weight_decay: 0.0001
+)[0m
+2020-07-10 16:27:08,179 [32mINFO[0m: ==> begin trace[0m
+2020-07-10 16:27:24,692 [32mINFO[0m: ==> tr_data dumped[0m
+2020-07-10 16:27:25,219 [32mINFO[0m: => trace and tr_func saved[0m
+2020-07-10 16:27:33,442 [32mINFO[0m: Epoch: [1/1][   0/5005] Time 8.221 (8.221) Data 5.435 (5.435) Loss 6.9081 (6.9081) Acc@1 0.00 (0.00) Acc@5 0.00 (0.00) Memory(MB) 4890[0m
+2020-07-10 16:27:36,883 [32mINFO[0m: Epoch: [1/1][  20/5005] Time 0.177 (0.555) Data 0.000 (0.261) Loss 7.1782 (7.0545) Acc@1 0.00 (0.11) Acc@5 0.00 (0.41) Memory(MB) 4890[0m
+2020-07-10 16:27:40,373 [32mINFO[0m: Epoch: [1/1][  40/5005] Time 0.174 (0.370) Data 0.000 (0.135) Loss 7.0570 (7.0668) Acc@1 0.00 (0.08) Acc@5 0.00 (0.50) Memory(MB) 4890[0m
+2020-07-10 16:27:44,340 [32mINFO[0m: Epoch: [1/1][  60/5005] Time 0.174 (0.313) Data 0.002 (0.091) Loss 6.9722 (7.0408) Acc@1 0.00 (0.08) Acc@5 0.39 (0.49) Memory(MB) 4890[0m
+2020-07-10 16:27:47,810 [32mINFO[0m: Epoch: [1/1][  80/5005] Time 0.170 (0.279) Data 0.000 (0.069) Loss 6.9185 (6.9660) Acc@1 0.00 (0.11) Acc@5 0.39 (0.58) Memory(MB) 4890[0m
+2020-07-10 16:27:51,282 [32mINFO[0m: Epoch: [1/1][ 100/5005] Time 0.171 (0.258) Data 0.005 (0.056) Loss 6.9281 (6.9310) Acc@1 0.39 (0.14) Acc@5 1.17 (0.54) Memory(MB) 4890[0m
+2020-07-10 16:27:55,098 [32mINFO[0m: Epoch: [1/1][ 120/5005] Time 0.174 (0.247) Data 0.003 (0.047) Loss 6.9034 (6.9215) Acc@1 0.39 (0.20) Acc@5 1.17 (0.66) Memory(MB) 4890[0m
+2020-07-10 16:27:58,696 [32mINFO[0m: Epoch: [1/1][ 140/5005] Time 0.173 (0.237) Data 0.001 (0.041) Loss 6.9154 (6.9094) Acc@1 0.39 (0.20) Acc@5 0.78 (0.74) Memory(MB) 4890[0m
+2020-07-10 16:28:02,502 [32mINFO[0m: Epoch: [1/1][ 160/5005] Time 0.171 (0.231) Data 0.001 (0.037) Loss 6.8791 (6.9017) Acc@1 0.00 (0.20) Acc@5 1.17 (0.74) Memory(MB) 4890[0m
+2020-07-10 16:28:06,294 [32mINFO[0m: Epoch: [1/1][ 180/5005] Time 0.176 (0.227) Data 0.010 (0.033) Loss 6.9026 (6.8931) Acc@1 0.00 (0.19) Acc@5 1.17 (0.84) Memory(MB) 4890[0m
+2020-07-10 16:28:09,985 [32mINFO[0m: Epoch: [1/1][ 200/5005] Time 0.174 (0.183) Data 0.007 (0.003) Loss 6.8099 (6.8757) Acc@1 1.17 (0.22) Acc@5 1.56 (1.03) Memory(MB) 4890[0m
+2020-07-10 16:28:14,103 [32mINFO[0m: Epoch: [1/1][ 220/5005] Time 0.172 (0.186) Data 0.002 (0.003) Loss 6.8143 (6.8482) Acc@1 0.39 (0.19) Acc@5 0.78 (1.12) Memory(MB) 4890[0m
+2020-07-10 16:28:18,012 [32mINFO[0m: Epoch: [1/1][ 240/5005] Time 0.175 (0.188) Data 0.000 (0.003) Loss 6.7924 (6.8129) Acc@1 0.78 (0.31) Acc@5 1.95 (1.37) Memory(MB) 4890[0m
+2020-07-10 16:28:21,524 [32mINFO[0m: Epoch: [1/1][ 260/5005] Time 0.173 (0.186) Data 0.000 (0.003) Loss 6.7897 (6.7948) Acc@1 0.00 (0.40) Acc@5 0.78 (1.66) Memory(MB) 4890[0m
+2020-07-10 16:28:25,122 [32mINFO[0m: Epoch: [1/1][ 280/5005] Time 0.173 (0.186) Data 0.001 (0.003) Loss 6.7233 (6.7800) Acc@1 0.39 (0.39) Acc@5 1.95 (1.80) Memory(MB) 4890[0m
+2020-07-10 16:28:29,320 [32mINFO[0m: Epoch: [1/1][ 300/5005] Time 0.172 (0.190) Data 0.002 (0.003) Loss 6.7116 (6.7546) Acc@1 0.39 (0.59) Acc@5 1.56 (2.20) Memory(MB) 4890[0m
+2020-07-10 16:28:33,097 [32mINFO[0m: Epoch: [1/1][ 320/5005] Time 0.174 (0.190) Data 0.003 (0.003) Loss 6.7616 (6.7287) Acc@1 0.00 (0.59) Acc@5 1.95 (2.20) Memory(MB) 4890[0m
+2020-07-10 16:28:36,577 [32mINFO[0m: Epoch: [1/1][ 340/5005] Time 0.175 (0.189) Data 0.000 (0.003) Loss 6.6959 (6.7054) Acc@1 0.78 (0.53) Acc@5 2.34 (2.09) Memory(MB) 4890[0m
+2020-07-10 16:28:40,059 [32mINFO[0m: Epoch: [1/1][ 360/5005] Time 0.172 (0.187) Data 0.001 (0.003) Loss 6.6656 (6.6851) Acc@1 0.39 (0.51) Acc@5 0.39 (2.05) Memory(MB) 4890[0m
+2020-07-10 16:28:43,834 [32mINFO[0m: Epoch: [1/1][ 380/5005] Time 0.173 (0.187) Data 0.007 (0.003) Loss 6.6017 (6.6648) Acc@1 1.17 (0.57) Acc@5 2.73 (2.17) Memory(MB) 4890[0m
+2020-07-10 16:28:47,307 [32mINFO[0m: Epoch: [1/1][ 400/5005] Time 0.173 (0.186) Data 0.003 (0.003) Loss 6.6779 (6.6516) Acc@1 0.39 (0.51) Acc@5 0.39 (2.06) Memory(MB) 4890[0m
+2020-07-10 16:28:50,795 [32mINFO[0m: Epoch: [1/1][ 420/5005] Time 0.175 (0.183) Data 0.009 (0.003) Loss 6.6246 (6.6305) Acc@1 0.39 (0.50) Acc@5 0.78 (2.16) Memory(MB) 4890[0m
+2020-07-10 16:28:54,549 [32mINFO[0m: Epoch: [1/1][ 440/5005] Time 0.174 (0.182) Data 0.004 (0.003) Loss 6.5465 (6.6086) Acc@1 1.56 (0.60) Acc@5 4.69 (2.29) Memory(MB) 4890[0m
+2020-07-10 16:28:58,039 [32mINFO[0m: Epoch: [1/1][ 460/5005] Time 0.174 (0.182) Data 0.004 (0.003) Loss 6.5619 (6.5811) Acc@1 0.00 (0.62) Acc@5 1.56 (2.63) Memory(MB) 4890[0m
+2020-07-10 16:29:01,512 [32mINFO[0m: Epoch: [1/1][ 480/5005] Time 0.173 (0.182) Data 0.002 (0.003) Loss 6.4778 (6.5462) Acc@1 1.17 (0.70) Acc@5 4.30 (3.13) Memory(MB) 4890[0m
+2020-07-10 16:29:05,513 [32mINFO[0m: Epoch: [1/1][ 500/5005] Time 0.175 (0.181) Data 0.004 (0.003) Loss 6.4025 (6.5094) Acc@1 0.00 (0.73) Acc@5 3.52 (3.20) Memory(MB) 4890[0m
+2020-07-10 16:29:08,987 [32mINFO[0m: Epoch: [1/1][ 520/5005] Time 0.174 (0.179) Data 0.020 (0.003) Loss 6.4709 (6.4748) Acc@1 0.78 (0.95) Acc@5 5.08 (3.58) Memory(MB) 4890[0m
+2020-07-10 16:29:12,702 [32mINFO[0m: Epoch: [1/1][ 540/5005] Time 0.173 (0.180) Data 0.004 (0.003) Loss 6.4593 (6.4592) Acc@1 0.00 (0.88) Acc@5 3.52 (3.65) Memory(MB) 4890[0m
+2020-07-10 16:29:16,179 [32mINFO[0m: Epoch: [1/1][ 560/5005] Time 0.173 (0.180) Data 0.007 (0.003) Loss 6.3613 (6.4335) Acc@1 1.17 (0.78) Acc@5 4.30 (3.43) Memory(MB) 4890[0m
+2020-07-10 16:29:19,654 [32mINFO[0m: Epoch: [1/1][ 580/5005] Time 0.173 (0.179) Data 0.011 (0.002) Loss 6.4533 (6.4178) Acc@1 0.39 (0.80) Acc@5 3.52 (3.56) Memory(MB) 4890[0m
+2020-07-10 16:29:23,665 [32mINFO[0m: Epoch: [1/1][ 600/5005] Time 0.174 (0.181) Data 0.005 (0.002) Loss 6.3220 (6.3983) Acc@1 0.39 (0.91) Acc@5 3.52 (3.86) Memory(MB) 4890[0m
+2020-07-10 16:29:27,139 [32mINFO[0m: Epoch: [1/1][ 620/5005] Time 0.174 (0.181) Data 0.013 (0.002) Loss 6.3219 (6.3658) Acc@1 1.56 (0.95) Acc@5 5.08 (4.06) Memory(MB) 4890[0m
+2020-07-10 16:29:30,616 [32mINFO[0m: Epoch: [1/1][ 640/5005] Time 0.173 (0.180) Data 0.005 (0.002) Loss 6.3444 (6.3472) Acc@1 1.56 (1.06) Acc@5 5.08 (4.27) Memory(MB) 4890[0m
+2020-07-10 16:29:34,308 [32mINFO[0m: Epoch: [1/1][ 660/5005] Time 0.174 (0.181) Data 0.010 (0.002) Loss 6.4007 (6.3408) Acc@1 1.17 (1.10) Acc@5 5.08 (4.30) Memory(MB) 4890[0m
+2020-07-10 16:29:37,786 [32mINFO[0m: Epoch: [1/1][ 680/5005] Time 0.175 (0.181) Data 0.005 (0.002) Loss 6.2878 (6.3182) Acc@1 1.56 (1.18) Acc@5 3.52 (4.50) Memory(MB) 4890[0m
+2020-07-10 16:29:41,262 [32mINFO[0m: Epoch: [1/1][ 700/5005] Time 0.173 (0.178) Data 0.006 (0.002) Loss 6.3888 (6.2939) Acc@1 0.39 (1.27) Acc@5 5.08 (4.97) Memory(MB) 4890[0m
+2020-07-10 16:29:45,603 [32mINFO[0m: Epoch: [1/1][ 720/5005] Time 0.173 (0.183) Data 0.006 (0.002) Loss 6.1786 (6.2709) Acc@1 0.78 (1.30) Acc@5 6.25 (5.14) Memory(MB) 4890[0m
+2020-07-10 16:29:49,081 [32mINFO[0m: Epoch: [1/1][ 740/5005] Time 0.174 (0.182) Data 0.003 (0.002) Loss 6.2934 (6.2632) Acc@1 0.00 (1.20) Acc@5 2.34 (5.25) Memory(MB) 4890[0m
+2020-07-10 16:29:52,838 [32mINFO[0m: Epoch: [1/1][ 760/5005] Time 0.174 (0.183) Data 0.004 (0.002) Loss 6.1242 (6.2330) Acc@1 1.95 (1.38) Acc@5 8.98 (5.59) Memory(MB) 4890[0m
+2020-07-10 16:29:56,315 [32mINFO[0m: Epoch: [1/1][ 780/5005] Time 0.173 (0.183) Data 0.003 (0.002) Loss 6.1517 (6.2196) Acc@1 0.78 (1.54) Acc@5 5.86 (5.91) Memory(MB) 4890[0m
+2020-07-10 16:29:59,800 [32mINFO[0m: Epoch: [1/1][ 800/5005] Time 0.181 (0.180) Data 0.048 (0.002) Loss 6.2918 (6.1935) Acc@1 0.78 (1.74) Acc@5 4.69 (6.27) Memory(MB) 4890[0m
+2020-07-10 16:30:03,435 [32mINFO[0m: Epoch: [1/1][ 820/5005] Time 0.173 (0.181) Data 0.003 (0.002) Loss 6.2026 (6.1788) Acc@1 1.56 (1.56) Acc@5 7.03 (6.01) Memory(MB) 4890[0m
+2020-07-10 16:30:06,937 [32mINFO[0m: Epoch: [1/1][ 840/5005] Time 0.174 (0.181) Data 0.004 (0.003) Loss 6.2496 (6.1578) Acc@1 0.78 (1.56) Acc@5 2.73 (6.22) Memory(MB) 4890[0m
+2020-07-10 16:30:10,417 [32mINFO[0m: Epoch: [1/1][ 860/5005] Time 0.173 (0.180) Data 0.001 (0.003) Loss 6.1579 (6.1315) Acc@1 1.95 (1.60) Acc@5 6.64 (6.55) Memory(MB) 4890[0m
+2020-07-10 16:30:14,331 [32mINFO[0m: Epoch: [1/1][ 880/5005] Time 0.174 (0.182) Data 0.001 (0.003) Loss 6.1694 (6.1240) Acc@1 3.12 (1.65) Acc@5 5.47 (6.56) Memory(MB) 4890[0m
+2020-07-10 16:30:17,808 [32mINFO[0m: Epoch: [1/1][ 900/5005] Time 0.174 (0.182) Data 0.009 (0.003) Loss 6.2181 (6.0993) Acc@1 1.56 (1.88) Acc@5 3.52 (6.80) Memory(MB) 4890[0m
+2020-07-10 16:30:21,286 [32mINFO[0m: Epoch: [1/1][ 920/5005] Time 0.174 (0.178) Data 0.001 (0.003) Loss 6.0026 (6.0833) Acc@1 3.12 (2.00) Acc@5 7.42 (6.98) Memory(MB) 4890[0m
+2020-07-10 16:30:24,860 [32mINFO[0m: Epoch: [1/1][ 940/5005] Time 0.173 (0.178) Data 0.002 (0.003) Loss 6.0722 (6.0699) Acc@1 1.56 (1.89) Acc@5 7.03 (7.02) Memory(MB) 4890[0m
+2020-07-10 16:30:28,338 [32mINFO[0m: Epoch: [1/1][ 960/5005] Time 0.173 (0.177) Data 0.001 (0.003) Loss 5.9705 (6.0394) Acc@1 1.56 (1.95) Acc@5 11.72 (7.28) Memory(MB) 4890[0m
+2020-07-10 16:30:31,818 [32mINFO[0m: Epoch: [1/1][ 980/5005] Time 0.174 (0.177) Data 0.002 (0.003) Loss 5.9432 (6.0214) Acc@1 3.52 (2.17) Acc@5 7.42 (7.23) Memory(MB) 4890[0m
+2020-07-10 16:30:35,698 [32mINFO[0m: Epoch: [1/1][1000/5005] Time 0.173 (0.179) Data 0.001 (0.003) Loss 6.0515 (6.0210) Acc@1 1.17 (2.16) Acc@5 7.03 (7.57) Memory(MB) 4890[0m
+2020-07-10 16:30:39,190 [32mINFO[0m: Epoch: [1/1][1020/5005] Time 0.174 (0.178) Data 0.001 (0.002) Loss 6.0708 (6.0138) Acc@1 1.17 (2.02) Acc@5 4.69 (7.69) Memory(MB) 4890[0m
+2020-07-10 16:30:42,738 [32mINFO[0m: Epoch: [1/1][1040/5005] Time 0.174 (0.179) Data 0.000 (0.002) Loss 5.8907 (5.9981) Acc@1 1.95 (2.02) Acc@5 9.38 (7.88) Memory(MB) 4890[0m
+2020-07-10 16:30:46,245 [32mINFO[0m: Epoch: [1/1][1060/5005] Time 0.174 (0.179) Data 0.001 (0.002) Loss 6.1001 (5.9757) Acc@1 1.95 (2.22) Acc@5 5.47 (8.32) Memory(MB) 4890[0m
+2020-07-10 16:30:49,736 [32mINFO[0m: Epoch: [1/1][1080/5005] Time 0.174 (0.177) Data 0.002 (0.002) Loss 5.9088 (5.9538) Acc@1 1.95 (2.36) Acc@5 10.55 (8.80) Memory(MB) 4890[0m
+2020-07-10 16:30:53,525 [32mINFO[0m: Epoch: [1/1][1100/5005] Time 0.175 (0.178) Data 0.002 (0.002) Loss 5.8399 (5.9591) Acc@1 1.56 (2.23) Acc@5 7.81 (8.36) Memory(MB) 4890[0m
+2020-07-10 16:30:57,005 [32mINFO[0m: Epoch: [1/1][1120/5005] Time 0.174 (0.178) Data 0.002 (0.002) Loss 6.0620 (5.9221) Acc@1 1.95 (2.35) Acc@5 9.77 (8.57) Memory(MB) 4890[0m
+2020-07-10 16:31:00,485 [32mINFO[0m: Epoch: [1/1][1140/5005] Time 0.173 (0.178) Data 0.001 (0.002) Loss 5.8407 (5.9021) Acc@1 1.95 (2.53) Acc@5 7.42 (8.69) Memory(MB) 4890[0m
+2020-07-10 16:31:04,030 [32mINFO[0m: Epoch: [1/1][1160/5005] Time 0.174 (0.178) Data 0.001 (0.002) Loss 5.8340 (5.8895) Acc@1 2.73 (2.65) Acc@5 8.20 (8.97) Memory(MB) 4890[0m
+2020-07-10 16:31:07,509 [32mINFO[0m: Epoch: [1/1][1180/5005] Time 0.174 (0.178) Data 0.000 (0.002) Loss 5.9237 (5.8753) Acc@1 2.34 (2.80) Acc@5 8.59 (9.22) Memory(MB) 4890[0m
+2020-07-10 16:31:10,989 [32mINFO[0m: Epoch: [1/1][1200/5005] Time 0.173 (0.176) Data 0.001 (0.002) Loss 5.8690 (5.8724) Acc@1 3.12 (2.75) Acc@5 11.72 (9.48) Memory(MB) 4890[0m
+2020-07-10 16:31:14,853 [32mINFO[0m: Epoch: [1/1][1220/5005] Time 0.173 (0.178) Data 0.002 (0.002) Loss 5.8499 (5.8598) Acc@1 2.73 (2.85) Acc@5 10.16 (9.88) Memory(MB) 4890[0m
+2020-07-10 16:31:18,332 [32mINFO[0m: Epoch: [1/1][1240/5005] Time 0.173 (0.178) Data 0.001 (0.002) Loss 5.8460 (5.8464) Acc@1 3.52 (2.91) Acc@5 9.77 (9.78) Memory(MB) 4890[0m
+2020-07-10 16:31:21,812 [32mINFO[0m: Epoch: [1/1][1260/5005] Time 0.174 (0.177) Data 0.000 (0.002) Loss 5.7405 (5.8369) Acc@1 4.69 (2.95) Acc@5 9.38 (9.77) Memory(MB) 4890[0m
+2020-07-10 16:31:26,052 [32mINFO[0m: Epoch: [1/1][1280/5005] Time 0.172 (0.181) Data 0.001 (0.002) Loss 5.9616 (5.8427) Acc@1 1.95 (2.94) Acc@5 7.42 (9.69) Memory(MB) 4890[0m
+2020-07-10 16:31:29,625 [32mINFO[0m: Epoch: [1/1][1300/5005] Time 0.173 (0.180) Data 0.001 (0.002) Loss 5.6332 (5.8121) Acc@1 4.30 (3.38) Acc@5 10.94 (10.55) Memory(MB) 4890[0m
+2020-07-10 16:31:33,425 [32mINFO[0m: Epoch: [1/1][1320/5005] Time 0.173 (0.182) Data 0.001 (0.002) Loss 5.7083 (5.7952) Acc@1 3.12 (3.37) Acc@5 11.72 (10.85) Memory(MB) 4890[0m
+2020-07-10 16:31:36,905 [32mINFO[0m: Epoch: [1/1][1340/5005] Time 0.174 (0.182) Data 0.001 (0.002) Loss 5.7101 (5.7688) Acc@1 3.91 (3.41) Acc@5 12.50 (11.12) Memory(MB) 4890[0m
+2020-07-10 16:31:40,385 [32mINFO[0m: Epoch: [1/1][1360/5005] Time 0.174 (0.181) Data 0.001 (0.002) Loss 5.8632 (5.7584) Acc@1 1.95 (3.38) Acc@5 9.38 (11.27) Memory(MB) 4890[0m
+2020-07-10 16:31:44,730 [32mINFO[0m: Epoch: [1/1][1380/5005] Time 0.174 (0.186) Data 0.001 (0.002) Loss 5.8624 (5.7640) Acc@1 2.73 (3.18) Acc@5 11.33 (11.05) Memory(MB) 4890[0m
+2020-07-10 16:31:48,211 [32mINFO[0m: Epoch: [1/1][1400/5005] Time 0.174 (0.186) Data 0.001 (0.002) Loss 5.7461 (5.7544) Acc@1 3.52 (3.46) Acc@5 12.89 (11.37) Memory(MB) 4890[0m
+2020-07-10 16:31:51,693 [32mINFO[0m: Epoch: [1/1][1420/5005] Time 0.174 (0.184) Data 0.004 (0.002) Loss 5.6326 (5.7137) Acc@1 4.69 (3.85) Acc@5 12.11 (11.76) Memory(MB) 4890[0m
+2020-07-10 16:31:55,457 [32mINFO[0m: Epoch: [1/1][1440/5005] Time 0.174 (0.185) Data 0.002 (0.002) Loss 5.8378 (5.6920) Acc@1 6.25 (3.98) Acc@5 12.50 (12.37) Memory(MB) 4890[0m
+2020-07-10 16:31:58,936 [32mINFO[0m: Epoch: [1/1][1460/5005] Time 0.174 (0.185) Data 0.001 (0.002) Loss 5.6298 (5.6782) Acc@1 3.52 (3.98) Acc@5 11.33 (12.36) Memory(MB) 4890[0m
+2020-07-10 16:32:02,581 [32mINFO[0m: Epoch: [1/1][1480/5005] Time 0.186 (0.182) Data 0.040 (0.002) Loss 5.6999 (5.6763) Acc@1 3.91 (4.07) Acc@5 11.33 (12.54) Memory(MB) 4890[0m
+2020-07-10 16:32:26,140 [32mINFO[0m: Test: [  0/196] Time 16.230 (16.230) Loss 5.6209 (5.6209) Acc@1 6.25 (6.25) Acc@5 12.50 (12.50)[0m
+2020-07-10 16:32:28,591 [32mINFO[0m: Test: [ 20/196] Time 0.268 (0.127) Loss 5.8895 (5.9730) Acc@1 6.25 (4.17) Acc@5 15.62 (10.42)[0m
+2020-07-10 16:32:31,299 [32mINFO[0m: Test: [ 40/196] Time 0.305 (0.143) Loss 5.7464 (5.9739) Acc@1 0.00 (3.96) Acc@5 9.38 (11.28)[0m
+2020-07-10 16:32:34,262 [32mINFO[0m: Test: [ 60/196] Time 0.090 (0.123) Loss 6.0233 (5.9382) Acc@1 3.12 (3.89) Acc@5 9.38 (11.42)[0m
+2020-07-10 16:32:37,072 [32mINFO[0m: Test: [ 80/196] Time 0.187 (0.131) Loss 6.1283 (5.9959) Acc@1 6.25 (3.59) Acc@5 9.38 (10.69)[0m
+2020-07-10 16:32:39,923 [32mINFO[0m: Test: [100/196] Time 0.324 (0.152) Loss 6.0680 (5.9899) Acc@1 3.12 (3.37) Acc@5 9.38 (10.58)[0m
+2020-07-10 16:32:42,514 [32mINFO[0m: Test: [120/196] Time 0.357 (0.143) Loss 5.9691 (5.9812) Acc@1 0.00 (3.31) Acc@5 9.38 (10.67)[0m
+2020-07-10 16:32:45,020 [32mINFO[0m: Test: [140/196] Time 0.229 (0.137) Loss 5.7812 (5.9979) Acc@1 6.25 (3.26) Acc@5 15.62 (10.39)[0m
+2020-07-10 16:32:47,544 [32mINFO[0m: Test: [160/196] Time 0.066 (0.147) Loss 6.5189 (6.0117) Acc@1 0.00 (3.12) Acc@5 3.12 (10.15)[0m
+2020-07-10 16:32:50,298 [32mINFO[0m: Test: [180/196] Time 0.275 (0.162) Loss 6.2291 (6.0084) Acc@1 0.00 (3.19) Acc@5 12.50 (10.17)[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 1 Loss 6.0507 Acc@1 203 Acc@5 618 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 2 Loss 5.9365 Acc@1 182 Acc@5 631 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 6 Loss 5.9944 Acc@1 199 Acc@5 621 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 0 Loss 6.0015 Acc@1 200 Acc@5 644 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 3 Loss 6.0158 Acc@1 187 Acc@5 626 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 4 Loss 6.0344 Acc@1 207 Acc@5 628 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 5 Loss 5.9839 Acc@1 194 Acc@5 611 total_size 6250[0m
+2020-07-10 16:32:55,310 [32mINFO[0m:  Rank 7 Loss 5.9509 Acc@1 201 Acc@5 664 total_size 6250[0m
+2020-07-10 16:32:55,361 [32mINFO[0m:  * All Loss 5.9960 Acc@1 3.146 (1573/50000) Acc@5 10.086 (5043/50000)[0m

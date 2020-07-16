@@ -1,0 +1,884 @@
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           SH-IDC1-10-198-4-41
+  Local device:         mlx5_0
+  Local port:           1
+  CPCs attempted:       rdmacm, udcm
+--------------------------------------------------------------------------
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:02,515 [32mINFO[0m: Parrots 0.6.0 | Git hash: d7b26529 | Compute hash: 2c662d99[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 4 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 2 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 0 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 3 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 7 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 6 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 5 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:04,271 [32mINFO[0m: rank 1 of 8 jobs, in SH-IDC1-10-198-4-41[0m
+2020-07-09 20:39:07,126 [32mINFO[0m: config
+{
+  "seed": 99,
+  "net": {
+    "arch": "efficientnet_b1",
+    "kwargs": {
+      "bn": {
+        "use_sync_bn": false,
+        "kwargs": {}
+      }
+    }
+  },
+  "dataset": {
+    "train": {
+      "meta_file": "/mnt/lustre/share/images/meta/train.txt",
+      "image_dir": "/mnt/lustre/share/images/train",
+      "random_resize_crop": 224,
+      "colorjitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.1
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": true
+    },
+    "test": {
+      "meta_file": "/mnt/lustre/share/images/meta/val.txt",
+      "image_dir": "/mnt/lustre/share/images/val",
+      "resize": 256,
+      "center_crop": [
+        224,
+        224
+      ],
+      "colorjitter": null,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "mirror": false
+    },
+    "batch_size": 32,
+    "workers": 4
+  },
+  "trainer": {
+    "max_epoch": 1,
+    "test_freq": 1,
+    "log_freq": 20,
+    "bn": {
+      "syncbn": false
+    },
+    "mixed_precision": {
+      "half": false,
+      "loss_scale": 128.0,
+      "float_bn": true
+    },
+    "optimizer": {
+      "type": "SGD",
+      "kwargs": {
+        "lr": 0.1,
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      }
+    },
+    "lr_scheduler": {
+      "warmup_epochs": 0,
+      "type": "MultiStepLR",
+      "kwargs": {
+        "milestones": [
+          30,
+          60,
+          90
+        ],
+        "gamma": 0.1
+      }
+    }
+  },
+  "saver": {
+    "pretrain_model": null,
+    "resume_model": null,
+    "save_dir": "checkpoints/efficientnet_b0"
+  }
+}[0m
+2020-07-09 20:39:07,172 [32mINFO[0m: creating model 'efficientnet_b1'[0m
+2020-07-09 20:39:07,386 [32mINFO[0m: model
+DistributedParrotsModel
+EfficientNet(
+  (blocks): ModuleList(
+    (0): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=32, bias=False)
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(32, 8, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(8, 32, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(32, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=16, bias=False)
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(16, 4, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(4, 16, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(16, 96, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(96, 96, kernel_size=(3, 3), stride=[2, 2], padding=(1, 1), groups=96, bias=False)
+        (4): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(96, 4, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(4, 96, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(96, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (3): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(144, 144, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=144, bias=False)
+        (4): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(144, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (4): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(144, 144, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=144, bias=False)
+        (4): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(144, 24, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (5): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(24, 144, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(144, 144, kernel_size=(5, 5), stride=[2, 2], padding=(2, 2), groups=144, bias=False)
+        (4): BatchNorm2d(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(144, 6, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(6, 144, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(144, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (6): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(240, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(240, 240, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=240, bias=False)
+        (4): BatchNorm2d(240, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(240, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (7): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(240, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(240, 240, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=240, bias=False)
+        (4): BatchNorm2d(240, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(240, 40, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(40, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (8): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(40, 240, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(240, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(240, 240, kernel_size=(3, 3), stride=[2, 2], padding=(1, 1), groups=240, bias=False)
+        (4): BatchNorm2d(240, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(240, 10, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(10, 240, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(240, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(80, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (9): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(480, 480, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=480, bias=False)
+        (4): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(80, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (10): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(480, 480, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=480, bias=False)
+        (4): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(80, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (11): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(480, 480, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=480, bias=False)
+        (4): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(480, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(80, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (12): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(80, 480, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(480, 480, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=480, bias=False)
+        (4): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(480, 20, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(20, 480, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(480, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(112, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (13): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(672, 672, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=672, bias=False)
+        (4): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(112, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (14): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(672, 672, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=672, bias=False)
+        (4): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(112, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (15): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(672, 672, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=672, bias=False)
+        (4): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(672, 112, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(112, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (16): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(112, 672, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(672, 672, kernel_size=(5, 5), stride=[2, 2], padding=(2, 2), groups=672, bias=False)
+        (4): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(672, 28, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(28, 672, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(672, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (17): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(1152, 1152, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=1152, bias=False)
+        (4): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (18): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(1152, 1152, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=1152, bias=False)
+        (4): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (19): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(1152, 1152, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=1152, bias=False)
+        (4): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (20): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(1152, 1152, kernel_size=(5, 5), stride=[1, 1], padding=(2, 2), groups=1152, bias=False)
+        (4): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(1152, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (21): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(192, 1152, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(1152, 1152, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=1152, bias=False)
+        (4): BatchNorm2d(1152, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(1152, 48, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(48, 1152, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(1152, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (22): MBConvBlock(
+      (in_conv): Sequential(
+        (0): Conv2d(320, 1920, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(1920, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): swish()
+        (3): Conv2d(1920, 1920, kernel_size=(3, 3), stride=[1, 1], padding=(1, 1), groups=1920, bias=False)
+        (4): BatchNorm2d(1920, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): swish()
+      )
+      (se_block): Sequential(
+        (conv1): Conv2d(1920, 80, kernel_size=(1, 1), stride=(1, 1))
+        (act1): swish()
+        (conv2): Conv2d(80, 1920, kernel_size=(1, 1), stride=(1, 1))
+        (act2): Sigmoid()
+      )
+      (out_conv): Sequential(
+        (0): Conv2d(1920, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (stem): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): swish()
+  )
+  (head): Sequential(
+    (0): Conv2d(320, 1280, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (1): BatchNorm2d(1280, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): swish()
+  )
+  (avgpool): AdaptiveAvgPool2d()
+  (fc): Linear(in_features=1280, out_features=1000, bias=True)
+  (dropout): Dropout2d(p=0.2, inplace)
+)[0m
+2020-07-09 20:39:07,386 [32mINFO[0m: loss
+CrossEntropyLoss()[0m
+2020-07-09 20:39:07,388 [32mINFO[0m: optimizer
+SGD (
+Parameter Group 0
+    dampening: 0
+    hold_grads: False
+    lr: 0.1
+    momentum: 0.9
+    nesterov: False
+    weight_decay: 0.0001
+)[0m
+2020-07-09 20:39:09,388 [32mINFO[0m: ==> begin trace[0m
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1666
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7f210a1811fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7f210a16c747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7f20f857d13e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7f20f854580a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7f20f85544d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7f20f85e00bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7f20f85e0509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7f20f85e14eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7f20f8512c78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7f20f86b2206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7f20f86b41ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7f20f86b4589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7f20f86b471e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7f20f86a6e0b]
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1666
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7f9d511b61fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7f9d511a1747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7f9d3f5b213e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7f9d3f57a80a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7f9d3f5894d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7f9d3f6150bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7f9d3f615509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7f9d3f6164eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7f9d3f547c78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7f9d3f6e7206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7f9d3f6e91ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7f9d3f6e9589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7f9d3f6e971e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7f9d3f6dbe0b]
+2020-07-09 20:39:22,197 [32mINFO[0m: ==> tr_data dumped[0m
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1662
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7f5ca05f81fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7f5ca05e3747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7f5c8e9f413e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7f5c8e9bc80a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7f5c8e9cb4d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7f5c8ea570bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7f5c8ea57509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7f5c8ea584eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7f5c8e989c78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7f5c8eb29206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7f5c8eb2b1ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7f5c8eb2b589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7f5c8eb2b71e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7f5c8eb1de0b]
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1666
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7fc351b1d1fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7fc351b08747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7fc33ff1913e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7fc33fee180a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7fc33fef04d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7fc33ff7c0bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7fc33ff7c509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7fc33ff7d4eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7fc33feaec78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7fc34004e206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7fc3400501ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7fc340050589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7fc34005071e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7fc340042e0b]
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1664
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7fca8cb101fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7fca8cafb747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7fca7af0c13e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7fca7aed480a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7fca7aee34d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7fca7af6f0bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7fca7af6f509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7fca7af704eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7fca7aea1c78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7fca7b041206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7fca7b0431ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7fca7b043589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7fca7b04371e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7fca7b035e0b]
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1664
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7f648aa4d1fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7f648aa38747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7f6478e4913e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7f6478e1180a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7f6478e204d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7f6478eac0bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7f6478eac509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7f6478ead4eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7f6478ddec78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7f6478f7e206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7f6478f801ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7f6478f80589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7f6478f8071e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7f6478f72e0b]
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1662
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7f325e4241fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7f325e40f747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7f324c82013e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7f324c7e880a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7f324c7f74d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7f324c8830bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7f324c883509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7f324c8844eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7f324c7b5c78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7f324c955206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7f324c9571ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7f324c957589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7f324c95771e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7f324c949e0b]
+Traceback (most recent call last):
+  File "main.py", line 359, in <module>
+    main()
+  File "main.py", line 191, in main
+    tr_func = trace(tr_func_, tr_input, tr_target)
+  File "build/bdist.linux-x86_64/egg/parrots/aot.py", line 59, in trace
+  File "main.py", line 188, in tr_func_
+    loss.backward()
+  File "build/bdist.linux-x86_64/egg/torch/tensor.py", line 405, in backward
+RuntimeError: Assertion it != storageList_.end() failed at /mnt/cache/share/platform/download/parrots2/src/scheduler.cpp (161). Key not found: No Storage exists for Operand 1664
+backtrace:
+1 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Scheduler::getOperand(parrots::Operand const&)+0x13d) [0x7feaccaa81fd]
+2 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/libparrots.so(parrots::Engine::getOperand(parrots::Operand const&)+0x47) [0x7feacca93747]
+3 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::wait_ready() const+0x4e) [0x7feabaea413e]
+4 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::getSpec() const+0x23a) [0x7feabae6c80a]
+5 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::is_contiguous() const+0x24) [0x7feabae7b4d4]
+6 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::contiguous() const+0x1d) [0x7feabaf070bd]
+7 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fa509) [0x7feabaf07509]
+8 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x1fb4eb) [0x7feabaf084eb]
+9 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x12cc78) [0x7feabae39c78]
+10 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::GradFnBase::backward(bool)+0x256) [0x7feabafd9206]
+11 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::vector<std::shared_ptr<autograd::GradFnBase>, std::allocator<std::shared_ptr<autograd::GradFnBase> > >, bool)+0x46a) [0x7feabafdb1ea]
+12 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(autograd::doBackward(std::shared_ptr<autograd::GradFnBase>, bool)+0xa9) [0x7feabafdb589]
+13 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(CDArray::backward(CDArray, bool)+0xde) [0x7feabafdb71e]
+14 /mnt/cache/share/platform/env/miniconda3.6/envs/pat20200703/lib/python3.6/site-packages/parrots-0.6.0rc0-py3.6-linux-x86_64.egg/parrots/binding.cpython-36m-x86_64-linux-gnu.so(+0x2c0e0b) [0x7feabafcde0b]
+srun: error: SH-IDC1-10-198-4-41: tasks 0,2-7: Exited with exit code 1
+srun: error: SH-IDC1-10-198-4-41: task 1: Exited with exit code 1
