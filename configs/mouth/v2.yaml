@@ -104,6 +104,8 @@ vgg_w: [1, 1, 1, 1]
 dis_weight_of_face_shuffle: 1
 # path of vgg16 weights path
 vgg_model_path: ./models/mouth_inpaint_network/vgg_model/vgg16.weight
+# pavi task name
+task_name: mouth_v2
 
 ## dataset option
 # worker threads
