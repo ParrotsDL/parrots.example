@@ -457,6 +457,42 @@ def seg_mem_func(done_flag="total",
                 ret['ips'] = ips.group(1)
     return ret
 
+@register_callfunc
+def star_func(done_flag="Pipeline is Done",
+              iter_speed_flag="epoch: 0 .* 100\/.*, (.*)\]",
+              ap_flag="\| TopDown \| (.*) \| .* \| .* \| .* \| .* \| .* \| .* \| .* \| .* \| .*|\| BottomUp \| (.*) \| .* \| .* \| .* \| .* \| .* \| .* \| .* \| .* \| .*",
+              ips_flag="jobs, in ([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
+              **args):
+    """ log_file: read from stdin as default
+        iter_speed_flag: flag for 100 iter time
+        prec_flag: flag for Prec@1 and Prec@5
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['ap'] = 'none'
+    ret['ips'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(1)
+        import pdb
+        pdb.set_trace()
+        ap = re.search(ap_flag, line)
+        if ap is not None:
+            ret['ap'] = ap.groups()[0] if ap.groups()[1] is None else ap.groups()[1]
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    return ret
 
 def callback_wapper(func_name, **args):
     ret_dict = callback_funcs[func_name](**args)

@@ -46,3 +46,6 @@
 	path = models/Multi_organ_seg_HR
 	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
 	branch = pat0.6
+[submodule "models/STAR"]
+	path = models/STAR
+	url = git@gitlab.bj.sensetime.com:wangcan/STAR.git

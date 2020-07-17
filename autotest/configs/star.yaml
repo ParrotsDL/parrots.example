@@ -1,0 +1,35 @@
+star_resnet18:
+  func: star_func
+  args: 
+    done_flag: "Pipeline is Done"
+  thresh: 
+    iter_speed: 1.23
+    ap: 0.678
+resnet50:
+  func: star_func
+  args: 
+    done_flag: "Pipeline is Done"
+  thresh: 
+    iter_speed: 1.30
+    ap: 0.734
+resnet101:
+  func: star_func
+  args: 
+    done_flag: "Pipeline is Done"
+  thresh: 
+    iter_speed: 1.24
+    ap: 0.737
+hrnet32:
+  func: star_func
+  args: 
+    done_flag: "Pipeline is Done"
+  thresh: 
+    iter_speed: 0.56
+    ap: 0.751
+higher_hrnet32:
+  func: star_func
+  args: 
+    done_flag: "Pipeline is Done"
+  thresh: 
+    iter_speed: 0.89
+    ap: 0.673
