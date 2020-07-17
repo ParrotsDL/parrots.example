@@ -45,3 +45,7 @@
 [submodule "models/mmaction"]
 	path = models/mmaction
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction-lite.git
+[submodule "models/Multi_organ_seg_HR"]
+	path = models/Multi_organ_seg_HR
+	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
+	branch = pat0.6
