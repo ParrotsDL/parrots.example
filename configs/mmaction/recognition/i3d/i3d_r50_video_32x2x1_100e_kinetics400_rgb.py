@@ -4,7 +4,7 @@ model = dict(
     backbone=dict(
         type='ResNet3d',
         pretrained2d=True,
-        pretrained='torchvision://resnet50',
+        pretrained='/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/resnet50-19c8e357.pth',
         depth=50,
         conv_cfg=dict(type='Conv3d'),
         norm_eval=False,
