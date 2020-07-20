@@ -49,3 +49,6 @@
 	path = models/Multi_organ_seg_HR
 	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
 	branch = pat0.6
+[submodule "models/mouth_inpaint_network"]
+	path = models/mouth_inpaint_network
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git

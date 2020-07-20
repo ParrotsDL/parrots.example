@@ -84,6 +84,9 @@ task:
                 {'framework': 'mmaction', 'gpus': 8, 'model': 'i3d_r50_video_32x2x1_100e_kinetics400_rgb', 'py_args': '--validate --pavi --pavi_project parrots_test --seed 1024'},
                 {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--validate --pavi --pavi_project parrots_test --seed 1024'},
                 {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_dense_1x1x8_100e_kinetics400_rgb', 'py_args': '--validate --pavi --pavi_project parrots_test --seed 1024'},
+                
+                # # mouth
+                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
             ]
     # Optional
     # callback: "cat"

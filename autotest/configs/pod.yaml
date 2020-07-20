@@ -206,6 +206,14 @@ pod_keypoint-rcnn-R50-FPN-1x.short: # Required.
     iter_speed: 0.71
     bbox_ap: 0.541
     seg_ap: 0.637
+pod_keypoint-rcnn-R50-FPN-1x.short.dummy_data: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.71 # Just need speed
+    bbox_ap: None
+    seg_ap: None
 pod_keypoint-rcnn-R50-FPN-1x.benchmark: # Required.
   func: pod_func # Required
   args:
@@ -229,6 +237,14 @@ pod_rfcn-R101-ohem-deform-1x.short: # Required.
   thresh: # Required
     iter_speed: 0.86
     bbox_ap: 0.823
+    seg_ap: None
+pod_rfcn-R101-ohem-deform-1x.short.dummy_data: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "Thanks"
+  thresh: # Required
+    iter_speed: 0.86   # Just need speed
+    bbox_ap: None
     seg_ap: None
 pod_rfcn-R101-ohem-deform-1x.benchmark: # Required.
   func: pod_func # Required
@@ -341,6 +357,14 @@ pod_faster-rcnn-R50-C4-1x.short: # Required.
   thresh: # Required
     iter_speed: 0.789
     bbox_ap: 0.035
+    seg_ap: None
+pod_faster-rcnn-R50-C4-1x.short.dummy_data: # Required.
+  func: pod_func # Required
+  args:
+    done_flag: "copypaste:"
+  thresh: # Required
+    iter_speed: 0.789  # Just need speed
+    bbox_ap: None 
     seg_ap: None
 pod_faster-rcnn-R50-C4-1x.benchmark: # Required.
   func: pod_func # Required
