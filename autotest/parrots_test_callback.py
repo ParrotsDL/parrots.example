@@ -499,18 +499,18 @@ def mmaction_func(done_flag="Pipeline is Done",
             ips = re.search(ips_flag, line)
             if ips is not None:
                 ret['ips'] = ips.group(1)
-
-    ret['iter_speed'] = "{:.4f}".format(np.mean(iter_speed_list))
-    date1 = time.strptime(ret['start_time'], "%Y-%m-%d %H:%M:%S")
-    date2 = time.strptime(ret['end_time'], "%Y-%m-%d %H:%M:%S")
-    date1 = datetime.datetime(
-            date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
-    date2 = datetime.datetime(
-        date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
-    total_time = date2-date1
-    total_time = total_time.days*24+total_time.seconds/3600
-    ret['total_time(h)'] = '{:.1f}'.format(total_time)
-
+    if len(iter_speed_list) > 0:
+        ret['iter_speed'] = "{:.4f}".format(np.mean(iter_speed_list))
+    if ret['start_time'] != 'none' and ret['end_time'] != 'none':
+        date1 = time.strptime(ret['start_time'], "%Y-%m-%d %H:%M:%S")
+        date2 = time.strptime(ret['end_time'], "%Y-%m-%d %H:%M:%S")
+        date1 = datetime.datetime(
+                date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
+        date2 = datetime.datetime(
+            date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
+        total_time = date2-date1
+        total_time = total_time.days*24+total_time.seconds/3600
+        ret['total_time(h)'] = '{:.1f}'.format(total_time)
     return ret
 
 def callback_wapper(func_name, **args):
