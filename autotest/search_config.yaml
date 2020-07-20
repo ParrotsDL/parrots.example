@@ -80,6 +80,9 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "se_resnet50", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
+                
+                # # mouth
+                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
             ]
     # Optional
     # callback: "cat"
