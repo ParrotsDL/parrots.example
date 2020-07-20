@@ -21,4 +21,3 @@ srun --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=pod_${n
 python $ROOT/models/pytorch-object-detection/tools/train_val.py \
   --config=$cfg ${EXTRA_ARGS} \
   2>&1 | tee $ROOT/log/pod/train.${name}.log.$T
-
