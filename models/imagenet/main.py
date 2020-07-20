@@ -31,6 +31,8 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
+                    help='dummy data for speed evaluation')
 parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
 parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
 
@@ -228,11 +230,18 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
+    if args.dummy_test:
+        input_, target_  = next(iter(train_loader))
+        train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
         iter_start_time = time.time()
         # measure data loading time
         data_time.update(time.time() - end)
 
+        if args.dummy_test:
+            input = input_.detach()
+            input.requires_grad = True
+            target = target_
         input = input.cuda()
         target = target.cuda()
 
@@ -288,7 +297,13 @@ def test(test_loader, model, criterion, args):
     model.eval()
     with torch.no_grad():
         end = time.time()
+        if args.dummy_test:
+            input_, target_ = next(iter(test_loader))
+            test_loader = [(i, i) for i in range(len(test_loader))]
         for i, (input, target) in enumerate(test_loader):
+            if args.dummy_test:
+                input = input_
+                target = target_
             input = input.cuda()
             target = target.cuda()
 
