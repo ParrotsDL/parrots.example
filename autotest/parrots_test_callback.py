@@ -407,7 +407,7 @@ def seg_pspnet(done_flag="Save Checkpoint",
                 ret['is_done'] = True
         mIoU = re.search(mIoU_flag, line)
         if mIoU is not None:
-            ret['mIoU'] = mIoU.group()
+            ret['mIoU'] = mIoU.group(1)
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)
             if ips is not None:
@@ -452,7 +452,7 @@ def seg_deeplab(done_flag="Save Checkpoint",
                 ret['is_done'] = True
         mIoU = re.search(mIoU_flag, line)
         if mIoU is not None:
-            ret['mIoU'] = mIoU.group()
+            ret['mIoU'] = mIoU.group(1)
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)
             if ips is not None:
@@ -497,7 +497,7 @@ def seg_mobilenet_v2_plus(done_flag="Save Checkpoint",
                 ret['is_done'] = True
         mIoU = re.search(mIoU_flag, line)
         if mIoU is not None:
-            ret['mIoU'] = mIoU.group()
+            ret['mIoU'] = mIoU.group(1)
         if ret['ips'] == 'none':
             ips = re.search(ips_flag, line)
             if ips is not None:
