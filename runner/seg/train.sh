@@ -67,9 +67,3 @@ OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
       exit 1
       ;;
 esac
-#set -x
-#OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-#srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
-#    $PYTHON_ARGS $EXTRA_ARGS \
-#    2>&1 | tee $ROOT/log/seg/train.${name}.log.$T && srun -p $1 -n$2 --gres gpu:8 --ntasks-pernode 8 --job-name=seg_${name} ${SRUN_ARGS} $PYTHON_ARGS1 $EXTRA_ARGS 2>&1 | tee -a $ROOT/log/seg/train.${name}.log.$T 
-                                                             
