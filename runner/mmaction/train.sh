@@ -1,6 +1,5 @@
 #!/bin/bash
-export PYTHONPATH=/mnt/lustre/jiaomenglei/parrots-dev/parrots2/python:$PYTHONPATH
-export PYTHONPATH=~/dev/mmcv_debug/mmcv:$PYTHONPATH
+
 mkdir -p log/mmaction
 
 T=`date +%m%d%H%M`
