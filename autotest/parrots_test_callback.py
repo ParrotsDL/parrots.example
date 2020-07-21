@@ -200,6 +200,53 @@ def ssd_func(done_flag="Pipeline is Done",
         ret['total_time'] = total_time
     return ret
 
+@register_callfunc
+def mouth_func(done_flag="Pipeline is Done",
+             iter_speed_flag="iter time: (.+)",
+             start_flag="[0-9]{4}-[0-2][0-9]-[0-3][0-9]-[0-2][0-9]:[0-6][0-9]:[0-6][0-9]",
+             end_flag="[0-9]{4}-[0-2][0-9]-[0-3][0-9]-[0-2][0-9]:[0-6][0-9]:[0-6][0-9]",
+             ips_flag="hostname is:(.+)",
+             **args):
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['start'] = 'none'
+    ret['end'] = 'none'
+    ret['ips'] = 'none'
+    ret['total_time'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        if ret['iter_speed'] == 'none':
+            iter_speed = re.search(iter_speed_flag, line)
+            if iter_speed is not None:
+                ret['iter_speed'] = iter_speed.group(1)
+        if ret['start'] == 'none':
+            start = re.search(start_flag, line)
+            if start is not None:
+                ret['start'] = start.group()
+        end = re.search(end_flag, line)
+        if end is not None:
+            ret['end'] = end.group()
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+    if ret['start'] != 'none' and ret['end'] != 'none':
+        date1 = time.strptime(ret['start'], "%Y-%m-%d-%H:%M:%S")
+        date2 = time.strptime(ret['end'], "%Y-%m-%d-%H:%M:%S")
+        date1 = datetime.datetime(
+            date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
+        date2 = datetime.datetime(
+            date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
+        total_time = date2-date1
+        total_time = total_time.days*24+total_time.seconds/3600
+        ret['total_time'] = total_time
+    return ret
+
 
 @register_callfunc
 def mild_func(done_flag="Pipeline is Done",
