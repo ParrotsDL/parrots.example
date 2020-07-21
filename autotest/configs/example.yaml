@@ -222,7 +222,7 @@ example_resnet18_mix: # Required.
     iter_speed: 0.2688
     acc1: 30
     acc5: None
-example_resnet18_mix.dummy_data: # Required.
+example_resnet18_mix.short.dummy_data: # Required.
   func: example_func # Required
   args:
     done_flag: "All Loss"
