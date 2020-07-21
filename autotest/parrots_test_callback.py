@@ -16,7 +16,6 @@ if os.environ.get('LOG_STREAM_DEBUG') is not None:
 else:
     log_stream = sys.stdin
 
-
 def register_callfunc(func):
     callback_funcs[func.__name__] = func
 
@@ -430,6 +429,140 @@ def nas_lite_func(done_flag="Pipeline is Done",
                 ret['ips'] = ips.group(1)
     return ret
 
+@register_callfunc
+def seg_pspnet(done_flag="Save Checkpoint",
+             mIoU_flag="Eval result: mIoU/mAcc/allAcc (\d\.\d+)/",
+             ips_flag="IP:(.+)",
+             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 200",
+             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 300",
+             **args):
+    """ log_file: read from stdin as default
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['mIoU'] = 'none'
+    ret['ips'] = 'none'
+    ret['start'] = 'none'
+    ret['end'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        mIoU = re.search(mIoU_flag, line)
+        if mIoU is not None:
+            ret['mIoU'] = mIoU.group(1)
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+        if ret['start'] == 'none':
+            start = re.search(start_flag, line)
+            if start is not None:
+                ret['start'] = start.group(1)
+        end = re.search(end_flag, line)
+        if end is not None:
+            ret['end'] = end.group(1)
+        if ret['start'] != 'none' and ret['end'] != 'none' and ret['iter_speed'] == 'none':
+            date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
+            date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+            total_interval_time = (date2 - date1).total_seconds()
+            iter_speed = total_interval_time/100
+            ret['iter_speed'] = iter_speed
+    return ret
+
+@register_callfunc
+def seg_deeplab(done_flag="Save Checkpoint",
+             mIoU_flag="Eval result: mIoU/mAcc/allAcc (\d\.\d+)/",
+             ips_flag="IP:(.+)",
+             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 200",
+             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 300",
+             **args):
+    """ log_file: read from stdin as default
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['mIoU'] = 'none'
+    ret['ips'] = 'none'
+    ret['start'] = 'none'
+    ret['end'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        mIoU = re.search(mIoU_flag, line)
+        if mIoU is not None:
+            ret['mIoU'] = mIoU.group(1)
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+        if ret['start'] == 'none':
+            start = re.search(start_flag, line)
+            if start is not None:
+                ret['start'] = start.group(1)
+        end = re.search(end_flag, line)
+        if end is not None:
+            ret['end'] = end.group(1)
+        if ret['start'] != 'none' and ret['end'] != 'none' and ret['iter_speed'] == 'none':
+            date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
+            date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+            total_interval_time = (date2 - date1).total_seconds()
+            iter_speed = total_interval_time/100
+            ret['iter_speed'] = iter_speed
+    return ret
+
+@register_callfunc
+def seg_mobilenet_v2_plus(done_flag="Save Checkpoint",
+             mIoU_flag="the best val result is: (\d\.\d+)",
+             ips_flag="IP:(.+)",
+             start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 200",
+             end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9]),([0-9]*)-rk0-train.py#180:iter = 300",
+             **args):
+    """ log_file: read from stdin as default
+        ret(dict): results of analysis metrics
+    """
+    ret = {}
+    ret.update(**args)
+    ret['is_done'] = False
+    ret['iter_speed'] = 'none'
+    ret['mIoU'] = 'none'
+    ret['ips'] = 'none'
+    ret['start'] = 'none'
+    ret['end'] = 'none'
+    for line in log_stream:
+        if ret['is_done'] is False:
+            is_done = re.search(done_flag, line)
+            if is_done is not None:
+                ret['is_done'] = True
+        mIoU = re.search(mIoU_flag, line)
+        if mIoU is not None:
+            ret['mIoU'] = mIoU.group(1)
+        if ret['ips'] == 'none':
+            ips = re.search(ips_flag, line)
+            if ips is not None:
+                ret['ips'] = ips.group(1)
+        if ret['start'] == 'none':
+            start = re.search(start_flag, line)
+            if start is not None:
+                ret['start'] = start.group(1)
+        end = re.search(end_flag, line)
+        if end is not None:
+            ret['end'] = end.group(1)
+        if ret['start'] != 'none' and ret['end'] != 'none' and ret['iter_speed'] == 'none':
+            date1 = datetime.datetime.strptime(ret['start'], "%Y-%m-%d %H:%M:%S")
+            date2 = datetime.datetime.strptime(ret['end'], "%Y-%m-%d %H:%M:%S")
+            total_interval_time = (date2 - date1).total_seconds()
+            iter_speed = total_interval_time/100
+            ret['iter_speed'] = iter_speed
+    return ret
 
 @register_callfunc
 def example_func(done_flag="All Loss",
@@ -527,5 +660,4 @@ def collect_config(framework, model_name):
 if __name__ == '__main__':
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
-        callback_wapper(config['func'], **config['args'],
-                        thresh=config['thresh'])
+        callback_wapper(config['func'], args=config['args'], thresh=config['thresh'])
