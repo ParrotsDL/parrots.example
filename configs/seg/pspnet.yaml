@@ -23,7 +23,7 @@ dataset: # Required.
   ignore_label: 255
 
 trainer: # Required.
-  epochs: 3
+  epochs: 200
   start_epochs: 0
   optimizer:
     type: SGD
