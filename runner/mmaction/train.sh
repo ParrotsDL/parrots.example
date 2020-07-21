@@ -42,6 +42,6 @@ set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
 srun -K --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=mmaction_${name} ${SRUN_ARGS}\
     $PYTHON_ARGS $EXTRA_ARGS \
-    2>&1 | tee $ROOT/log/mmaction/train.${name}.${step}.log.$T
+    2>&1 | tee $ROOT/log/mmaction/train.${name}.log.$T
 
     
