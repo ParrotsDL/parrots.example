@@ -1,0 +1,21 @@
+seg_pspnet: # Required. {framework}_{model}
+  func: seg_pspnet # Required
+  args:
+    done_flag: "Save Checkpoint "
+  thresh: # Required
+    iter_speed: 0.88
+    mIoU: 73.8
+seg_deeplab: # Required.
+  func: seg_deeplab # Required
+  args:
+    done_flag: "Save Checkpoint"
+  thresh: # Required
+    iter_speed: 1.31
+    mIoU: 76.1
+seg_mobilenet_v2_plus: # Required.
+  func: seg_mobilenet_v2_plus # Required
+  args:
+    done_flag: "Pipeline is done"
+  thresh: # Required
+    iter_speed: 0.74
+    mIoU: 67.8

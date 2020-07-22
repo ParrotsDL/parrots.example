@@ -14,6 +14,14 @@ example_resnet50.short: # Required.
     iter_speed: 0.2464
     acc1: 75.77
     acc5: None
+example_resnet50.short.dummy_data: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2464
+    acc1: None
+    acc5: None
 example_resnet50.benchmark: # Required.
   func: example_func # Required
   args:
@@ -29,6 +37,14 @@ example_resnet50_sync.short: # Required.
   thresh: # Required
     iter_speed: 0.156
     acc1: 37.0
+    acc5: None
+example_resnet50_sync.short.dummy_data: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.156
+    acc1: None
     acc5: None
 example_resnet50_sync.benchmark: # Required.
   func: example_func # Required
@@ -205,6 +221,14 @@ example_resnet18_mix: # Required.
   thresh: # Required
     iter_speed: 0.2688
     acc1: 30
+    acc5: None
+example_resnet18_mix.short.dummy_data: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.2688
+    acc1: None
     acc5: None
 example_resnet18_mix.benchmark: # Required.
   func: example_func # Required
@@ -494,6 +518,22 @@ example_mobile_v1.short: # Required.
     iter_speed: 0.198
     acc1: 41.869
     acc5: None
+example_mobile_v1.short: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: 41.869
+    acc5: None
+example_mobile_v1.short.dummy_data: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.198
+    acc1: None
+    acc5: None
 example_mobile_v1.benchmark: # Required.
   func: example_func # Required
   args:
@@ -510,6 +550,14 @@ example_inceptionv3.short: # Required.
     iter_speed: 0.305
     acc1: 56.0
     acc5: 76.5
+example_inceptionv3.short.dummy_data: # Required.
+  func: example_func # Required
+  args:
+    done_flag: "All Loss"
+  thresh: # Required
+    iter_speed: 0.305
+    acc1: None
+    acc5: None
 example_vgg16.benchmark: # Required.
   func: example_func # Required
   args:
