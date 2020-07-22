@@ -178,7 +178,16 @@ def main():
                        device=torch.device('cuda'))
         if  args.world_size > 1:
             dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
-            mem_max = mem_mb.item() 
+
+        mem_alloc = mem_mb.item()
+        # get max memory cached
+        mem = torch.cuda.max_memory_cached()
+        mem_mb = torch.tensor([mem / (1024 * 1024)],
+                       dtype=torch.int,
+                       device=torch.device('cuda'))
+        if args.world_size > 1:
+            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+        mem_cached = mem_mb.item()
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -212,7 +221,8 @@ def main():
         monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
-        monitor_writer.add_scalar('__benchmark gpu_mem(mb)',mem_max,1)
+        monitor_writer.add_scalar('__benchmark_mem_alloc(mb)',mem_alloc,1)
+        monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
         monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
@@ -274,7 +284,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         batch_time.update(time.time() - end)
         end = time.time()
         iter_end_time = time.time()
-        iter_time_list.append(iter_end_time - iter_start_time)
+        if len(iter_time_list) <= 100 and i >= 210 and i <= 310:
+            iter_time_list.append(iter_end_time - iter_start_time)
 
         if i % args.log_freq == 0:
             progress.display(i)
