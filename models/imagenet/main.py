@@ -230,6 +230,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
+    loader_length = len(train_loader)
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
@@ -278,7 +279,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         if i % args.log_freq == 0:
             progress.display(i)
             if args.rank == 0 and monitor_writer:
-                cur_iter = epoch * len(train_loader) + i
+                cur_iter = epoch * loader_length + i
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
