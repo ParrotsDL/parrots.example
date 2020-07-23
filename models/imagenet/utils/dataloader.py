@@ -1,6 +1,7 @@
-import torch
 import torchvision.transforms as transforms
-import pape.data as pdata
+from torch.utils.data import DataLoader
+from torch.utils.data.distributed import DistributedSampler
+from .dataset import McDataset
 
 
 def build_augmentation(cfg):
@@ -32,16 +33,15 @@ def build_dataloader(cfg, world_size):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
 
-    train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
-    train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
-    train_loader = torch.utils.data.DataLoader(
+    train_dataset = McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+    train_sampler = DistributedSampler(train_dataset)
+    train_loader = DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
-
-    test_sampler = pdata.DistributedSampler(test_dataset, round_up=False, shuffle=False)
-    test_loader = torch.utils.data.DataLoader(
+    test_dataset = McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    test_sampler = DistributedSampler(test_dataset)
+    test_loader = DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
-        num_workers=cfg.workers, pin_memory=True, sampler=test_sampler)
+        num_workers=cfg.workers, pin_memory=True, sampler=test_sampler, drop_last=False)
     return train_loader, train_sampler, test_loader, test_sampler
