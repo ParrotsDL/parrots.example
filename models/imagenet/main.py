@@ -19,6 +19,7 @@ import pape
 import pape.distributed as dist
 from pape.parallel import DistributedModel
 from pape.half import HalfModel, HalfOptimizer
+from pape.utils.loss import LabelSmoothLoss
 
 import models
 from utils.dataloader import build_dataloader
@@ -84,7 +85,10 @@ def main():
     model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
-    criterion = nn.CrossEntropyLoss().cuda()
+    if cfgs.trainer.get('label_smooth', None):
+        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+    else:
+        criterion = nn.CrossEntropyLoss().cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)

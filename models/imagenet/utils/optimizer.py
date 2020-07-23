@@ -32,6 +32,7 @@ def get_params(model):
 
 
 def build_optimizer(model, cfgs):
+    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
     if cfgs.trainer.get('bn', None):
         if cfgs.trainer.bn.get('weight_decay', True) is False:
             params_bn, params_other = get_params(model)
@@ -39,6 +40,4 @@ def build_optimizer(model, cfgs):
                                          {'params': params_bn, 'weight_decay': 0.0},
                                          {'params': params_other}
                                         ], **cfgs.trainer.optimizer.kwargs)
-    else:
-        optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
     return optimizer

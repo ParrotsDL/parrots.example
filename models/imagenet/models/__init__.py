@@ -22,6 +22,9 @@ from .densenet import densenet121, densenet169, densenet201, densenet161
 from .seresnext import seresnext50_32x4d, seresnext101_32x4d, seresnext101_64x4d
 from .nasnet import nasnetamobile, nasnetalarge
 from .alexnet import alexnet
+# # # # # # # # # from .mobile_v2_splitbn import mobile_v2_splitbn
+from .resnest import ResNest, resnest50, resnest101, resnest200, resnest269
+from .sknet import sknet50, sknet101
 
 
 __all__ = [
@@ -96,4 +99,12 @@ __all__ = [
     'nasnetamobile',
     'nasnetalarge',
     'alexnet',
+    'mobile_v2_splitbn',
+    'ResNest',
+    'resnest50',
+    'resnest101',
+    'resnest200',
+    'resnest269',
+    'sknet50',
+    'sknet101',
 ]
