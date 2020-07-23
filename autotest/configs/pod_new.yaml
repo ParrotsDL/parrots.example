@@ -1,0 +1,28 @@
+pod_faster-rcnn-R50-FPN-1x.benchmark: # Required.
+  # attr: thresh
+  __benchmark_avg_iter_time(s): 0.8
+  __benchmark_mem_alloc(mb): 8000
+  __benchmark_mem_cached(mb): 5000
+  __benchmark_pure_training_time(h): 1.5
+  __benchmark_total_time(h): 2
+pod_rfcn-R101-ohem-deform-1x.benchmark: # Required.
+  # attr: thresh
+  __benchmark_avg_iter_time(s): 0.8
+  __benchmark_mem_alloc(mb): 8000
+  __benchmark_mem_cached(mb): 5000
+  __benchmark_pure_training_time(h): 1.5
+  __benchmark_total_time(h): 2
+pod_faster-rcnn-mobilenet-FPN-1x.benchmark: # Required.
+  # attr: thresh
+  __benchmark_avg_iter_time(s): 0.8
+  __benchmark_mem_alloc(mb): 8000
+  __benchmark_mem_cached(mb): 5000
+  __benchmark_pure_training_time(h): 1.5
+  __benchmark_total_time(h): 2
+pod_rfcn-shufflenet-1x.benchmark: # Required.
+  # attr: thresh
+  __benchmark_avg_iter_time(s): 0.8
+  __benchmark_mem_alloc(mb): 8000
+  __benchmark_mem_cached(mb): 5000
+  __benchmark_pure_training_time(h): 1.5
+  __benchmark_total_time(h): 2
