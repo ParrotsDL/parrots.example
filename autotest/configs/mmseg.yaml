@@ -6,7 +6,7 @@ mmseg_fcn_r101-d8_512x1024_40k_cityscapes:
     iter_speed: None
     top1_acc: None
     total_time(h): None
-mmseg_ann_r101-d8_512x1024_40k_cityscapes.py:
+mmseg_ann_r101-d8_512x1024_40k_cityscapes:
   func: mmseg_func
   args:
     done_flag: "Pipeline is Done"
@@ -95,6 +95,110 @@ mmseg_pspnet_r101-d8_512x1024_40k_cityscapes:
     top1_acc: None
     total_time(h): None
 mmseg_upernet_r101_512x1024_40k_cityscapes:
+  func: mmaction_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_fcn_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_ann_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_ccnet_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_deeplabv3plus_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_deeplabv3_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_encnet_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_fcn_hr18_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_gcnet_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_nonlocal_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_ocrnet_hr18_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_psanet_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_pspnet_r50-d8_512x1024_40k_cityscapes:
+  func: mmseg_func
+  args:
+    done_flag: "Pipeline is Done"
+  thresh:
+    iter_speed: None
+    top1_acc: None
+    total_time(h): None
+mmseg_upernet_r50_512x1024_40k_cityscapes:
   func: mmaction_func
   args:
     done_flag: "Pipeline is Done"
