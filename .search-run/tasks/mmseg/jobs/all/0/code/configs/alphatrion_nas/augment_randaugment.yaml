@@ -1,0 +1,29 @@
+augment: randaugmentN${RA.N}M${RA.M}
+RA:
+    N: 2
+    M: 9
+data:
+    origin_train:
+        transform_image:
+            name: TrainRandAugment
+            num_ops: '@{RA.N}'
+            magnitude_level: '@{RA.M}'
+        transform_batch:
+            name: cuda_remain
+            alpha: _ALPHATRION_DELETE_CONFIG_
+    nas_train:
+        transform_image:
+            name: TrainRandAugment
+            num_ops: '@{RA.N}'
+            magnitude_level: '@{RA.M}'
+        transform_batch:
+            name: cuda_remain
+            alpha: _ALPHATRION_DELETE_CONFIG_
+    adabn:
+        transform_image:
+            name: TrainRandAugment
+            num_ops: '@{RA.N}'
+            magnitude_level: '@{RA.M}'
+        transform_batch:
+            name: cuda_remain
+            alpha: _ALPHATRION_DELETE_CONFIG_

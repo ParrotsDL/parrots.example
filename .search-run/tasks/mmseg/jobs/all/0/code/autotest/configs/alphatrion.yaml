@@ -1,0 +1,112 @@
+alphatrion_mobilenet_v2_fp32: # Required.
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.188
+        valid_top1: 0.6979
+alphatrion_mobilenet_v2_fp16:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.183
+        valid_top1: 0.6987
+alphatrion_se_resnet50_fp32:
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.235
+        valid_top1: 0.7657
+alphatrion_se_resnet50_fp16:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.228
+        valid_top1: 0.7655
+alphatrion_resnet50_fp32:
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.231
+        valid_top1: 0.7553
+alphatrion_resnet50_fp16:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.234
+        valid_top1: 0.7544
+alphatrion_resnet101_fp32:
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.306
+        valid_top1: 0.7739
+alphatrion_resnet101_fp16:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.323
+        valid_top1: 0.7721
+alphatrion_mobilenet_v2_fp32_benchmark: # Required.
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.188
+        valid_top1: 0.6979
+alphatrion_mobilenet_v2_fp16_benchmark:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.183
+        valid_top1: 0.6987
+alphatrion_se_resnet50_fp32_benchmark:
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.235
+        valid_top1: 0.7657
+alphatrion_se_resnet50_fp16_benchmark:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.228
+        valid_top1: 0.7655
+alphatrion_resnet50_fp32_benchmark:
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.231
+        valid_top1: 0.7553
+alphatrion_resnet50_fp16_benchmark:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.234
+        valid_top1: 0.7544
+alphatrion_resnet101_fp32_benchmark:
+  func: alphatrion_func # Required
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.306
+        valid_top1: 0.7739
+alphatrion_resnet101_fp16_benchmark:
+  func: alphatrion_func
+  args:
+        done_flag: "Pipeline is Done"
+  thresh: # Required
+        iter_speed: 0.323
+        valid_top1: 0.7721

@@ -1,0 +1,32 @@
+alphatrion_nas_super_resnet_range1: # Required.
+  func: alphatrion_nas_func # Required
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    iter_speed: 2.40
+    total_time: 19.0
+    acc: 0.750
+alphatrion_nas_super_resnet_range1_fp16: # Required.
+  func: alphatrion_nas_func # Required
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    iter_speed: 1.80
+    total_time: 19.0
+    acc: 0.750
+alphatrion_nas_super_resnet_range1_benchmark: # Required.
+  func: alphatrion_nas_func # Required
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    iter_speed: 2.40
+    total_time: 19.0
+    acc: 0.750
+alphatrion_nas_super_resnet_range1_fp16_benchmark: # Required.
+  func: alphatrion_nas_func # Required
+  args:
+    done_flag: "Pipeline is Done"
+  thresh: # Required
+    iter_speed: 1.80
+    total_time: 19.0
+    acc: 0.750
