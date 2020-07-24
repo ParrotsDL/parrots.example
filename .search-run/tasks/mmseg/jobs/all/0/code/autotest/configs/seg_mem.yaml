@@ -1,7 +1,0 @@
-seg_mem_PSPNet:
-  func: seg_mem_func
-  args: 
-    done_flag: "total"
-  thresh: 
-    iter_speed: 7
-    avg_dice: 0.7

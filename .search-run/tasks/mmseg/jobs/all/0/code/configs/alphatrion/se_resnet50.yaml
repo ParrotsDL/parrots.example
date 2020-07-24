@@ -1,6 +1,0 @@
-run_name: bag_of_tricks/se_resnet50/gpu32_batch32_0gamma_nodecay_smooth0.1_colorless_warmup5_coslr0.4_epoch50
-num_epochs: 50
-
-network:
-    main:
-        name: gluon.se_resnet50_v1d

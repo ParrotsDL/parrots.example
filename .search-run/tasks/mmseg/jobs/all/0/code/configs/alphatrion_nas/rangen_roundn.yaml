@@ -1,7 +1,0 @@
-width: ''
-se_prefix: ''
-super_learn_image_size: 224
-normal_learn_image_size: 224
-range_and_round: range${range}_round${round}
-range: 0
-round: 0

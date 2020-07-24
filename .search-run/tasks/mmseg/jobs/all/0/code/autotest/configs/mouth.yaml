@@ -1,6 +1,0 @@
-mouth_v2: # Required
-  func: mouth_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    total_time: 16.0
