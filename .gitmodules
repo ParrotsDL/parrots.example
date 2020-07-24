@@ -51,4 +51,4 @@
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
 [submodule "models/mmsegmentation"]
 	path = models/mmsegmentation
-	url = https://github.com/open-mmlab/mmsegmentation.git
+	url = git@gitlab.bj.sensetime.com:maxiaoming/mmsegmentation.git
