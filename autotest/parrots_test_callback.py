@@ -513,8 +513,8 @@ def mmseg_func(done_flag="Pipeline is Done",
                  start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9])",
                  end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9])",
                  iter_speed_flag="eta: [0-9]*:[0-9]*:[0-9]*, time: ([0-9]*.[0-9]*)",
-                 top1_acc_flag="top1_acc: ([0-9]*.[0-9]*)",
-                 ips_flag="host: [a-zA-Z]*@([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
+                 top1_acc_flag="mIoU: ([0-9]*.[0-9]*)",
+                 ips_flag="Start running, host: [a-zA-Z]*@([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
                  **args):
     ret = {}
     ret.update(**args)
