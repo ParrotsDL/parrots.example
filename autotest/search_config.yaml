@@ -82,10 +82,35 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                 
                 # # mouth
-                {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
+                # {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
                                
                 # # mmseg
-                {'framework': 'mmseg', 'gpus': 4, 'model': 'fcn_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'fcn_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'fcn_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'ann_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'ann_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'ccnet_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'ccnet_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'deeplabv3plus_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'deeplabv3plus_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'deeplabv3_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'deeplabv3_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'encnet_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'encnet_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'fcn_hr18s_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'fcn_hr18_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'gcnet_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'gcnet_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'nonlocal_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'nonlocal_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'ocrnet_hr18s_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'ocrnet_hr18_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'psanet_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'psanet_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'pspnet_r101-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'pspnet_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'upernet_r101_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                # {'framework': 'mmseg', 'gpus': 4, 'model': 'upernet_r50_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
             ]
     # Optional
     # callback: "cat"
