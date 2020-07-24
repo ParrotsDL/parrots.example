@@ -27,61 +27,6 @@ def register_callfunc(func):
 
 
 @register_callfunc
-def mmsegi_func(done_flag="Pipeline is Done",
-                 start_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9])",
-                 end_flag="([0-9]{4}-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-6][0-9]:[0-6][0-9])",
-                 iter_speed_flag="eta: [0-9]*:[0-9]*:[0-9]*, time: ([0-9]*.[0-9]*)",
-                 top1_acc_flag="top1_acc: ([0-9]*.[0-9]*)",
-                 ips_flag="host: [a-zA-Z]*@([a-zA-Z]+\-[a-zA-z0-9]+\-[0-9]+\-[0-9]+\-[0-9]+\-[0-9]+)",
-                 **args):
-    ret = {}
-    ret.update(**args)
-    ret['start_time'] = 'none'
-    ret['end_time'] = 'none'
-    ret['is_done'] = False
-    ret['iter_speed'] = 'none'
-    ret['top1_acc'] = 'none'
-    ret['ips'] = 'none'
-    ret['total_time(h)'] = 'none'
-   
-    iter_speed_list = []
-    for line in log_stream:
-        if ret['start_time'] == 'none':
-            start_time = re.search(start_flag, line)
-            if start_time is not None:
-                ret['start_time'] = start_time.group(1)
-        end_time = re.search(end_flag, line)
-        if end_time is not None:
-            ret['end_time'] = end_time.group(1)
-        if ret['is_done'] is False:
-            is_done = re.search(done_flag, line)
-            if is_done is not None:
-                ret['is_done'] = True
-        iter_speed = re.search(iter_speed_flag, line)
-        if iter_speed is not None:
-                iter_speed_list.append(float(iter_speed.group(1)))
-        top1_acc = re.search(top1_acc_flag, line)
-        if top1_acc is not None:
-            ret['top1_acc'] = top1_acc.group(1)
-        if ret['ips'] == 'none':
-            ips = re.search(ips_flag, line)
-            if ips is not None:
-                ret['ips'] = ips.group(1)
-    if len(iter_speed_list) > 0:
-        ret['iter_speed'] = "{:.4f}".format(np.mean(iter_speed_list))
-    if ret['start_time'] != 'none' and ret['end_time'] != 'none':
-        date1 = time.strptime(ret['start_time'], "%Y-%m-%d %H:%M:%S")
-        date2 = time.strptime(ret['end_time'], "%Y-%m-%d %H:%M:%S")
-        date1 = datetime.datetime(
-                date1[0], date1[1], date1[2], date1[3], date1[4], date1[5])
-        date2 = datetime.datetime(
-            date2[0], date2[1], date2[2], date2[3], date2[4], date2[5])
-        total_time = date2-date1
-        total_time = total_time.days*24+total_time.seconds/3600
-        ret['total_time(h)'] = '{:.1f}'.format(total_time)
-    return ret
-
-@register_callfunc
 def pod_func(done_flag="copypaste:|Thanks",
              iter_speed_flag="Progress:\[100\.0\%\](.*)batch_time:[0-9]*.[0-9]*\(([0-9]*.[0-9]*)\)",
              acc_flag1="\"bbox\.AP\": ([0-9]*.[0-9]*)|mAP: ([0-9]*.[0-9]*)",
@@ -256,6 +201,7 @@ def ssd_func(done_flag="Pipeline is Done",
         ret['total_time'] = total_time
     return ret
 
+
 @register_callfunc
 def mouth_func(done_flag="Pipeline is Done",
              iter_speed_flag="iter time: (.+)",
@@ -329,6 +275,7 @@ def mild_func(done_flag="Pipeline is Done",
                 continue
             ret[key] = rv.group(0)
     return ret
+
 
 @register_callfunc
 def alphatrion_nas_func(done_flag="Pipeline is Done",
@@ -522,6 +469,7 @@ def example_func(done_flag="All Loss",
             if ips is not None:
                 ret['ips'] = ips.group(1)
     return ret
+
 
 @register_callfunc
 def seg_mem_func(done_flag="total",
