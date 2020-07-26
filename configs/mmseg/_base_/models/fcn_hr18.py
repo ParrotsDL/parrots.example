@@ -2,7 +2,7 @@
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
     type='EncoderDecoder',
-    pretrained='open-mmlab://msra/hrnetv2_w18',
+    pretrained='/mnt/lustre/share_data/xujiarui/pretrain_model/hrnetv2_w18_small-b5a04e21.pth',
     backbone=dict(
         type='HRNet',
         norm_cfg=norm_cfg,
