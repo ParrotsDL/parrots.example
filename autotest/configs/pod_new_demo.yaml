@@ -1,4 +1,4 @@
-pod_faster-rcnn-R50-FPN-1x.benchmark: # Required.
+pod_new.demo: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
   __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
