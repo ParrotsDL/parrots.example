@@ -49,3 +49,6 @@
 [submodule "models/mouth_inpaint_network"]
 	path = models/mouth_inpaint_network
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
+[submodule "models/pytorch-object-detection-v3.1.0"]
+	path = models/pytorch-object-detection-v3.1.0
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/Pytorch-Object-Detection.git

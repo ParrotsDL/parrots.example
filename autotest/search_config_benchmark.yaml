@@ -41,6 +41,8 @@ task:
                     {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "vgg16.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "shuffle_v1.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # # pod-v3.1.0
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x.benchmark', 'py_args': '--seed 1024 --pavi-project zjtest'},
                 ]
     # Optional
     # callback: "cat"
