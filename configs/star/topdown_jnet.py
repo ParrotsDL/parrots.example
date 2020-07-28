@@ -1,9 +1,10 @@
+
 gpus=[0,1,2,3,4,5,6,7]
 rank=0
-use_pape = True
+use_pape = False
 log_level = 'INFO'
 output_dir = './output'
-exp_id = 'resnet50'
+exp_id = 'acdsph_Jnet'
 log_dir = 'log'
 
 load_from = None
@@ -14,7 +15,6 @@ print_freq = 10
 convert=None
 debug=False
 pavi_project='default'
-
 
 
 # 数据集使用哪几个channel
@@ -39,23 +39,14 @@ channel_cfg = dict(
 
 )
 
-# model settings
 model = dict(
     type='TopDown',
-    pretrained='pretrained_models/imagenet/resnet50-19c8e357.pth',
+    pretrained='',
     backbone=dict(
-        type='ResNet',
-        depth=50,
-        num_stages=4,
-        out_indices=(0, 1, 2, 3),
-        frozen_stages=1),
+        type='sunyan_light_model_bn',
+        out_channels=17,
+        ),
 
-    keypoint_head=dict(
-        type='NaiveDeconv',
-        in_channels=256,
-        out_channels=channel_cfg['num_heatmap'],
-        loss_kp=None,)
-        
 )
 
 
@@ -93,14 +84,18 @@ data = dict(
             use_ceph=False,
             data_format='jpg',
             flip=True,
-            rot_factor=40,
-            scale_factor=0.5,
+            rot_factor=15,
+            scale_factor=0.3,
             num_joints_half_body=8,
-            prob_half_body=0.3,
+            prob_half_body=0.0,
 
             color_rgb=True,
             image_size=[192,256],
-            heatmap_size=[48,64],
+            heatmap_size=[24,32],
+
+            # image_size=[144,112],
+            # heatmap_size=[18,14],
+
             # image_size=[288,384],
             # heatmap_size=[72,96],
             # image_size=[96,96],
@@ -138,6 +133,7 @@ train_cfg = dict(
     type='TrainTopDown',
 
     batch_size_per_gpu=64,
+    # batch_size_per_gpu=512,
     workers_per_gpu=2,
     shuffle=True,
 
@@ -145,7 +141,7 @@ train_cfg = dict(
     end_epoch=200,
 
     optimizer='adam',
-    lr=1e-3,
+    lr=2e-4,
     lr_factor=0.1,
     lr_step=[140,180],
     # lr_step=[90,120],
@@ -164,7 +160,7 @@ test_cfg = dict(
     batch_size_per_gpu=64,
     workers_per_gpu=2,
     coco_det_file='',
-    coco_bbox_flip='pretrained_models/det/COCO_val2017_detections_AP_H_56_person.json',
+    coco_bbox_flip='/mnt/lustre/share_data/star/COCO_val2017_detections_AP_H_56_person.json',
     bbox_thre=1.0,
     image_thre=0.0,
     nms_thre=1.0,
@@ -173,10 +169,10 @@ test_cfg = dict(
 
 
     soft_nms=False,
-    flip_test=True,
+    flip_test=False,
     post_process=True,
     shift_heatmap=True,
-    use_gt_bbox=True,
+    use_gt_bbox=False,
 )
 
 debug_config = dict(
@@ -186,3 +182,10 @@ debug_config = dict(
     save_heatmap_gt=True,
     save_heatmap_pred=True
     )
+
+
+
+
+
+
+

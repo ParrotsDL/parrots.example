@@ -81,11 +81,12 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                 # star
-                # {'framework': 'star', 'gpus': 8, 'model': "resnet18", 'py_args': '--pavi --pavi-project parrots_test'},
-                # {'framework': 'star', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi --pavi-project parrots_test'},
-                # {'framework': 'star', 'gpus': 8, 'model': "resnet101", 'py_args': '--pavi --pavi-project parrots_test'},
-                # {'framework': 'star', 'gpus': 8, 'model': "hrnet32", 'py_args': '--pavi --pavi-project parrots_test'},
-                {'framework': 'star', 'gpus': 8, 'model': "higher_hrnet32", 'py_args': '--pavi --pavi-project parrots_test'},
+                {'framework': 'star', 'gpus': 8, 'model': "topdown_resnet50", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnest50", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_jnet", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_hrnet32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
             ]
     # Optional
     # callback: "cat"
