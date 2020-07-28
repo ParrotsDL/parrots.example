@@ -5,3 +5,4 @@ results_dir
 work_dirs
 checkpoints*
 results*
+.vscode
