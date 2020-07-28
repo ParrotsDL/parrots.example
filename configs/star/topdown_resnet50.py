@@ -137,7 +137,7 @@ train_cfg = dict(
     trainer=True,
     type='TrainTopDown',
 
-    batch_size_per_gpu=64,
+    batch_size_per_gpu=32,
     workers_per_gpu=2,
     shuffle=True,
 
@@ -161,7 +161,7 @@ test_cfg = dict(
     tester=True,
     type='TestTopDown',
 
-    batch_size_per_gpu=64,
+    batch_size_per_gpu=32,
     workers_per_gpu=2,
     coco_det_file='',
     coco_bbox_flip='pretrained_models/det/COCO_val2017_detections_AP_H_56_person.json',

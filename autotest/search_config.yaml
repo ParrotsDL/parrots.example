@@ -87,6 +87,7 @@ task:
                 # {'framework': 'star', 'gpus': 8, 'model': "topdown_hrnet32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --ceph'},
             ]
     # Optional
     # callback: "cat"
