@@ -1,6 +1,6 @@
 alphatrion_mobilenet_v2_fp32: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -8,7 +8,7 @@ alphatrion_mobilenet_v2_fp32: # Required.
   valid_top1: [0.6979, 'has_to_higher']
 alphatrion_mobilenet_v2_fp16:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -16,7 +16,7 @@ alphatrion_mobilenet_v2_fp16:
   valid_top1: [0.6987, 'has_to_higher']
 alphatrion_se_resnet50_fp32:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -24,7 +24,7 @@ alphatrion_se_resnet50_fp32:
   valid_top1: [0.7657, 'has_to_higher']
 alphatrion_se_resnet50_fp16:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -32,7 +32,7 @@ alphatrion_se_resnet50_fp16:
   valid_top1: [0.7655, 'has_to_higher']
 alphatrion_resnet50_fp32:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -40,7 +40,7 @@ alphatrion_resnet50_fp32:
   valid_top1: [0.7553, 'has_to_higher']
 alphatrion_resnet50_fp16:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -48,7 +48,7 @@ alphatrion_resnet50_fp16:
   valid_top1: [0.7544, 'has_to_higher']
 alphatrion_resnet101_fp32:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -56,7 +56,7 @@ alphatrion_resnet101_fp32:
   valid_top1: [0.7739, 'has_to_higher']
 alphatrion_resnet101_fp16:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -64,7 +64,7 @@ alphatrion_resnet101_fp16:
   valid_top1: [0.7721, 'has_to_higher']
 alphatrion_mobilenet_v2_fp32_benchmark: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -72,7 +72,7 @@ alphatrion_mobilenet_v2_fp32_benchmark: # Required.
   valid_top1: [0.6979, 'has_to_higher']
 alphatrion_mobilenet_v2_fp16_benchmark:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -80,7 +80,7 @@ alphatrion_mobilenet_v2_fp16_benchmark:
   valid_top1: [0.6987, 'has_to_higher']
 alphatrion_se_resnet50_fp32_benchmark:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -88,7 +88,7 @@ alphatrion_se_resnet50_fp32_benchmark:
   valid_top1: [0.7657, 'has_to_higher']
 alphatrion_se_resnet50_fp16_benchmark:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -96,7 +96,7 @@ alphatrion_se_resnet50_fp16_benchmark:
   valid_top1: [0.7655, 'has_to_higher']
 alphatrion_resnet50_fp32_benchmark:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -104,7 +104,7 @@ alphatrion_resnet50_fp32_benchmark:
   valid_top1: [0.7553, 'has_to_higher']
 alphatrion_resnet50_fp16_benchmark:
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -112,7 +112,7 @@ alphatrion_resnet50_fp16_benchmark:
   valid_top1: [0.7544, 'has_to_higher']
 alphatrion_resnet101_fp32_benchmark:
    # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
@@ -120,7 +120,7 @@ alphatrion_resnet101_fp32_benchmark:
   valid_top1: [0.7739, 'has_to_higher']
 alphatrion_resnet101_fp16_benchmark:
    # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_avg_iter_time(s): [0.25, 'has_to_lower']
   __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
   __benchmark_mem_cached(mb): [5000, 'has_to_lower']
   __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
