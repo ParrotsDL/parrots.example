@@ -56,6 +56,10 @@ task:
                 # # nas_lite
                 # {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi --pavi-project parrots_test'},                
                 # # example
+                # seg
+                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
+                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
+                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "inception_resnet_mix", 'py_args': '--pavi --pavi-project parrots_test'},
@@ -88,6 +92,8 @@ task:
                 # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --ceph'},
+                # # mouth
+                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
             ]
     # Optional
     # callback: "cat"

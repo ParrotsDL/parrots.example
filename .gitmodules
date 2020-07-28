@@ -49,3 +49,6 @@
 [submodule "models/STAR"]
 	path = models/STAR
 	url = git@gitlab.bj.sensetime.com:wangcan/STAR.git
+[submodule "models/mouth_inpaint_network"]
+	path = models/mouth_inpaint_network
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git

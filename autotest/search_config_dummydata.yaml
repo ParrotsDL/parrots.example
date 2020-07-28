@@ -1,0 +1,39 @@
+task:
+    # Required (change partition, num_gpus or others where necessary)
+    template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    # Required
+    search_args:
+        - type: Nested
+          value: [
+                    # pod dummy data
+                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    # example dummy data
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                ]
+    # Optional
+    # callback: "cat"
+    callback: "python autotest/parrots_test_callback.py {framework} {model}"
+
+searcher:
+    # Support GridSearcher, RandomSearcher, SkoptSearcher
+    type: GridSearcher
+    # Required
+    reward_attribute: acc
+
+scheduler:
+    type: FIFO
+    parallel_size: 8
+    stop_criterion:
+        max_tries: 100
+
+# Optional
+pavi:
+    compare:
+        name: parrots.test.dummydata
+
+# slurm_job_id_monitor: true
