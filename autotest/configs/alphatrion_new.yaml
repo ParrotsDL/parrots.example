@@ -1,112 +1,128 @@
 alphatrion_mobilenet_v2_fp32: # Required.
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.188
-        valid_top1: 0.6979
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.6979, 'has_to_higher']
 alphatrion_mobilenet_v2_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.183
-        valid_top1: 0.6987
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.6987, 'has_to_higher']
 alphatrion_se_resnet50_fp32:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.235
-        valid_top1: 0.7657
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7657, 'has_to_higher']
 alphatrion_se_resnet50_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.228
-        valid_top1: 0.7655
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7655, 'has_to_higher']
 alphatrion_resnet50_fp32:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.231
-        valid_top1: 0.7553
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7553, 'has_to_higher']
 alphatrion_resnet50_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.234
-        valid_top1: 0.7544
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7544, 'has_to_higher']
 alphatrion_resnet101_fp32:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.306
-        valid_top1: 0.7739
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7739, 'has_to_higher']
 alphatrion_resnet101_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.323
-        valid_top1: 0.7721
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7721, 'has_to_higher']
 alphatrion_mobilenet_v2_fp32_benchmark: # Required.
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.188
-        valid_top1: 0.6979
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.6979, 'has_to_higher']
 alphatrion_mobilenet_v2_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.183
-        valid_top1: 0.6987
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.6987, 'has_to_higher']
 alphatrion_se_resnet50_fp32_benchmark:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.235
-        valid_top1: 0.7657
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7657, 'has_to_higher']
 alphatrion_se_resnet50_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.228
-        valid_top1: 0.7655
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7655, 'has_to_higher']
 alphatrion_resnet50_fp32_benchmark:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.231
-        valid_top1: 0.7553
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7553, 'has_to_higher']
 alphatrion_resnet50_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.234
-        valid_top1: 0.7544
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7544, 'has_to_higher']
 alphatrion_resnet101_fp32_benchmark:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.306
-        valid_top1: 0.7739
+   # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7739, 'has_to_higher']
 alphatrion_resnet101_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.323
-        valid_top1: 0.7721
+   # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  valid_top1: [0.7721, 'has_to_higher']
