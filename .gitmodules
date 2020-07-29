@@ -49,7 +49,3 @@
 [submodule "models/mouth_inpaint_network"]
 	path = models/mouth_inpaint_network
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
-[submodule "Pattern"]
-	path = Pattern
-	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
-	branch = pattern0.3_pat_test
