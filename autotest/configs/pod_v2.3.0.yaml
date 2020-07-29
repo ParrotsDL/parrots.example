@@ -15,21 +15,3 @@ pod_v2.3.0_fcos-v11-80w-stride4: # Required.
   __benchmark_pure_training_time(h): [10000, 'has_to_lower']
   __benchmark_total_time(h): [10000, 'has_to_lower']
   metrics/mAP:0.5: [10000, 'has_to_higher']
-
-pod_v2.3.0_retinanet-v11-18w.benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.28, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [456, 'has_to_lower']
-  __benchmark_mem_cached(mb): [754, 'has_to_lower']
-  __benchmark_pure_training_time(h): [0.92, 'has_to_lower']
-  __benchmark_total_time(h): [0.96, 'has_to_lower']
-  metrics/mAP:0.35: [0.126, 'has_to_higher']
-
-pod_v2.3.0_fcos-v11-80w-stride4.benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [0.72, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [3887, 'has_to_lower']
-  __benchmark_mem_cached(mb): [5540, 'has_to_lower']
-  __benchmark_pure_training_time(h): [0.98, 'has_to_lower']
-  __benchmark_total_time(h): [1.02, 'has_to_lower']
-  metrics/mAP:0.5: [0.11, 'has_to_higher']
