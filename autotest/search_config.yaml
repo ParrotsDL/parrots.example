@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -14,6 +14,8 @@ task:
                 # {'framework': 'pod', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # seg_mem
                 #{'framework': 'seg_mem', 'gpus': 8, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project parrots_test'},
+                # pattern
+                {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--pavi --pavi-project parrots_test'},
@@ -57,9 +59,9 @@ task:
                 # {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi --pavi-project parrots_test'},                
                 # # example
                 # seg
-                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
-                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
-                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
+#                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
+#                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
+#                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "inception_resnet_mix", 'py_args': '--pavi --pavi-project parrots_test'},
@@ -86,11 +88,11 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                 
                 # # mouth
-                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
+#                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
             ]
     # Optional
     # callback: "cat"
-    callback: "python autotest/parrots_test_callback.py {framework} {model}"
+    callback: "python autotest/parrots_test_callback_new.py {framework} {model}"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
