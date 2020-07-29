@@ -12,6 +12,13 @@ example_resnet50.short: # Required.
   __benchmark_pure_training_time(h): [100000, 'has_to_lower']
   __benchmark_total_time(h): [100000, 'has_to_lower']
   Accuracy_Test_top1: [0, 'has_to_higher']
+example_resnet50.short.dummy_data: # Required.
+  __benchmark_avg_iter_time(s): [0.192, 'has_to_lower'] # 0.160 x 1.2
+  __benchmark_mem_alloc(mb): [6232, 'has_to_lower'] # 5194 x 1.2
+  __benchmark_mem_cached(mb): [6456, 'has_to_lower'] # 5380 x 1.2
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Accuracy_Test_top1: [0, 'has_to_higher']
 example_resnet50.benchmark: # Required.
   __benchmark_avg_iter_time(s): [0.192, 'has_to_lower'] # 0.160 x 1.2
   __benchmark_mem_alloc(mb): [6232, 'has_to_lower'] # 5194 x 1.2
@@ -26,6 +33,13 @@ example_resnet50_sync.short: # Required.
   __benchmark_pure_training_time(h): [100000, 'has_to_lower']
   __benchmark_total_time(h): [100000, 'has_to_lower']
   Accuracy_Test_top1: [0, 'has_to_higher']
+example_resnet50_sync.short.dummy_data: # Required.
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Accuracy_Test_top1: [0, 'has_to_higher']  
 example_resnet50_sync.benchmark: # Required.
   __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
   __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
@@ -439,7 +453,7 @@ example_mobile_v1.short: # Required.
   __benchmark_pure_training_time(h): [100000, 'has_to_lower']
   __benchmark_total_time(h): [100000, 'has_to_lower']
   Accuracy_Test_top1: [0, 'has_to_higher']
-example_mobile_v1.short: # Required.
+example_mobile_v1.short.dummy_data: # Required.
   __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
   __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
   __benchmark_mem_cached(mb): [100000, 'has_to_lower']
@@ -459,6 +473,12 @@ example_inceptionv3.short: # Required.  __benchmark_avg_iter_time(s): [100000, '
   __benchmark_pure_training_time(h): [100000, 'has_to_lower']
   __benchmark_total_time(h): [100000, 'has_to_lower']
   Accuracy_Test_top1: [0, 'has_to_higher']
+example_inceptionv3.short.dummy_data: # Required.  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Accuracy_Test_top1: [0, 'has_to_higher']
 example_vgg16.benchmark: # Required.
   __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
   __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
@@ -467,6 +487,13 @@ example_vgg16.benchmark: # Required.
   __benchmark_total_time(h): [100000, 'has_to_lower']
   Accuracy_Test_top1: [0, 'has_to_higher']
 example_shuffle_v1.benchmark: # Required.
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Accuracy_Test_top1: [0, 'has_to_higher']
+example_resnet18_mix.short.dummy_data:
   __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
   __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
   __benchmark_mem_cached(mb): [100000, 'has_to_lower']
