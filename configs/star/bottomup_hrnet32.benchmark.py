@@ -1,9 +1,9 @@
-gpus=[0,1,2,3,4,5,6,7]
+gpus=8
 rank=0
 use_pape = False
 log_level = 'INFO'
 output_dir = './output'
-exp_id = 'acdsph_5017'
+exp_id = 'higher_hrnet32'
 log_dir = 'log'
 
 load_from = None
@@ -15,13 +15,12 @@ convert=None
 debug=True
 pavi_project='default'
 
-
 channel_cfg = dict(
     num_heatmap = 17,
     num_merge_keypoints = 17,
-    num_keypoints = [17],
+    num_keypoints = [17], 
 
-    sub_data_name = ['coco'],
+    sub_data_name = ['coco'], 
 
     model_supervise_channel = [
         [0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,11,12,13,14,15,16],
@@ -29,33 +28,70 @@ channel_cfg = dict(
 
     model_select_channel = [
         0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,11,12,13,14,15,16
-        # 14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,
     ]
 
 )
 
+
+
+
+# model settings
 model = dict(
     type='BottomUp',
     pretrained='',
     backbone=dict(
-        type='sunyan_light_model_bn',
-        #type='JnetOri_BU',
-        #block = 'Bottleneck',
-        #layers = [2, 3, 4, 1],
-        out_channels = channel_cfg['num_heatmap']*2,
+        type='HigherResolutionNet',
+        extra=dict(
+            final_conv_kerne=1,
+            pretrained_layers=['*'],
+            stem_inplanes=64
+        ),
+        stage2=dict(
+            num_modules=1,
+            num_branches=2,
+            block='basic',
+            num_blocks=[4,4],
+            num_channels=[32,64],
+            fuse_method='sum'
+        ),
+        stage3=dict(
+            num_modules=4,
+            num_branches=3,
+            block='basic',
+            num_blocks=[4,4,4],
+            num_channels=[32,64,128],
+            fuse_method='sum'
+        ),
+        stage4=dict(
+            num_modules=3,
+            num_branches=4,
+            block='basic',
+            num_blocks=[4,4,4,4],
+            num_channels=[32,64,128,256],
+            fuse_method='sum'
+        ),
     ),
+
+
     keypoint_head=dict(
-        type='NoneConv',
-    #    pre_stage_channels=256,
+        type='HigherResolutionHead',
+        pre_stage_channels=32,
         num_joints=17,
         tag_per_joint=True,
-    #    extra=dict(
-    #        final_conv_kerne=1,
-    #        pretrained_layers=['*'],
-    #    ),
-    #    loss=dict(
-    #        with_ae_loss=True, #[True]
-    #    )
+        extra=dict(
+            final_conv_kerne=1,
+            pretrained_layers=['*'],
+        ),
+        deconv=dict(
+            num_deconvs=1,
+            num_channels=[32],
+            kernel_size=[4],
+            num_basic_blocks=4,
+            cat_output=[True]
+        ),
+        loss=dict(
+            with_ae_loss=[True, False],
+        )
     ),
 )
 
@@ -73,7 +109,9 @@ valid_pipeline = [
     # dict(type='Normalize'),
 ]
 
-data = dict(
+
+
+data = dict( 
         type = ['BU_CocoDataset'], #, 'CocoDataset'],
         data_cfg = dict(
             train_annotations = [
@@ -82,26 +120,28 @@ data = dict(
 
             train_image_path = [
                 '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017',
-                ],
+                ],            
 
             valid_annotations = '/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
             valid_image_path = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017',
 
             world_size = 1,
             use_ceph=False,
-            num_scales=1,
+            num_scales=2,
 
             data_format='jpg',
             flip=0.5,
             max_num_people=30,
             rot_factor=30,
             scale_type='short',
-            scale_factor=[0.75,1.5],
+            scale_factor=[0.75,1.5],   
             max_translate=40,
             scale_aware_sigma=False,
             color_rgb=True,
             image_size=[512,512],
-            heatmap_size=[64],#[128,256]
+            heatmap_size=[128, 256],            
+            # image_size=[640,640],
+            # heatmap_size=[160, 320],
             sigma=2,
             output_dir = output_dir,
             train_pipeline = train_pipeline,
@@ -118,32 +158,31 @@ data = dict(
             model_select_channel = channel_cfg['model_select_channel'],
             ))
 
+
 loss = dict(
     type='MultiLossFactory',
-    num_stages=1,#2
+    num_stages=2,
     ae_loss_type='exp',
-    with_ae_loss=[True],
-    push_loss_factor=[0.001],
-    pull_loss_factor=[0.001],
-    with_heatmaps_loss=[True],#[True,True]
-    heatmaps_loss_factor=[1.0],
-
+    with_ae_loss=[True, False],
+    push_loss_factor=[0.001, 0.001],
+    pull_loss_factor=[0.001, 0.001],
+    with_heatmaps_loss=[True, True],
+    heatmaps_loss_factor=[1.0, 1.0],
+    
 )
-
-
 # model training and testing settings
 train_cfg = dict(
     trainer=True,
     type='TrainBottomUp',
-    batch_size_per_gpu=16,
-    workers_per_gpu=1,
+    batch_size_per_gpu=10,
+    workers_per_gpu=2,
     shuffle=True,
 
     begin_epoch=0,
-    end_epoch=300,
+    end_epoch=1,
 
     optimizer='adam',
-    lr=0.00015,
+    lr=0.0015,
     lr_factor=0.1,
     lr_step=[200,260],
     # lr_step=[90,120],
@@ -151,8 +190,10 @@ train_cfg = dict(
     gamma1=0.99,
     momentum=0.9,
     weight_decay=0.0001
-
+    
 )
+
+
 test_cfg = dict(
     tester=False,
     type='TestBottomUp',
@@ -168,8 +209,8 @@ test_cfg = dict(
 
     detection_threshold=0.1,
     scale_factor=[1],
-    with_heatmaps=[True],
-    with_ae=[True],
+    with_heatmaps=[True, True],
+    with_ae=[True, False],
     project2image=True,
     nms_kernel=5,
     nms_padding=2,

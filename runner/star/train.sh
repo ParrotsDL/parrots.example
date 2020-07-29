@@ -3,8 +3,7 @@ now=$(date +"%Y%m%d_%H%M%S")
 
 ROOT=.
 pyroot=$ROOT/models/STAR
-papePath=/mnt/lustre/hanyachao/pape/pape_pt1.4::$PYTHONPATH
-export PYTHONPATH=$pyroot:$papePath
+export PYTHONPATH=$pyroot:$PYTHONPATH
 
 name=$3
 g=$(($2<8?$2:8))

@@ -140,7 +140,7 @@ train_cfg = dict(
     shuffle=True,
 
     begin_epoch=0,
-    end_epoch=300,
+    end_epoch=1,
 
     optimizer='adam',
     lr=0.00015,
