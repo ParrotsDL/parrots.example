@@ -1,0 +1,17 @@
+pod-v3.1.0_faster-rcnn-R50-FPN-1x.benchmark: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.31, 'has_to_lower']   # 0.279 + 10%
+  __benchmark_mem_alloc(mb): [2856, 'has_to_lower']   # 2596 + 10%
+  __benchmark_mem_cached(mb): [3584, 'has_to_lower']   # 3258 + 10%
+  __benchmark_pure_training_time(h): [1.3, 'has_to_lower']  # 0.751 + 0.5
+  __benchmark_total_time(h): [1.3, 'has_to_lower']  # 0.765 + 0.5
+  metrics/bbox.AP.5: [0.26, 'has_to_higher']  # 0.289 - 10%
+
+pod-v3.1.0_faster-rcnn-R50-FPN-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.31, 'has_to_lower']   # 0.279 + 10%
+  __benchmark_mem_alloc(mb): [2856, 'has_to_lower']   # 2596 + 10%
+  __benchmark_mem_cached(mb): [3584, 'has_to_lower']   # 3258 + 10%
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']  
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']

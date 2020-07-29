@@ -1,0 +1,8 @@
+pod_new.demo: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.8, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [8000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [5000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [1.5, 'has_to_lower']
+  __benchmark_total_time(h): [2, 'has_to_lower']
+  mAP0.5: [0.76, 'has_to_higher']
