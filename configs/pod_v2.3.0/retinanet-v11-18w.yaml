@@ -1,8 +1,8 @@
 dataset: # Required.
   type: custom_bgr
   train:
-    meta_file: /mnt/lustre/share_data/qinhaifang/bdd100k_train_0918_new.json
-    image_dir: /mnt/lustre/share_data/qinhaifang
+    meta_file: /mnt/lustre/share_data/jiaomenglei/pod_v2.3.0_data/bdd100k_train_0918_new.json
+    image_dir: /mnt/lustre/share_data/jiaomenglei/pod_v2.3.0_data
     scales: [600]              # shorter side of resized image
     flip: False
     data_augmentation:
@@ -14,8 +14,8 @@ dataset: # Required.
       prob: 0.25
       gauss: 8
   test:
-    meta_file: /mnt/lustre/share_data/qinhaifang/bdd100k_val_0918_new.json
-    image_dir: /mnt/lustre/share_data/qinhaifang
+    meta_file: /mnt/lustre/share_data/jiaomenglei/pod_v2.3.0_data/bdd100k_val_0918_new.json
+    image_dir: /mnt/lustre/share_data/jiaomenglei/pod_v2.3.0_data
     flip: False
   scales: [600]              # shorter side of resized image
   has_keypoint: False        # don't use keypoints
@@ -29,7 +29,7 @@ dataset: # Required.
   evaluator:
     type: mAP_FPR               # choices = {'COCO', 'VOC', 'mAP', 'mAP_FPR'}
     kwargs:
-      gt_file: /mnt/lustre/share_data/qinhaifang/bdd100k_val_0918_new.json
+      gt_file: /mnt/lustre/share_data/jiaomenglei/pod_v2.3.0_data/bdd100k_val_0918_new.json
       num_classes: 4      # calcuate AP_bbox only
       class_names: ["__background__", "car", "nonMotorType", "human"]
       iou_thresh: 0.5
