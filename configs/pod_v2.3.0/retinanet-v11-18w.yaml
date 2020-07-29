@@ -37,7 +37,7 @@ dataset: # Required.
   class_names: ["__background__", "car", "nonMotorType", "human"]
 trainer: # Required.
   max_epoch: 14              # total epochs for the training
-  test_freq: 1
+  test_freq: 14
   optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
     kwargs:
