@@ -90,7 +90,16 @@ task:
                 
                 # # mouth
                 # {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
-            
+                
+                # # star
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnet50", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnest50", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_jnet", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "topdown_hrnet32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hnret32", 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --ceph'}
+
                 # # pod-v3.1.0
                 # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
            
