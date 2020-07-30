@@ -5,7 +5,7 @@ seg_pspnet.benchmark: # Required. {framework}_{model}
   __benchmark_mem_cached(mb): [10000, 'has_to_lower']
   __benchmark_pure_training_time(h): [10000, 'has_to_lower']
   __benchmark_total_time(h): [10000, 'has_to_lower']
-  mIoU: [10000, 'has_to_higher']
+  eval_mIoU: [10000, 'has_to_higher']
 seg_deeplab.benchmark: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
   __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
@@ -13,7 +13,7 @@ seg_deeplab.benchmark: # Required.
   __benchmark_mem_cached(mb): [10000, 'has_to_lower']
   __benchmark_pure_training_time(h): [10000, 'has_to_lower']
   __benchmark_total_time(h): [10000, 'has_to_lower']
-  mIoU: [10000, 'has_to_higher']
+  eval_mIoU: [10000, 'has_to_higher']
 seg_mobilenet_v2_plus.benchmark: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
   __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
