@@ -601,7 +601,6 @@ def example_func(done_flag="All Loss",
                 ret['ips'] = ips.group(1)
     return ret
 
-
 @register_callfunc
 def seg_mem_func(done_flag="total",
                 iter_speed_flag="Epoch: 2, iter: 0, batch_loss: [0-9]*.[0-9]*\, batch_time: ([0-9]*.[0-9]*)",
