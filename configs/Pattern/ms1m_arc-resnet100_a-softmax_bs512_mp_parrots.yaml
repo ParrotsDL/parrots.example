@@ -94,7 +94,7 @@ data:
         format: 'txt'
         data_format: 'ceph'
         data_format_ceph: 'ceph'
-        data_format_lustre: 'cluster'
+        data_format_lustre: 'lustre'
         batch_size: 64
 test:
     strategy:

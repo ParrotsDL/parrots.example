@@ -1,0 +1,345 @@
+net:
+    backbone:
+        arch: core.model.backbone.pattern_fir_c1pad0.Pattern_FIR_c1pad0
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+        kwargs:
+            block: Bottleneck
+            ratio: 8
+            input_shape: [1, 64, 64]
+    neck:
+        #output channel = [B, 64]
+        arch: core.model.neck.mtfc_neck.MTFCneck
+        prev: backbone # must have for neck and head module
+        kwargs:
+            fc_dim: 64 # fc dimention
+            #dropout: True
+            bias: False
+        lr_decay_mult:
+            neck: [1, 10, 1, 10]
+
+    head: # loss inside
+        arch: core.model.head.msms_clsf.MSMSclsf
+        prev: neck # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            head: [1, 1, 1, 1]
+            #neck: [1, 10, 1, 10]
+        task_names:
+            0:
+                gender: ['gender_data']
+                age: ['age_data_smartphone']
+                race: ['race_data']
+                mask: ['mask_data']
+                glass: ['glass_data']
+                emotion: ['emotion_data']
+                beard: ['beard_data']
+                eye: ['eye_data']
+                mouth: ['mouth_data'] 
+                smile: ['smile_data']
+                face_value: ['face_value_data']
+        kwargs:
+            #task_names: ['gender', 'age', 'race', 'mask', 'glass', 'emotion', 'beard', 'eye', 'mouth','smile', 'face_value'] # task name for each branch in heada
+            task_cfgs:
+                gender:
+                     fc_dim: 64
+                     num_class: 2 # classifier
+                     loss_type: softmax
+                     loss_weight: 1
+                     has_accuracy: True
+                age:
+                    fc_dim: 64
+                    num_class: 1 # classifier
+                    loss_type: Double_SmoothL1WithThrd 
+                    loss_weight: [0.1, 0.1]
+                    has_accuracy: False
+                race:
+                    fc_dim: 64
+                    num_class: 3 # classifier
+                    loss_type: softmax
+                    loss_weight: 1
+                    has_accuracy: True
+                mask:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: softmax
+                    loss_weight: 1
+                    has_accuracy: True
+                glass:
+                    fc_dim: 64
+                    num_class: 3 # classifier
+                    loss_type: softmax
+                    loss_weight: 1
+                    has_accuracy: True
+                emotion:
+                    fc_dim: 64
+                    num_class: 7 # classifier
+                    loss_type: softmax
+                    loss_weight: 1
+                    has_accuracy: True
+                beard:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: softmax
+                    loss_weight: 1
+                    has_accuracy: True
+                eye:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: softmax
+                    loss_weight: 1
+                    has_accuracy: True
+                mouth:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: softmax
+                smile:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: softmax-comp
+                    loss_weight: 1
+                    has_accuracy: True
+                face_value:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: softmax-comp
+                    loss_weight: 1
+                    has_accuracy: True
+
+
+strategy:
+    task_type: 'attribute'
+    data_type: 'msms'
+    scatter_mode: True
+    #pavi_mode: False
+
+    max_iter: 50 #400000
+    base_lr: 0.01
+    lr_steps: [300000, 350000]
+    lr_mults: [0.1, 0.1]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0004
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 5000
+    print_freq: 20
+    load_name: ''
+    save_path: '../exp'
+
+    workers: 4
+data:
+    training_param:
+        preprocessor: 'cv'
+        # crop config
+        crop: True
+        y_offset: 15
+        crop_height: 128
+        crop_width: 128
+        # scale
+        scale: True
+        final_height: 64
+        final_width: 64
+        # mirror
+        mirror: True
+        mirror_prob: 0.5
+        # gray
+        use_gray: True
+        final_channel: 1
+        gray_prob: 1
+
+        # zoom
+        zoom: True
+        zoom_min: 0.9
+        zoom_max: 1.1
+        #rotate
+        rotate: True
+        rotate_angle_max_value: 5
+
+        #trans(trans_x_max_value and trans_y_max_value are optional)
+        trans: True
+        trans_max_value: 0.1
+        #noise 
+        noise: True
+        noise_max_value: 0.05
+        noise_prob: 0.2
+        
+        motion_blur: True
+        motion_blur_prob: 0.2
+        motion_blur_l_min: 1
+        motion_blur_l_max: 10
+        motion_blur_theta_min: 0
+        motion_blur_theta_max: 180 
+        # normalize
+        normalize: False
+        normalize_type: 'mean_std' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [127.5, 127.5, 127.5]
+        std: [79.6875, 79.6875, 79.6875]
+
+#****************************************train data**********************************************
+    gender_data:
+        type: 'attribute'
+        task: 'gender'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_gender'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_gender'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_gender.json'
+        batch_size: 32 # for single gpu
+    
+    age_data_smartphone:
+        type: 'attribute'
+        task: 'age'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/smartphone_data'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/smartphone_data'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/smart_phone_train.json'
+        batch_size: 32 # for single gpu
+        smooth_l1_thrd: 1
+        diff_thrd: 1
+   
+    race_data:
+        type: 'attribute'
+        task: 'race'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_race'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_race'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_race.json'
+        batch_size: 16 # for single gpu
+    
+    mask_data:
+        type: 'attribute'
+        task: 'mask'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_mask'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_mask'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_mask.json'
+        batch_size: 16 # for single gpu
+    glass_data:
+        type: 'attribute'
+        task:  'glass'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_glass'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_glass'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_glass.json'
+        batch_size: 16 # for single gpu
+    emotion_data:
+        type: 'attribute'
+        task: 'emotion'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_emotion'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_emotion'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_emotion.json'
+        batch_size: 16 # for single gpu
+    beard_data:
+        type: 'attribute'
+        task: 'beard'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_beard'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_beard'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_beard.json'
+        batch_size: 16 # for single gpu
+    eye_data:
+        type: 'attribute'
+        task: 'eye'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_eye'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_eye'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_eye.json'
+        batch_size: 16 # for single gpu
+    mouth_data:
+        type: 'attribute'
+        task: 'mouth'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_mouth'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_mouth'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_mouth.json'
+        batch_size: 16 # for single gpu
+    smile_data:
+        compare_task: True
+        type: 'attribute'
+        task: 'smile'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_smile'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_smile'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_smile.json'
+        batch_size: 16 # for single gpu
+    face_value_data:
+        compare_task: True
+        type: 'attribute'
+        task: 'face_value'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix_cluster: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_face_value'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_face_value'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/new_face_value.json'
+        batch_size: 16 # for single gpu
+
+test:
+    strategy:
+        #is_test: True
+        task_type: 'attribute'
+        task_mode: 'test'
+        data_type: 'msms-test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path']
+        workers: 0
+
+    testing_param:
+        preprocessor: 'cv'
+        # crop config
+        crop: True
+        y_offset: 15
+        crop_height: 128
+        crop_width: 128
+        # scale
+        scale: True
+        final_height: 64
+        final_width: 64
+        # mirror
+        mirror: False # Notice: different from training
+        # gray
+        use_gray: True
+        final_channel: 1 
+        gray_prob: 1
+        # normalize
+        normalize: False
+        normalize_type: 'mean_std' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [127.5, 127.5, 127.5]
+        std: [79.6875, 79.6875, 79.6875]
+
+
+######################  veh  ###########################
+    age_data_smartphone:
+        type: 'attribute'
+        task: 'age'
+        prefix: '/mnt/lustre/share/anwenju/forlitong/all_attr/smartphone_data'
+        json_path: '/mnt/lustre/share/anwenju/forlitong/all_attr/smart_phone_test.json'
+        batch_size: 256 # for single gpu
+        delta_thres: [5, 10]
