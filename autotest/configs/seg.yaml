@@ -1,21 +1,49 @@
 seg_pspnet: # Required. {framework}_{model}
-  func: seg_pspnet # Required
-  args:
-    done_flag: "Save Checkpoint "
-  thresh: # Required
-    iter_speed: 0.88
-    mIoU: 73.8
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower'] 
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  eval_mIoU: [10000, 'has_to_higher']
 seg_deeplab: # Required.
-  func: seg_deeplab # Required
-  args:
-    done_flag: "Save Checkpoint"
-  thresh: # Required
-    iter_speed: 1.31
-    mIoU: 76.1
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  eval_mIoU: [10000, 'has_to_higher']
 seg_mobilenet_v2_plus: # Required.
-  func: seg_mobilenet_v2_plus # Required
-  args:
-    done_flag: "Pipeline is done"
-  thresh: # Required
-    iter_speed: 0.74
-    mIoU: 67.8
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  mIoU: [10000, 'has_to_higher']
+
+seg_pspnet.benchmark: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower'] 
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  eval_mIoU: [10000, 'has_to_higher']
+seg_deeplab.benchmark: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  eval_mIoU: [10000, 'has_to_higher']
+seg_mobilenet_v2_plus.benchmark: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  mIoU: [10000, 'has_to_higher']

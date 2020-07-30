@@ -90,10 +90,12 @@ task:
                 
                 # # mouth
                  {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
+                # # pod-v3.1.0
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
             ]
     # Optional
     # callback: "cat"
-    callback: "python autotest/parrots_test_callback.py {framework} {model}"
+    callback: "python autotest/parrots_test_callback_new.py {framework} {model}"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
