@@ -89,12 +89,12 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                 
                 # # mouth
-                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
+         #        {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
                 ## TextRecog
-                 {'framework': 'TextRecog', 'gpus': 8, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project parrots_test'},
-                 {'framework': 'TextRecog', 'gpus': 8, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test'},
-                 {'framework': 'TextRecog', 'gpus': 8, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test'},
-                 {'framework': 'TextRecog', 'gpus': 8, 'model': 'print_crnn', 'py_args': '--pavi --pavi-project parrots_test'},
+                 {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project parrots_test'},
+                 {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test'},
+                 {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test'},
+                 {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test'},
                 # # pod-v3.1.0
                 # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
             ]

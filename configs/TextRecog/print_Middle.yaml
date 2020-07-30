@@ -30,6 +30,16 @@ dataset:
     val_source:
     val_root: ''
     val_source: /mnt/lustre/maxiaoming/testdata/label/label2.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_test_replace.txt
+  val_list:
+    val_root_list_ceph: ['']
+    val_source_list_ceph: []
+    val_root_list: ['']
+    val_source_list: ['/mnt/lustre/maxiaoming/testdata/label/label2.txt']
+  test:
+    test_root_ceph: ''
+    test_source:
+    test_root: ''
+    test_source: /mnt/lustre/maxiaoming/testdata/label/label2.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_test_replace.txt
   dict: /mnt/lustre/maxiaoming/testdata/label/dict.txt # #/mnt/lustre/ocrgroup/dataset/labels/print_dict_add_express_digit_shujutang_air_en.txt
   batch_size: 32 # batch size on one GPU
   num_workers: 0
@@ -48,8 +58,8 @@ solver:
     milestones: [120000, 180000]
     lr_mults: 0.1
     warmup_from: 0.0001 # linear increase
-    warmup_steps: 10000
-    max_iter: 200000
+    warmup_steps: 0 #10000
+    max_iter: 500 #200000
   clip_type: norm # norm or value
   max_norm: 10
 checkpoint:
@@ -59,5 +69,5 @@ checkpoint:
   strict: True # whether to strictly enforce that the keys in :attr:`state_dict` match the keys returned by this module's
 phase: train
 print_freq: 10
-val_freq: 1000
+val_freq: 100 # 1000
 work_dir: experiments/textnet_middle/print_align
