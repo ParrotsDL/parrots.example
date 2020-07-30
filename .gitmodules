@@ -42,9 +42,6 @@
 [submodule "mild"]
 	path = models/mild
 	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
-[submodule "models/mmaction"]
-	path = models/mmaction
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction-lite.git
 [submodule "models/Multi_organ_seg_HR"]
 	path = models/Multi_organ_seg_HR
 	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
@@ -58,3 +55,6 @@
 [submodule "models/pytorch-object-detection-v2.3.0"]
 	path = models/pytorch-object-detection-v2.3.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+[submodule "models/mmaction"]
+	path = models/mmaction
+	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
