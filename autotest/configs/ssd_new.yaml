@@ -21,7 +21,6 @@ ssd_ssd_FSAF_benchmark: # Required
   __benchmark_mem_cached(mb): [10000, 'has_to_lower']
   __benchmark_pure_training_time(h): [10000, 'has_to_lower']
   __benchmark_total_time(h): [10000, 'has_to_lower']
-  epoch/mAP: [10000, 'has_to_higher']
 ssd_ssd_Retina_benchmark:
   # attr: [thresh, has_to_higher/has_to_lower]
   __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
@@ -29,4 +28,3 @@ ssd_ssd_Retina_benchmark:
   __benchmark_mem_cached(mb): [10000, 'has_to_lower']
   __benchmark_pure_training_time(h): [10000, 'has_to_lower']
   __benchmark_total_time(h): [10000, 'has_to_lower']
-  epoch/mAP: [10000, 'has_to_higher']

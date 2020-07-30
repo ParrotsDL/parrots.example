@@ -14,4 +14,3 @@ seg_nas_single_path_oneshot_benchmark: # Required
   __benchmark_mem_cached(mb): [10000, 'has_to_lower']
   __benchmark_pure_training_time(h): [10000, 'has_to_lower']
   __benchmark_total_time(h): [10000, 'has_to_lower']
-  test_acc: [10000, 'has_to_higher']
