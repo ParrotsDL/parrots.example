@@ -200,7 +200,6 @@ def ssd_func(done_flag="Pipeline is Done",
         ret['total_time'] = total_time
     return ret
 
-
 @register_callfunc
 def mouth_func(done_flag="Pipeline is Done",
              iter_speed_flag="iter time: (.+)",
@@ -274,7 +273,6 @@ def mild_func(done_flag="Pipeline is Done",
                 continue
             ret[key] = rv.group(0)
     return ret
-
 
 @register_callfunc
 def alphatrion_nas_func(done_flag="Pipeline is Done",
