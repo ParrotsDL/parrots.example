@@ -1,376 +1,407 @@
 pod_faster-rcnn-R50-FPN-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.53
-    bbox_ap: 0.354
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-FPN-1x_mix: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.49
-    bbox_ap: 0.355
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_retinanet-R50-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.52
-    bbox_ap: 0.350
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_mask-rcnn-R50-FPN-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.62
-    bbox_ap: 0.362
-    seg_ap: 0.328
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+  metrics/segm.AP: [10000, 'has_to_higher']
+
 pod_mask-rcnn-R50-FPN-1x_mix: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.59
-    bbox_ap: 0.363
-    seg_ap: 0.329
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+  metrics/segm.AP: [10000, 'has_to_higher']
+
 pod_keypoint-rcnn-R50-FPN-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.71
-    bbox_ap: 0.541
-    seg_ap: 0.637
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+  metrics/keypoints.AP: [10000, 'has_to_higher']
+
 pod_keypoint-rcnn-R50-FPN-1x_mix: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.57
-    bbox_ap: 0.542
-    seg_ap: 0.636
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+  metrics/keypoints.AP: [10000, 'has_to_higher']
+
 pod_rfcn-R101-ohem-deform-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.86
-    bbox_ap: 0.823
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/mAP0.5: [10000, 'has_to_higher']
+
 pod_cascade-rcnn-R50-FPN-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.65
-    bbox_ap: 0.398
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-mobilenet-FPN-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.49
-    bbox_ap: 0.129
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-mobilenet-FPN-1x_mix: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.56
-    bbox_ap: 0.151
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-shufflenet-FPN-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.41
-    bbox_ap: 0.132
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_rfcn-mobilenet-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.48
-    bbox_ap: 0.258
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/mAP0.5: [10000, 'has_to_higher']
+
 pod_rfcn-shufflenet-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.49
-    bbox_ap: 0.313
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/mAP0.5: [10000, 'has_to_higher']
+
 pod_grid-rcnn-R50-FPN-2x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.66
-    bbox_ap: 0.384
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_retinanet-R50-ghm-1x: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 1.03
-    bbox_ap: 0.165
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-FPN-1x-DCN@C3-C5: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.58
-    bbox_ap: 0.248
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_retinanet-R50-GN-FA: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.88
-    bbox_ap: 0.087
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-NASFPN-1x_mix: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.9
-    bbox_ap: 0.393
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-PAFPN-1x_mix: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.7
-    bbox_ap: 0.217
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-FPN-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.53
-    bbox_ap: 0.354
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-R50-FPN-1x_mix.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.49
-    bbox_ap: 0.355
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_retinanet-R50-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.52
-    bbox_ap: 0.350
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_mask-rcnn-R50-FPN-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.62
-    bbox_ap: 0.362
-    seg_ap: 0.328
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_mask-rcnn-R50-FPN-1x_mix.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.59
-    bbox_ap: 0.363
-    seg_ap: 0.329
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_keypoint-rcnn-R50-FPN-1x.short: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.71
-    bbox_ap: 0.541
-    seg_ap: 0.637
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+  metrics/keypoints.AP: [10000, 'has_to_higher']
+
 pod_keypoint-rcnn-R50-FPN-1x.short.dummy_data: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.71 # Just need speed
-    bbox_ap: None
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+  metrics/keypoints.AP: [10000, 'has_to_higher']
+
 pod_keypoint-rcnn-R50-FPN-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.71
-    bbox_ap: 0.541
-    seg_ap: 0.637
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_keypoint-rcnn-R50-FPN-1x_mix.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.57
-    bbox_ap: 0.542
-    seg_ap: 0.636
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_rfcn-R101-ohem-deform-1x.short: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.86
-    bbox_ap: 0.823
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/mAP0.5: [10000, 'has_to_higher']
+
 pod_rfcn-R101-ohem-deform-1x.short.dummy_data: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.86   # Just need speed
-    bbox_ap: None
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/mAP0.5: [10000, 'has_to_higher']
+
 pod_rfcn-R101-ohem-deform-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.86
-    bbox_ap: 0.823
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_cascade-rcnn-R50-FPN-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.65
-    bbox_ap: 0.398
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-mobilenet-FPN-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.49
-    bbox_ap: 0.129
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-mobilenet-FPN-1x_mix.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.56
-    bbox_ap: 0.151
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-shufflenet-FPN-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.41
-    bbox_ap: 0.132
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_rfcn-mobilenet-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.48
-    bbox_ap: 0.258
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_rfcn-shufflenet-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "Thanks"
-  thresh: # Required
-    iter_speed: 0.49
-    bbox_ap: 0.313
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_grid-rcnn-R50-FPN-2x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.66
-    bbox_ap: 0.384
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_retinanet-R50-ghm-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 1.03
-    bbox_ap: 0.165
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-R50-FPN-1x-DCN@C3-C5.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.58
-    bbox_ap: 0.248
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_retinanet-R50-GN-FA.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.88
-    bbox_ap: 0.087
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-R50-NASFPN-1x_mix.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.9
-    bbox_ap: 0.393
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-R50-PAFPN-1x_mix.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.7
-    bbox_ap: 0.217
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
 pod_faster-rcnn-R50-C4-1x.short: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.789
-    bbox_ap: 0.035
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-C4-1x.short.dummy_data: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.789  # Just need speed
-    bbox_ap: None 
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  metrics/bbox.AP: [10000, 'has_to_higher']
+
 pod_faster-rcnn-R50-C4-1x.benchmark: # Required.
-  func: pod_func # Required
-  args:
-    done_flag: "copypaste:"
-  thresh: # Required
-    iter_speed: 0.789
-    bbox_ap: 0.035
-    seg_ap: None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
