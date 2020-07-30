@@ -52,6 +52,9 @@
 [submodule "models/mmsegmentation"]
 	path = models/mmsegmentation
 	url = git@gitlab.bj.sensetime.com:maxiaoming/mmsegmentation.git
+[submodule "models/STAR"]
+	path = models/STAR
+	url = git@gitlab.bj.sensetime.com:hanyachao/STAR.git
 [submodule "models/pytorch-object-detection-v3.1.0"]
 	path = models/pytorch-object-detection-v3.1.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/Pytorch-Object-Detection.git
