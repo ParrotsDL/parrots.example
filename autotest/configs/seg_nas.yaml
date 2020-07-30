@@ -1,15 +1,16 @@
 seg_nas_single_path_oneshot: # Required
-  func: seg_nas_func # Required
-  args:
-    done_flag: "over the evolution"
-  thresh: # Required
-    total_time: 38.0
-    acc: 0.530
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  test_acc: [10000, 'has_to_higher']
 
 seg_nas_single_path_oneshot_benchmark: # Required
-  func: seg_nas_func # Required
-  args:
-    done_flag: "over the evolution"
-  thresh: # Required
-    total_time: 38.0
-    acc: 0.530
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
