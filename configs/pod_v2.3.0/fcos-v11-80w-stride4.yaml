@@ -3,9 +3,11 @@ dataset: # Required.
   train:
     #meta_file: /mnt/lustre/qinhaifang/re_det/pytorch-object-detection/jsonfile/20180814_nonmotorType_wangkun_delete_test_pro_del_coco_80w_humanx3_addjp.json
     meta_file: /mnt/lustre/share_data/qinhaifang/bdd100k_train_0918_new.json
+    ceph_meta_file: s3://parrots_model_data/pod/bdd100k/bdd100k_train_0918_new.json
     #meta_file: /mnt/lustre/qinhaifang/re_det/pytorch-object-detection/jsonfile/20180814_nonmotorType_wangkun_delete_test_pro_del_coco_80w.json
     #meta_file: /mnt/lustre/qinhaifang/re_det/pytorch-object-detection/jsonfile/test_china_11245.json
     image_dir: /mnt/lustre/share_data/qinhaifang
+    ceph_image_dir: s3://parrots_model_data/pod/bdd100k
     scales: [400,576,800]              # shorter side of resized image
     flip: True
     data_augmentation:
@@ -18,8 +20,10 @@ dataset: # Required.
       gauss: 8
   test:
     meta_file: /mnt/lustre/share_data/qinhaifang/bdd100k_val_0918_new.json
+    ceph_meta_file: s3://parrots_model_data/pod/bdd100k/bdd100k_val_0918_new.json
     #meta_file: /mnt/lustre/share/zenglingyun/data/test_china_11245.json
     image_dir: /mnt/lustre/share_data/qinhaifang
+    ceph_image_dir: s3://parrots_model_data/pod/bdd100k
     flip: False
   scales: [576]              # shorter side of resized image
   has_keypoint: False        # don't use keypoints
@@ -43,6 +47,7 @@ dataset: # Required.
     type: mAP               # choices = {'COCO', 'VOC', 'mAP'}
     kwargs:
       gt_file: /mnt/lustre/share_data/qinhaifang/bdd100k_val_0918_new.json
+      ceph_gt_file: s3://parrots_model_data/pod/bdd100k/bdd100k_val_0918_new.json
       #gt_file: /mnt/lustre/share/zenglingyun/data/test_china_11245.json
       num_classes: 4      # calcuate AP_bbox only
       class_names: ["__background__", "car", "nonMotorType", "human"]
