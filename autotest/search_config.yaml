@@ -57,9 +57,9 @@ task:
                 # {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi --pavi-project parrots_test'},                
                 # # example
                 # seg
-                {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
-                {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
-                {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
+                # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
+                # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
+                # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "inception_resnet_mix", 'py_args': '--pavi --pavi-project parrots_test'},
@@ -86,11 +86,14 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                 
                 # # mouth
-                 {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
+                #  {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
+                #  light_nas
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi --pavi-project parrots_test'},
+
             ]
     # Optional
     # callback: "cat"
-    callback: "python autotest/parrots_test_callback.py {framework} {model}"
+    callback: "python autotest/parrots_test_callback_new.py {framework} {model}"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher

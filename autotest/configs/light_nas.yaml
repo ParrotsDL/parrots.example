@@ -1,0 +1,19 @@
+light_nas_single_path_oneshot: # Required
+  __benchmark_avg_iter_time(s): [0.257 'has_to_lower'] # 0.217 + 0.04
+  __benchmark_mem_alloc(mb): [22524, 'has_to_lower'] # 18524 + 4000
+  __benchmark_mem_cached(mb): [22923, 'has_to_lower'] # 18923 + 4000
+  __benchmark_pure_training_time(h): [0.050, 'has_to_lower'] # 0.042 + 0.008
+  __benchmark_total_time(h): [0.054, 'has_to_lower'] # 0.046 + 0.008
+  train_acc: [0, 'has_to_higher']
+  train_iou: [0, 'has_to_higher']
+  test_iou: [0, 'has_to_higher']
+
+light_nas_single_path_oneshot_benchmark: # Required
+  __benchmark_avg_iter_time(s): [0.257 'has_to_lower'] # 0.217 + 0.04
+  __benchmark_mem_alloc(mb): [22524, 'has_to_lower'] # 18524 + 4000
+  __benchmark_mem_cached(mb): [22923, 'has_to_lower'] # 18923 + 4000
+  __benchmark_pure_training_time(h): [0.050, 'has_to_lower'] # 0.042 + 0.008
+  __benchmark_total_time(h): [0.054, 'has_to_lower'] # 0.046 + 0.008
+  train_acc: [0.242, 'has_to_higher'] # 0.252 - 0.01
+  train_iou: [0.148, 'has_to_higher'] # 0.158 -0.01
+  test_acc: [0.571, 'has_to_higher'] # 0.581 - 0.01

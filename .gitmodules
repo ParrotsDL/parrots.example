@@ -49,3 +49,6 @@
 [submodule "models/mouth_inpaint_network"]
 	path = models/mouth_inpaint_network
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
+[submodule "models/light_nas"]
+	path = models/light_nas
+	url = git@gitlab.bj.sensetime.com:hanyachao/light_nas.git
