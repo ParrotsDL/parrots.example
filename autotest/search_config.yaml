@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh Test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
