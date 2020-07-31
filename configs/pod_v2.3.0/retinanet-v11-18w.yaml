@@ -1,0 +1,142 @@
+dataset: # Required.
+  type: custom_bgr
+  train:
+    meta_file: /mnt/lustre/share_data/jiaomenglei/model_pool_data/pod_v2.3.0_data/bdd100k_train_0918_new.json
+    ceph_meta_file: s3://parrots_model_data/pod/bdd100k/bdd100k_train_0918_new.json
+    image_dir: /mnt/lustre/share_data/jiaomenglei/model_pool_data/pod_v2.3.0_data
+    ceph_image_dir: s3://parrots_model_data/pod/bdd100k
+    scales: [600]              # shorter side of resized image
+    flip: False
+    data_augmentation:
+      turn_on: False
+      brightness: 0.1
+      contrast: 0.5
+      hue: 0.07
+      saturation: 0.5
+      prob: 0.25
+      gauss: 8
+  test:
+    meta_file: /mnt/lustre/share_data/jiaomenglei/model_pool_data/pod_v2.3.0_data/bdd100k_val_0918_new.json
+    ceph_meta_file: s3://parrots_model_data/pod/bdd100k/bdd100k_val_0918_new.json
+    image_dir: /mnt/lustre/share_data/jiaomenglei/model_pool_data/pod_v2.3.0_data
+    ceph_image_dir: s3://parrots_model_data/pod/bdd100k
+    flip: False
+  scales: [600]              # shorter side of resized image
+  has_keypoint: False        # don't use keypoints
+  has_mask: False            # don't use segmentations
+  aspect_grouping: [1, ]     # use group_sampler when loading dataset
+  alignment: 128             # Align size of images to fit FPN. For fpn-faster-rcnn, 32 is enough; for RetinaNet, it's 128.
+  max_size: 2000             # longer side of resized image
+  pixel_bgr_mean: [104, 117, 123] # ImageNet pretrained statics
+  batch_size: 2
+  workers: 2                 # number of workers of dataloader for each process
+  evaluator:
+    type: mAP_FPR               # choices = {'COCO', 'VOC', 'mAP', 'mAP_FPR'}
+    kwargs:
+      gt_file: /mnt/lustre/share_data/jiaomenglei/model_pool_data/pod_v2.3.0_data/bdd100k_val_0918_new.json
+      ceph_gt_file: s3://parrots_model_data/pod/bdd100k/bdd100k_val_0918_new.json
+      num_classes: 4      # calcuate AP_bbox only
+      class_names: ["__background__", "car", "nonMotorType", "human"]
+      iou_thresh: 0.5
+  num_classes: 4
+  class_names: ["__background__", "car", "nonMotorType", "human"]
+trainer: # Required.
+  max_epoch: 14              # total epochs for the training
+  test_freq: 14
+  optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
+    type: SGD
+    kwargs:
+      lr: 0.00078
+      momentum: 0.9
+      weight_decay: 0.00005
+  lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
+    warmup_epochs: 0.5         # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
+    type: MultiStepLR
+    kwargs:
+      milestones: [7,12]     # epochs to decay lr
+      gamma: 0.1             # decay rate
+
+saver: # Required.
+  save_dir: checkpoints_fcw_sysbn_lr_s2_no_frozen_pretrain_map_warmup_0.5_resume_epoch3      # dir to save checkpoints
+  # pretrain_model: /mnt/lustre/qinhaifang1/for_haifang/V11_model/ckpt_best.pth.tar
+  results_dir: results_dir_fcw_sysbn_lr_s2_no_frozen_pretrain_map_warmup_0.5_resume_epoch3   # dir to save detection results. i.e., bboxes, masks, keypoints
+  #vis_gt:
+  #  output_dir: vis_gt
+  #vis_dt:
+  #  output_dir: vis_dt
+  #  bbox_thresh: 0.3
+
+
+#fp16:
+#  keep_batchnorm_fp32: True
+
+net: # Required.
+  - name: backbone            # backbone = resnet50(frozen_layers, out_layers, out_strides)
+    type: pod.models.backbones.v11_retinanet_8bit.V11Net
+    kwargs:
+      frozen_layers: []   # layer0...1 is fixed
+      out_layers: [2,3]     # layer1...4, commonly named Conv2...5
+      out_strides: [8,16]  # tell the strides of output features
+#      deformable: False       # set it as true if using deform for fpn
+      normalize:
+      #  type: solo_bn
+        type: sync_bn
+        kwargs:
+          bn_group_size: 8
+      merge_bn: False
+      # layer4:               # provide config for layer4 if using deform for fpn, do not use atrous' algorithm
+      #   stride: 2
+      #   dilation: 1
+      #   block: DeformBlock
+  - name: neck
+    prev: backbone
+    type: pod.models.necks.fpn_concat_8bit.FPN
+    kwargs:
+      outplanes: 32
+      start_level: 3
+      num_level: 3            # if num_level>len(backbone.out_layers), additional conv with be stacked.
+      out_strides: [8,16,32] # strides of output features. aka., anchor strides for roi_head
+      downsample: conv        # method to downsample, for FPN, it's pool, for RetienaNet, it's conv
+      upsample: nearest       # method to interp, nearest or bilinear
+      initializer:
+        method: xavier
+  - name: roi_head
+    prev: neck 
+    type: pod.models.heads.roi_head.RetinaSubNet_8bit
+    kwargs:
+      feat_planes: 32        # channels of intermediate conv
+      num_classes: 4         # for rpn, it's 2; for RetinaNet, it's 81
+      initializer:
+        method: normal
+        std: 0.01
+      merge_bn: True
+      cfg:
+        focal_loss:
+          type: sigmoid
+          alpha: 0.25
+          gamma: 2.0
+          init_prior: 0.01
+        allowed_border: -1            # >=0 for rpn, -1 for retinanet(keep all anchors)
+        anchor_ratios: [0.5,1,2]      # anchor strides are provided as feature strides by feature extractor
+        anchor_scales: [4, 5.0396842, 6.34960421] # scale of anchors relative to feature map
+        roi_min_size: 0               # minimum scale of a valid roi
+        nms:                          # nms configuration within each level
+          type: naive
+          nms_iou_thresh: -1          # do not nms within each level
+        train:
+          sampler:
+            type: keep_all            # no sampling, keep all positives and negatives
+          matcher:
+            positive_iou_thresh: 0.5 
+            negative_iou_thresh: 0.4 
+            ignore_iou_thresh: 0.5    # Required if provide ignore_regions
+            allow_low_quality_match: True # an anchor is also positive if it has highest iou with any gt
+        test:
+          pre_nms_score_thresh: 0.05  # to reduce computation
+          pre_nms_top_n: 6000
+          post_nms_top_n: 1000
+          across_levels:              # merge multi-level proposals
+            top_n: 100
+            nms:
+              type: naive
+              nms_iou_thresh: 0.5     # Required in RetinaNet. DO not nms in FPN across levels 

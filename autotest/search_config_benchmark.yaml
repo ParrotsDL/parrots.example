@@ -7,10 +7,10 @@ task:
           value: [
                     # (un)commit your config here
                     # seg
-                    # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
-                    # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
-                    # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
-                    # pod
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # # pod
                     # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
@@ -29,10 +29,10 @@ task:
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet50_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'resnet101_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
-                    # ssd
+                    # # ssd
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader --SEED 1024'},
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader --SEED 1024'},
-                    # example
+                    # # example
                     # {'framework': 'example', 'gpus': 8, 'model': "dpn92.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_v3.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_v4.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
@@ -43,6 +43,13 @@ task:
                     # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v1.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # light_nas
                     # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot.benchmark', 'py_args': '--pavi --pavi-project parrots_test'},
+                    # star
+                    # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnet50.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnest50.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'star', 'gpus': 8, 'model': "topdown_jnet.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'star', 'gpus': 8, 'model': "topdown_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 ]
     # Optional
     # callback: "cat"
