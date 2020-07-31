@@ -2,23 +2,41 @@ star_topdown_resnet50:
   __benchmark_avg_iter_time(s): [2.273, 'has_to_lower'] # 1.894 x 1.2
   __benchmark_mem_alloc(mb): [31125, 'has_to_lower'] # 25938 x 1.2
   __benchmark_mem_cached(mb): [36405, 'has_to_lower'] # 30338 x 1.2
-  __benchmark_pure_training_time(h): [float('inf'), 'has_to_lower']
-  __benchmark_total_time(h): [float('inf'), 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
   Train_Accuracy: [0, 'has_to_higher']
 star_topdown_resnest50:
   __benchmark_avg_iter_time(s): [1.2864, 'has_to_lower'] # 1.072 x 1.2
   __benchmark_mem_alloc(mb): [22459, 'has_to_lower'] # 18716 x 1.2
   __benchmark_mem_cached(mb): [26188, 'has_to_lower'] # 21824 x 1.2
-  __benchmark_pure_training_time(h): [float('inf'), 'has_to_lower']
-  __benchmark_total_time(h): [float('inf'), 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
   Train_Accuracy: [0, 'has_to_higher']
 star_topdown_jnet:
   __benchmark_avg_iter_time(s): [1.210, 'has_to_lower'] # 1.009 x 1.2
   __benchmark_mem_alloc(mb): [5443, 'has_to_lower'] # 4536 x 1.2
   __benchmark_mem_cached(mb): [6868, 'has_to_lower'] # 5724 x 1.2
-  __benchmark_pure_training_time(h): [float('inf'), 'has_to_lower']
-  __benchmark_total_time(h): [float('inf'), 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
   Train_Accuracy: [0, 'has_to_higher']
 star_topdown_hrnet32:
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower'] # 1.009 x 1.2
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower'] # 4536 x 1.2
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower'] # 5724 x 1.2
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Train_Accuracy: [0, 'has_to_higher']
 star_bottomup_hrnet32:
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower'] # 1.009 x 1.2
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower'] # 4536 x 1.2
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower'] # 5724 x 1.2
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Train_Accuracy: [0, 'has_to_higher']
 star_bottomup_jnet:
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower'] # 1.009 x 1.2
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower'] # 4536 x 1.2
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower'] # 5724 x 1.2
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  Train_Accuracy: [0, 'has_to_higher']
