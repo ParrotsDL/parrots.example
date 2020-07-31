@@ -69,5 +69,5 @@ checkpoint:
   strict: True # whether to strictly enforce that the keys in :attr:`state_dict` match the keys returned by this module's
 phase: train
 print_freq: 10
-val_freq: 100 # 1000
+val_freq: 500 # 1000
 work_dir: experiments/textnet_middle/print_align
