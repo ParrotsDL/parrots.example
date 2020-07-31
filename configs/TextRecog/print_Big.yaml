@@ -43,7 +43,7 @@ dataset:
   dict: /mnt/lustre/share_data/maxiaoming/text_data/label/dict.txt  #/mnt/lustre/liuxu2/datasets/hw_dict.txt
   batch_size: 8 # batch size on one GPU
   num_workers: 0
-  new_h: 32 #48 # resize image's height to new_h and keep the aspect ratio
+  new_h: 48 # resize image's height to new_h and keep the aspect ratio
   color: False # RGB if True else Gray
 solver:
   optimizer:
