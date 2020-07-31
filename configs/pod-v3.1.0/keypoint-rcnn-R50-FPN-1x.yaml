@@ -1,5 +1,5 @@
 version: v3.0.0
-num_classes: &num_classes 81
+num_classes: &num_classes 2
 
 flip: &flip
  type: flip
@@ -9,8 +9,13 @@ flip: &flip
 resize: &resize
  type: keep_ar_resize
  kwargs:
-   scales: [800]
+   scales: [640, 672, 704, 736, 768, 800] # shorter side of resized image
    max_size: 1333
+resize_test: &resize_test
+  type: keep_ar_resize
+  kwargs:
+    scales: [800]
+    max_size: 1333
 
 to_tensor: &to_tensor
   type: to_tensor
@@ -27,44 +32,41 @@ dataset: # Required.
       type: coco
       kwargs:
         source: train  # dataset id
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_train2017.json
+        has_keypoint: True
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
             image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
-            memcached: False
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
     dataset:
       type: coco
       kwargs:
         source: val
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
             image_dir: s3://parrots_data/DSK/datasets/mscoco2017/val2017
             color_mode: RGB
-        transformer: [*resize, *to_tensor, *normalize]
+        transformer: [*resize_test, *to_tensor, *normalize]
         evaluator:
           type: COCO               # choices = {'COCO', 'VOC', 'MR'}
           kwargs:
-            gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            # gt_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            iou_types: [bbox]
+            gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json
+            iou_types: [bbox, keypoints]
   batch_sampler:
-    type: aspect_ratio_group
+    type: base
     kwargs:
       sampler:
-        type: dist
-        kwargs: {}
+        type: coco_keypoint
+        kwargs:
+          batch_size: 2
       batch_size: 2
-      aspect_grouping: [1,]
   dataloader:
     type: base
     kwargs:
@@ -73,26 +75,26 @@ dataset: # Required.
 
 
 trainer: # Required.
-  max_epoch: 14             # total epochs for the training
-  test_freq: 14
-  optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
+  max_epoch: 23       # total epochs for the training
+  test_freq: 23
+  optimizer:          # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
     kwargs:
       lr: 0.00125
       momentum: 0.9
       weight_decay: 0.0001
-  lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
-    warmup_epochs: 1         # set to be 0 to disable warmup. When warmup,  target_lr = init_lr * total_batch_size
+  lr_scheduler:       # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
+    warmup_epochs: 1  # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
-      milestones: [9,12]     # epochs to decay lr
-      gamma: 0.1             # decay rate
+      milestones: [14,21]   # epochs to decay lr
+      gamma: 0.1            # decay rate
 
 saver: # Required.
   save_dir: checkpoints     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
   results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
-  auto_resume: True  # find last checkpoint from save_dir and resume from it automatically
+  auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
 
@@ -257,3 +259,46 @@ net:
               nms_iou_thresh: 0.5
             bbox_score_thresh: 0.0
             top_n: 100
+  - name: keyp_head
+    prev: neck
+    type: pod.models.heads.keyp_head.ConvUp
+    kwargs:
+      num_keypoints: 17             # number of keypoints
+      feat_planes: 512
+      num_convs: 8
+      deconv_kernel: 4
+      initializer:
+        method: msra
+      cfg:
+        keyp_loss:
+          type: softmax_cross_entropy
+          kwargs:
+            class_dim: -1  # last dim is the class dim
+        fpn:
+          fpn_levels: [0,1,2,3]   # indices of fpn features used for this stage. these levels are supposed to be continuous
+          base_scale: 56          # target level of a RoI is floor(log2((w*h)**0.5/base_scale))
+        roipooling:
+          method: 'roialignpool'    # choices=['roialignpool', 'psroipool', 'roipool']. note that 'psroipool' is for RFCN head
+          pool_size: 14
+          sampling_ratio: 2
+        keyp_supervisor:
+          type: base
+          kwargs:
+            resample: True            # sampling from rpn proposals; False to use bbox_head sampled results, may be faster
+            label_h: 56               # output size of heatmap
+            label_w: 56
+            sampler:
+              type: naive
+              kwargs:
+                batch_size: 128         # mask batch size of each image
+                positive_percent: 1.0   # sample positives only
+            matcher:
+              type: max_iou
+              kwargs:
+                positive_iou_thresh: 0.5
+                negative_iou_thresh: -1
+                allow_low_quality_match: False  # train only. positive if a anchor has highest iou with any gt
+                ignore_iou_thresh: -1
+        keyp_predictor:
+          type: base
+          kwargs: {}
