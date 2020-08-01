@@ -1,55 +1,120 @@
-# all epoch
 mmaction_i3d_r50_video_32x2x1_100e_kinetics400_rgb:
-  func: mmaction_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh:
-    iter_speed: None
-    top1_acc: None
-    total_time(h): None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.top1_acc: [10000, 'has_to_higher']
+
+mmaction_r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.top1_acc: [10000, 'has_to_higher']
+
+mmaction_slowfast_r50_video_4x16x1_256e_kinetics400_rgb:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.top1_acc: [10000, 'has_to_higher']
+
+mmaction_slowonly_r50_video_4x16x1_256e_kinetics400_rgb:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.top1_acc: [10000, 'has_to_higher']
+
+mmaction_tsm_r50_video_1x1x8_100e_kinetics400_rgb:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.top1_acc: [10000, 'has_to_higher']
 
 mmaction_tsn_r50_video_1x1x8_100e_kinetics400_rgb:
-  func: mmaction_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh:
-    iter_speed: None
-    top1_acc: 69.22
-    total_time(h): None
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.top1_acc: [10000, 'has_to_higher']
 
-mmaction_tsn_r50_video_dense_1x1x8_100e_kinetics400_rgb:
-  func: mmaction_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh:
-    iter_speed: None
-    top1_acc: 70.21
-    total_time(h): None
+mmaction_bmn_400x100_2x8_9e_activitynet_feature:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.auc: [10000, 'has_to_higher']
+  train.AR@100: [10000, 'has_to_higher']
 
-# benchmark 1 epoch
+# benchmark
 mmaction_i3d_r50_video_32x2x1_100e_kinetics400_rgb.benchmark:
-  func: mmaction_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh:
-    iter_speed: 0.5796
-    top1_acc: 0.0137
-    total_time(h): 0.7
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
+mmaction_r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb.benchmark:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
+mmaction_slowfast_r50_video_4x16x1_256e_kinetics400_rgb.benchmark:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
+mmaction_slowonly_r50_video_4x16x1_256e_kinetics400_rgb.benchmark:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+
+mmaction_tsm_r50_video_1x1x8_100e_kinetics400_rgb.benchmark:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
 
 mmaction_tsn_r50_video_1x1x8_100e_kinetics400_rgb.benchmark:
-  func: mmaction_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh:
-    iter_speed: 2.0375
-    top1_acc: 0.1722
-    total_time(h): 0.6
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
 
-mmaction_tsn_r50_video_dense_1x1x8_100e_kinetics400_rgb.benchmark:
-  func: mmaction_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh:
-    iter_speed: 1.4417
-    top1_acc: 0.1581
-    total_time(h): 0.5
+mmaction_bmn_400x100_2x8_9e_activitynet_feature.benchmark:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']

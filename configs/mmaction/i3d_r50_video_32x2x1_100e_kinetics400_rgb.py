@@ -4,7 +4,7 @@ model = dict(
     backbone=dict(
         type='ResNet3d',
         pretrained2d=True,
-        pretrained='/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/resnet50-19c8e357.pth',
+        pretrained='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/resnet50-19c8e357.pth',
         depth=50,
         conv_cfg=dict(type='Conv3d'),
         norm_eval=False,
@@ -22,16 +22,23 @@ train_cfg = None
 test_cfg = dict(average_clips=None)
 # dataset settings
 dataset_type = 'VideoDataset'
-data_root = '/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/kinetics400_256'
-data_root_val = '/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/kinetics400_256'
-ann_file_train = '/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/k400_train.txt'
-ann_file_val = '/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/k400_val.txt'
-ann_file_test = '/mnt/lustre/share_data/jiaomenglei/data/mmaction_data/k400_val.txt'
+# lusture data
+data_root = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/kinetics400_256'
+data_root_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/kinetics400_256'
+ann_file_train = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_train.txt'
+ann_file_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_val.txt'
+ann_file_test = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_val.txt'
+# ceph data
+ceph_data_root = 's3://parrots_model_data/mmaction_data/kinetics400_256'
+ceph_data_root_val = 's3://parrots_model_data/mmaction_data/kinetics400_256'
+ceph_ann_file_train = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_train.txt'
+ceph_ann_file_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_val.txt'
+ceph_ann_file_test = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_val.txt'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
 train_pipeline = [
     dict(type='DecordInit'),
-    dict(type='SampleFrames', clip_len=32, frame_interval=2, num_clips=1),
+    dict(type='SampleFrames', clip_len=32, frame_interval=2, num_clips=1, start_index=0),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(
@@ -54,7 +61,8 @@ val_pipeline = [
         clip_len=32,
         frame_interval=2,
         num_clips=1,
-        test_mode=True),
+        test_mode=True,
+        start_index=0),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='CenterCrop', crop_size=224),
@@ -71,7 +79,8 @@ test_pipeline = [
         clip_len=32,
         frame_interval=2,
         num_clips=10,
-        test_mode=True),
+        test_mode=True,
+        start_index=0),
     dict(type='DecordDecode'),
     dict(type='Resize', scale=(-1, 256)),
     dict(type='ThreeCrop', crop_size=256),
@@ -106,10 +115,10 @@ optimizer = dict(
 optimizer_config = dict(grad_clip=dict(max_norm=40, norm_type=2))
 # learning policy
 lr_config = dict(policy='step', step=[40, 80])
-total_epochs = 1
-checkpoint_config = dict(interval=1)
+total_epochs = 100
+checkpoint_config = dict(interval=5)
 evaluation = dict(
-    interval=1, metrics=['top_k_accuracy', 'mean_class_accuracy'], topk=(1, 5))
+    interval=5, metrics=['top_k_accuracy', 'mean_class_accuracy'], topk=(1, 5))
 log_config = dict(
     interval=20,
     hooks=[

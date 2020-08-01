@@ -12,30 +12,7 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-case $name in
-  "i3d_r50_video_32x2x1_100e_kinetics400_rgb")
-    PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/recognition/i3d/${name}.py --launcher=slurm"
-    ;;
-  "tsn_r50_video_1x1x8_100e_kinetics400_rgb")
-    PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/recognition/tsn/${name}.py --launcher=slurm"
-    ;;
-  "tsn_r50_video_dense_1x1x8_100e_kinetics400_rgb")
-    PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/recognition/tsn/${name}.py --launcher=slurm"
-    ;;
-  "i3d_r50_video_32x2x1_100e_kinetics400_rgb.benchmark")
-    PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/recognition/i3d/${name}.py --launcher=slurm"
-    ;;
-  "tsn_r50_video_1x1x8_100e_kinetics400_rgb.benchmark")
-    PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/recognition/tsn/${name}.py --launcher=slurm"
-    ;;
-  "tsn_r50_video_dense_1x1x8_100e_kinetics400_rgb.benchmark")
-    PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/recognition/tsn/${name}.py --launcher=slurm"
-    ;;
-  *)
-    echo "invalid $name"
-    exit 1
-    ;; 
-esac
+PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/${name}.py --launcher=slurm --validate"
 
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
