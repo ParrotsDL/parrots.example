@@ -44,4 +44,3 @@ if __name__ == '__main__':
             pre_callback_wapper(config)
         else:
             after_callback_wapper(config)
-
