@@ -4,7 +4,7 @@ import sys
 import yaml
 import pavi
 
-def after_callback_wapper(config):
+def after_callback_wrapper(config):
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
         pavi_task_id = env['PAVI_TASK_ID']
@@ -20,7 +20,7 @@ def after_callback_wapper(config):
     print(yaml.dump(config))
 
 
-def pre_callback_wapper(config):
+def pre_callback_wrapper(config):
 
     print(yaml.dump(config))
 
@@ -40,7 +40,7 @@ def collect_config(framework, model_name):
 if __name__ == '__main__':
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
-        if sys.argv[3] == 'pre':
-            pre_callback_wapper(config)
-        else:
-            after_callback_wapper(config)
+        if sys.argv[3] == '0':
+            pre_callback_wrapper(config)
+        elif sys.argv[3] == '1':
+            after_callback_wrapper(config)
