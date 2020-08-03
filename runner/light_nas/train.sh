@@ -15,9 +15,39 @@ EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 step='search'
 
+case $name in
+    "single_path_oneshot_search")
+      step=search
+      PYTHON_ARGS="python -m main \
+         --config=configs/light_nas/single_path_oneshot/search.yaml \
+         --step=$step"
+      ;; 
+    "single_path_oneshot_evolution")
+      step=evolution
+      PYTHON_ARGS="python -m main \
+         --config=configs/light_nas/single_path_oneshot/evolution.yaml \
+         --step=$step"
+      ;; 
+    "single_path_oneshot_benchmark_search")
+      step=search
+      PYTHON_ARGS="python -m main \
+         --config=configs/light_nas/single_path_oneshot/search.benchmark.yaml \
+         --step=$step"
+      ;; 
+    "single_path_oneshot_benchmark_evolution")
+      step=evolution
+      PYTHON_ARGS="python -m main \
+         --config=configs/light_nas/single_path_oneshot/evolution.benchmark.yaml \
+         --step=$step"
+      ;; 
+    *)
+      echo "invalid $name"
+      exit 1
+      ;; 
+esac
+
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
 srun --mpi=pmi2 -p $1 --job-name=light_nas_${name} \
     --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS}\
-    python -m main --config ${cfg} --step ${step} \
-    ${EXTRA_ARGS} \
+    $PYTHON_ARGS ${EXTRA_ARGS} \
     2>&1 | tee log/light_nas/train_${step}_${name}.log-$now

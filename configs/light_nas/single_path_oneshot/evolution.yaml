@@ -1,0 +1,131 @@
+model: single_path_oneshot
+dataset: # Required.
+  type: cityscapes
+  search_retrain:
+    train:
+      data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
+      data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt
+      crop:
+        type: rand
+        size: [449, 897] # crop image with HxW size
+    val:
+      data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
+      data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_val.txt
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      crop:
+        type: center
+        size: [449, 897] # crop image with HxW size
+    batch_size: 1
+    workers: 2
+    flip: True
+    GaussianBlur: True
+    rand_resize: [0.5, 2.0]
+    rand_rotation: [-10.0, 10.0]
+    mean: [123.675, 116.28, 103.53]
+    std: [58.395, 57.12, 57.375]
+    ignore_label: 255
+  evolution:
+    train:
+      data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
+      data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt # Not enough data in cityscapes, use train as bn_adjust
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt # Not enough data
+      crop:
+        type: rand
+        size: [449, 897] # crop image with HxW size
+    val:
+      data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
+      data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_val.txt
+      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
+      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      crop:
+        type: center
+        size: [449, 897] # crop image with HxW size
+    batch_size: 8
+    workers: 2
+    flip: True
+    GaussianBlur: True
+    rand_resize: [0.5, 2.0]
+    rand_rotation: [-10.0, 10.0]
+    mean: [123.675, 116.28, 103.53]
+    std: [58.395, 57.12, 57.375]
+    ignore_label: 255
+
+task_info: # Unnecessary for cityscapes dataset, define whatever you like
+  search:
+    - ['laneline', 1, 2, 15, 0.25]
+  evolution:
+    - ['laneline', 1, 2, 15, 0.25]
+  retrain:
+    - ['laneline', 1, 2, 15, 0.25]
+
+trainer: # Required.
+  search:
+    epochs: 5 #500
+    start_epochs: 0
+    optimizer:
+      type: SGD
+      kwargs:
+        lr: 0.01
+        momentum: 0.9
+        weight_decay: 0.0005
+    lr_scheduler:
+      mode: poly
+      kwargs:
+        power: 0.9
+    criterion:
+      type: ce
+      kwargs:
+  retrain:
+    epochs: 1 # 200
+    start_epochs: 0
+    optimizer:
+      type: SGD
+      kwargs:
+        lr: 0.005
+        momentum: 0.9
+        weight_decay: 0.0005
+    lr_scheduler:
+      mode: poly
+      kwargs:
+        power: 0.9
+    criterion:
+      type: ce
+      kwargs:
+
+saver:
+  search:
+    snapshot_dir: ckpt_search_111
+  retrain:
+    snapshot_dir: ckpt_retrain
+  pretrain: ''
+
+step: # Required.
+  commom:
+    arch: Resnet
+    init_c: 32
+    num_classes: 19
+    layers: 16
+    down_list: [3, 7]
+    primitives: PRIMITIVES_RX
+    primitives_reduce: PRIMITIVES_RX_s2
+    ops: OPS_RX
+    ops_reduce: OPS_RX_s2
+  search:
+    sync_bn: False
+    ckpt_dir: ''
+  evolution:
+    sync_bn: True
+    ckpt: '/mnt/lustre/share_data/hanyachao/light_nas/single_path_oneshot/ckpt_search/305.pth'
+    ceph_ckpt:
+    max_iterations: 1 # 20
+    population: 1 # 50
+    top_k: 10
+    mutate_prob: 0.1
+  retrain:
+    sync_bn: True
+    child_net: '5453000050351445'
+    ckpt: 'ckpt_search/495.pth'

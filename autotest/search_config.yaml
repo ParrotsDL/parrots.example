@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+#     template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -98,10 +98,12 @@ task:
                 # # mouth
                 # {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project parrots_test'},
                 #  light_nas
-                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi --pavi-project parrots_test'},
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search_benchmark', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution_benchmark', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # # pod-v3.1.0
                 # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
->>>>>>> master
             ]
     # Optional
     # callback: "cat"
