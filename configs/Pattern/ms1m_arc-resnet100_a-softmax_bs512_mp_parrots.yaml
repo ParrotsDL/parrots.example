@@ -87,7 +87,7 @@ data:
     ms1m:
         prefix: ['cluster2:s3://lixiaojie.facedata/ms1m/']
         #prefix_ceph: ['cluster2:s3://lixiaojie.facedata/ms1m/']
-        prefix_ceph: ['cluster2:s3://parrots_model_data/pattern/verify/ms1m/']
+        prefix_ceph: ['s3://parrots_model_data/pattern/verify/ms1m/']
         prefix_lustre: ['/mnt/lustre/share/wuwenli/ms1m/']
         data_source: [/mnt/lustre/share/wuwenli/ms1m/image_list.txt]
         label_source: [/mnt/lustre/share/wuwenli/ms1m/label.txt]
