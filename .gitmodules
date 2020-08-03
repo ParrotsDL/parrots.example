@@ -61,3 +61,6 @@
 [submodule "models/pytorch-object-detection-v2.3.0"]
 	path = models/pytorch-object-detection-v2.3.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+[submodule "models/TextRecog"]
+	path = models/TextRecog
+	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
