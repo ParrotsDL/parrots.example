@@ -11,6 +11,133 @@ pod-v3.1.0_faster-rcnn-R50-FPN-1x: # Required.
   __benchmark_avg_iter_time(s): [0.31, 'has_to_lower']   # 0.279 + 10%
   __benchmark_mem_alloc(mb): [2856, 'has_to_lower']   # 2596 + 10%
   __benchmark_mem_cached(mb): [3584, 'has_to_lower']   # 3258 + 10%
-  __benchmark_pure_training_time(h): [100000, 'has_to_lower']  
+  __benchmark_pure_training_time(h): [10.64, 'has_to_lower']  # 9.64 + 1
+  __benchmark_total_time(h): [10.68, 'has_to_lower']  # 9.68 + 1
+  metrics/bbox.AP.5: [0.526, 'has_to_higher']  # 0.584 - 10%
+
+pod-v3.1.0_faster-rcnn-mobilenet-FPN-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
   __benchmark_total_time(h): [100000, 'has_to_lower']
   metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_mask-rcnn-R50-FPN-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.31, 'has_to_lower']   # 0.376 + 10%
+  __benchmark_mem_alloc(mb): [2856, 'has_to_lower']   # 2629 + 10%
+  __benchmark_mem_cached(mb): [3584, 'has_to_lower']   # 3258 + 10%
+  __benchmark_pure_training_time(h): [10.64, 'has_to_lower']  # 19.253 + 1
+  __benchmark_total_time(h): [10.68, 'has_to_lower']  # 19.267 + 1
+  metrics/bbox.AP.5: [0.526, 'has_to_higher']  # 0.592 - 10%
+
+pod-v3.1.0_cascade-rcnn-R50-FPN-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_fcos-R50-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_faster-rcnn-R50-FPN-1x-ms-test-aug: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_effnetd0-bifpn-retina-32epoch: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_faster-rcnn-R50-FPN-cityscapes: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_faster-rcnn-R50-FPN-openimages: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_grid-rcnn-R50-FPN-2x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_keypoint-rcnn-R50-FPN-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_mask-rcnn-R50-FPN-2x-lvis: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_retinanet-R50-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_rfcn-R101-ohem-deform-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
+pod-v3.1.0_rfcn-shufflenet-1x: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [100000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [100000, 'has_to_lower']
+  __benchmark_total_time(h): [100000, 'has_to_lower']
+  metrics/bbox.AP.5: [0, 'has_to_higher']
+
