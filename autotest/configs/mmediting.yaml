@@ -1,0 +1,112 @@
+mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.val_saved_number: [10000, 'has_to_higher']
+
+mmediting_deepfillv2_256x256_8x2_celeba:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.l1: [10000, 'has_to_lower']
+
+mmediting_dim_stage2_v16_pln_1x1_1000k_comp1k:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.CONN: [10000, 'has_to_lower']
+  train.GRAD: [10000, 'has_to_lower']
+
+mmediting_edsr_x2c64b16_g1_300k_div2k:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.PSNR: [10000, 'has_to_higher']
+
+mmediting_edvrm_wotsa_x4_g8_600k_reds:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.PSNR: [10000, 'has_to_higher']
+
+mmediting_esrgan_psnr_x4c64b23g32_g1_1000k_div2k:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.PSNR: [10000, 'has_to_higher']
+  train.SSIM: [10000, 'has_to_higher']
+
+mmediting_gl_256x256_8x12_celeba:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.l1: [10000, 'has_to_lower']
+
+mmediting_indexnet_mobv2_1x16_78k_comp1k:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.CONN: [10000, 'has_to_lower']
+  train.GRAD: [10000, 'has_to_lower']
+
+mmediting_msrresnet_x4c64b16_g1_1000k_div2k:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.PSNR: [10000, 'has_to_higher']
+  train.SSIM: [10000, 'has_to_higher']
+
+mmediting_pconv_256x256_stage1_8x1_celeba:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.l1: [10000, 'has_to_lower']
+
+mmediting_pix2pix_vanilla_unet_bn_1x1_80k_facades:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.val_saved_number: [10000, 'has_to_higher']
+
+mmediting_srcnn_x4k915_g1_1000k_div2k:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
+  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
+  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
+  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
+  __benchmark_total_time(h): [10000, 'has_to_lower']
+  train.PSNR: [10000, 'has_to_higher']
+  train.SSIM: [10000, 'has_to_higher']
