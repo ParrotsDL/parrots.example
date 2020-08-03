@@ -2,14 +2,26 @@ import os
 import os.path as osp
 import sys
 import yaml
+import pavi
+
+def after_callback_wapper(config):
+    env = os.environ.copy()
+    if env.get('PAVI_TASK_ID') is not None:
+        pavi_task_id = env['PAVI_TASK_ID']
+    else:
+        pavi_task_id = env['pavi_task_id']
+    pavi_ret = dict()
+    for k, v in config.items():
+        pk = 'pavi_' + k
+        pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+        pavi_ret[pk] = pv
+    config.update(pavi_ret)
+
+    print(yaml.dump(config))
 
 
-def callback_wapper(config):
-    # '__autotest_get_scalar_from_pavi': if true autoparrots will
-    # get scalar from pavi
-    config.update(dict(__autotest_get_scalar_from_pavi=True))
-    # Required: encoding to yaml format and output to stdout,
-    #           so that it can be auto-parsed to summary.
+def pre_callback_wapper(config):
+
     print(yaml.dump(config))
 
 
@@ -28,4 +40,7 @@ def collect_config(framework, model_name):
 if __name__ == '__main__':
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
-        callback_wapper(config)
+        if sys.argv[3] == 'pre':
+            pre_callback_wapper(config)
+        else:
+            after_callback_wapper(config)
