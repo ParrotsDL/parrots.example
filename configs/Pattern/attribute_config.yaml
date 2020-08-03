@@ -191,6 +191,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_gender'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_gender'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_gender.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_gender'
         batch_size: 32 # for single gpu
     
     age_data_smartphone:
@@ -202,6 +203,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smart_phone_train.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/smartphone_data'
         batch_size: 32 # for single gpu
         smooth_l1_thrd: 1
         diff_thrd: 1
@@ -215,6 +217,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_race'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_race'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_race.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_race'
         batch_size: 16 # for single gpu
     
     mask_data:
@@ -226,6 +229,7 @@ data:
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mask'
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mask'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mask.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_mask'
         batch_size: 16 # for single gpu
     glass_data:
         type: 'attribute'
@@ -236,6 +240,7 @@ data:
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_glass'
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_glass'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_glass.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_glass'
         batch_size: 16 # for single gpu
     emotion_data:
         type: 'attribute'
@@ -246,6 +251,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/new_emotion.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_emotion'
         batch_size: 16 # for single gpu
     beard_data:
         type: 'attribute'
@@ -256,6 +262,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_beard'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_beard'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_beard.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_beard'
         batch_size: 16 # for single gpu
     eye_data:
         type: 'attribute'
@@ -266,6 +273,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_eye'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_eye'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_eye.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_eye'
         batch_size: 16 # for single gpu
     mouth_data:
         type: 'attribute'
@@ -276,6 +284,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mouth'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mouth'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mouth.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_mouth'
         batch_size: 16 # for single gpu
     smile_data:
         compare_task: True
@@ -287,6 +296,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_smile'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_smile'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_smile.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_smile'
         batch_size: 16 # for single gpu
     face_value_data:
         compare_task: True
@@ -298,6 +308,7 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_face_value'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_face_value'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_face_value.json'
+        prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_face_value'
         batch_size: 16 # for single gpu
 
 test:
