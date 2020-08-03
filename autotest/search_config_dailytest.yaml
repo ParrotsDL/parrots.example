@@ -21,8 +21,12 @@ task:
                 ]
     # Optional
     # callback: "cat"
+<<<<<<< HEAD
     pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0"
     after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1"
+=======
+    callback: "python autotest/parrots_test_callback_new.py {framework} {model}"
+>>>>>>> master
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
