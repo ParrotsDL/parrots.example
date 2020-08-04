@@ -28,14 +28,12 @@ dataset: # Required.
       kwargs:
         source: train  # dataset id
         meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
             image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
-            memcached: False
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
     dataset:
@@ -43,7 +41,6 @@ dataset: # Required.
       kwargs:
         source: val
         meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
         image_reader:
           type: ceph_opencv
           kwargs:
@@ -55,7 +52,6 @@ dataset: # Required.
           type: COCO               # choices = {'COCO', 'VOC', 'MR'}
           kwargs:
             gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            # gt_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
             iou_types: [bbox]
   batch_sampler:
     type: aspect_ratio_group
@@ -73,7 +69,7 @@ dataset: # Required.
 
 
 trainer: # Required.
-  max_epoch: 14             # total epochs for the training
+  max_epoch: 14              # total epochs for the training
   test_freq: 14
   optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
@@ -92,7 +88,7 @@ saver: # Required.
   save_dir: checkpoints     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
   results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
-  auto_resume: True  # find last checkpoint from save_dir and resume from it automatically
+  auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
 
@@ -110,6 +106,7 @@ hooks:
       logdir: log
       summary_writer: pavi
 
+
 net:
   - name: backbone              # backbone = resnet50(frozen_layers, out_layers, out_strides)
     type: pod.models.backbones.resnet50
@@ -118,7 +115,9 @@ net:
       out_layers: [1,2,3,4]     # layer1...4, commonly named Conv2...5
       out_strides: [4,8,16,32]  # tell the strides of output features
       normalize:
-        type: freeze_bn
+        type: sync_bn
+        kwargs:
+          bn_group_size: 8
       initializer:
         method: msra
   - name: neck
@@ -203,12 +202,12 @@ net:
                 type: rpn
                 kwargs:
                   top_n: 1000
-  - name: bbox_head
+  - name: cascade_head
     prev: neck
-    type: pod.models.heads.bbox_head.FC
+    type: pod.models.heads.cascade_head.FC
     kwargs:
       feat_planes: 1024
-      num_classes: *num_classes                 # number of classification classes
+      num_classes: *num_classes             # number of classification classes
       initializer:
         method: msra
       cfg:
@@ -224,36 +223,42 @@ net:
           fpn_levels: [0,1,2,3]   # indices of fpn features used for this stage. these levels are supposed to be continuous
           base_scale: 56          # target level of a RoI is floor(log2((w*h)**0.5/base_scale))
         roipooling:
-          method: 'roialignpool'      # choices=['roialignpool', 'psroipool', 'roipool', 'psroimaskpool']. note that 'psroipool' is for RFCN head
+          method: 'roialignpool'  # choices=['roialignpool', 'psroipool', 'roipool']. note that 'psroipool' is for RFCN head
           pool_size: 7
-          sampling_ratio: 2           # number of sampling points in each bin. 0 means densely sampled
-        bbox_normalize: &bbox_norm
-          means: [0, 0, 0, 0]         # statics to normalize localization predictions.
-          stds: [0.1, 0.1, 0.2, 0.2]
-        share_location: &share_location False         # is share location in bbox regression for all classes
-        bbox_supervisor:
-          type: faster
+          sampling_ratio: 2
+        num_stage: &num_stage 3
+        stage_weights: [1, 0.5, 0.25]
+        test_ensemble: True
+        stage_bbox_normalize: &bbox_norm
+          means: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]     # statics to normalize localization predictions.
+          stds: [[0.1, 0.1, 0.2, 0.2], [0.05, 0.05, 0.1, 0.1], [0.033, 0.033, 0.067, 0.067]]
+        share_location: &share_location True     # is share location in bbox regression for all classes
+        cascade_supervisor:
+          type: cascade
           kwargs:
-            bbox_normalize: *bbox_norm
-            matcher:
+            num_stage: *num_stage
+            stage_bbox_normalize: *bbox_norm
+            stage_matcher:
               type: max_iou
               kwargs:
                 ignore_iou_thresh: 0.5          # Required if provide ignore_regions
-                positive_iou_thresh: 0.5
-                negative_iou_thresh: 0.5
+                positive_iou_thresh: [0.5, 0.6, 0.7]        # train only
+                negative_iou_thresh: [0.5, 0.6, 0.7]        # train only
                 allow_low_quality_match: False  # positive if a anchor has highest iou with any gt
             sampler:
               type: naive
               kwargs:
                 batch_size: 512
                 positive_percent: 0.25
-        bbox_predictor:
-          type: faster
+        cascade_predictor:
+          type: cascade
           kwargs:
-            bbox_normalize: *bbox_norm
+            num_stage: *num_stage
+            stage_bbox_normalize: *bbox_norm
             share_location: *share_location
-            nms:
-              type: naive
-              nms_iou_thresh: 0.5
             bbox_score_thresh: 0.0
-            top_n: 100
+            nms:
+              type: naive               # choices = {'naive', 'soft'}
+              nms_iou_thresh: 0.5       # test only
+            bbox_score_thresh: 0.0      # test only
+            top_n: 100                  # test only, number of bboxes to keep

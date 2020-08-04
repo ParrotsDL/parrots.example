@@ -1,10 +1,16 @@
 version: v3.0.0
-num_classes: &num_classes 81
+num_classes: &num_classes 1231
 
 flip: &flip
  type: flip
  kwargs:
    flip_p: 0.5
+
+ms_resize: &ms_resize
+ type: keep_ar_resize
+ kwargs:
+   scales: [640, 672, 704, 736, 768, 800]
+   max_size: 1333
 
 resize: &resize
  type: keep_ar_resize
@@ -24,26 +30,24 @@ normalize: &normalize
 dataset: # Required.
   train:
     dataset:
-      type: coco
+      type: lvis
       kwargs:
         source: train  # dataset id
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        meta_file: /mnt/lustre/share/DSK/datasets/lvis/lvis_v0.5_train.json
+        has_mask: True
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
             image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
-            memcached: False
-        transformer: [*flip, *resize, *to_tensor, *normalize]
+        transformer: [*flip, *ms_resize, *to_tensor, *normalize]
   test:
     dataset:
-      type: coco
+      type: lvis
       kwargs:
         source: val
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+        meta_file: /mnt/lustre/share/DSK/datasets/lvis/lvis_v0.5_val.json
         image_reader:
           type: ceph_opencv
           kwargs:
@@ -52,18 +56,20 @@ dataset: # Required.
             color_mode: RGB
         transformer: [*resize, *to_tensor, *normalize]
         evaluator:
-          type: COCO               # choices = {'COCO', 'VOC', 'MR'}
+          type: LVIS               # choices = {'COCO', 'VOC', 'MR'}
           kwargs:
-            gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            # gt_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            iou_types: [bbox]
+            gt_file: /mnt/lustre/share/DSK/datasets/lvis/lvis_v0.5_val.json
+            iou_types: [bbox, segm]
   batch_sampler:
     type: aspect_ratio_group
     kwargs:
       sampler:
-        type: dist
-        kwargs: {}
-      batch_size: 2
+        type: repeat_factor
+        kwargs:
+          t: 0.001
+          ri_mode: random_round
+          pn: 0.5
+      batch_size: 1
       aspect_grouping: [1,]
   dataloader:
     type: base
@@ -73,8 +79,8 @@ dataset: # Required.
 
 
 trainer: # Required.
-  max_epoch: 14             # total epochs for the training
-  test_freq: 14
+  max_epoch: 25.3736          # 90000 iterations
+  test_freq: 25.3736 
   optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
     kwargs:
@@ -82,17 +88,18 @@ trainer: # Required.
       momentum: 0.9
       weight_decay: 0.0001
   lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
-    warmup_epochs: 1         # set to be 0 to disable warmup. When warmup,  target_lr = init_lr * total_batch_size
+    warmup_epochs: 0.282          # 1000 iterations of warmup 
+    warmup_type: linear
     type: MultiStepLR
     kwargs:
-      milestones: [9,12]     # epochs to decay lr
+      milestones: [16.9158, 22.5545]     # [60000, 80000]
       gamma: 0.1             # decay rate
 
 saver: # Required.
   save_dir: checkpoints     # dir to save checkpoints
-  pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  pretrain_model: /mnt/lustre/share/prototype_model_zoo/resnet50_batch1k_epoch100_nesterov_wd0.0001_bn_nowd/checkpoints/ckpt.pth.tar
   results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
-  auto_resume: True  # find last checkpoint from save_dir and resume from it automatically
+  auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
 
@@ -121,6 +128,7 @@ net:
         type: freeze_bn
       initializer:
         method: msra
+      checkpoint: True
   - name: neck
     prev: backbone
     type: pod.models.necks.fpn.FPN
@@ -219,7 +227,7 @@ net:
         loc_loss:
           type: smooth_l1_loss
           kwargs:
-            sigma: 1.0
+            sigma: 1000.0
         fpn:
           fpn_levels: [0,1,2,3]   # indices of fpn features used for this stage. these levels are supposed to be continuous
           base_scale: 56          # target level of a RoI is floor(log2((w*h)**0.5/base_scale))
@@ -256,4 +264,47 @@ net:
               type: naive
               nms_iou_thresh: 0.5
             bbox_score_thresh: 0.0
-            top_n: 100
+            top_n: 300
+  - name: mask_head
+    prev: neck
+    type: pod.models.heads.mask_head.ConvUp
+    kwargs:
+      num_classes: *num_classes               # number of classes, 0 for background class
+      feat_planes: 256
+      num_convs: 4
+      deconv_kernel: 2
+      initializer:
+        method: msra
+      cfg:
+        mask_loss:
+          type: sigmoid_cross_entropy
+        fpn:
+          fpn_levels: [0,1,2,3]   # indices of fpn features used for this stage. these levels are supposed to be continuous
+          base_scale: 56          # target level of a RoI is floor(log2((w*h)**0.5/base_scale))
+        roipooling:
+          method: 'roialignpool'    # choices=['roialignpool', 'psroipool', 'roipool']. note that 'psroipool' is for RFCN head
+          pool_size: 14
+          sampling_ratio: 2
+        mask_supervisor:
+          type: base
+          kwargs:
+            resample: True            # sampling from rpn proposals; False to use bbox_head sampled results, may be faster
+            label_h: 28               # output size of heatmap
+            label_w: 28
+            sampler:
+              type: naive
+              kwargs:
+                batch_size: 128         # mask batch size of each image
+                positive_percent: 1.0   # sample positives only
+            matcher:
+              type: max_iou
+              kwargs:
+                positive_iou_thresh: 0.5
+                negative_iou_thresh: -1
+                allow_low_quality_match: False  # train only. positive if a anchor has highest iou with any gt
+                ignore_iou_thresh: -1
+        mask_predictor:
+          type: base
+          kwargs:
+            num_classes: *num_classes
+            mask_thresh: 0.5

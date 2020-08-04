@@ -11,8 +11,7 @@ import warnings
 from autoparrots.utils.fileio import dump
 
 
-def after_callback_wapper(config):
-    time.sleep(10)  # wait 10s for pavi scalar uploaded
+def after_callback_wrapper(config):
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
         pavi_task_id = env['PAVI_TASK_ID']
@@ -30,7 +29,7 @@ def after_callback_wapper(config):
     print(yaml.dump(config))
 
 
-def update_thresh_wapper(config, framework, model_name):
+def pre_callback_wrapper(config, framework, model_name):
     time.sleep(10)  # wait 10s for pavi scalar uploaded    
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
@@ -102,8 +101,8 @@ if __name__ == '__main__':
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
         if sys.argv[3] == '0':
-            pre_callback_wapper(config)
+            pre_callback_wrapper(config)
         elif sys.argv[3] == '1':
-            after_callback_wapper(config)
+            after_callback_wrapper(config)
         elif sys.argv[3] == '2':
-            update_thresh_wapper(config, sys.argv[1], sys.argv[2])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2])
