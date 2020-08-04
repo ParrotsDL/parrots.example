@@ -1,6 +1,6 @@
 mkdir -p log/springnas-lite/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 ROOT=.
 
 # add springnas_lite lib without install
