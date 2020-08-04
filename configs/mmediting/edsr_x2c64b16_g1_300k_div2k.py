@@ -114,13 +114,11 @@ data = dict(
 optimizers = dict(generator=dict(type='Adam', lr=1e-4, betas=(0.9, 0.999)))
 
 # learning policy
-# total_iters = 300000
-total_iters = 500
+total_iters = 300000
 lr_config = dict(policy='Step', by_epoch=False, step=[200000], gamma=0.5)
 
 checkpoint_config = dict(interval=5000, save_optimizer=True, by_epoch=False)
-# evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
-evaluation = dict(interval=500, save_image=True, gpu_collect=True)
+evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
 log_config = dict(
     interval=100,
     hooks=[

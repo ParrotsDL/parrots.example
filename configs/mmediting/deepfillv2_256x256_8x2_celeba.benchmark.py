@@ -184,9 +184,11 @@ visual_config = dict(
     ],
 )
 
-evaluation = dict(interval=50000)
+# evaluation = dict(interval=50000)
+evaluation = dict(interval=500)
 
-total_iters = 500003
+# total_iters = 500003
+total_iters = 500
 dist_params = dict(backend='nccl', port=20002)
 log_level = 'INFO'
 work_dir = './work_dirs/test_pggan'

@@ -131,8 +131,7 @@ lr_config = dict(policy='Step', step=[52000, 67600], gamma=0.1, by_epoch=False)
 
 # checkpoint saving
 checkpoint_config = dict(interval=2600, by_epoch=False)
-# evaluation = dict(interval=2600, save_image=False)
-evaluation = dict(interval=500, save_image=False)
+evaluation = dict(interval=2600, save_image=False)
 # yapf:disable
 log_config = dict(
     interval=10,
@@ -144,8 +143,7 @@ log_config = dict(
 # yapf:enable
 
 # runtime settings
-# total_iters = 78000
-total_iters = 500
+total_iters = 78000
 dist_params = dict(backend='nccl', port=20008)
 log_level = 'INFO'
 work_dir = './work_dirs/indexnet'

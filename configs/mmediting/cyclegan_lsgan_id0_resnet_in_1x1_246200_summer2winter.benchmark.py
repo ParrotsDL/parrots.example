@@ -119,11 +119,14 @@ optimizers = dict(
     discriminators=dict(type='Adam', lr=2e-4, betas=(0.5, 0.999)))
 
 # learning policy
+# lr_config = dict(
+#     policy='Linear', by_epoch=False, target_lr=0, start=123100, interval=1231)
 lr_config = dict(
-    policy='Linear', by_epoch=False, target_lr=0, start=123100, interval=1231)
+    policy='Linear', by_epoch=False, target_lr=0, start=0, interval=1)
 # checkpoint saving
 checkpoint_config = dict(interval=12310, save_optimizer=True, by_epoch=False)
-evaluation = dict(interval=12310, save_image=True)
+# evaluation = dict(interval=12310, save_image=True)
+evaluation = dict(interval=500, save_image=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -134,7 +137,8 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-total_iters = 246200
+# total_iters = 246200
+total_iters = 500
 cudnn_benchmark = True
 dist_params = dict(backend='nccl', port=20001)
 log_level = 'INFO'

@@ -1,18 +1,23 @@
-exp_name = 'srcnn_x4k915_g1_1000k_div2k'
+exp_name = 'edsr_x2c64b16_g1_300k_div2k'
 
-scale = 4
+scale = 2
 # model settings
 model = dict(
     type='BasicRestorer',
     generator=dict(
-        type='SRCNN',
-        channels=(3, 64, 32, 3),
-        kernel_sizes=(9, 1, 5),
-        upscale_factor=scale),
+        type='EDSR',
+        in_channels=3,
+        out_channels=3,
+        mid_channels=64,
+        num_blocks=16,
+        upscale_factor=scale,
+        res_scale=1,
+        rgb_mean=(0.4488, 0.4371, 0.4040),
+        rgb_std=(1.0, 1.0, 1.0)),
     pixel_loss=dict(type='L1Loss', loss_weight=1.0, reduction='mean'))
 # model training and testing settings
 train_cfg = None
-test_cfg = dict(metrics=['PSNR', 'SSIM'], crop_border=scale)
+test_cfg = dict(metrics=['PSNR'], crop_border=scale)
 
 # dataset settings
 train_dataset_type = 'SRAnnotationDataset'
@@ -35,7 +40,7 @@ train_pipeline = [
         mean=[0, 0, 0],
         std=[1, 1, 1],
         to_rgb=True),
-    dict(type='PairedRandomCrop', gt_patch_size=128),
+    dict(type='PairedRandomCrop', gt_patch_size=96),
     dict(
         type='Flip', keys=['lq', 'gt'], flip_ratio=0.5,
         direction='horizontal'),
@@ -68,7 +73,6 @@ test_pipeline = [
 
 data_root = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/'
 data_root_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/val_set5/'
-
 ceph_data_root = 's3://parrots_model_data/mmediting_data/SR/datasets/DIV2K/'
 ceph_data_root_val = 's3://parrots_model_data/mmediting_data/SR/datasets/val_set5/'
 
@@ -82,7 +86,7 @@ data = dict(
         times=1000,
         dataset=dict(
             type=train_dataset_type,
-            lq_folder= data_root + 'DIV2K_train_LR_bicubic/X4_sub',
+            lq_folder= data_root + 'DIV2K_train_LR_bicubic/X2_sub',
             gt_folder= data_root + 'DIV2K_train_HR_sub',
             ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/meta_info_DIV2K800sub_GT.txt',
             pipeline=train_pipeline,
@@ -92,34 +96,31 @@ data = dict(
     val_workers_per_gpu=1,
     val=dict(
         type=val_dataset_type,
-        lq_folder= data_root_val + 'Set5_bicLRx4',
-        gt_folder= data_root_val + 'Set5',
+        lq_folder= data_root_val + 'Set5_bicLRx2',
+        gt_folder= data_root_val + 'Set5_mod12',
         pipeline=test_pipeline,
         scale=scale,
         filename_tmpl='{}'),
     # test
     test=dict(
         type=val_dataset_type,
-        lq_folder= data_root_val + 'Set5_bicLRx4',
-        gt_folder= data_root_val + 'Set5',
+        lq_folder= data_root_val + 'Set5_bicLRx2',
+        gt_folder= data_root_val + 'Set5_mod12',
         pipeline=test_pipeline,
         scale=scale,
         filename_tmpl='{}'))
 
 # optimizer
-optimizers = dict(generator=dict(type='Adam', lr=2e-4, betas=(0.9, 0.999)))
+optimizers = dict(generator=dict(type='Adam', lr=1e-4, betas=(0.9, 0.999)))
 
 # learning policy
-total_iters = 1000000
-lr_config = dict(
-    policy='CosineRestart',
-    by_epoch=False,
-    periods=[250000, 250000, 250000, 250000],
-    restart_weights=[1, 1, 1, 1],
-    min_lr=1e-7)
+# total_iters = 300000
+total_iters = 500
+lr_config = dict(policy='Step', by_epoch=False, step=[200000], gamma=0.5)
 
 checkpoint_config = dict(interval=5000, save_optimizer=True, by_epoch=False)
-evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+# evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+evaluation = dict(interval=500, save_image=True, gpu_collect=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -130,7 +131,7 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-dist_params = dict(backend='nccl', port=20012)
+dist_params = dict(backend='nccl', port=20004)
 log_level = 'INFO'
 work_dir = f'./work_dirs/{exp_name}'
 load_from = None

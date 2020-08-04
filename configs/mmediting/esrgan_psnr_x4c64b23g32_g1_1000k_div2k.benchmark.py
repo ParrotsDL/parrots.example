@@ -1,14 +1,16 @@
-exp_name = 'srcnn_x4k915_g1_1000k_div2k'
+exp_name = 'esrgan_psnr_x4c64b23g32_g1_1000k_div2k'
 
 scale = 4
 # model settings
 model = dict(
     type='BasicRestorer',
     generator=dict(
-        type='SRCNN',
-        channels=(3, 64, 32, 3),
-        kernel_sizes=(9, 1, 5),
-        upscale_factor=scale),
+        type='RRDBNet',
+        in_channels=3,
+        out_channels=3,
+        mid_channels=64,
+        num_blocks=23,
+        growth_channels=32),
     pixel_loss=dict(type='L1Loss', loss_weight=1.0, reduction='mean'))
 # model training and testing settings
 train_cfg = None
@@ -68,7 +70,6 @@ test_pipeline = [
 
 data_root = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/'
 data_root_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/val_set5/'
-
 ceph_data_root = 's3://parrots_model_data/mmediting_data/SR/datasets/DIV2K/'
 ceph_data_root_val = 's3://parrots_model_data/mmediting_data/SR/datasets/val_set5/'
 
@@ -84,7 +85,7 @@ data = dict(
             type=train_dataset_type,
             lq_folder= data_root + 'DIV2K_train_LR_bicubic/X4_sub',
             gt_folder= data_root + 'DIV2K_train_HR_sub',
-            ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/meta_info_DIV2K800sub_GT.txt',
+            ann_file= '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/meta_info_DIV2K800sub_GT.txt',
             pipeline=train_pipeline,
             scale=scale)),
     # val
@@ -110,7 +111,8 @@ data = dict(
 optimizers = dict(generator=dict(type='Adam', lr=2e-4, betas=(0.9, 0.999)))
 
 # learning policy
-total_iters = 1000000
+# total_iters = 1000000
+total_iters = 500
 lr_config = dict(
     policy='CosineRestart',
     by_epoch=False,
@@ -119,7 +121,8 @@ lr_config = dict(
     min_lr=1e-7)
 
 checkpoint_config = dict(interval=5000, save_optimizer=True, by_epoch=False)
-evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+# evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+evaluation = dict(interval=500, save_image=True, gpu_collect=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -130,7 +133,7 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-dist_params = dict(backend='nccl', port=20012)
+dist_params = dict(backend='nccl', port=20006)
 log_level = 'INFO'
 work_dir = f'./work_dirs/{exp_name}'
 load_from = None

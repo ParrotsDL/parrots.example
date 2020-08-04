@@ -132,11 +132,9 @@ visual_config = dict(
     res_name_list=['gt_img', 'masked_img', 'fake_res', 'fake_img'],
 )
 
-# evaluation = dict(interval=50000)
-evaluation = dict(interval=500)
+evaluation = dict(interval=50000)
 
-# total_iters = 800002
-total_iters = 500
+total_iters = 800002
 dist_params = dict(backend='nccl', port=20010)
 log_level = 'INFO'
 work_dir = './work_dirs/test_pggan'

@@ -1,13 +1,15 @@
-exp_name = 'srcnn_x4k915_g1_1000k_div2k'
+exp_name = 'msrresnet_x4c64b16_g1_1000k_div2k'
 
 scale = 4
 # model settings
 model = dict(
     type='BasicRestorer',
     generator=dict(
-        type='SRCNN',
-        channels=(3, 64, 32, 3),
-        kernel_sizes=(9, 1, 5),
+        type='MSRResNet',
+        in_channels=3,
+        out_channels=3,
+        mid_channels=64,
+        num_blocks=16,
         upscale_factor=scale),
     pixel_loss=dict(type='L1Loss', loss_weight=1.0, reduction='mean'))
 # model training and testing settings
@@ -110,7 +112,8 @@ data = dict(
 optimizers = dict(generator=dict(type='Adam', lr=2e-4, betas=(0.9, 0.999)))
 
 # learning policy
-total_iters = 1000000
+# total_iters = 1000000
+total_iters = 500
 lr_config = dict(
     policy='CosineRestart',
     by_epoch=False,
@@ -119,7 +122,8 @@ lr_config = dict(
     min_lr=1e-7)
 
 checkpoint_config = dict(interval=5000, save_optimizer=True, by_epoch=False)
-evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+# evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+evaluation = dict(interval=500, save_image=True, gpu_collect=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -130,7 +134,7 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-dist_params = dict(backend='nccl', port=20012)
+dist_params = dict(backend='nccl', port=20009)
 log_level = 'INFO'
 work_dir = f'./work_dirs/{exp_name}'
 load_from = None

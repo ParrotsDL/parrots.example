@@ -114,8 +114,7 @@ lr_config = dict(policy='Fixed', by_epoch=False)
 
 # checkpoint saving
 checkpoint_config = dict(interval=4000, save_optimizer=True, by_epoch=False)
-# evaluation = dict(interval=4000, save_image=True)
-evaluation = dict(interval=500, save_image=True)
+evaluation = dict(interval=4000, save_image=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -126,8 +125,7 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-# total_iters = 80000
-total_iters = 500
+total_iters = 80000
 cudnn_benchmark = True
 dist_params = dict(backend='nccl', port=20011)
 log_level = 'INFO'

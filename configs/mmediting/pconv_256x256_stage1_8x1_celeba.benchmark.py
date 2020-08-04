@@ -1,48 +1,41 @@
 model = dict(
-    type='GLInpaintor',
+    type='PConvInpaintor',
     encdec=dict(
-        type='GLEncoderDecoder',
-        encoder=dict(type='GLEncoder', norm_cfg=dict(type='SyncBN')),
-        decoder=dict(type='GLDecoder', norm_cfg=dict(type='SyncBN')),
-        dilation_neck=dict(
-            type='GLDilationNeck', norm_cfg=dict(type='SyncBN'))),
-    disc=dict(
-        type='GLDiscs',
-        global_disc_cfg=dict(
-            in_channels=3,
-            max_channels=512,
-            fc_in_channels=512 * 4 * 4,
-            fc_out_channels=1024,
-            num_convs=6,
-            norm_cfg=dict(type='SyncBN'),
-        ),
-        local_disc_cfg=dict(
-            in_channels=3,
-            max_channels=512,
-            fc_in_channels=512 * 4 * 4,
-            fc_out_channels=1024,
-            num_convs=5,
-            norm_cfg=dict(type='SyncBN'),
-        ),
-    ),
-    loss_gan=dict(
-        type='GANLoss',
-        gan_type='vanilla',
-        loss_weight=0.001,
-    ),
+        type='PConvEncoderDecoder',
+        encoder=dict(
+            type='PConvEncoder',
+            norm_cfg=dict(type='SyncBN', requires_grad=True),
+            norm_eval=False),
+        decoder=dict(type='PConvDecoder', norm_cfg=dict(type='SyncBN'))),
+    disc=None,
+    loss_composed_percep=dict(
+        type='PerceptualLoss',
+        vgg_type='vgg16',
+        layer_weights={
+            '4': 1.,
+            '9': 1.,
+            '16': 1.,
+        },
+        perceptual_weight=0.05,
+        style_weight=120,
+        pretrained=('/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/vgg16-397923af.pth')),
+    loss_out_percep=True,
     loss_l1_hole=dict(
         type='L1Loss',
-        loss_weight=1.0,
+        loss_weight=6.,
+    ),
+    loss_l1_valid=dict(
+        type='L1Loss',
+        loss_weight=1.,
+    ),
+    loss_tv=dict(
+        type='MaskedTVLoss',
+        loss_weight=0.1,
     ),
     pretrained=None)
 
-train_cfg = dict(
-    disc_step=1,
-    iter_tc=40000,
-    iter_td=50000,
-    start_iter=0,
-    local_size=(128, 128))
-test_cfg = dict(metrics=['l1', 'psnr', 'ssim'])
+train_cfg = dict(disc_step=0)
+test_cfg = dict(metrics=['l1'])
 
 dataset_type = 'ImgInpaintingDataset'
 input_shape = (256, 256)
@@ -51,11 +44,13 @@ train_pipeline = [
     dict(type='LoadImageFromFile', key='gt_img'),
     dict(
         type='LoadMask',
-        mask_mode='bbox',
+        mask_mode='irregular',
         mask_config=dict(
-            max_bbox_shape=(128, 128),
-            max_bbox_delta=40,
-            min_margin=20,
+            num_vertexes=(4, 10),
+            max_angle=6.0,
+            length_range=(20, 128),
+            brush_width=(10, 45),
+            area_ratio_range=(0.15, 0.65),
             img_shape=input_shape)),
     dict(
         type='Crop',
@@ -78,10 +73,9 @@ train_pipeline = [
     dict(type='GetMaskedImage'),
     dict(
         type='Collect',
-        keys=['gt_img', 'masked_img', 'mask', 'mask_bbox'],
+        keys=['gt_img', 'masked_img', 'mask'],
         meta_keys=['gt_img_path']),
-    dict(type='ImageToTensor', keys=['gt_img', 'masked_img', 'mask']),
-    dict(type='ToTensor', keys=['mask_bbox'])
+    dict(type='ImageToTensor', keys=['gt_img', 'masked_img', 'mask'])
 ]
 
 test_pipeline = train_pipeline
@@ -92,11 +86,12 @@ ceph_data_root = 's3://parrots_model_data/mmediting_data/CelebA-HQ/'
 ceph_data_root_val = None
 
 data = dict(
-    samples_per_gpu=12,
-    workers_per_gpu=8,
+    samples_per_gpu=1,
+    workers_per_gpu=2,
     val_samples_per_gpu=1,
     val_workers_per_gpu=8,
-    drop_last=True,
+    train_drop_last=True,
+    val_drop_last=True,
     train=dict(
         type=dataset_type,
         ann_file=('/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/CelebA-HQ/train_celeba_img_list.txt'),
@@ -116,8 +111,8 @@ data = dict(
         pipeline=test_pipeline,
         test_mode=True))
 
-optimizers = dict(
-    generator=dict(type='Adam', lr=0.0004), disc=dict(type='Adam', lr=0.0004))
+optimizers = dict(generator=dict(type='Adam',
+                                 lr=0.0002))  # fist stage training
 
 lr_config = dict(policy='Fixed', by_epoch=False)
 
@@ -125,7 +120,7 @@ checkpoint_config = dict(by_epoch=False, interval=50000)
 log_config = dict(
     interval=100,
     hooks=[
-        dict(type='TextLoggerHook'),
+        dict(type='TextLoggerHook', by_epoch=False),
         # dict(type='TensorboardLoggerHook'),
         # dict(type='PaviLoggerHook', init_kwargs=dict(project='mmedit'))
     ])
@@ -134,22 +129,19 @@ visual_config = dict(
     type='VisualizationHook',
     output_dir='visual',
     interval=1000,
-    res_name_list=[
-        'gt_img', 'masked_img', 'fake_res', 'fake_img', 'fake_gt_local'
-    ],
+    res_name_list=['gt_img', 'masked_img', 'fake_res', 'fake_img'],
 )
 
-evaluation = dict(
-    interval=50000,
-    metric_dict=dict(l1=dict()),
-)
+# evaluation = dict(interval=50000)
+evaluation = dict(interval=500)
 
-total_iters = 300002
-dist_params = dict(backend='nccl', port=20007)
+# total_iters = 800002
+total_iters = 500
+dist_params = dict(backend='nccl', port=20010)
 log_level = 'INFO'
-work_dir = './work_dirs/gl_celeba'
+work_dir = './work_dirs/test_pggan'
 load_from = None
 resume_from = None
 workflow = [('train', 10000)]
-exp_name = '0027_gl_celeba'
+exp_name = 'pconv_256x256_stage1_8x1_celeba'
 find_unused_parameters = False

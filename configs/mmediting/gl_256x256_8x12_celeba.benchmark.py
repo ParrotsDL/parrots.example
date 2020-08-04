@@ -139,12 +139,18 @@ visual_config = dict(
     ],
 )
 
+# evaluation = dict(
+#     interval=50000,
+#     metric_dict=dict(l1=dict()),
+# )
+
 evaluation = dict(
-    interval=50000,
+    interval=500,
     metric_dict=dict(l1=dict()),
 )
 
-total_iters = 300002
+# total_iters = 300002
+total_iters = 500
 dist_params = dict(backend='nccl', port=20007)
 log_level = 'INFO'
 work_dir = './work_dirs/gl_celeba'

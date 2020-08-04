@@ -110,7 +110,8 @@ data = dict(
 optimizers = dict(generator=dict(type='Adam', lr=2e-4, betas=(0.9, 0.999)))
 
 # learning policy
-total_iters = 1000000
+# total_iters = 1000000
+total_iters = 500
 lr_config = dict(
     policy='CosineRestart',
     by_epoch=False,
@@ -119,7 +120,8 @@ lr_config = dict(
     min_lr=1e-7)
 
 checkpoint_config = dict(interval=5000, save_optimizer=True, by_epoch=False)
-evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+# evaluation = dict(interval=5000, save_image=True, gpu_collect=True)
+evaluation = dict(interval=500, save_image=True, gpu_collect=True)
 log_config = dict(
     interval=100,
     hooks=[
