@@ -46,6 +46,12 @@
 [submodule "models/mouth_inpaint_network"]
 	path = models/mouth_inpaint_network
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
+[submodule "models/mmsegmentation"]
+	path = models/mmsegmentation
+	url = git@gitlab.bj.sensetime.com:maxiaoming/mmsegmentation.git
+[submodule "models/STAR"]
+	path = models/STAR
+	url = git@gitlab.bj.sensetime.com:hanyachao/STAR.git
 [submodule "models/pytorch-object-detection-v3.1.0"]
 	path = models/pytorch-object-detection-v3.1.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/Pytorch-Object-Detection.git
@@ -55,3 +61,9 @@
 [submodule "models/mmdet"]
 	path = models/mmdet
 	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git
+[submodule "models/mmaction"]
+	path = models/mmaction
+	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
+[submodule "models/TextRecog"]
+	path = models/TextRecog
+	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
