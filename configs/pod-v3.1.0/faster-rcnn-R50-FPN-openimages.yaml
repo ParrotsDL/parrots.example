@@ -1,5 +1,5 @@
 version: v3.0.0
-num_classes: &num_classes 81
+num_classes: &num_classes 501
 
 flip: &flip
  type: flip
@@ -11,6 +11,13 @@ resize: &resize
  kwargs:
    scales: [800]
    max_size: 1333
+
+resize_test: &resize_test
+ type: keep_ar_resize
+ kwargs:
+   scales: [640, 672, 704, 736, 768, 800]              # shorter side of resized image
+   max_size: 1333
+
 
 to_tensor: &to_tensor
   type: to_tensor
@@ -24,44 +31,45 @@ normalize: &normalize
 dataset: # Required.
   train:
     dataset:
-      type: coco
+      type: openimages
       kwargs:
         source: train  # dataset id
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        num_classes: *num_classes
+        ignore_as_gt: True
+        meta_file: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minitrain.json
         image_reader:
           type: ceph_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
+            # image_dir: /mnt/lustre/share/DSK/datasets/OpenImages/OpenImages/train
+            image_dir: s3://parrots_data/DSK/datasets/OpenImages/OpenImages/train
             color_mode: RGB
-            memcached: False
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
     dataset:
-      type: coco
+      type: openimages
       kwargs:
         source: val
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+        num_classes: *num_classes
+        meta_file: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
         image_reader:
           type: ceph_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/val2017
+            # image_dir: /mnt/lustre/share/DSK/datasets/OpenImages/OpenImages/train
+            image_dir: s3://parrots_data/DSK/datasets/OpenImages/OpenImages/train
             color_mode: RGB
-        transformer: [*resize, *to_tensor, *normalize]
+        transformer: [*resize_test, *to_tensor, *normalize]
         evaluator:
-          type: COCO               # choices = {'COCO', 'VOC', 'MR'}
+          type: OID               # choices = {'COCO', 'VOC', 'mAP'}
           kwargs:
-            gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            # gt_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            iou_types: [bbox]
+            input_annotations_boxes: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
+            input_annotations_labels: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
+            iou_thresh: 0.5
+            output_metrics: metrics.csv
   batch_sampler:
     type: aspect_ratio_group
     kwargs:
       sampler:
-        type: dist
+        type: class_balance
         kwargs: {}
       batch_size: 2
       aspect_grouping: [1,]
@@ -73,8 +81,8 @@ dataset: # Required.
 
 
 trainer: # Required.
-  max_epoch: 14             # total epochs for the training
-  test_freq: 14
+  max_epoch: 8              # total epochs for the training
+  test_freq: 8
   optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
     kwargs:
@@ -85,14 +93,14 @@ trainer: # Required.
     warmup_epochs: 1         # set to be 0 to disable warmup. When warmup,  target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
-      milestones: [9,12]     # epochs to decay lr
+      milestones: [5,7]     # epochs to decay lr
       gamma: 0.1             # decay rate
 
 saver: # Required.
   save_dir: checkpoints     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
   results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
-  auto_resume: True  # find last checkpoint from save_dir and resume from it automatically
+  auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
 
@@ -110,6 +118,7 @@ hooks:
       logdir: log
       summary_writer: pavi
 
+
 net:
   - name: backbone              # backbone = resnet50(frozen_layers, out_layers, out_strides)
     type: pod.models.backbones.resnet50
@@ -118,7 +127,9 @@ net:
       out_layers: [1,2,3,4]     # layer1...4, commonly named Conv2...5
       out_strides: [4,8,16,32]  # tell the strides of output features
       normalize:
-        type: freeze_bn
+        type: sync_bn
+        kwargs:
+          bn_group_size: 8
       initializer:
         method: msra
   - name: neck

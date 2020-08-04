@@ -100,6 +100,20 @@ task:
 
                 # # pod-v3.1.0
                 # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-mobilenet-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'cascade-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'fcos-R50-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'effnetd0-bifpn-retina-32epoch', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x-ms-test-aug', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-cityscapes', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-openimages', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-2x-lvis', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'retinanet-R50-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
+                # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--seed 1024 --pavi-project parrots_test'},
                 # mmaction
                 # {'framework': 'mmaction', 'gpus': 8, 'model': 'i3d_r50_video_32x2x1_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                 # {'framework': 'mmaction', 'gpus': 8, 'model': 'r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
@@ -151,6 +165,11 @@ task:
                 # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades.benchmark', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                 # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k.benchmark', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
 
+                ## TextRecog
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
             ]
     # Optional
     # callback: "cat"
