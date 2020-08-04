@@ -11,9 +11,6 @@
 [submodule "models/ssd.triondet"]
 	path = models/ssd.triondet
 	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
-[submodule "models/mmdetection-pro"]
-	path = models/mmdetection-pro
-	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/mmdetection-pro.git
 [submodule "models/ssd"]
 	path = models/ssd
 	url = git@gitlab.bj.sensetime.com:liuguangyu/ssd.git
@@ -55,3 +52,6 @@
 [submodule "models/pytorch-object-detection-v2.3.0"]
 	path = models/pytorch-object-detection-v2.3.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+[submodule "models/mmdet"]
+	path = models/mmdet
+	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git

@@ -1,15 +1,17 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh platform_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
           value: [
                     # (un)commit your config here
+                    # # mmdet
+                    {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_caffe_fpn_mstrain_1x_coco.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # seg
-                    {'framework': 'seg', 'gpus': 16, 'model': 'pspnet.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
-                    {'framework': 'seg', 'gpus': 16, 'model': 'deeplab.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
-                    {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # # pod
                     # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'retinanet-R50-1x.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
