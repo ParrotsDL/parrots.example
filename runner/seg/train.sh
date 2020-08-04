@@ -24,7 +24,7 @@ case $name in
       #PYTHON_ARGS1="python -u $pyroot/eval.py --config=configs/seg/pspnet.yaml"
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
-      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
+      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS} \
     python -u $pyroot/train.py \
     --base_size=2048 \
     --scales 1.0 \
@@ -38,7 +38,7 @@ OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
       #PYTHON_ARGS1="python -u $pyroot/eval.py --config=configs/seg/deeplab.yaml"
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
-      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
+      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS} \
     python -u $pyroot/train.py \
     --config=configs/seg/deeplab.yaml $EXTRA_ARGS \
     --base_size=2048 \
@@ -52,7 +52,7 @@ OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
       #PYTHON_ARGS1=""
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
-      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
+      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS} \
     python -u $pyroot/train.py --config=configs/seg/mobilenet_v2_plus.yaml $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/seg/train.${name}.log.$T
     ;;
@@ -61,7 +61,7 @@ OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
       #PYTHON_ARGS1="python -u $pyroot/eval.py --config=configs/seg/pspnet.yaml"
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
-      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
+      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS} \
     python -u $pyroot/train.py \
     --base_size=2048 \
     --scales 1.0 \
@@ -75,7 +75,7 @@ OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
       #PYTHON_ARGS1="python -u $pyroot/eval.py --config=configs/seg/deeplab.yaml"
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
-      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
+      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS} \
     python -u $pyroot/train.py \
     --base_size=2048 \
     --scales 1.0 \
@@ -89,7 +89,7 @@ OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
       #PYTHON_ARGS1=""
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1\
-      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS}\
+      srun -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=seg_${name} ${SRUN_ARGS} \
     python -u $pyroot/train.py --config=configs/seg/mobilenet_v2_plus.benchmark.yaml $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/seg/train.${name}.log.$T
     ;;
