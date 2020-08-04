@@ -2,7 +2,7 @@
 
 mkdir -p log/pod_v2.3.0/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 cfg=$ROOT/configs/pod_v2.3.0/${name}.yaml
