@@ -67,3 +67,6 @@
 [submodule "models/TextRecog"]
 	path = models/TextRecog
 	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
+[submodule "models/mmpose"]
+	path = models/mmpose
+	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
