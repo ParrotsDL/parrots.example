@@ -61,7 +61,7 @@ def update_thresh_wrapper(config, framework, model_name):
             pv = pv[-1]['value']
             update_ret[k].append(pv)
             # update thresh
-            mean_pv = sum(update_ret[k][3:len(update_ret[k])]) / 1.0*(len(update_ret[k])-3)
+            mean_pv = 1.0 * sum(update_ret[k][3:len(update_ret[k])]) / (len(update_ret[k])-3)
             std_pv = float(v[2]) if not v[2].endswith('%') else float(
                 v[2][:-1]) * mean_pv * 0.01
 
