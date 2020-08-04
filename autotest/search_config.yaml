@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh Test {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -16,7 +16,7 @@ task:
                 #{'framework': 'seg_mem', 'gpus': 8, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project parrots_test'},
                 # pattern
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster'},
-                  {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster'},
+                #  {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--pavi --pavi-project parrots_test'},
