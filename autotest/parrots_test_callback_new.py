@@ -29,8 +29,8 @@ def after_callback_wrapper(config):
     print(yaml.dump(config))
 
 
-def pre_callback_wrapper(config, framework, model_name):
-    time.sleep(10)  # wait 10s for pavi scalar uploaded    
+def update_thresh_wrapper(config, framework, model_name):
+    time.sleep(5)  # wait 10s for pavi scalar uploaded    
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
         pavi_task_id = env['PAVI_TASK_ID']
