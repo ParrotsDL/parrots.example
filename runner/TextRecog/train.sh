@@ -2,7 +2,7 @@
 
 mkdir -p log/TextRecog/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=$(pwd)
 cfg=$ROOT/configs/TextRecog/${name}.yaml
