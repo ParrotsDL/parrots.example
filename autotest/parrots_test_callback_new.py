@@ -9,7 +9,7 @@ import warnings
 
 
 from autoparrots.utils.fileio import dump
-
+from autoparrots.command.entry import trace_up
 
 def after_callback_wrapper(config):
     env = os.environ.copy()
@@ -37,8 +37,9 @@ def update_thresh_wrapper(config, framework, model_name):
     else:
         pavi_task_id = env['pavi_task_id']
 
-    this_dir = osp.dirname(os.path.abspath(__file__))
-    configs_dir = osp.join(this_dir, 'configs')
+    root_path = trace_up('.search-run')
+    root_path = root_path.replace('.search-run', 'autotest')
+    configs_dir = osp.join(root_path, 'configs')
     config_path = osp.join(configs_dir, framework+'.yaml')
     if '__benchmark_pavi_task_id' not in config:
         # raise KeyError('pavi_task_id not provided')
@@ -80,7 +81,7 @@ def update_thresh_wrapper(config, framework, model_name):
     print(yaml.dump(config))
 
 
-def pre_callback_wapper(config):
+def pre_callback_wrapper(config):
 
     print(yaml.dump(config))
 
