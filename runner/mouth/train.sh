@@ -2,7 +2,7 @@
 
 mkdir -p log/mouth/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 cfg=$ROOT/configs/mouth/${name}.yaml
