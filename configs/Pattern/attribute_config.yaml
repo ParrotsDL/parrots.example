@@ -250,7 +250,7 @@ data:
         data_format_ceph: 'ceph'
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion'
         prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/new_emotion.json'
+        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_emotion'
         batch_size: 16 # for single gpu
     beard_data:
