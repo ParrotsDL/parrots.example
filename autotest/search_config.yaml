@@ -150,6 +150,12 @@ task:
                 # {'framework': 'mmseg', 'gpus': 4, 'model': 'pspnet_r50-d8_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
                 # {'framework': 'mmseg', 'gpus': 4, 'model': 'upernet_r101_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
                 # {'framework': 'mmseg', 'gpus': 4, 'model': 'upernet_r50_512x1024_40k_cityscapes', 'py_args': '--pavi --pavi_project parrots_test --seed 0'},
+                
+                ## TextRecog
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
             ]
     # Optional
     # callback: "cat"
