@@ -2,7 +2,7 @@
 
 mkdir -p log/Light_Nas_zpzhang/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
