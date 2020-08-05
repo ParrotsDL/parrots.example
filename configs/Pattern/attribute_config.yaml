@@ -115,7 +115,7 @@ strategy:
     scatter_mode: True
     #pavi_mode: False
 
-    max_iter: 50 #400000
+    max_iter: 400000
     base_lr: 0.01
     lr_steps: [300000, 350000]
     lr_mults: [0.1, 0.1]
