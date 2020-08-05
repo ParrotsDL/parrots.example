@@ -50,18 +50,18 @@ task:
                     # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
 
                     # mmediting
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 8, 'model': 'deepfillv2_256x256_8x2_celeba', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'dim_stage2_v16_pln_1x1_1000k_comp1k', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'edsr_x2c64b16_g1_300k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # # pytorch运行报错 {'framework': 'mmediting', 'gpus': 8, 'model': 'edvrm_wotsa_x4_g8_600k_reds', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'esrgan_psnr_x4c64b23g32_g1_1000k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 8, 'model': 'gl_256x256_8x12_celeba', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'indexnet_mobv2_1x16_78k_comp1k', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'msrresnet_x4c64b16_g1_1000k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 8, 'model': 'pconv_256x256_stage1_8x1_celeba', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
-                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 8, 'model': 'deepfillv2_256x256_8x2_celeba', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'dim_stage2_v16_pln_1x1_1000k_comp1k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'edsr_x2c64b16_g1_300k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # # pytorch运行报错 {'framework': 'mmediting', 'gpus': 8, 'model': 'edvrm_wotsa_x4_g8_600k_reds', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'esrgan_psnr_x4c64b23g32_g1_1000k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 8, 'model': 'gl_256x256_8x12_celeba', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'indexnet_mobv2_1x16_78k_comp1k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'msrresnet_x4c64b16_g1_1000k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 8, 'model': 'pconv_256x256_stage1_8x1_celeba', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
+                    # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 --max-step 500'},
                 ]
     # Optional
     # callback: "cat"
