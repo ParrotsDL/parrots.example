@@ -1,32 +1,30 @@
 ssd_ssd_FSAF: # Required
-  func: ssd_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    total_time: 16.0
-    iter_speed: 0.860
-    valid_top1: 0.3737
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
+  epoch/mAP: [10000, '<', '50%']
 ssd_ssd_Retina:
-  func: ssd_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    total_time: 12.0
-    iter_speed: 0.700
-    valid_top1: 0.3450
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
+  epoch/mAP: [10000, '<', '50%']
 ssd_ssd_FSAF_benchmark: # Required
-  func: ssd_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    total_time: 16.0
-    iter_speed: 0.860
-    valid_top1: 0.3737
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
 ssd_ssd_Retina_benchmark:
-  func: ssd_func
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    total_time: 12.0
-    iter_speed: 0.700
-    valid_top1: 0.3450
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']

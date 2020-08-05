@@ -17,7 +17,7 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun --mpi=pmi2 -p $1 -n$2 --gres=gpu:$g --ntasks-per-node=$g --job-name=mouth_${name} ${SRUN_ARGS}\
+srun --mpi=pmi2 -p $1 -n$2 --gres=gpu:$g --ntasks-per-node=$g --job-name=mouth_${name} ${SRUN_ARGS} \
 python $ROOT/models/mouth_inpaint_network/train.py \
   $cfg  log/mouth/ ${EXTRA_ARGS} \
   2>&1 | tee $ROOT/log/mouth/train.mouth_${name}.log.$T

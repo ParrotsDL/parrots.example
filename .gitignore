@@ -3,3 +3,6 @@ log
 results_dir
 .search-run
 work_dirs
+checkpoints*
+results*
+.vscode

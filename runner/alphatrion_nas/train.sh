@@ -73,6 +73,6 @@ case $name in
 esac
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=alphatrion_nas_${name} ${SRUN_ARGS}\
+srun -K -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=alphatrion_nas_${name} ${SRUN_ARGS} \
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/alphatrion_nas/train.${name}.log.$T

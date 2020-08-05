@@ -1,112 +1,120 @@
 alphatrion_mobilenet_v2_fp32: # Required.
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.188
-        valid_top1: 0.6979
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.20, '>', '50%']
+  __benchmark_mem_alloc(mb): [2800, '>', '50%']
+  __benchmark_mem_cached(mb): [3300, '>', '50%']
+  __benchmark_pure_training_time(h): [0.31, '>', '50%']
+  __benchmark_total_time(h): [0.33, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_mobilenet_v2_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.183
-        valid_top1: 0.6987
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.20, '>', '50%']
+  __benchmark_mem_alloc(mb): [2800, '>', '50%']
+  __benchmark_mem_cached(mb): [3300, '>', '50%']
+  __benchmark_pure_training_time(h): [0.30, '>', '50%']
+  __benchmark_total_time(h): [0.30, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_se_resnet50_fp32:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.235
-        valid_top1: 0.7657
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.43, '>', '50%']
+  __benchmark_mem_alloc(mb): [5500, '>', '50%']
+  __benchmark_mem_cached(mb): [6800, '>', '50%']
+  __benchmark_pure_training_time(h): [0.65, '>', '50%']
+  __benchmark_total_time(h): [0.65, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_se_resnet50_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.228
-        valid_top1: 0.7655
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.30, '>', '50%']
+  __benchmark_mem_alloc(mb): [3500, '>', '50%']
+  __benchmark_mem_cached(mb): [4600, '>', '50%']
+  __benchmark_pure_training_time(h): [0.45, '>', '50%']
+  __benchmark_total_time(h): [0.45, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_resnet50_fp32:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.231
-        valid_top1: 0.7553
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.30, '>', '50%']
+  __benchmark_mem_alloc(mb): [5400, '>', '50%']
+  __benchmark_mem_cached(mb): [5800, '>', '50%']
+  __benchmark_pure_training_time(h): [0.44, '>', '50%']
+  __benchmark_total_time(h): [0.45, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_resnet50_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.234
-        valid_top1: 0.7544
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.40, '>', '50%']
+  __benchmark_mem_alloc(mb): [4400, '>', '50%']
+  __benchmark_mem_cached(mb): [5500, '>', '50%']
+  __benchmark_pure_training_time(h): [0.57, '>', '50%']
+  __benchmark_total_time(h): [0.57, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_resnet101_fp32:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.306
-        valid_top1: 0.7739
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.45, '>', '50%']
+  __benchmark_mem_alloc(mb): [7300, '>', '50%']
+  __benchmark_mem_cached(mb): [7900, '>', '50%']
+  __benchmark_pure_training_time(h): [0.66, '>', '50%']
+  __benchmark_total_time(h): [0.67, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_resnet101_fp16:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.323
-        valid_top1: 0.7721
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.39, '>', '50%']
+  __benchmark_mem_alloc(mb): [4400, '>', '50%']
+  __benchmark_mem_cached(mb): [5500, '>', '50%']
+  __benchmark_pure_training_time(h): [0.57, '>', '50%']
+  __benchmark_total_time(h): [0.58, '>', '50%']
+  valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_mobilenet_v2_fp32_benchmark: # Required.
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.188
-        valid_top1: 0.6979
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.20, '>', '50%']
+  __benchmark_mem_alloc(mb): [2800, '>', '50%']
+  __benchmark_mem_cached(mb): [3300, '>', '50%']
+  __benchmark_pure_training_time(h): [0.31, '>', '50%']
+  __benchmark_total_time(h): [0.33, '>', '50%']
 alphatrion_mobilenet_v2_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.183
-        valid_top1: 0.6987
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.20, '>', '50%']
+  __benchmark_mem_alloc(mb): [2800, '>', '50%']
+  __benchmark_mem_cached(mb): [3300, '>', '50%']
+  __benchmark_pure_training_time(h): [0.30, '>', '50%']
+  __benchmark_total_time(h): [0.30, '>', '50%']
 alphatrion_se_resnet50_fp32_benchmark:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.235
-        valid_top1: 0.7657
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.43, '>', '50%']
+  __benchmark_mem_alloc(mb): [5500, '>', '50%']
+  __benchmark_mem_cached(mb): [6800, '>', '50%']
+  __benchmark_pure_training_time(h): [0.65, '>', '50%']
+  __benchmark_total_time(h): [0.65, '>', '50%']
 alphatrion_se_resnet50_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.228
-        valid_top1: 0.7655
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.30, '>', '50%']
+  __benchmark_mem_alloc(mb): [3500, '>', '50%']
+  __benchmark_mem_cached(mb): [4600, '>', '50%']
+  __benchmark_pure_training_time(h): [0.45, '>', '50%']
+  __benchmark_total_time(h): [0.45, '>', '50%']
 alphatrion_resnet50_fp32_benchmark:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.231
-        valid_top1: 0.7553
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.30, '>', '50%']
+  __benchmark_mem_alloc(mb): [5400, '>', '50%']
+  __benchmark_mem_cached(mb): [5800, '>', '50%']
+  __benchmark_pure_training_time(h): [0.44, '>', '50%']
+  __benchmark_total_time(h): [0.45, '>', '50%']
 alphatrion_resnet50_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.234
-        valid_top1: 0.7544
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.40, '>', '50%']
+  __benchmark_mem_alloc(mb): [4400, '>', '50%']
+  __benchmark_mem_cached(mb): [5500, '>', '50%']
+  __benchmark_pure_training_time(h): [0.57, '>', '50%']
+  __benchmark_total_time(h): [0.57, '>', '50%']
 alphatrion_resnet101_fp32_benchmark:
-  func: alphatrion_func # Required
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.306
-        valid_top1: 0.7739
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.45, '>', '50%']
+  __benchmark_mem_alloc(mb): [7300, '>', '50%']
+  __benchmark_mem_cached(mb): [7900, '>', '50%']
+  __benchmark_pure_training_time(h): [0.66, '>', '50%']
+  __benchmark_total_time(h): [0.67, '>', '50%']
 alphatrion_resnet101_fp16_benchmark:
-  func: alphatrion_func
-  args:
-        done_flag: "Pipeline is Done"
-  thresh: # Required
-        iter_speed: 0.323
-        valid_top1: 0.7721
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [0.39, '>', '50%']
+  __benchmark_mem_alloc(mb): [4400, '>', '50%']
+  __benchmark_mem_cached(mb): [5500, '>', '50%']
+  __benchmark_pure_training_time(h): [0.57, '>', '50%']
+  __benchmark_total_time(h): [0.58, '>', '50%']

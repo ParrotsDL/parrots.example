@@ -1,32 +1,30 @@
 alphatrion_nas_super_resnet_range1: # Required.
-  func: alphatrion_nas_func # Required
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    iter_speed: 2.40
-    total_time: 19.0
-    acc: 0.750
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
+  max_origin_valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_nas_super_resnet_range1_fp16: # Required.
-  func: alphatrion_nas_func # Required
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    iter_speed: 1.80
-    total_time: 19.0
-    acc: 0.750
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
+  max_origin_valid-metric-sub-epoch-best/top1: [10000, '<', '50%']
 alphatrion_nas_super_resnet_range1_benchmark: # Required.
-  func: alphatrion_nas_func # Required
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    iter_speed: 2.40
-    total_time: 19.0
-    acc: 0.750
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
 alphatrion_nas_super_resnet_range1_fp16_benchmark: # Required.
-  func: alphatrion_nas_func # Required
-  args:
-    done_flag: "Pipeline is Done"
-  thresh: # Required
-    iter_speed: 1.80
-    total_time: 19.0
-    acc: 0.750
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '>', '50%']
+  __benchmark_mem_alloc(mb): [10000, '>', '50%']
+  __benchmark_mem_cached(mb): [10000, '>', '50%']
+  __benchmark_pure_training_time(h): [10000, '>', '50%']
+  __benchmark_total_time(h): [10000, '>', '50%']
