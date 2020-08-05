@@ -156,10 +156,14 @@ task:
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                #
+                # mmpose
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024'},
             ]
     # Optional
     # callback: "cat"
-    callback: "python autotest/parrots_test_callback_new.py {framework} {model}"
+    callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
