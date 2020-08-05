@@ -5,6 +5,7 @@ dist_params = dict(backend='nccl')
 workflow = [('train', 1)]
 checkpoint_config = dict(interval=10)
 evaluation = dict(interval=1, metric='mAP')
+# type=topdown_res50
 
 optimizer = dict(
     type='Adam',
@@ -74,7 +75,7 @@ data_cfg = dict(
 )
 
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromClient'),
     dict(type='TopDownRandomFlip', flip_prob=0.5),
     dict(
         type='TopDownHalfBodyTransform',
@@ -99,7 +100,7 @@ train_pipeline = [
 ]
 
 valid_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromClient'),
     dict(type='TopDownAffine'),
     dict(type='ToTensor'),
     dict(
@@ -119,26 +120,29 @@ valid_pipeline = [
 
 test_pipeline = valid_pipeline
 
-data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017'
+data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017/'
+data_root_val = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/'
+ceph_data_root = 's3://parrots_data/DSK/datasets/mscoco2017/train2017/'
+ceph_data_root_val = 's3://parrots_data/DSK/datasets/mscoco2017/val2017/'
 data = dict(
     samples_per_gpu=64,
     workers_per_gpu=2,
     train=dict(
         type='TopDownCocoDataset',
-        ann_file=f'{data_root}/annotations/person_keypoints_train2017.json',
-        img_prefix=f'{data_root}/train2017/',
+        ann_file=f'/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_train2017.json',
+        img_prefix=data_root,
         data_cfg=data_cfg,
         pipeline=train_pipeline),
     val=dict(
         type='TopDownCocoDataset',
-        ann_file=f'{data_root}/annotations/person_keypoints_val2017.json',
-        img_prefix=f'{data_root}/val2017/',
+        ann_file=f'/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
+        img_prefix=data_root_val,
         data_cfg=data_cfg,
         pipeline=valid_pipeline),
     test=dict(
         type='TopDownCocoDataset',
-        ann_file=f'{data_root}/annotations/person_keypoints_val2017.json',
-        img_prefix=f'{data_root}/val2017/',
+        ann_file=f'/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
+        img_prefix=data_root_val,
         data_cfg=data_cfg,
         pipeline=valid_pipeline),
 )

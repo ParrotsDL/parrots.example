@@ -20,7 +20,7 @@ srun --mpi=pmi2 -p $1 --job-name=mmpose_${name}\
     --kill-on-bad-exit=1 \
     python -u $ROOT/models/mmpose/tools/train.py \
         $cfg \
-        --work-dir=${work_dir}
+        --work-dir=${work_dir} \
         --launcher="slurm" \
         ${EXTRA_ARGS} \
-    2>&1|tee log/star/train_${name}.log-$now
+    2>&1|tee log/mmpose/train_${name}.log-$now
