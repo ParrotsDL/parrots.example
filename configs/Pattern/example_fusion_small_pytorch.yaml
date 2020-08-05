@@ -1,0 +1,492 @@
+net:
+    backbone:
+        arch: core.model.backbone.pattern_fvn.Pattern_FVN
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+        kwargs:
+            block: ConvBN
+            layers: [1, 2, 4, 2]
+            ratio: 8
+            # prelu: True
+
+    #neck:
+    #    arch: path.to.model.def.function
+    #    prev: backbone # must have for neck and head module
+    #    kwargs:
+    #        fc_dim: # fc dimention
+    head: # loss inside
+        arch: core.model.head.msml_tracking_head.MSMLhead
+        prev: backbone # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            neck: [1, 10, 1, 10]
+            head: [1, 1, 1, 1]
+        task_names:
+            0:
+                gender: ['gender_data_imdb_v1']
+                age: ['age_data_sz_v1',]
+                race: ['race_data_imdb_v1']
+                mask: ['mask_data']
+                glass: ['glass_data_glass']
+                emotion: ['emotion_data']
+                landmark: ['landmark_data_20190505_train_data']
+                smile: ['smile_data_allshare']
+        kwargs:
+            task_cfgs:
+                gender:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: [softmax]
+                    loss_weight: [1]
+                    has_accuracy: [True]
+                age:
+                    fc_dim: 64
+                    num_class: 1 # classifier
+                    loss_type: [SmoothL1WithThrd]
+                    loss_weight: [0.1]
+                    has_accuracy: [False]
+                race:
+                    fc_dim: 64
+                    num_class: 3 # classifier
+                    loss_type: [softmax]
+                    loss_weight: [1]
+                    has_accuracy: [True]
+                mask:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: [softmax]
+                    loss_weight: [1]
+                    has_accuracy: [True]
+                glass:
+                    fc_dim: 64
+                    num_class: 3 # classifier
+                    loss_type: [softmax]
+                    loss_weight: [1]
+                    has_accuracy: [True]
+                emotion:
+                    fc_dim: 64
+                    num_class: 7 # classifier
+                    loss_type: [softmax]
+                    loss_weight: [1]
+                    has_accuracy: [True]
+                smile:
+                    fc_dim: 64
+                    num_class: 2 # classifier
+                    loss_type: [softmax-comp]
+                    loss_weight: [1]
+                    has_accuracy: [True]
+                landmark:
+                    fc_dim: 128
+                    num_class: 212 # landmark
+                    loss_type: [SmoothL1Landmark, SmoothL1EyeGap, SmoothL1LipGap] #change
+                    loss_weight: [0.01, 0.1, 0.1]
+                    has_accuracy: [False, False, False]
+
+
+
+strategy:
+    task_type: 'tracking'
+    task_mode: 'train'
+    scatter_mode: True
+
+    max_iter: 280000
+    base_lr: 0.001
+    lr_steps: [100000, 140000, 180000, 220000, 260000]
+    lr_mults: [0.5, 0.5, 0.5, 0.5, 0.5]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0004
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 5000
+    print_freq: 20
+    load_name: 'iter_80000_ckpt.pth.tar'
+    save_path: '/mnt/lustre/fangkairen/pattern0.3_exps/fusion/FVN_fusion_small_pytorch'
+
+    workers: 8
+data:
+    training_param:
+        # bgr_to_rgb->resize->gray->pad->rotate->trans->zoom->mirror->crop->rescale->normalize->to_tensor
+        # resize
+        resize: False
+        #new_width: 112
+        #new_height: 112
+        # gray
+        use_gray: False
+        final_channel: 3
+
+        rotate: True
+        rotate_angle_max_value: 5
+
+        trans: True
+        trans_max_value: 0.1
+
+        zoom: True
+        zoom_min: 0.9
+        zoom_max: 1.1
+
+        mirror: True
+        mirror_prob: 0.5
+
+
+        # crop config
+        crop: True
+        y_offset: 15
+        crop_height: 144
+        crop_width: 144
+        # scale
+        scale: True
+        final_height: 144
+        final_width: 144
+
+
+        # normalize
+        normalize: True
+        normalize_type: 'mean_std' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [127.5, 127.5, 127.5]
+        std: [79.6875, 79.6875, 79.6875]
+        # add_noise
+        add_noise:
+            tasks: ['landmark']
+            mean: 0
+            std: 5
+            x_off: 1.5
+            y_off: 1.5
+            weight: [0.01]
+        # label_weights
+        label_weights: ['landmark']
+
+    gender_data_imdb_v1:
+        type: 'attribute'
+        task: ['gender']
+        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/gender/imdbface_v1/st_align'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/gender_data_imdb_v1_50000.json'
+        batch_size: 32 # for single gpu
+#    gender_data_imdb_v2:
+#        type: 'attribute'
+#        task: ['gender']
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/imdbface_v2/st_align'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/gender/gender_data_imdb_v2.json'
+#        batch_size: 16 # for single gpu
+#    gender_data_finance:
+#        type: 'attribute'
+#        task: ['gender']
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/finance/'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/gender/gender_data_finance.json'
+#        batch_size: 16 # for single gpu
+#    gender_data_tantan:
+#        type: 'attribute'
+#        task: ['gender']
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/wild_chinese/tantan_v2/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/gender/gender_data_tantan.json'
+#        batch_size: 16 # for single gpu
+#    gender_data_ali30w:
+#        type: 'attribute'
+#        task: ['gender']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/gender/alibaba/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/gender/gender_data_ali30w.json'
+#        batch_size: 16 # for single gpu
+#    gender_data_xinchao:
+#        type: 'attribute'
+#        task: ['gender']
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/senseinsight/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/gender/gender_data_xinchao.json'
+#        batch_size: 16 # for single gpu
+
+    age_data_sz_v1:
+        type: 'attribute'
+        task: ['age']
+        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/age_all_attributes/train_data'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/age_data_sz_v1_50000.json'
+        batch_size: 16 # for single gpu
+        smooth_l1_thrd: 2.5
+#    age_data_sz_v2:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/sz_data/st_align'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/age/age_data_sz_v2.json'
+#        batch_size: 16 # for single gpu
+#        smooth_l1_thrd: 2.5
+#    age_data_finance:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/finance/data_align_v2'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/age/age_data_finance.json'
+#        batch_size: 32 # for single gpu
+#        smooth_l1_thrd: 2.5
+#    age_data_smart_phone:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/phone/st_align'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/age/age_data_smart_phone.json'
+#        batch_size: 16 # for single gpu
+#        smooth_l1_thrd: 5
+#    age_data_student:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/student/st_align'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/age/age_data_student.json'
+#        batch_size: 16 # for single gpu
+#        smooth_l1_thrd: 5
+#    age_data_ali30w:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/alibaba/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/age/age_data_ali30w.json'
+#        batch_size: 16 # for single gpu
+#        smooth_l1_thrd: 5
+#    age_data_xinchao:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/xinchao/20181114_guangzhou/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/age/age_data_xinchao.json'
+#        batch_size: 16 # for single gpu
+#        smooth_l1_thrd: 5
+
+    race_data_imdb_v1:
+        type: 'attribute'
+        task: ['race']
+        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/race/imdbface_v1/st_align'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/race_data_imdb_v1_50000.json'
+        batch_size: 32 # for single gpu
+#    race_data_imdb_v2:
+#        type: 'attribute'
+#        task: ['race']
+#        prefix: '/mnt/lustrenew/chenkeyu/Data/GenderData/nm_aligned_data/st_align'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/race/race_data_imdb_v2.json'
+#        batch_size: 16 # for single gpu
+#    race_data_tantan:
+#        type: 'attribute'
+#        task: ['race']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/race/tantan/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/race/race_data_tantan.json'
+#        batch_size: 16 # for single gpu
+    mask_data:
+        type: 'attribute'
+        task: ['mask']
+        prefix: '/mnt/lustrenew/chenkeyu/Data/MaskData/Mask0/st_align_106/'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/mask_data_50000.json' # 546085
+        batch_size: 16 # for single gpu
+
+    glass_data_glass:
+        type: 'attribute'
+        task: ['glass']
+        prefix: '/mnt/lustrenew/chenkeyu/Data/GlassData/GlassData/st_align_106'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/glass_data_glass_50000.json' #520760
+        batch_size: 8 # for single gpu
+#    glass_data_sunglass:
+#        type: 'attribute'
+#        task: ['glass']
+#        prefix: '/mnt/lustrenew/chenkeyu/Data/GlassData/SunglassData/st_align_106'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/glass/glass_data_sunglass.json'
+#        batch_size: 8 # for single gpu
+
+    emotion_data:
+        type: 'attribute'
+        task: ['emotion']
+        prefix: '/mnt/lustrenew/chenkeyu/Data/EmotionData/siwei_emotion/aligned_emotion_image'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/emotion_data_50000.json'
+        batch_size: 16 # for single gpu
+#    emotion_data_cyj:
+#        type: 'attribute'
+#        task: ['emotion']
+#        prefix: '/mnt/lustrenew/chenkeyu/Data/EmotionData/yanjie_emotion/images_aligned_natural'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/emotion/emotion_data_cyj.json'
+#        batch_size: 8 # for single gpu
+#    emotion_data_cyj_final:
+#        type: 'attribute'
+#        task: ['emotion']
+#        prefix: '/mnt/lustre/chenkeyu/gen_emotion/cyj_val_align/cyj_val_aligned_images'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/emotion/emotion_data_cyj_final.json'
+#        batch_size: 8 # for single gpu
+
+    smile_data_allshare:
+        type: 'attribute'
+        task: ['smile']
+        compare_task: True
+        prefix: '/mnt/lustre/fangkairen/DATA/smile_data_allshare/AllSampleShare/'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/smile_data_allshare_50000.json' # 401624
+        batch_size: 16
+    landmark_data_20190505_train_data:
+        type: '106pt'
+        task: ['landmark']
+        has_label_weight: True
+        prefix: '/mnt/lustre/fangkairen/chenyanjie/to_kairen/106pt/align_and_get_affinemat/'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/20190505_train_data_50000.json'
+        batch_size: 16
+
+
+
+
+test:
+    strategy:
+        task_type: 'tracking'
+        task_mode: 'test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path']
+        workers: 4
+
+    testing_param:
+        crop: True
+        y_offset: 15
+        crop_height: 144
+        crop_width: 144
+        # scale
+        scale: True
+        final_height: 144
+        final_width: 144
+        # mirror
+        mirror: False # Notice: different from training
+        # gray
+        use_gray: False
+        final_channel: 3
+        # normalize
+        normalize: True
+        normalize_type: 'mean_std' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [127.5, 127.5, 127.5]
+        std: [79.6875, 79.6875, 79.6875]
+#    gender_test_data_xinchao:
+#        type: 'attribute'
+#        task: ['gender']
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/senseinsight/st_align_106'
+#        json_path: '/mnt/lustre/zhouyisu/gender_test_data_xinchao.json'
+#        batch_size: 256
+#
+    gender_test_data_ali30w:
+        type: 'attribute'
+        task: ['gender']
+        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/gender/alibaba/st_align_106'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/gender_test_data_ali30w_10000.json'
+        batch_size: 256
+#
+#    gender_test_data_sur:
+#        type: 'attribute'
+#        task: 'gender'
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/benchmark/gender/surveillance/gender_aligned_images'
+#        json_path: '/mnt/lustre/zhouyisu/gender_test_data_sur.json'
+#        batch_size: 256
+#
+#    gender_test_data_tantan:
+#        type: 'attribute'
+#        task: 'gender'
+#        prefix: '/mnt/lustre/wangfei/imdbface/wild_chinese/tantan_v2/st_align_106'
+#        json_path: '/mnt/lustre/zhouyisu/gender_test_data_tantan.json'
+#        batch_size: 256
+#
+#    gender_test_data_imdb:
+#        type: 'attribute'
+#        task: 'gender'
+#        prefix: '/mnt/lustre/wangfei/imdbface/imdbface_v2/st_align'
+#        json_path: '/mnt/lustre/zhouyisu/gender_test_data_imdb.json'
+#        batch_size: 256
+#
+#    age_test_data_smart_phone_new:
+#        type: 'attribute'
+#        task: 'age'
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/phone/st_align/'
+#        json_path: '/mnt/lustre/zhouyisu/allsample/age/test/age_test_data_smart_phone_new.json'
+#        batch_size: 256 # for single gpu
+#        delta_thres: [5, 10] # only for age
+#
+#    age_test_data_xinchao:
+#        type: 'attribute'
+#        task: ['age']
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/xinchao/20181114_guangzhou/st_align_106/'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/age/age_test_data_xinchao.json'
+#        batch_size: 256 # for single gpu
+#        delta_thres: [5, 10] # only for age
+    age_test_data_student:
+        type: 'attribute'
+        task: ['age']
+        prefix: '/mnt/lustrenew/jihaorui/annotation/guiyang_age/align/aligned_pupil_age_image/'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/age_test_data_student_10000.json'
+        batch_size: 256 # for single gpu
+        delta_thres: [5, 10] # only for age
+#
+#    age_test_data_sur:
+#        type: 'attribute'
+#        task: 'age'
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/benchmark/age/surveillance/age_aligned_images/'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/age/age_test_data_sur.json'
+#        batch_size: 256 # for single gpu
+#        delta_thres: [5, 10] # only for age
+#
+#    age_test_data_ali30w:
+#        type: 'attribute'
+#        task: 'age'
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/alibaba/st_align_106/'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/age/age_test_data_ali30w.json'
+#        batch_size: 256 # for single gpu
+#        delta_thres: [5, 10] # only for age
+#
+#    age_test_data_finance_new:
+#        type: 'attribute'
+#        task: 'age'
+#        prefix: '/mnt/lustrenew/lixiaojie/imdbface/finance/data_align_v2/'
+#        json_path: '/mnt/lustre/zhouyisu/allsample/age/test/age_test_data_finance_new.json'
+#        batch_size: 256 # for single gpu
+#        delta_thres: [5, 10] # only for age
+#
+#    age_test_data_easy:
+#        type: 'attribute'
+#        task: 'age'
+#        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/age_all_attributes/train_data/'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/age/age_test_data_easy.json'
+#        batch_size: 256 # for single gpu
+#        delta_thres: [5, 10] # only for age
+#
+#    beard_data_test:
+#        type: 'attribute'
+#        task: 'beard'
+#        prefix: '/mnt/lustre/zhouyisu/allsample/temp/beard'
+#        json_path: '/mnt/lustre/zhouyisu/allsample/beard_eye_mouth/beard_new_test.json'
+#        batch_size: 256 # for single gpu
+#   eye_data_test:
+#        type: 'attribute'
+#        task: 'eye'
+#        prefix: '/mnt/lustre/zhouyisu/allsample/temp/eye'
+#        json_path: '/mnt/lustre/zhouyisu/allsample/beard_eye_mouth/eye_new_test.json'
+#        batch_size: 256 # for single gpu
+#
+#    mouth_data_test:
+#        type: 'attribute'
+#        task: 'mouth'
+#        prefix: '/mnt/lustre/zhouyisu/allsample/temp/mouth'
+#        json_path: '/mnt/lustre/zhouyisu/allsample/beard_eye_mouth/mouth_new_test.json'
+#        batch_size: 256 # for single gpu
+#
+#
+#
+#    emotion_education:
+#        type: 'attribute'
+#        task: 'emotion'
+#        prefix: '/mnt/lustrenew/dutianyuan/attribute_data/emotion_testset/education/aligned_image'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/emotion_7cls/emotion_test_education.json'
+#        batch_size: 256
+#
+#    emotion_honda:
+#        type: 'attribute'
+#        task: 'emotion'
+#        prefix: '/mnt/lustrenew/dutianyuan/attribute_data/emotion_testset/honda/cyj_val_aligned_images'
+#        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/emotion_7cls/emotion_test_honda.json'
+#        batch_size: 256
+#
+    emotion_test:
+        type: 'attribute'
+        task: ['emotion']
+        prefix: '/mnt/lustre/fangkairen/DATA/attribute_data/emotion_testset/emotion/aligned_image/'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/emotion_test_10000.json'
+        batch_size: 256
+    meitu_2016_test:
+        type: '106pt'
+        task: ['landmark']
+        has_label_weight: False
+        prefix: '/mnt/lustre/fangkairen/chenyanjie/to_kairen/106pt/align_and_get_affinemat/20190508_meitu_2016/align_imgs/'
+        json_path: '/mnt/lustre/fangkairen/SomeJsonData/20190508_meitu_2016_test.json'
+        batch_size: 256 # for single gpu

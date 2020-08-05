@@ -16,7 +16,10 @@ task:
                 # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                 # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                 # seg_mem
-                # {'framework': 'seg_mem', 'gpus': 8, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project parrots_test'},
+                #{'framework': 'seg_mem', 'gpus': 8, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project parrots_test'},
+                # pattern
+                # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster'},
+                #  {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--pavi --pavi-project parrots_test'},

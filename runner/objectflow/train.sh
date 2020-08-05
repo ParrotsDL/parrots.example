@@ -8,13 +8,14 @@ config=configs/objectflow/${job_name}.py
 
 work_dir=log/objectflow/$2
 mkdir -p ${work_dir}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 ROOT=.
 pyroot=$ROOT/models/ObjectFlow
 
 export PYTHONPATH=$pyroot:$PYTHONPATH
 srun -p ${partition} --gres=gpu:${gpu_per_node} -n${gpus} \
-    --ntasks-per-node=${gpu_per_node} \
+    --ntasks-per-node=${gpu_per_node}  ${SRUN_ARGS} \
     --job-name=${job_name} --kill-on-bad-exit=1 \
 python -u ${pyroot}/tools/train.py ${config} --work_dir=${work_dir} \
     --launcher='slurm' --validate \

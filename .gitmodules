@@ -34,8 +34,8 @@
 	path = models/srdemo
 	url = git@gitlab.bj.sensetime.com:luopeichao/srdemo.git
 [submodule "tests/deploy/quantization/Famicom"]
-	path = tests/deploy/quantization/Famicom
-	url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git
+    path = tests/deploy/quantization/Famicom
+    url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git
 [submodule "models/springnas-lite"]
 	path = models/springnas-lite
 	url = git@gitlab.bj.sensetime.com:wangshiguang/springnas-lite.git
@@ -70,3 +70,7 @@
 [submodule "models/mmpose"]
 	path = models/mmpose
 	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
+[submodule "models/Pattern"]
+	path = models/Pattern
+	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
+	branch = pattern0.3_pat_test
