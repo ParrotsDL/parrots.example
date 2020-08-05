@@ -25,8 +25,8 @@ net:
             head: [1, 1, 1, 1]
         task_names:
             0:
-                eye: ['glass', 'honda', 'indoor', 'light_eye_label', 'big_angle_open_close']
-                valid_eye: ['valid_invalid', 'big_angle_valid_invalid']
+                eye: ['big_angle_open_close']
+                valid_eye: ['big_angle_valid_invalid']
 
         kwargs:
             task_cfgs:
@@ -44,12 +44,12 @@ net:
                    has_accuracy: [True]
 
 strategy:
-    pavi_mode: False
+    pavi_mode: True
     task_type: 'tracking'
     task_mode: 'train'
     scatter_mode: True
 
-    max_iter: 200000
+    max_iter: 20 #200000
     base_lr: 0.01
     lr_steps: [160000, 180000]
     lr_mults: [0.1, 0.1]
@@ -103,14 +103,24 @@ data:
     big_angle_open_close:
         type: 'drowsiness'
         task: ['eye']
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
         prefix: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
+        prefix_cluster: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
+        prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/totag'
         json_path: '/mnt/lustre/zhangqiming/data/big_angle_eye/big_angle_eye_open_close.json'
         batch_size: 4
 
     big_angle_valid_invalid:
         type: 'drowsiness'
         task: ['valid_eye']
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
         prefix: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
+        prefix_cluster: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
+        prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/totag'
         json_path: '/mnt/lustre/zhangqiming/data/big_angle_eye/big_angle_eye_valid_invalid_valid_eye.json'
         batch_size: 2
 

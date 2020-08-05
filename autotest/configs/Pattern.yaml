@@ -33,3 +33,12 @@ Pattern_attribute_config:
     acc1_mouth: [0, 'has_to_higher']
     acc1_race: [0, 'has_to_higher']
     acc1_smile: [0, 'has_to_higher']
+Pattern_eye_best_config_parrots:
+    # attr: [thresh, has_to_higher/has_to_lower]
+    __benchmark_avg_iter_time(s): [100000, '<', '50%']
+    __benchmark_mem_alloc(mb): [100000, '<', '50%']
+    __benchmark_mem_cached(mb): [100000, '<', '50%']
+    __benchmark_pure_training_time(h): [10000, '<', '50%']
+    __benchmark_total_time(h): [100000, '<', '50%']
+    acc1_valid_eye_softmax: [0, '<', '50%']
+    acc1_eye_softmax: [0, '<','50%']
