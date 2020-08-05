@@ -69,6 +69,6 @@ scheduler:
 # Optional
 pavi:
     compare:
-        name: parrots.test.benchmark
+        name: parrots.test.weeklybenchmark
 
 # slurm_job_id_monitor: true
