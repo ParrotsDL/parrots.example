@@ -163,10 +163,13 @@ task:
                 # mmpose
                 # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                 # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'bottomup_hrnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
             ]
     # Optional
     # callback: "cat"
-    callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0"
+    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
