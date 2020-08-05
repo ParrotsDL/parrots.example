@@ -35,6 +35,8 @@ parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
 parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
 parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
+parser.add_argument('--max_step', default=None, type=int, metavar='N',
+                    help='number of total epochs to run')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -106,6 +108,8 @@ def main():
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
+    if args.max_step is not None:
+        args.max_epoch = args.max_step
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
 
