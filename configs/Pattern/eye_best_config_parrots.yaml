@@ -1,0 +1,156 @@
+net:
+    backbone:
+        arch: core.model.backbone.pattern_fir.Pattern_FIR
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+        kwargs:
+            block: Bottleneck
+            layers: [3, 4, 6, 3]
+            ratio: 8
+            # prelu: True
+
+    #neck:
+    #    arch: path.to.model.def.function
+    #    prev: backbone # must have for neck and head module
+    #    kwargs:
+    #        fc_dim: # fc dimention
+    head: # loss inside
+        arch: core.model.head.msml_tracking_head.MSMLhead
+        prev: backbone # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            neck: [1, 10, 1, 10]
+            head: [1, 1, 1, 1]
+        task_names:
+            0:
+                eye: ['glass', 'honda', 'indoor', 'light_eye_label', 'big_angle_open_close']
+                valid_eye: ['valid_invalid', 'big_angle_valid_invalid']
+
+        kwargs:
+            task_cfgs:
+               eye:
+                   fc_dim: 128
+                   num_class: 2 # classifier
+                   loss_type: [softmax]
+                   loss_weight: [1]
+                   has_accuracy: [True]
+               valid_eye:
+                   fc_dim: 128
+                   num_class: 2 # classifier
+                   loss_type: [softmax]
+                   loss_weight: [1]
+                   has_accuracy: [True]
+
+strategy:
+    pavi_mode: False
+    task_type: 'tracking'
+    task_mode: 'train'
+    scatter_mode: True
+
+    max_iter: 200000
+    base_lr: 0.01
+    lr_steps: [160000, 180000]
+    lr_mults: [0.1, 0.1]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0004
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 5000
+    print_freq: 20
+    load_name: 'iter_195000_ckpt.pth.tar'
+    save_path: '../eye_exp/eye_crop_fir_dts_zzms_clean_v2_invalid_no_zoom_nomotionblur_big_angle_parrots_aten/'
+
+    workers: 32
+data:
+    training_param:
+        preprocessor: 'cv'
+        crop: True
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        scale: False
+        mirror: True
+        mirror_prob: 0.5
+        zoom: True
+        zoom_min: 0.9
+        zoom_max: 1.1
+        use_gray: True
+        final_channel: 1
+        input_channel: 1
+        rotate: True
+        rotate_angle_max_value: 5
+        rotate_center: [0, 0]
+        trans: True
+        trans_max_value: 0.1
+        use_spotlight: True
+        motion_blur: True
+        motion_blur_prob: 0.2
+        motion_blur_l_min: 1
+        motion_blur_l_max: 10
+        motion_blur_theta_min: 0
+        motion_blur_theta_max: 180 
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [0.0]
+        std: [1.0]
+
+    big_angle_open_close:
+        type: 'drowsiness'
+        task: ['eye']
+        prefix: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
+        json_path: '/mnt/lustre/zhangqiming/data/big_angle_eye/big_angle_eye_open_close.json'
+        batch_size: 4
+
+    big_angle_valid_invalid:
+        type: 'drowsiness'
+        task: ['valid_eye']
+        prefix: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
+        json_path: '/mnt/lustre/zhangqiming/data/big_angle_eye/big_angle_eye_valid_invalid_valid_eye.json'
+        batch_size: 2
+
+
+test:
+    strategy:
+        task_type: 'tracking'
+        task_mode: 'test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path']
+        workers: 0
+
+    testing_param:
+        preprocessor: 'cv'
+        crop: True
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        # gray
+        use_gray: True
+        final_channel: 1
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [0]
+        std: [1]
+
+eval:
+    open_close_test:
+        type: 'drowsiness'
+        task: ['eye']
+        prefix: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/images/Image/'
+        json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/open_close.json'
+        batch_size: 64
+    valid_invalid_test:
+        type: 'drowsiness'
+        task: ['valid_eye']
+        prefix: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/images/Image/'
+        json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/valid_invalid_valid_eye.json'
+        batch_size: 64
