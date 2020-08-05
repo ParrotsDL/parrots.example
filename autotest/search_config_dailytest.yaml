@@ -6,7 +6,9 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here
-                   # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
+                    # mmdet
+                    {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test'},
                    # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test'},
                    # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test'},
                     # pod

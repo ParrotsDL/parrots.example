@@ -104,6 +104,16 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     python -u models/mmdet/tools/train.py --config=configs/mmdet/mask_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
     ;;
+    "mask_rcnn_r50_fpn_1x_coco.short")
+set -x
+OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
+srun -K --mpi=pmi2 -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/mask_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
     "cascade_rcnn_r50_fpn_1x_coco.benchmark")
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \

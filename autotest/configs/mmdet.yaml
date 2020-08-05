@@ -24,6 +24,7 @@ mmdet_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   __benchmark_pure_training_time(h): [10000, '<', '50%']
   __benchmark_total_time(h): [10000, '<', '50%']
   train.bbox_mAP_50: [10000, '>', '50%']
+  train.segm_mAP_50: [10000, '>', '50%']
 
 mmdet_mask_rcnn_r50_fpn_1x_coco.benchmark: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -33,6 +34,17 @@ mmdet_mask_rcnn_r50_fpn_1x_coco.benchmark: # Required. {framework}_{model}
   __benchmark_pure_training_time(h): [10000, '<', '50%']
   __benchmark_total_time(h): [10000, '<', '50%']
   train.bbox_mAP_50: [10000, '>', '50%']
+  train.segm_mAP_50: [10000, '>', '50%']
+
+mmdet_mask_rcnn_r50_fpn_1x_coco.short: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  __benchmark_avg_iter_time(s): [10000, '<', '50%']
+  __benchmark_mem_alloc(mb): [10000, '<', '50%'] 
+  __benchmark_mem_cached(mb): [10000, '<', '50%']
+  __benchmark_pure_training_time(h): [10000, '<', '50%']
+  __benchmark_total_time(h): [10000, '<', '50%']
+  train.bbox_mAP_50: [10000, '>', '50%']
+  train.segm_mAP_50: [10000, '>', '50%']
 
 mmdet_cascade_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
