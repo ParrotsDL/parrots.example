@@ -6,7 +6,6 @@ import yaml
 import pavi
 import time
 import warnings
-from collections import OrderedDict
 
 
 from autoparrots.utils.fileio import dump
@@ -121,8 +120,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
                 update_ret[k][0] = mean_pv + std_pv
             else:
                 raise KeyError('Unsupported operator key')
-    
-    full_config = OrderedDict(full_config)
+
     full_config[run_type] = update_ret
     config = full_config
 
