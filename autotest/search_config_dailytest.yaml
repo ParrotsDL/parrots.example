@@ -14,7 +14,7 @@ task:
                     # example
                     {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test'},
                 ]
