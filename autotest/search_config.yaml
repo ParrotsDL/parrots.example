@@ -183,8 +183,8 @@ task:
             ]
     # Optional
     # callback: "cat"
-    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0"
-    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1"
+    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 all"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 all"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher

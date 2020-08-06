@@ -44,6 +44,8 @@ def after_callback_wrapper(config, run_type):
             config.update(comm_table)
         else:
             config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
 
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
@@ -86,6 +88,8 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
             config.update(comm_table)
         else:
             config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
 
     if '__benchmark_pavi_task_id' not in config:
         # raise KeyError('pavi_task_id not provided')
@@ -140,6 +144,8 @@ def pre_callback_wrapper(config, run_type):
             config.update(comm_table)
         else:
             config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
     print(yaml.dump(config))
 
 

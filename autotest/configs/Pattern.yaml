@@ -1,28 +1,13 @@
 Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
     # attr: [thresh, has_to_higher/has_to_lower]
-    __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
-    __benchmark_mem_alloc(mb): [2504, 'has_to_lower']
-    __benchmark_mem_cached(mb): [2693, 'has_to_lower']
-    __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-    __benchmark_total_time(h): [100000, 'has_to_lower']
     acc1_ms1m: [0, 'has_to_higher']
     acc5_ms1m: [0, 'has_to_higher']
 Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots.benchmark:
     # attr: [thresh, has_to_higher/has_to_lower]
-    __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
-    __benchmark_mem_alloc(mb): [2504, 'has_to_lower']
-    __benchmark_mem_cached(mb): [2693, 'has_to_lower']
-    __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-    __benchmark_total_time(h): [100000, 'has_to_lower']
-    acc1_ms1m: [0, 'has_to_higher']
-    acc5_ms1m: [0, 'has_to_higher']
+    placeholder: 'none'
+
 Pattern_attribute_config:
     # attr: [thresh, has_to_higher/has_to_lower]
-    __benchmark_avg_iter_time(s): [100000, 'has_to_lower']
-    __benchmark_mem_alloc(mb): [100000, 'has_to_lower']
-    __benchmark_mem_cached(mb): [100000, 'has_to_lower']
-    __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-    __benchmark_total_time(h): [100000, 'has_to_lower']
     acc1_beard: [0, 'has_to_higher']
     acc1_emotion: [0, 'has_to_higher']
     acc1_eye: [0, 'has_to_higher']
