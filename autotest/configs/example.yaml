@@ -187,6 +187,13 @@ example_resnet18_mix: # Required.
   __benchmark_pure_training_time(h): [100000, '<', '50%'] # 0.221 x 1.2
   __benchmark_total_time(h): [100000, '<', '50%'] # 0.225 x 1.2
   Accuracy_Test_top1: [0, '>', '20%'] # 20.586 - 1
+example_resnet18_mix.short: # Required.
+  __benchmark_avg_iter_time(s): [0.092, '<', '50%'] # 0.077 x 1.2
+  __benchmark_mem_alloc(mb): [2017, '<', '50%'] # 1681 x 1.2
+  __benchmark_mem_cached(mb): [2054, '<', '50%'] # 1712 x 1.2
+  __benchmark_pure_training_time(h): [100000, '<', '50%'] # 0.221 x 1.2
+  __benchmark_total_time(h): [100000, '<', '50%'] # 0.225 x 1.2
+  Accuracy_Test_top1: [0, '>', '20%'] # 20.586 - 1
 example_resnet18_mix.benchmark: # Required.
   __benchmark_avg_iter_time(s): [0.092, '<', '50%'] # 0.077 x 1.2
   __benchmark_mem_alloc(mb): [2017, '<', '50%'] # 1681 x 1.2
