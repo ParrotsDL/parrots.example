@@ -8,7 +8,7 @@ task:
                 # (un)commit your config here
                 # # mmdet
                 # {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_caffe_fpn_mstrain_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
-                # {'framework': 'mmdet', 'gpus': 8, 'model': 'mmask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'mmdet', 'gpus': 8, 'model': 'cascade_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_fp16_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 # {'framework': 'mmdet', 'gpus': 8, 'model': 'retinanet_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
