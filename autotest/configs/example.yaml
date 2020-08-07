@@ -85,6 +85,9 @@ example_resnet18.benchmark: # Required.
 example_resnet18_mix: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 20.586 - 1
 
+example_resnet18_mix.short: # Required.
+  Accuracy_Test_top1: [0, '>', '20%'] # 20.586 - 1
+
 example_resnet18_mix.benchmark: # Required.
   placeholder: 'none'
 
