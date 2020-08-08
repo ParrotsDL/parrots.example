@@ -44,8 +44,8 @@ task:
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader --SEED 1024'},
                     # # alphatrion_nas
                     # # alphatrion_nas
-                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
-                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
+                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
+                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # # example
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_v4.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "inception_v4_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
