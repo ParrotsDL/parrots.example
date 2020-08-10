@@ -35,7 +35,7 @@ task:
                     # {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 0'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'cascade-rcnn-R50-FPN-1x', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 0'},
                     # {'framework': 'pod', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 0'},
-                    # {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-NASFPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 0'},
+                    # {'framework': 'pod', 'gpus': 16, 'model': 'faster-rcnn-R50-NASFPN-1x_mix', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 0'},
                     # # alphatrion
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp32_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # {'framework': 'alphatrion', 'gpus': 8, 'model': 'mobilenet_v2_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project parrots_test --data_reader MemcachedReader --seed 1024'},
