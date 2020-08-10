@@ -1,6 +1,6 @@
 _base_ = './fovea_r50_fpn_4x4_1x_coco.py'
 model = dict(
-    pretrained='torchvision://resnet101',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet101-5d3b4d8f.pth',
     backbone=dict(depth=101),
     bbox_head=dict(
         with_deform=True,

@@ -1,6 +1,6 @@
 _base_ = './faster_rcnn_r50_fpn_1x_coco.py'
 model = dict(
-    pretrained='open-mmlab://detectron2/resnet50_caffe',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50_msra-5891d200.pth',
     backbone=dict(
         norm_cfg=dict(requires_grad=False), norm_eval=True, style='caffe'))
 # use caffe img_norm

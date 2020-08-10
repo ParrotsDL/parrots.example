@@ -24,5 +24,5 @@ model = dict(
             norm_cfg=dict(type='BN', requires_grad=True),
             norm_eval=True,
             conv_cfg=dict(type='ConvAWS'),
-            pretrained='torchvision://resnet50',
+            pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50-19c8e357.pth',
             style='pytorch')))
