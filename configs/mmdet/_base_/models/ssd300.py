@@ -2,7 +2,7 @@
 input_size = 300
 model = dict(
     type='SingleStageDetector',
-    pretrained='open-mmlab://vgg16_caffe',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/vgg16_caffe-292e1171.pth',
     backbone=dict(
         type='SSDVGG',
         input_size=input_size,

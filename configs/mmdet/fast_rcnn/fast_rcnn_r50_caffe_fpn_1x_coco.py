@@ -1,7 +1,7 @@
 _base_ = './fast_rcnn_r50_fpn_1x_coco.py'
 
 model = dict(
-    pretrained='open-mmlab://detectron2/resnet50_caffe',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50_msra-5891d200.pth',
     backbone=dict(
         norm_cfg=dict(type='BN', requires_grad=False), style='caffe'))
 

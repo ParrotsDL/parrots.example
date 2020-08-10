@@ -1,6 +1,6 @@
 _base_ = './cascade_mask_rcnn_r50_fpn_20e_coco.py'
 model = dict(
-    pretrained='open-mmlab://resnext101_64x4d',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnext101_64x4d-ee2c6f71.pth',
     backbone=dict(
         type='ResNeXt',
         depth=101,

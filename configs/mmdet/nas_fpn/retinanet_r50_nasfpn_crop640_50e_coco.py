@@ -7,7 +7,7 @@ cudnn_benchmark = True
 norm_cfg = dict(type='BN', requires_grad=True)
 model = dict(
     type='RetinaNet',
-    pretrained='torchvision://resnet50',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50-19c8e357.pth',
     backbone=dict(
         type='ResNet',
         depth=50,

@@ -4,7 +4,7 @@ _base_ = [
 ]
 model = dict(
     type='RepPointsDetector',
-    pretrained='torchvision://resnet50',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50-19c8e357.pth',
     backbone=dict(
         type='ResNet',
         depth=50,

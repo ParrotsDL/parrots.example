@@ -1,7 +1,7 @@
 # model settings
 model = dict(
     type='RPN',
-    pretrained='open-mmlab://detectron2/resnet50_caffe',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50_msra-5891d200.pth',
     backbone=dict(
         type='ResNet',
         depth=50,

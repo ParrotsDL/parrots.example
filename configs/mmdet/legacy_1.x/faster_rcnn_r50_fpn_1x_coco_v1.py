@@ -6,7 +6,7 @@ _base_ = [
 
 model = dict(
     type='FasterRCNN',
-    pretrained='torchvision://resnet50',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50-19c8e357.pth',
     rpn_head=dict(
         type='RPNHead',
         anchor_generator=dict(

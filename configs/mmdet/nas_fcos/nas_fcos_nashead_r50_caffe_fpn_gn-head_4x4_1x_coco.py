@@ -5,7 +5,7 @@ _base_ = [
 
 model = dict(
     type='NASFCOS',
-    pretrained='open-mmlab://detectron2/resnet50_caffe',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50_msra-5891d200.pth',
     backbone=dict(
         type='ResNet',
         depth=50,
