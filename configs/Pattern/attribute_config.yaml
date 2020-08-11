@@ -129,7 +129,7 @@ strategy:
     snapshot_freq: 5000
     print_freq: 20
     load_name: ''
-    save_path: '../exp'
+    save_path: './Pattern_save/attribute'
 
     workers: 4
 data:
