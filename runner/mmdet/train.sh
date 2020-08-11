@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir -p log/mmdet
+export PYTORCH_VERSION=1.4
 
 T=`date +%m%d%H%M`
 name=$3
