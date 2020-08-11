@@ -1,17 +1,7 @@
 pod_v2.3.0_retinanet-v11-18w: # Required.
-  # attr: [thresh, >/<]
-  __benchmark_avg_iter_time(s): [10000, '<', '5%']  # 1984: 0.244
-  __benchmark_mem_alloc(mb): [10000, '<', '5%']  # 1984: 415 
-  __benchmark_mem_cached(mb): [10000, '<', '5%']  # 1984: 616
-  __benchmark_pure_training_time(h): [10000, '<', '5%']  # 1984: 4.228
-  __benchmark_total_time(h): [10000, '<', '5%']  # 1984: 4.247
-  metrics/mAP:0.35: [10000, '>', '5%', 0.369]
+  # attr: [thresh, has_to_higher/has_to_lower]
+  metrics/mAP:0.35: [10000, '>', '20%', 0.369]
 
 pod_v2.3.0_fcos-v11-80w-stride4: # Required.
-  # attr: [thresh, >/<]
-  __benchmark_avg_iter_time(s): [10000, '<', '5%']  # 1984: 0.643
-  __benchmark_mem_alloc(mb): [10000, '<', '5%']  # 1984: 3534
-  __benchmark_mem_cached(mb): [10000, '<', '5%']  #1984: 5036
-  __benchmark_pure_training_time(h): [10000, '<', '5%']  # 1984: 11.883
-  __benchmark_total_time(h): [10000, '<', '5%']  # 1984: 11.902
-  metrics/mAP:0.5: [10000, '>', '5%', 0.508]
+  # attr: [thresh, has_to_higher/has_to_lower]
+  metrics/mAP:0.5: [10000, '>', '20%', 0.508]
