@@ -273,6 +273,46 @@ mmaction_tsm_r50_video_1x1x8_100e_kinetics400_rgb:
   - '>'
   - 20%
 mmaction_tsn_r50_video_1x1x8_100e_kinetics400_rgb:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.7374065256118776
+    - <
+    - 50%
+    - 1.8102780032157897
+    - 1.836366866827011
+    - 1.828168181180954
+    __benchmark_mem_alloc(mb):
+    - 32317.5
+    - <
+    - 50%
+    - 21545
+    - 21545
+    - 21545
+    __benchmark_mem_cached(mb):
+    - 36366.0
+    - <
+    - 50%
+    - 24244
+    - 24244
+    - 24244
+    __benchmark_pavi_task_id:
+    - c0294797-9d39-4d81-b160-80db50c56be3
+    - 309a4ea7-7107-4a1b-9faf-cf0466b3ccf1
+    - f1b283f6-a89f-4ea0-a2b7-3f97b0b20f95
+    __benchmark_pure_training_time(h):
+    - 0.23208412835995357
+    - <
+    - 50%
+    - 0.15269292612870533
+    - 0.15635420203208925
+    - 0.15512112855911256
+    __benchmark_total_time(h):
+    - 10000
+    - <
+    - 50%
+    - 0.15273471434911093
+    - 0.1563916254705853
+    - 0.15514332638846504
   train.top1_acc:
   - 10000
   - '>'
