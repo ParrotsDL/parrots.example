@@ -1,6 +1,6 @@
 _base_ = './fcos_r50_caffe_fpn_gn-head_4x4_1x_coco.py'
 model = dict(
-    pretrained='open-mmlab://resnext101_64x4d',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnext101_64x4d-ee2c6f71.pth',
     backbone=dict(
         type='ResNeXt',
         depth=101,

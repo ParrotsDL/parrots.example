@@ -28,5 +28,5 @@ model = dict(
             conv_cfg=dict(type='ConvAWS'),
             sac=dict(type='SAC', use_deform=True),
             stage_with_sac=(False, True, True, True),
-            pretrained='torchvision://resnet50',
+            pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnet50-19c8e357.pth',
             style='pytorch')))

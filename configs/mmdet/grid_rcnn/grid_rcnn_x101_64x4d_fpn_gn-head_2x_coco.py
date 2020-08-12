@@ -1,6 +1,6 @@
 _base_ = './grid_rcnn_x101_32x4d_fpn_gn-head_2x_coco.py'
 model = dict(
-    pretrained='open-mmlab://resnext101_64x4d',
+    pretrained='/mnt/lustre/share_data/yangruichao/model_pool_data/mmdet/resnext101_64x4d-ee2c6f71.pth',
     backbone=dict(
         type='ResNeXt',
         depth=101,

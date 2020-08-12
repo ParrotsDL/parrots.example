@@ -7,7 +7,7 @@ name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
 
-pyroot=$ROOT/models/mmdet/tools
+pyroot=$ROOT/models/mmdet
 export PYTHONPATH=$pyroot:$PYTHONPATH
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
@@ -16,8 +16,8 @@ SRUN_ARGS=${SRUN_ARGS:-""}
 case $name in
     "mask_rcnn_r50_caffe_fpn_mstrain_1x_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -26,8 +26,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "mask_rcnn_r50_fpn_1x_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -36,8 +36,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "cascade_rcnn_r50_fpn_1x_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -46,8 +46,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "retinanet_r50_fpn_1x_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -56,8 +56,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "mask_rcnn_r50_fpn_fp16_1x_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -66,8 +66,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "ssd300_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -76,8 +76,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "faster_rcnn_r50_fpn_fp16_1x_coco")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -86,8 +86,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "mask_rcnn_r50_caffe_fpn_mstrain_1x_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -96,8 +96,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "mask_rcnn_r50_fpn_1x_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -106,8 +106,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "mask_rcnn_r50_fpn_1x_coco.short")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -116,8 +116,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "cascade_rcnn_r50_fpn_1x_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -126,8 +126,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "retinanet_r50_fpn_1x_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -136,8 +136,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "mask_rcnn_r50_fpn_fp16_1x_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -146,8 +146,8 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "ssd300_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
@@ -156,12 +156,82 @@ srun -K --mpi=pmi2 -p $1 -n$2 \
     ;;
     "faster_rcnn_r50_fpn_fp16_1x_coco.benchmark")
 set -x
-OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K --mpi=pmi2 -p $1 -n$2 \
+
+srun -p $1 -n$2 \
         --gres gpu:$g \
         --ntasks-per-node $g \
         --job-name=mmdet_${name} ${SRUN_ARGS}\
     python -u models/mmdet/tools/train.py --config=configs/mmdet/fp16/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "mask_rcnn_x101_32x4d_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/mask_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "faster_rcnn_r50_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/faster_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "retinanet_r50_fpn_fp16_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/fp16/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "mask_rcnn_r101_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/mask_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "mask_rcnn_x101_64x4d_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/mask_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "fast_rcnn_r50_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/fast_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
+    "cascade_mask_rcnn_r50_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/cascade_rcnn/${name}.py --launcher=slurm $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
     ;;
     *)
