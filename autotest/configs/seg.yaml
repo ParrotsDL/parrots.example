@@ -1,49 +1,23 @@
 seg_pspnet: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [10000, 'has_to_lower'] 
-  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
-  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-  __benchmark_total_time(h): [10000, 'has_to_lower']
-  eval_mIoU: [10000, 'has_to_higher']
+  eval_mIoU: [10000, '>', '20%']
+
 seg_deeplab: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
-  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
-  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-  __benchmark_total_time(h): [10000, 'has_to_lower']
-  eval_mIoU: [10000, 'has_to_higher']
+  eval_mIoU: [10000, '>', '20%']
+
 seg_mobilenet_v2_plus: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
-  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
-  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-  __benchmark_total_time(h): [10000, 'has_to_lower']
-  mIoU: [10000, 'has_to_higher']
+  mIoU: [10000, '>', '20%']
 
 seg_pspnet.benchmark: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [10000, 'has_to_lower'] 
-  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
-  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-  __benchmark_total_time(h): [10000, 'has_to_lower']
-  eval_mIoU: [10000, 'has_to_higher']
+  eval_mIoU: [10000, '>', '20%']
+
 seg_deeplab.benchmark: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
-  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
-  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-  __benchmark_total_time(h): [10000, 'has_to_lower']
-  eval_mIoU: [10000, 'has_to_higher']
+  placeholder: 'none'
+
 seg_mobilenet_v2_plus.benchmark: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, 'has_to_lower']
-  __benchmark_mem_alloc(mb): [10000, 'has_to_lower']
-  __benchmark_mem_cached(mb): [10000, 'has_to_lower']
-  __benchmark_pure_training_time(h): [10000, 'has_to_lower']
-  __benchmark_total_time(h): [10000, 'has_to_lower']
-  mIoU: [10000, 'has_to_higher']
+  placeholder: 'none'

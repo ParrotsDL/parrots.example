@@ -11,9 +11,6 @@
 [submodule "models/ssd.triondet"]
 	path = models/ssd.triondet
 	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
-[submodule "models/mmdetection-pro"]
-	path = models/mmdetection-pro
-	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/mmdetection-pro.git
 [submodule "models/ssd"]
 	path = models/ssd
 	url = git@gitlab.bj.sensetime.com:liuguangyu/ssd.git
@@ -34,8 +31,8 @@
 	path = models/srdemo
 	url = git@gitlab.bj.sensetime.com:luopeichao/srdemo.git
 [submodule "tests/deploy/quantization/Famicom"]
-	path = tests/deploy/quantization/Famicom
-	url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git
+    path = tests/deploy/quantization/Famicom
+    url = git@gitlab.bj.sensetime.com:lizhouyang/Famicom.git
 [submodule "models/springnas-lite"]
 	path = models/springnas-lite
 	url = git@gitlab.bj.sensetime.com:wangshiguang/springnas-lite.git
@@ -64,6 +61,19 @@
 [submodule "models/pytorch-object-detection-v2.3.0"]
 	path = models/pytorch-object-detection-v2.3.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+[submodule "models/mmdet"]
+	path = models/mmdet
+	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git
 [submodule "models/mmaction"]
 	path = models/mmaction
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
+[submodule "models/mmediting"]
+	path = models/mmediting
+	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
+[submodule "models/TextRecog"]
+	path = models/TextRecog
+	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
+[submodule "models/Pattern"]
+	path = models/Pattern
+	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
+	branch = pattern0.3_pat_test

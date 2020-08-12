@@ -1,0 +1,152 @@
+net:
+    backbone:
+        arch: core.model.backbone.mobilenet_v2_x.MobileNetV2_6
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+            nn.Linear: [1, 10, 1, 10]
+        kwargs:
+            feature_dim: 128 # for each single branch
+
+    head: # loss inside
+        arch: core.model.head.msms_roi_head.MSMShead
+        prev: backbone # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            head: [1, 1, 1, 1]
+        task_names: 
+            0:
+                gaze_vector: ['honda3_vector_trainset_v3']
+                gaze_valid: ['honda3_valid_trainset']
+        kwargs:
+            task_cfgs:
+                gaze_vector:
+                    gaze_dim: 3
+                    loss_type: L2
+                    loss_weight: 1
+                    has_accuracy: False
+                gaze_valid:
+                    num_class: 4
+                    loss_type: softmax
+                    loss_weight: 0.1
+                    has_accuracy: True
+strategy:
+    task_type: 'gaze'
+    task_mode: 'train'
+    scatter_mode: True
+
+    max_iter: 100000
+    base_lr: 0.01
+    lr_steps: [50000, 70000, 90000]
+    #base_lr: 0.1
+    #lr_steps: [5000, 16000, 18000]
+    lr_mults: [0.1, 0.1, 0.1]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0002
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 200
+    print_freq: 20
+    load_name: ''
+    #pretrained_model: '/mnt/lustrenew/share/zhangqi1/ModelExp/GazeModelZoo/pattern0.2/honda3/naive_mb2.6_gray_ckpt.pth.tar'
+    # pretrained_model: '/mnt/lustre/tanjie/ModelExp/tanjie_GazeModelZoo/v2.6_imagenet_honda2_honda3.pth.tar'
+    pretrained_model: ''
+    #save_path: '/mnt/lustrenew/share/zhangqi1/ModelExp/honda3/exps/naive_transfer/'
+    save_path: '/mnt/lustre/tanjie/ModelExp/pattern0.3/exps/naive_v2.6_best_transfer/' 
+
+    workers: 4 
+data:
+    training_param:
+        # crop config
+        crop: False
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        final_height: 224
+        final_width: 224
+        # mirror
+        mirror: True
+        mirror_prob: 0.5
+        # zoom
+        zoom: False
+        zoom_min: 0.9
+        zoom_max: 1.1
+        # gray
+        use_gray: True
+        final_channel: 1
+        #rotate
+        rotate: True
+        rotate_angle_max_value: 20
+        #trans(trans_x_max_value and trans_y_max_value are optional)
+        trans: True
+        trans_max_value: 0.067
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        #mean: [127.5]
+        #std: [79.68750]
+
+    honda3_vector_trainset_v3:
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3/'
+        json_path: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3/labels/lists/train_honda3_vector_transfer.json'
+        batch_size: 16 # for single gpu
+
+
+    honda3_valid_trainset: #hodna3_v1
+        type: 'gaze_cls_with_rect'
+        task: ['gaze_valid']
+        prefix: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1/'
+        json_path: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1/labels/use_solve/lists/0428_clean/123video_1234pic/train_honda3_valid_123video_1234pic_use_annotation_4cls_equal.json'
+        batch_size: 16 # for single gpu
+
+test:
+    strategy:
+        task_type: 'gaze'
+        task_mode: 'test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path'] + 'checkpoint'
+        workers: 0
+        gaze_convert_method: 'naive'
+        gaze_convert_proto: '/mnt/lustre/tanjie/Tool/Pattern3/Pattern/algorithm/gaze/convert/caffe_example/deploy_vector_mb2.6_fc128_scale1_size7.prototxt'
+
+    testing_param:
+        # crop config
+        crop: False
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        final_height: 224
+        final_width: 224
+        # gray
+        use_gray: True
+        final_channel: 1
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        #mean: [127.5, 127.5, 127.5]
+        #std: [79.6875, 79.6875, 79.6875]
+    honda3_vector_testset_v3:
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/'
+        json_path: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/labels/lists_0830/test_honda3_vector_transfer.json'
+        batch_size: 32 # for single gpu
+
+    honda3_valid_use_annotation_testset:
+        type: 'gaze_cls_with_rect'
+        task: ['gaze_valid']
+        prefix: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/test/'
+        json_path: '/mnt/lustre/tanjie/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_testset_valid_invalid/cropped_Honda_Pro3_data_1012_1014_valid_invalid_multicase/make_valid_invalid_list/make_testset/test_honda3_valid_invalid.json'
+        batch_size: 32 # for single gpu
