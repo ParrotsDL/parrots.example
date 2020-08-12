@@ -39,7 +39,7 @@ dataset: # Required.
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
         transformer: [*flip, *ms_resize, *to_tensor, *normalize]
   test:
@@ -52,7 +52,7 @@ dataset: # Required.
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/val2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
             color_mode: RGB
         transformer: [*resize, *to_tensor, *normalize]
         evaluator:
@@ -96,7 +96,7 @@ trainer: # Required.
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
+  save_dir: checkpoints/mask-rcnn-R50-FPN-2x-lvis     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/prototype_model_zoo/resnet50_batch1k_epoch100_nesterov_wd0.0001_bn_nowd/checkpoints/ckpt.pth.tar
   results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
