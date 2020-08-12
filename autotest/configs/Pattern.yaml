@@ -2,10 +2,6 @@ Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
     # attr: [thresh, >/<]
     acc1_ms1m: [0, '>', '50%']
     acc5_ms1m: [0, '>', '50%']
-Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots.benchmark:
-    # attr: [thresh, >/<]
-    placeholder: 'none'
-
 Pattern_attribute_config:
     # attr: [thresh, >/<]
     acc1_beard: [0, '>', '50%']
@@ -18,3 +14,7 @@ Pattern_attribute_config:
     acc1_mouth: [0, '>', '50%']
     acc1_race: [0, '>', '50%']
     acc1_smile: [0, '>', '50%']
+Pattern_eye_best_config_parrots:
+    # attr: [thresh, >/<]
+    acc1_valid_eye_softmax: [0, '<', '50%']
+    acc1_eye_softmax: [0, '<','50%']
