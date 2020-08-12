@@ -28,8 +28,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 1
-  test_freq: 2
+  max_epoch: 2
+  test_freq: 3
   log_freq: 200
   mixed_precision:
     half: True

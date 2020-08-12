@@ -1,6 +1,6 @@
 mkdir -p log/springnas-lite/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 ROOT=.
 
 # add springnas_lite lib without install
@@ -14,7 +14,7 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-srun --mpi=pmi2 -p $1 -n$2 --gres=gpu:$g --ntasks-per-node=$g --cpus-per-task=5 --job-name=nas_lite_${name} ${SRUN_ARGS}\
+srun --mpi=pmi2 -p $1 -n$2 --gres=gpu:$g --ntasks-per-node=$g --cpus-per-task=5 --job-name=nas_lite_${name} ${SRUN_ARGS} \
 python models/springnas-lite/imagenet-example-automl/main.py \
  --config $ROOT/configs/springnas-lite/proxyless_mobcell_search_7ms_batch512_epoch100/config.yaml \
  --bn_sync_mode=sync \

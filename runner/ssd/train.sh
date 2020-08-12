@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p log/ssd/
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
@@ -37,7 +37,7 @@ case $name in
 esac
 set -x
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-srun -K -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} ${SRUN_ARGS}\
+srun -K -p $1 -n$2  --gres gpu:8 --ntasks-per-node 8 --job-name=${name} ${SRUN_ARGS} \
     $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/ssd/train.${name}.log.$T
 
