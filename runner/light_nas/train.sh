@@ -28,18 +28,6 @@ case $name in
          --config=configs/light_nas/single_path_oneshot/evolution.yaml \
          --step=$step"
       ;; 
-    "single_path_oneshot_benchmark_search")
-      step=search
-      PYTHON_ARGS="python -m main \
-         --config=configs/light_nas/single_path_oneshot/search.benchmark.yaml \
-         --step=$step"
-      ;; 
-    "single_path_oneshot_benchmark_evolution")
-      step=evolution
-      PYTHON_ARGS="python -m main \
-         --config=configs/light_nas/single_path_oneshot/evolution.benchmark.yaml \
-         --step=$step"
-      ;; 
     *)
       echo "invalid $name"
       exit 1

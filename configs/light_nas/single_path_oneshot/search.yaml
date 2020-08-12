@@ -64,7 +64,7 @@ task_info: # Unnecessary for cityscapes dataset, define whatever you like
 
 trainer: # Required.
   search:
-    epochs: 1 #500
+    epochs: 500
     start_epochs: 0
     optimizer:
       type: SGD
@@ -80,7 +80,7 @@ trainer: # Required.
       type: ce
       kwargs:
   retrain:
-    epochs: 1 # 200
+    epochs: 200
     start_epochs: 0
     optimizer:
       type: SGD
@@ -121,8 +121,8 @@ step: # Required.
     sync_bn: True
     ckpt: '/mnt/lustre/share_data/hanyachao/light_nas/single_path_oneshot/ckpt_search/305.pth'
     ceph_ckpt:
-    max_iterations: 1 # 20
-    population: 1 # 50
+    max_iterations: 20
+    population: 50
     top_k: 10
     mutate_prob: 0.1
   retrain:
