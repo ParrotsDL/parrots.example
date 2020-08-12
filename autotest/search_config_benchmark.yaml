@@ -62,6 +62,9 @@ task:
                     # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "mobile_v2.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "mobile_v2_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # light_nas
+                    # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
+                    # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
                     # star
                     # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnet50.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnest50.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
