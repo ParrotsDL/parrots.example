@@ -1,6 +1,6 @@
 alphatrion_nas_super_resnet_range1:
   max_origin_valid-metric-sub-epoch-best/top1:
-  - 10000
+  - 0.75
   - '>'
   - 20%
 alphatrion_nas_super_resnet_range1_benchmark:
@@ -35,7 +35,7 @@ alphatrion_nas_super_resnet_range1_benchmark:
   placeholder: none
 alphatrion_nas_super_resnet_range1_fp16:
   max_origin_valid-metric-sub-epoch-best/top1:
-  - 10000
+  - 0.75
   - '>'
   - 20%
 alphatrion_nas_super_resnet_range1_fp16_benchmark:
