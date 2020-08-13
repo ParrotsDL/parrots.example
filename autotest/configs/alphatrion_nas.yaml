@@ -1,15 +1,70 @@
-alphatrion_nas_super_resnet_range1: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  max_origin_valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_nas_super_resnet_range1_fp16: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  max_origin_valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_nas_super_resnet_range1_benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-alphatrion_nas_super_resnet_range1_fp16_benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
+alphatrion_nas_super_resnet_range1:
+  max_origin_valid-metric-sub-epoch-best/top1:
+  - 10000
+  - '>'
+  - 20%
+alphatrion_nas_super_resnet_range1_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.2513662588478316
+    - <
+    - 50%
+    - 1.5009108392318877
+    __benchmark_mem_alloc(mb):
+    - 21100.5
+    - <
+    - 50%
+    - 14067
+    __benchmark_mem_cached(mb):
+    - 22008.0
+    - <
+    - 50%
+    - 14672
+    __benchmark_pavi_task_id:
+    - 8d7d3bce-3465-470e-aa17-82aa4ea478e7
+    __benchmark_pure_training_time(h):
+    - 1.8682949982086816
+    - <
+    - 50%
+    - 1.2455299988057877
+    __benchmark_total_time(h):
+    - 1.8911927488446234
+    - <
+    - 50%
+    - 1.2607951658964156
+  placeholder: none
+alphatrion_nas_super_resnet_range1_fp16:
+  max_origin_valid-metric-sub-epoch-best/top1:
+  - 10000
+  - '>'
+  - 20%
+alphatrion_nas_super_resnet_range1_fp16_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.706061781042873
+    - <
+    - 50%
+    - 1.8040411873619155
+    __benchmark_mem_alloc(mb):
+    - 21811.5
+    - <
+    - 50%
+    - 14541
+    __benchmark_mem_cached(mb):
+    - 22533.0
+    - <
+    - 50%
+    - 15022
+    __benchmark_pavi_task_id:
+    - c6f889ed-aec0-4a77-a6ac-0b673c6c973e
+    __benchmark_pure_training_time(h):
+    - 1.4083492182691892
+    - <
+    - 50%
+    - 0.9388994788461261
+    __benchmark_total_time(h):
+    - 1.4280843097964924
+    - <
+    - 50%
+    - 0.9520562065309949
+  placeholder: none
