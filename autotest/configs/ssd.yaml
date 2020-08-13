@@ -1,6 +1,6 @@
 ssd_ssd_FSAF:
   epoch/mAP:
-  - 10000
+  - 0.3737
   - '>'
   - 20%
 ssd_ssd_FSAF_benchmark:
@@ -35,7 +35,7 @@ ssd_ssd_FSAF_benchmark:
   placeholder: none
 ssd_ssd_Retina:
   epoch/mAP:
-  - 10000
+  - 0.3450
   - '>'
   - 20%
 ssd_ssd_Retina_benchmark:
