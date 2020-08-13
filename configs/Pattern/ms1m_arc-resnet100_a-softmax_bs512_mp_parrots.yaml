@@ -56,7 +56,7 @@ strategy:
 
     snapshot_freq: 5000
     print_freq: 100 #100
-    save_path: '../experiments/ms1m_arc-resnet100_a-softmax_bs512_mp_parrots/'
+    save_path: './Pattern/verify/ms1m_arc-resnet100_a-softmax_bs512_mp_parrots/'
     workers: 1
 data:
     training_param:

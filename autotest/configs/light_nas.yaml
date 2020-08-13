@@ -1,0 +1,5 @@
+light_nas_single_path_oneshot_search: # Required
+  train_acc: [0, '>', '20%']
+  train_iou: [0, '>', '20%']
+light_nas_single_path_oneshot_evolution: # Required
+  test_acc: [0, '>', '20%']
