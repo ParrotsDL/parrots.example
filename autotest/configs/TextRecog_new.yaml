@@ -1,0 +1,15 @@
+TextRecog_print_Middle: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  acc: [0.5, '>', '20%']
+
+TextRecog_print_MiddleV2: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  acc: [0.5, '>', '20%']
+
+TextRecog_print_Big: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  acc: [0.5, '>', '20%']
+
+TextRecog_crnn: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  acc: [0.5, '>', '20%']
