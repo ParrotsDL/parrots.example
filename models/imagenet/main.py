@@ -192,7 +192,7 @@ def main():
         if args.world_size > 1:
             dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
         mem_cached = mem_mb.item()
-
+        
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
@@ -298,6 +298,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
+        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 320:
+            return
 
 
 def test(test_loader, model, criterion, args):
