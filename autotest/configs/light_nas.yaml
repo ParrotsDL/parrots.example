@@ -1,5 +1,5 @@
 light_nas_single_path_oneshot_search: # Required
-  train_acc: [0, '>', '20%']
-  train_iou: [0, '>', '20%']
+  train_acc: [0.726, '>', '20%', 0.907]
+  train_iou: [0.635, '>', '20%', 0.794]
 light_nas_single_path_oneshot_evolution: # Required
-  test_acc: [0, '>', '20%']
+  test_acc: [0.549, '>', '20%', 0.686]
