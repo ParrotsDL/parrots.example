@@ -11,7 +11,41 @@ import warnings
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
 
-def after_callback_wrapper(config):
+# 公共表
+comm_table = {
+    '__benchmark_avg_iter_time(s)': [10000, '<', '50%'],
+    '__benchmark_mem_alloc(mb)': [10000, '<', '50%'],
+    '__benchmark_mem_cached(mb)': [10000, '<', '50%'],
+    '__benchmark_pure_training_time(h)': [10000, '<', '50%'],
+    '__benchmark_total_time(h)': [10000, '<', '50%'],
+    '__benchmark_pavi_task_id': []
+}
+
+# 0: 只保存速度、显存等信息
+# 1: 保存速度、显存、精度等信息
+run_type_table = {
+    'all': 1,
+    'benchmark': 0,
+    'dailytest': 1,
+    'dummydata': 0,
+    'weeklybenchmark': 0,
+    'weeklytest': 1
+}
+
+def after_callback_wrapper(config, run_type):
+    if run_type in config.keys():
+        config = config[run_type]
+    else:
+        for key in run_type_table.keys():
+            if key in config.keys():
+                del config[key]
+        if run_type_table[run_type] == 1:
+            config.update(comm_table)
+        else:
+            config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
+
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
         pavi_task_id = env['PAVI_TASK_ID']
@@ -24,12 +58,12 @@ def after_callback_wrapper(config):
         pk = 'pavi_' + k
         pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
         pavi_ret[pk] = pv
-    config.update(pavi_ret)
 
+    config.update(pavi_ret)
     print(yaml.dump(config))
 
 
-def update_thresh_wrapper(config, framework, model_name):
+def update_thresh_wrapper(config, framework, model_name, run_type):
     time.sleep(5)  # wait 10s for pavi scalar uploaded    
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
@@ -41,6 +75,21 @@ def update_thresh_wrapper(config, framework, model_name):
     root_path = root_path.replace('.search-run', 'autotest')
     configs_dir = osp.join(root_path, 'configs')
     config_path = osp.join(configs_dir, framework+'.yaml')
+    full_config = copy.deepcopy(config)
+
+    if run_type in config.keys():
+        config = config[run_type]
+    else:
+        for key in run_type_table.keys():
+            if key in config.keys():
+                del config[key]
+        if run_type_table[run_type] == 1:
+            config.update(comm_table)
+        else:
+            config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
+
     if '__benchmark_pavi_task_id' not in config:
         # raise KeyError('pavi_task_id not provided')
         # make it compatible with old version
@@ -72,17 +121,29 @@ def update_thresh_wrapper(config, framework, model_name):
             else:
                 raise KeyError('Unsupported operator key')
 
-    config.update(update_ret)
+    full_config[run_type] = update_ret
+    config = full_config
 
     org_config = yaml.load(open(config_path, 'r'), Loader=yaml.Loader)
     org_config.update({framework+'_'+model_name: config})
-    dump(org_config, config_path, file_format='yaml')
+    dump(org_config, config_path, file_format='yaml', default_flow_style=False)
 
-    print(yaml.dump(config))
+    print(yaml.dump(config[run_type]))
 
 
-def pre_callback_wrapper(config):
-
+def pre_callback_wrapper(config, run_type):
+    if run_type in config.keys():
+        config = config[run_type]
+    else:
+        for key in run_type_table.keys():
+            if key in config.keys():
+                del config[key]
+        if run_type_table[run_type] == 1:
+            config.update(comm_table)
+        else:
+            config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
     print(yaml.dump(config))
 
 
@@ -99,11 +160,12 @@ def collect_config(framework, model_name):
 
 
 if __name__ == '__main__':
+    assert sys.argv[4] in run_type_table.keys()
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config)
+            pre_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '1':
-            after_callback_wrapper(config)
+            after_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])

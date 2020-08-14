@@ -2,7 +2,7 @@
 
 mkdir -p log/alphatrion_nas/
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
@@ -48,7 +48,7 @@ case $name in
       configs/alphatrion_nas/super_learn_part_train.yaml \
       --search_space super_resnet_range1 \
       --RA.M 11 --all_num_epochs.super_learn 1 \
-      --local_batch_size 128 --num_gpus $2 \
+      --local_batch_size 64 --num_gpus $2 \
       --lr 0.8 \
       --fp 32 --mixed.train false --mixed.valid false --mixed.adabn false \
       --resume ''"

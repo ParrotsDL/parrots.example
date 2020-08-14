@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p log/ssd/
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
