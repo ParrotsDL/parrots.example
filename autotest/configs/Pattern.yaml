@@ -1,20 +1,39 @@
-Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
-    # attr: [thresh, >/<]
-    acc1_ms1m: [0, '>', '50%']
-    acc5_ms1m: [0, '>', '50%']
 Pattern_attribute_config:
-    # attr: [thresh, >/<]
-    acc1_beard: [0, '>', '50%']
-    acc1_emotion: [0, '>', '50%']
-    acc1_eye: [0, '>', '50%']
-    acc1_face_value: [0, '>', '50%']
-    acc1_gender: [0, '>', '50%']
-    acc1_glass: [0, '>', '50%']
-    acc1_mask: [0, '>', '50%']
-    acc1_mouth: [0, '>', '50%']
-    acc1_race: [0, '>', '50%']
-    acc1_smile: [0, '>', '50%']
+  average_precision:
+  - 0
+  - '>'
+  - 50%
 Pattern_eye_best_config_parrots:
-    # attr: [thresh, >/<]
-    acc1_valid_eye_softmax: [0, '<', '50%']
-    acc1_eye_softmax: [0, '<','50%']
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb):
+    - 0
+    - <
+    - 50%
+    __benchmark_mem_cached(mb):
+    - 3108.0
+    - <
+    - 50%
+    __benchmark_pavi_task_id:
+    - 9b12e13a-57f0-43d8-bd99-0eef77d9278c
+    - 9b12e13a-57f0-43d8-bd99-0eef77d9278c
+    __benchmark_pure_training_time(h):
+    - 0
+    - <
+    - 50%
+    __benchmark_total_time(h):
+    - 0
+    - <
+    - 50%
+    average_precision:
+    - 0
+    - '>'
+    - 50%
+Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
+  average_precision:
+  - 0
+  - '>'
+  - 50%
