@@ -113,7 +113,7 @@ strategy:
     task_type: 'attribute'
     data_type: 'msms'
     scatter_mode: True
-    #pavi_mode: False
+    pavi_mode: True
 
     max_iter: 400000
     base_lr: 0.01
