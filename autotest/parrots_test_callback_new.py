@@ -52,12 +52,18 @@ def after_callback_wrapper(config, run_type):
     else:
         pavi_task_id = env['pavi_task_id']
     pavi_ret = dict()
+
     for k, v in config.items():
-        if k == '__benchmark_pavi_task_id':
+        if k == '__benchmark_pavi_task_id' :
             continue
         pk = 'pavi_' + k
-        pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
-        pavi_ret[pk] = pv
+   
+        if v[1] == '>':
+            result_pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'))
+            pavi_ret[pk] = result_pv[-1]['value']
+        else:
+            result_pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'), reverse = True)
+            pavi_ret[pk] = result_pv[-1]['value']
 
     config.update(pavi_ret)
     print(yaml.dump(config))
