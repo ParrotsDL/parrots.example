@@ -192,7 +192,7 @@ def main():
         if args.world_size > 1:
             dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
         mem_cached = mem_mb.item()
-
+        
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
@@ -298,6 +298,31 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
+        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 320:
+            return
+           # mem = torch.cuda.max_memory_allocated()
+           # mem_mb = torch.tensor([mem / (1024 * 1024)],
+           #                dtype=torch.int,
+           #                device=torch.device('cuda'))
+           # if args.world_size > 1:
+           #     dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+           # mem_alloc = mem_mb.item()
+           # mem = torch.cuda.max_memory_cached()
+           # mem_mb = torch.tensor([mem / (1024 * 1024)],
+           #                dtype=torch.int,
+           #                device=torch.device('cuda'))
+           # if args.world_size > 1:
+          #      dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+         #   mem_cached = mem_mb.item()
+            #end_time = time.time()
+            #if args.rank == 0 and monitor_writer:
+            #    monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
+            #    monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
+            #    monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
+            #    monitor_writer.add_scalar('__benchmark_mem_alloc(mb)',mem_alloc,1)
+            #    monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
+            #    monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
+            #    exit()
 
 
 def test(test_loader, model, criterion, args):
