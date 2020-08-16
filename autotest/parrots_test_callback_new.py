@@ -59,7 +59,7 @@ def after_callback_wrapper(config, run_type):
         try:
             pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
         except:
-            pv = 'unknow, ({}) may not exist on pavi'.format(k)
+            pv = 'unknow, {} may not exist on pavi'.format(k)
         pavi_ret[pk] = pv
 
     config.update(pavi_ret)
@@ -113,7 +113,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
                 pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
                 pv = pv[-1]['value']
             except:
-                pv = 'unknow, ({}) may not exist on pavi'.format(k)
+                pv = 'unknow, {} may not exist on pavi'.format(k)
             update_ret[k].append(pv)
             # update thresh
             mean_pv = 1.0 * sum(update_ret[k][3:len(update_ret[k])]) / (len(update_ret[k])-3)
