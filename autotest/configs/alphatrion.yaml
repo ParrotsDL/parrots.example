@@ -32,7 +32,6 @@ alphatrion_mobilenet_v2_fp16_benchmark:
     - <
     - 50%
     - 0.2698657764991124
-  placeholder: none
 alphatrion_mobilenet_v2_fp32:
   valid-metric-sub-epoch-best/top1:
   - 0.6979
@@ -67,7 +66,6 @@ alphatrion_mobilenet_v2_fp32_benchmark:
     - <
     - 50%
     - 0.2746821716096666
-  placeholder: none
 alphatrion_resnet101_fp16:
   valid-metric-sub-epoch-best/top1:
   - 0.7721
@@ -102,7 +100,6 @@ alphatrion_resnet101_fp16_benchmark:
     - <
     - 50%
     - 0.3441155603196886
-  placeholder: none
 alphatrion_resnet101_fp32:
   valid-metric-sub-epoch-best/top1:
   - 0.7739
@@ -137,7 +134,6 @@ alphatrion_resnet101_fp32_benchmark:
     - <
     - 50%
     - 0.47284119692113663
-  placeholder: none
 alphatrion_resnet50_fp16:
   valid-metric-sub-epoch-best/top1:
   - 0.7555
@@ -172,7 +168,6 @@ alphatrion_resnet50_fp16_benchmark:
     - <
     - 50%
     - 0.3302666250864665
-  placeholder: none
 alphatrion_resnet50_fp32:
   valid-metric-sub-epoch-best/top1:
   - 0.7553
@@ -207,7 +202,6 @@ alphatrion_resnet50_fp32_benchmark:
     - <
     - 50%
     - 0.33814736896091036
-  placeholder: none
 alphatrion_se_resnet50_fp16:
   valid-metric-sub-epoch-best/top1:
   - 0.7655
@@ -242,7 +236,6 @@ alphatrion_se_resnet50_fp16_benchmark:
     - <
     - 50%
     - 0.35003094143337676
-  placeholder: none
 alphatrion_se_resnet50_fp32:
   valid-metric-sub-epoch-best/top1:
   - 0.7657
@@ -277,4 +270,3 @@ alphatrion_se_resnet50_fp32_benchmark:
     - <
     - 50%
     - 0.341018100115988
-  placeholder: none
