@@ -1,63 +1,272 @@
-alphatrion_mobilenet_v2_fp32: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
 alphatrion_mobilenet_v2_fp16:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_se_resnet50_fp32:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_se_resnet50_fp16:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_resnet50_fp32:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_resnet50_fp16:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_resnet101_fp32:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_resnet101_fp16:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  valid-metric-sub-epoch-best/top1: [10000, '>', '20%']
-
-alphatrion_mobilenet_v2_fp32_benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
+  valid-metric-sub-epoch-best/top1:
+  - 0.6987
+  - '>'
+  - 20%
 alphatrion_mobilenet_v2_fp16_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-alphatrion_se_resnet50_fp32_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-alphatrion_se_resnet50_fp16_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-alphatrion_resnet50_fp32_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-alphatrion_resnet50_fp16_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-alphatrion_resnet101_fp32_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.240612787775474
+    - <
+    - 50%
+    - 0.16040852518364934
+    __benchmark_mem_alloc(mb):
+    - 2766.0
+    - <
+    - 50%
+    - 1844
+    __benchmark_mem_cached(mb):
+    - 2838.0
+    - <
+    - 50%
+    - 1892
+    __benchmark_pavi_task_id:
+    - 9522208d-e4fb-4a08-b9bb-eb2e329ed530
+    __benchmark_pure_training_time(h):
+    - 0.3828250849246979
+    - <
+    - 50%
+    - 0.25521672328313194
+    __benchmark_total_time(h):
+    - 0.40479866474866866
+    - <
+    - 50%
+    - 0.2698657764991124
+alphatrion_mobilenet_v2_fp32:
+  valid-metric-sub-epoch-best/top1:
+  - 0.6979
+  - '>'
+  - 20%
+alphatrion_mobilenet_v2_fp32_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.2438416610849966
+    - <
+    - 50%
+    - 0.16256110738999774
+    __benchmark_mem_alloc(mb):
+    - 4005.0
+    - <
+    - 50%
+    - 2670
+    __benchmark_mem_cached(mb):
+    - 4128.0
+    - <
+    - 50%
+    - 2752
+    __benchmark_pavi_task_id:
+    - fb53f762-6039-4774-8970-24bca0f1be9a
+    __benchmark_pure_training_time(h):
+    - 0.392516187230746
+    - <
+    - 50%
+    - 0.26167745815383064
+    __benchmark_total_time(h):
+    - 0.41202325741449997
+    - <
+    - 50%
+    - 0.2746821716096666
+alphatrion_resnet101_fp16:
+  valid-metric-sub-epoch-best/top1:
+  - 0.7721
+  - '>'
+  - 20%
 alphatrion_resnet101_fp16_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.3216954351651786
+    - <
+    - 50%
+    - 0.21446362344345243
+    __benchmark_mem_alloc(mb):
+    - 10644.0
+    - <
+    - 50%
+    - 7096
+    __benchmark_mem_cached(mb):
+    - 10890.0
+    - <
+    - 50%
+    - 7260
+    __benchmark_pavi_task_id:
+    - 7d450615-f14c-4c33-a51d-086970452b8e
+    __benchmark_pure_training_time(h):
+    - 0.4963696085413297
+    - <
+    - 50%
+    - 0.33091307236088646
+    __benchmark_total_time(h):
+    - 0.5161733404795329
+    - <
+    - 50%
+    - 0.3441155603196886
+alphatrion_resnet101_fp32:
+  valid-metric-sub-epoch-best/top1:
+  - 0.7739
+  - '>'
+  - 20%
+alphatrion_resnet101_fp32_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.4421132000366059
+    - <
+    - 50%
+    - 0.2947421333577373
+    __benchmark_mem_alloc(mb):
+    - 13548.0
+    - <
+    - 50%
+    - 9032
+    __benchmark_mem_cached(mb):
+    - 13905.0
+    - <
+    - 50%
+    - 9270
+    __benchmark_pavi_task_id:
+    - da3c1436-8324-4d33-a319-c2684cd5e15e
+    __benchmark_pure_training_time(h):
+    - 0.6894347380598386
+    - <
+    - 50%
+    - 0.45962315870655907
+    __benchmark_total_time(h):
+    - 0.709261795381705
+    - <
+    - 50%
+    - 0.47284119692113663
+alphatrion_resnet50_fp16:
+  valid-metric-sub-epoch-best/top1:
+  - 0.7555
+  - '>'
+  - 20%
+alphatrion_resnet50_fp16_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.32049730390605363
+    - <
+    - 50%
+    - 0.2136648692707024
+    __benchmark_mem_alloc(mb):
+    - 9540.0
+    - <
+    - 50%
+    - 6360
+    __benchmark_mem_cached(mb):
+    - 9681.0
+    - <
+    - 50%
+    - 6454
+    __benchmark_pavi_task_id:
+    - f8b7bb6d-58a9-45b4-998c-cc0aa164f8b0
+    __benchmark_pure_training_time(h):
+    - 0.47803054044644033
+    - <
+    - 50%
+    - 0.3186870269642936
+    __benchmark_total_time(h):
+    - 0.4953999376296997
+    - <
+    - 50%
+    - 0.3302666250864665
+alphatrion_resnet50_fp32:
+  valid-metric-sub-epoch-best/top1:
+  - 0.7553
+  - '>'
+  - 20%
+alphatrion_resnet50_fp32_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.3315494709675855
+    - <
+    - 50%
+    - 0.221032980645057
+    __benchmark_mem_alloc(mb):
+    - 11563.5
+    - <
+    - 50%
+    - 7709
+    __benchmark_mem_cached(mb):
+    - 11859.0
+    - <
+    - 50%
+    - 7906
+    __benchmark_pavi_task_id:
+    - de5119e8-caa3-4b66-be82-e40dbd01df37
+    __benchmark_pure_training_time(h):
+    - 0.4900149544080098
+    - <
+    - 50%
+    - 0.32667663627200655
+    __benchmark_total_time(h):
+    - 0.5072210534413655
+    - <
+    - 50%
+    - 0.33814736896091036
+alphatrion_se_resnet50_fp16:
+  valid-metric-sub-epoch-best/top1:
+  - 0.7655
+  - '>'
+  - 20%
+alphatrion_se_resnet50_fp16_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.3136980155907055
+    - <
+    - 50%
+    - 0.20913201039380366
+    __benchmark_mem_alloc(mb):
+    - 9670.5
+    - <
+    - 50%
+    - 6447
+    __benchmark_mem_cached(mb):
+    - 9813.0
+    - <
+    - 50%
+    - 6542
+    __benchmark_pavi_task_id:
+    - 5ad26542-7147-4113-85c7-aee371adf941
+    __benchmark_pure_training_time(h):
+    - 0.5055410397052765
+    - <
+    - 50%
+    - 0.33702735980351767
+    __benchmark_total_time(h):
+    - 0.5250464121500651
+    - <
+    - 50%
+    - 0.35003094143337676
+alphatrion_se_resnet50_fp32:
+  valid-metric-sub-epoch-best/top1:
+  - 0.7657
+  - '>'
+  - 20%
+alphatrion_se_resnet50_fp32_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 0.511527150173982
+    - <
+    - 50%
+    - 0.341018100115988
