@@ -124,7 +124,7 @@ optimizer = dict(
 optimizer_config = dict(grad_clip=dict(max_norm=40, norm_type=2))
 # learning policy
 lr_config = dict(policy='CosineAnnealing', min_lr=0)
-total_epochs = 256
+total_epochs = 125
 checkpoint_config = dict(interval=4)
 workflow = [('train', 1)]
 evaluation = dict(
