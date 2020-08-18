@@ -13,11 +13,11 @@ from autoparrots.command.entry import trace_up
 
 # 公共表
 comm_table = {
-    '__benchmark_avg_iter_time(s)': [10000, '<', '50%'],
-    '__benchmark_mem_alloc(mb)': [10000, '<', '50%'],
-    '__benchmark_mem_cached(mb)': [10000, '<', '50%'],
-    '__benchmark_pure_training_time(h)': [10000, '<', '50%'],
-    '__benchmark_total_time(h)': [10000, '<', '50%'],
+    '__benchmark_avg_iter_time(s)': [10000, '<', '5%'],
+    '__benchmark_mem_alloc(mb)': [10000, '<', '5%'],
+    '__benchmark_mem_cached(mb)': [10000, '<', '5%'],
+    '__benchmark_pure_training_time(h)': [10000, '<', '5%'],
+    '__benchmark_total_time(h)': [10000, '<', '5%'],
     '__benchmark_pavi_task_id': []
 }
 
@@ -112,8 +112,18 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
-            pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
-            pv = pv[-1]['value']
+
+            try:
+                if v[1] == '>':
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'))
+                    pv = pv[-1]['value']
+                else:
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'), reverse = True)
+                    pv = pv[-1]['value']
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+
+
             update_ret[k].append(pv)
             # update thresh
             mean_pv = 1.0 * sum(update_ret[k][3:len(update_ret[k])]) / (len(update_ret[k])-3)

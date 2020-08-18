@@ -64,7 +64,7 @@ strategy:
     print_freq: 20
     load_name: 'iter_195000_ckpt.pth.tar'
     #save_path: '../eye_exp/eye_crop_fir_dts_zzms_clean_v2_invalid_no_zoom_nomotionblur_big_angle_parrots_aten/'
-    save_path: './Pattern_save/drowsiness/pytorch/'
+    save_path: './Pattern_save/drowsiness/parrots/'
     workers: 32
 data:
     training_param:
