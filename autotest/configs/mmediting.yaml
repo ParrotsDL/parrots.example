@@ -1,46 +1,42 @@
 mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
   # attr: [thresh, </>]
-  train.val_saved_number: [106, '>', '50%']
+  train.val_saved_number: [309, '>', '50%']
 
 mmediting_deepfillv2_256x256_8x2_celeba:
   # attr: [thresh, </>]
-  train.l1: [5.411, '<', '50%']
+  train.l1: [0.125, '<', '50%']
 
 mmediting_dim_stage2_v16_pln_1x1_1000k_comp1k:
   # attr: [thresh, </>]
-  train.CONN: [52.4, '<', '50%']
-  train.GRAD: [29.4, '<', '50%']
+  train.CONN: [53.4, '<', '50%']
+  train.GRAD: [30.5, '<', '50%']
 
 mmediting_edsr_x2c64b16_g1_300k_div2k:
   # attr: [thresh, </>]
-  train.PSNR: [35.7592, '>', '50%']
-
-mmediting_edvrm_wotsa_x4_g8_600k_reds:
-  # attr: [thresh, </>]
-  train.PSNR: [30.3430, '>', '50%']
+  train.PSNR: [36.7, '>', '50%']
 
 mmediting_esrgan_psnr_x4c64b23g32_g1_1000k_div2k:
   # attr: [thresh, </>]
-  train.PSNR: [30.6428, '>', '50%']
-  train.SSIM: [0.8559, '>', '50%']
+  train.PSNR: [31.601, '>', '50%']
+  train.SSIM: [0.846, '>', '50%']
 
 mmediting_gl_256x256_8x12_celeba:
   # attr: [thresh, </>]
-  train.l1: [6.678, '<', '50%']
+  train.l1: [0.144, '<', '50%']
 
 mmediting_indexnet_mobv2_1x16_78k_comp1k:
   # attr: [thresh, </>]
-  train.CONN: [44.8, '<', '50%']
-  train.GRAD: [25.5, '<', '50%']
+  train.CONN: [50.9, '<', '50%']
+  train.GRAD: [32.7, '<', '50%']
 
 mmediting_msrresnet_x4c64b16_g1_1000k_div2k:
   # attr: [thresh, </>]
-  train.PSNR: [30.2252, '>', '50%']
-  train.SSIM: [0.8491, '>', '50%']
+  train.PSNR: [31.2, '>', '50%']
+  train.SSIM: [0.839, '>', '50%']
 
 mmediting_pconv_256x256_stage1_8x1_celeba:
   # attr: [thresh, </>]
-  train.l1: [5.990, '<', '50%']
+  train.l1: [0.126, '<', '50%']
 
 mmediting_pix2pix_vanilla_unet_bn_1x1_80k_facades:
   # attr: [thresh, </>]
@@ -48,5 +44,5 @@ mmediting_pix2pix_vanilla_unet_bn_1x1_80k_facades:
 
 mmediting_srcnn_x4k915_g1_1000k_div2k:
   # attr: [thresh, </>]
-  train.PSNR: [28.4316, '>', '50%']
-  train.SSIM: [0.8099, '>', '50%']
+  train.PSNR: [29.4, '>', '50%']
+  train.SSIM: [0.801, '>', '50%']
