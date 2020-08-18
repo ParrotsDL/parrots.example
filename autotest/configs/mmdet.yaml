@@ -1,74 +1,64 @@
 mmdet_mask_rcnn_r50_caffe_fpn_mstrain_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
   train.bbox_mAP: [10000, '>', '50%']
   train.segm_mAP: [10000, '>', '50%']
 
 mmdet_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.38, '>', '50%']
+  train.segm_mAP: [0.345, '>', '50%']
 
 mmdet_cascade_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.405, '>', '50%']
 
 mmdet_retinanet_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.365, '>', '50%']
 
 mmdet_mask_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
   train.bbox_mAP: [10000, '>', '50%']
   train.segm_mAP: [10000, '>', '50%']
 
 mmdet_ssd300_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.255, '>', '50%']
 
 mmdet_faster_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.376, '>', '50%']
 
 mmdet_mask_rcnn_x101_32x4d_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.418, '>', '50%']
+  train.segm_mAP: [0.376, '>', '50%']
 
 mmdet_faster_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.376, '>', '50%']
 
 mmdet_retinanet_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.365, '>', '50%']
 
 mmdet_mask_rcnn_r101_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  train.bbox_mAP: [0.400, '>', '50%']
+  train.segm_mAP: [0.362, '>', '50%']
 
 mmdet_fast_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
   train.bbox_mAP: [10000, '>', '50%']
 
 mmdet_cascade_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
+  train.bbox_mAP: [10000, '>', '50%']
+
+mask_rcnn_x101_64x4d_fpn_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  train.bbox_mAP: [10000, '>', '50%']
+
+faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
   train.bbox_mAP: [10000, '>', '50%']
