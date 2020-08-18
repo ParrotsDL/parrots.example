@@ -103,6 +103,9 @@ task:
                     # {'framework': 'mmaction', 'gpus': 8, 'model': 'tsm_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # {'framework': 'mmaction', 'gpus': 2, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
+                    # pod_v2.3.0
+                    # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.1'},
+                    # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.2'},
                 ]
     # Optional
     # callback: "cat"
