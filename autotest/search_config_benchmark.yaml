@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -20,6 +20,8 @@ task:
                     # {'framework': 'mmdet', 'gpus': 8, 'model': 'retinanet_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
                     # {'framework': 'mmdet', 'gpus': 8, 'model': 'ssd300_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
                     # {'framework': 'mmdet', 'gpus': 8, 'model': 'faster_rcnn_r50_fpn_fp16_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
+                    # {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_x101_64x4d_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
+                    # {'framework': 'mmdet', 'gpus': 8, 'model': 'faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
                     # seg
                     # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab.benchmark', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
@@ -62,6 +64,9 @@ task:
                     # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "mobile_v2.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
                     # {'framework': 'example', 'gpus': 8, 'model': "mobile_v2_mix.benchmark", 'py_args': '--pavi --pavi-project parrots_test'},
+                    # light_nas
+                    # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
+                    # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
                     # star
                     # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnet50.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'star', 'gpus': 8, 'model': "topdown_resnest50.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
@@ -69,6 +74,12 @@ task:
                     # {'framework': 'star', 'gpus': 8, 'model': "topdown_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # pattern
+                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster --max_step 300'},
+                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
+                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'eye_best_config_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
+                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster'},
+                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
                     # # seg_nas
                     # {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # mmediting
