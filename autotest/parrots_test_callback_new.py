@@ -13,11 +13,11 @@ from autoparrots.command.entry import trace_up
 
 # 公共表
 comm_table = {
-    '__benchmark_avg_iter_time(s)': [10000, '<', '50%'],
-    '__benchmark_mem_alloc(mb)': [10000, '<', '50%'],
-    '__benchmark_mem_cached(mb)': [10000, '<', '50%'],
-    '__benchmark_pure_training_time(h)': [10000, '<', '50%'],
-    '__benchmark_total_time(h)': [10000, '<', '50%'],
+    '__benchmark_avg_iter_time(s)': [10000, '<', '5%'],
+    '__benchmark_mem_alloc(mb)': [10000, '<', '5%'],
+    '__benchmark_mem_cached(mb)': [10000, '<', '5%'],
+    '__benchmark_pure_training_time(h)': [10000, '<', '5%'],
+    '__benchmark_total_time(h)': [10000, '<', '5%'],
     '__benchmark_pavi_task_id': []
 }
 
