@@ -1,7 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_modelpool {gpus} {model} {py_args}"
-    # template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -196,7 +195,7 @@ task:
                 #
                 #
                 # mmtrack
-                {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
             ]
     # Optional
     # callback: "cat"
