@@ -53,6 +53,8 @@ def after_callback_wrapper(config, run_type):
         pavi_task_id = env['pavi_task_id']
     pavi_ret = dict(test_life=1)
     for k, v in config.items():
+        if k == 'test_life':
+            continue
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
@@ -105,6 +107,9 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     config['test_life'] = 1
     # attr: [thresh, '>/<', '0.5%/1', val1, val2, ...]
     for k, v in config.items():
+        if k == 'test_life':
+            update_ret[k] = v
+            continue
         if k == '__benchmark_pavi_task_id':
             pv = pavi_task_id
             update_ret[k].append(pv)
