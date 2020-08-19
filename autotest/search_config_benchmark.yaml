@@ -101,6 +101,23 @@ task:
                     # {'framework': 'mmaction', 'gpus': 8, 'model': 'tsm_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # {'framework': 'mmaction', 'gpus': 2, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
+                    # pod-v3.1.0
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'cascade-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'fcos-R50-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'effnetd0-bifpn-retina-32epoch', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.2 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x-ms-test-aug', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.1 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-2x-lvis', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.2 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'retinanet-R50-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.06 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-cityscapes', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 1 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-openimages', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.05 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-mobilenet-FPN-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.05 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.5 --fork-method spawn'},
+                    # {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.5 --fork-method spawn'},
+                    {'framework': 'pod-v3.1.0', 'gpus': 8, 'model': 'centernetkp511-R101-60epoch', 'py_args': '--seed 1024 --pavi-project parrots_test --max-step 0.4 --fork-method spawn'},
                 ]
     # Optional
     # callback: "cat"

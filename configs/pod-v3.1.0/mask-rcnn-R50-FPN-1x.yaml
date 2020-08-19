@@ -88,9 +88,9 @@ trainer: # Required.
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
+  save_dir: checkpoints/mask-rcnn-R50-FPN-1x     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/mask-rcnn-R50-FPN-1x  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 

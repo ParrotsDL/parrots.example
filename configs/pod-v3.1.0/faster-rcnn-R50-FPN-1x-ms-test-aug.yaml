@@ -103,7 +103,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/faster-rcnn-R50-FPN-1x-ms-test-aug     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/faster-rcnn-R50-FPN-1x-ms-test-aug  # dir to save detection results. i.e., bboxes, masks, keypoints
 fp16:
   keep_batchnorm_fp32: True
   scale_factor: dynamic

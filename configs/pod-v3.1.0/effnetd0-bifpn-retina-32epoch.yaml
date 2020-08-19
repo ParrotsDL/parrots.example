@@ -93,7 +93,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/effnetd0-bifpn-retina-32epoch      # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/prototype_model_zoo/effnet_b0_batch1k_epoch350_stepdecaylr_bn_nowd_fp16_rmsprop/checkpoints/ckpt_375000.pth.tar
-  results_dir: results_dir   # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/effnetd0-bifpn-retina-32epoch   # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_gt:
   #  output_dir: vis_gt
   #vis_dt:

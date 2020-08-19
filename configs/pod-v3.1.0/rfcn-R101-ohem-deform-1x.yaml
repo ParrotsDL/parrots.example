@@ -94,7 +94,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/rfcn-R101-ohem-deform-1x     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet101-5d3b4d8f.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/rfcn-R101-ohem-deform-1x  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 

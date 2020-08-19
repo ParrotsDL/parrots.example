@@ -98,7 +98,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/mask-rcnn-R50-FPN-2x-lvis     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/prototype_model_zoo/resnet50_batch1k_epoch100_nesterov_wd0.0001_bn_nowd/checkpoints/ckpt.pth.tar
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/mask-rcnn-R50-FPN-2x-lvis  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
