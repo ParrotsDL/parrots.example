@@ -63,6 +63,7 @@ def after_callback_wrapper(config, run_type):
         pavi_ret[pk] = pv
 
     config.update(pavi_ret)
+    config['life'] = 1
     print(yaml.dump(config))
 
 
@@ -134,7 +135,9 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     org_config.update({framework+'_'+model_name: config})
     dump(org_config, config_path, file_format='yaml', default_flow_style=False)
 
-    print(yaml.dump(config[run_type]))
+    config = config[run_type]
+    config['life'] = 1
+    print(yaml.dump(config))
 
 
 def pre_callback_wrapper(config, run_type):
@@ -150,6 +153,7 @@ def pre_callback_wrapper(config, run_type):
             config = comm_table
     if 'placeholder' in config.keys():
         del config['placeholder']
+    config['life'] = 0
     print(yaml.dump(config))
 
 
