@@ -1,17 +1,68 @@
-pod_v2.3.0_retinanet-v11-18w: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, '<', '50%']
-  __benchmark_mem_alloc(mb): [10000, '<', '50%']
-  __benchmark_mem_cached(mb): [10000, '<', '50%']
-  __benchmark_pure_training_time(h): [10000, '<', '50%']
-  __benchmark_total_time(h): [10000, '<', '50%']
-  metrics/mAP:0.35: [10000, '>', '20%']
-
-pod_v2.3.0_fcos-v11-80w-stride4: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  __benchmark_avg_iter_time(s): [10000, '<', '50%']
-  __benchmark_mem_alloc(mb): [10000, '<', '50%']
-  __benchmark_mem_cached(mb): [10000, '<', '50%']
-  __benchmark_pure_training_time(h): [10000, '<', '50%']
-  __benchmark_total_time(h): [10000, '<', '50%']
-  metrics/mAP:0.5: [10000, '>', '20%']
+pod_v2.3.0_fcos-v11-80w-stride4:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 1.2121063150576692
+    - <
+    - 50%
+    - 0.8080708767051128
+    __benchmark_mem_alloc(mb):
+    - 5301.0
+    - <
+    - 50%
+    - 3534
+    __benchmark_mem_cached(mb):
+    - 7554.0
+    - <
+    - 50%
+    - 5036
+    __benchmark_pavi_task_id:
+    - 5b69ce30-d3f4-43af-aab6-7d5947c592eb
+    __benchmark_pure_training_time(h):
+    - 0.1824817802508672
+    - <
+    - 50%
+    - 0.1216545201672448
+    __benchmark_total_time(h):
+    - 0.22713643501202266
+    - <
+    - 50%
+    - 0.1514242900080151
+  metrics/mAP:0.5:
+  - 10000
+  - '>'
+  - 5%
+  - 0.508
+pod_v2.3.0_retinanet-v11-18w:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.479488730430603
+    - <
+    - 50%
+    - 0.31965915362040204
+    __benchmark_mem_alloc(mb):
+    - 622.5
+    - <
+    - 50%
+    - 415
+    __benchmark_mem_cached(mb):
+    - 1029.0
+    - <
+    - 50%
+    - 686
+    __benchmark_pavi_task_id:
+    - 77acf18e-102e-4e34-950e-947d485de19e
+    __benchmark_pure_training_time(h):
+    - 0.09586827943722406
+    - <
+    - 50%
+    - 0.06391218629148271
+    __benchmark_total_time(h):
+    - 0.1321810053785642
+    - <
+    - 50%
+    - 0.08812067025237613
+  metrics/mAP:0.35:
+  - 0.351
+  - '>'
+  - 5%
+  - 0.369
