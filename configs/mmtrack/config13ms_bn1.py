@@ -99,7 +99,7 @@ data = dict(
         anno_infos=[
             dict(
                 name='300VW',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/300VW_ori/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/300VW_ori/',
                 anno=anno_root +
                 '300vw.json',
                 frame_range=100,
@@ -108,7 +108,7 @@ data = dict(
             ),
             dict(
                 name='part1',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/IPC/20191030_监控场景人脸追踪视频采集_part1_chenyanjie/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/IPC/20191030_监控场景人脸追踪视频采集_part1_chenyanjie/',
                 anno=anno_root +
                 'part1.json',
                 frame_range=4,
@@ -117,7 +117,7 @@ data = dict(
             ),
             dict(
                 name='part2',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/IPC/20191031_监控场景人脸追踪视频采集_part2_chenyanjie/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/IPC/20191031_监控场景人脸追踪视频采集_part2_chenyanjie/',
                 anno=anno_root +
                 'part2.json',
                 frame_range=4,
@@ -126,7 +126,7 @@ data = dict(
             ),
             dict(
                 name='facial_landmark_image',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/facial_landmark_image/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/facial_landmark_image/',
                 anno=anno_root +
                 'facial_landmark_image.json',
                 frame_range=1,
@@ -135,7 +135,7 @@ data = dict(
             ),
             dict(
                 name='LandmarkGhostface',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/facial_landmark_video/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/facial_landmark_video/',
                 anno=anno_root +
                 'landmark_ghostface.json',
                 frame_range=60,
@@ -144,7 +144,7 @@ data = dict(
             ),
             dict(
                 name='LandmarkMidrange',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/facial_landmark_video/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/facial_landmark_video/',
                 anno=anno_root +
                 'landmark_midrange.json',
                 frame_range=8,
@@ -153,7 +153,7 @@ data = dict(
             ),
             dict(
                 name='movie',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/movie/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/movie/',
                 anno=anno_root +
                 'movie.json',
                 frame_range=1,
@@ -162,7 +162,7 @@ data = dict(
             ),
             dict(
                 name='BilibiliDance1',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/Bilibili_dance_1/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/Bilibili_dance_1/',
                 anno=anno_root +
                 'bilibili_dance_1.json',
                 frame_range=100,
@@ -171,7 +171,7 @@ data = dict(
             ),
             dict(
                 name='BilibiliDance2',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/Bilibili_dance_2/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/Bilibili_dance_2/',
                 anno=anno_root +
                 'bilibili_dance_2.json',
                 frame_range=20,
@@ -180,7 +180,7 @@ data = dict(
             ),
             dict(
                 name='BilibiliOther1',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/Bilibili_other_1/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/Bilibili_other_1/',
                 anno=anno_root +
                 'bilibili_other_1.json',
                 frame_range=20,
@@ -189,7 +189,7 @@ data = dict(
             ),
             dict(
                 name='HandNegativeWithFace',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/hand_negative/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/hand_negative/',
                 anno=anno_root +
                 'hand_rect_negative_with_Face_sample.json',
                 frame_range=1,
@@ -198,7 +198,7 @@ data = dict(
             ),
             dict(
                 name='HandNegativeNoFace',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/hand_negative/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/hand_negative/',
                 anno=anno_root +
                 'hand_rect_negative_no_Face_sample.json',
                 frame_range=1,
@@ -207,7 +207,7 @@ data = dict(
             ),
             dict(
                 name='large_yaw',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/large_angle_data/large_yaw/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/large_angle_data/large_yaw/',
                 anno=anno_root +
                 'facial_landmark_video_large_yaw_latest_0604_train.json',
                 frame_range=16,
@@ -216,7 +216,7 @@ data = dict(
             ),
             dict(
                 name='mask_glass',
-                root='sh40_hdd:s3://ARFace.Head_SOT_bucket/trainset/occlusion_data/20200508_mask_glass_lisiying/',
+                root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/occlusion_data/20200508_mask_glass_lisiying/',
                 anno=anno_root +
                 'facial_landmark_video_mask_occlusion_0615.json',
                 frame_range=8,
@@ -231,8 +231,8 @@ data = dict(
         ))
 
 # TODO: warm up & group params
-total_epochs = 50
-warmup_epochs = 10
+total_epochs = 3 # 50
+warmup_epochs = 1 # 10
 warmup_base_lr = 1e-4
 warmup_end_lr=base_lr = 1e-3
 end_lr = 1e-5
