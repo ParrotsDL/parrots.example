@@ -115,17 +115,23 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
             except:
                 pv = 'unknow, {} may not exist on pavi'.format(k)
             update_ret[k].append(pv)
-            # update thresh
-            mean_pv = 1.0 * sum(update_ret[k][3:len(update_ret[k])]) / (len(update_ret[k])-3)
-            std_pv = float(v[2]) if not v[2].endswith('%') else float(
-                v[2][:-1]) * mean_pv * 0.01
+            # get value which is not string
+            vaule_no_str = []
+            for it in update_ret[k][3:]:
+                if not isinstance(it, str):
+                    vaule_no_str.append(it)
+            if len(vaule_no_str) != 0:
+                # update thresh
+                mean_pv = 1.0 * sum(vaule_no_str) / (len(vaule_no_str))
+                std_pv = float(v[2]) if not v[2].endswith('%') else float(
+                    v[2][:-1]) * mean_pv * 0.01
 
-            if v[1] == '>':
-                update_ret[k][0] = mean_pv - std_pv
-            elif v[1] == '<':
-                update_ret[k][0] = mean_pv + std_pv
-            else:
-                raise KeyError('Unsupported operator key')
+                if v[1] == '>':
+                    update_ret[k][0] = mean_pv - std_pv
+                elif v[1] == '<':
+                    update_ret[k][0] = mean_pv + std_pv
+                else:
+                    raise KeyError('Unsupported operator key')
 
     full_config[run_type] = update_ret
     config = full_config
