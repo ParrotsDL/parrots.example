@@ -32,7 +32,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 2 # 120
+  max_epoch: 120
   test_freq: 121
   log_freq: 200
   label_smooth:
