@@ -49,13 +49,13 @@ validate_pipeline = [
 
 # lmdb config
 train_db_info=dict(
-    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0817/",
+    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819/",
     lmdb_name="Train",
     image_type_in_lmdb="path"
 )
 
 validate_db_info=dict(
-    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0817/",
+    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819/",
     lmdb_name="Validate",
     image_type_in_lmdb="path"
 )
@@ -338,11 +338,11 @@ data = dict(
                 ceph_clustre="sh1984_ssd")
         ],
         data_versions=dict(
-            eyelid_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            eyebrow_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            nose_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            lip_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            contour_version=["v1_mark","v1_AccruateV3_1.0.1"]
+            eyelid_version=["v1_mark","v1_modelX-v1.0"],
+            eyebrow_version=["v1_mark","v1_modelX-v1.0"],
+            nose_version=["v1_mark","v1_modelX-v1.0"],
+            lip_version=["v1_mark","v1_modelX-v1.0"],
+            contour_version=["v1_mark","v1_modelX-v1.0"]
         ),
         pipeline=train_pipeline
     ),
@@ -352,19 +352,19 @@ data = dict(
             dict(
                 dataset_name="meitu_2016",
                 repeats=1,
-                json_file_list="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/train_data/alignment_dataset/Validate/CropFace/OldMeanPose/meitu_2016/json_filelist.txt",
+                json_file_list="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/data/CropFace/OldMeanPose/Validate/meitu_2016/json_filelist.txt",
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Validate/meitu_2016/Image/",
-                json_rootpath="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/train_data/alignment_dataset/Validate/CropFace/OldMeanPose/meitu_2016/Label/",
+                json_rootpath="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/data/CropFace/OldMeanPose/Validate/meitu_2016/Label/",
                 source="ceph",
                 ceph_clustre="sh1984_ssd",
             ),
         ],
 	    data_versions=dict(
-            eyelid_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            eyebrow_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            nose_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            lip_version=["v1_mark","v1_AccruateV3_1.0.1"],
-            contour_version=["v1_mark","v1_AccruateV3_1.0.1"]
+            eyelid_version=["v1_mark","v1_modelX-v1.0"],
+            eyebrow_version=["v1_mark","v1_modelX-v1.0"],
+            nose_version=["v1_mark","v1_modelX-v1.0"],
+            lip_version=["v1_mark","v1_modelX-v1.0"],
+            contour_version=["v1_mark","v1_modelX-v1.0"]
         ),
         pipeline=validate_pipeline
     )
