@@ -64,12 +64,6 @@ def after_callback_wrapper(config, value_type, run_type):
             continue
         pk = 'pavi_' + k
 
-        if sys.argv[1] in value_type_table.keys():
-            value_type = value_type_table[sys.argv[1]]
-        else: 
-            # default: read last_value
-            value_type = value_type_table["default"]
-
         if value_type == "max_value":
             try:
                 if v[1] == '>':
@@ -228,9 +222,14 @@ if __name__ == '__main__':
     assert sys.argv[4] in run_type_table.keys()
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
+        if sys.argv[1] in value_type_table.keys():
+            value_type = value_type_table[sys.argv[1]]
+        else: 
+            # default: read last_value
+            value_type = value_type_table["default"]
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, sys.argv[4])
+            pre_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '1':
-            after_callback_wrapper(config, sys.argv[4])
+            after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
             update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
