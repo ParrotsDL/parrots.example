@@ -51,8 +51,10 @@ def after_callback_wrapper(config, run_type):
         pavi_task_id = env['PAVI_TASK_ID']
     else:
         pavi_task_id = env['pavi_task_id']
-    pavi_ret = dict()
+    pavi_ret = dict(test_life=1)
     for k, v in config.items():
+        if k == 'test_life':
+            continue
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
@@ -60,10 +62,10 @@ def after_callback_wrapper(config, run_type):
             pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
         except:
             pv = 'unknow, {} may not exist on pavi'.format(k)
+            pavi_ret['test_life'] = 0
         pavi_ret[pk] = pv
 
     config.update(pavi_ret)
-    config['test_life'] = 1
     print(yaml.dump(config))
 
 
@@ -102,8 +104,12 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     
     # TODO(shiguang): check pavi value
     update_ret = copy.deepcopy(config)
+    config['test_life'] = 1
     # attr: [thresh, '>/<', '0.5%/1', val1, val2, ...]
     for k, v in config.items():
+        if k == 'test_life':
+            update_ret[k] = v
+            continue
         if k == '__benchmark_pavi_task_id':
             pv = pavi_task_id
             update_ret[k].append(pv)
@@ -115,6 +121,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
                 pv = pv[-1]['value']
             except:
                 pv = 'unknow, {} may not exist on pavi'.format(k)
+                config['test_life'] = 0
             update_ret[k].append(pv)
             # get value which is not string
             vaule_no_str = []
@@ -132,6 +139,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
                 elif v[1] == '<':
                     update_ret[k][0] = mean_pv + std_pv
                 else:
+                    config['test_life'] = 0
                     raise KeyError('Unsupported operator key')
 
     full_config[run_type] = update_ret
@@ -142,7 +150,6 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     dump(org_config, config_path, file_format='yaml', default_flow_style=False)
 
     config = config[run_type]
-    config['test_life'] = 1
     print(yaml.dump(config))
 
 
