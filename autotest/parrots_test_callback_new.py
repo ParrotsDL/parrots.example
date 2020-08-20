@@ -32,6 +32,11 @@ run_type_table = {
     'weeklytest': 1
 }
 
+value_type_table = {
+    "Pattern": "max_value",
+    "default": "last_value"
+}
+
 def after_callback_wrapper(config, value_type, run_type):
     if run_type in config.keys():
         config = config[run_type]
@@ -58,7 +63,14 @@ def after_callback_wrapper(config, value_type, run_type):
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
-        if value_type == "max":
+
+        if sys.argv[1] in value_type_table.keys():
+            value_type = value_type_table[sys.argv[1]]
+        else: 
+            # default: read last_value
+            value_type = value_type_table["default"]
+
+        if value_type == "max_value":
             try:
                 if v[1] == '>':
                     pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'))[-1]['value']
@@ -70,7 +82,7 @@ def after_callback_wrapper(config, value_type, run_type):
                 pv = 'unknow, {} may not exist on pavi'.format(k)
                 pavi_ret['test_life'] = 0
             
-        elif value_type == "last":
+        elif value_type == "last_value":
             try:
                 pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
                 pavi_ret[pk] = pv
@@ -131,7 +143,7 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
-            if value_type == "max":
+            if value_type == "max_value":
                 try:
                     if v[1] == '>':
                         pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'))
@@ -142,7 +154,7 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
                 except:
                     pv = 'unknow, {} may not exist on pavi'.format(k)
                     config['test_life'] = 0
-            elif value_type == "last":
+            elif value_type == "last_value":
                 try:
                     pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
                     pv = pv[-1]['value']
@@ -213,13 +225,12 @@ def collect_config(framework, model_name):
 
 
 if __name__ == '__main__':
-    assert sys.argv[4] in ["max","last"], "Please add a new para for choosing max value or last vaue from pavi"
-    assert sys.argv[5] in run_type_table.keys()
+    assert sys.argv[4] in run_type_table.keys()
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, sys.argv[5])
+            pre_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '1':
-            after_callback_wrapper(config, sys.argv[4], sys.argv[5])
+            after_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4], sys.argv[5])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
