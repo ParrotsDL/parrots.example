@@ -1,0 +1,8 @@
+sketch_vgg1.4.3:
+  placeholder: 'none'
+
+sketch_mobilenet1.0.0:
+  placeholder: 'none'
+
+sketch_vggfusion:
+  placeholder: 'none'
