@@ -231,8 +231,8 @@ data = dict(
         ))
 
 # TODO: warm up & group params
-total_epochs = 3 # 50
-warmup_epochs = 1 # 10
+total_epochs = 50
+warmup_epochs = 10
 warmup_base_lr = 1e-4
 warmup_end_lr=base_lr = 1e-3
 end_lr = 1e-5
