@@ -131,6 +131,10 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
+<<<<<<< HEAD
+=======
+
+>>>>>>> 320953392bccf2b96d4b436bfa1f0c8082685183
             if value_type == "max":
                 try:
                     if v[1] == '>':
@@ -141,6 +145,7 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
                         pv = pv[-1]['value']
                 except:
                     pv = 'unknow, {} may not exist on pavi'.format(k)
+<<<<<<< HEAD
                     config['test_life'] = 0
             elif value_type == "last":
                 try:
@@ -149,6 +154,25 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
                 except:
                     pv = 'unknow, {} may not exist on pavi'.format(k)
                     config['test_life'] = 0
+=======
+
+            elif value_type == "last":
+                pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
+                pv = pv[-1]['value']
+            else:
+                print("Please set 'max' or 'last' for the type of value.")
+
+            update_ret[k].append(pv)
+            # update thresh
+            mean_pv = 1.0 * sum(update_ret[k][3:len(update_ret[k])]) / (len(update_ret[k])-3)
+            std_pv = float(v[2]) if not v[2].endswith('%') else float(
+                v[2][:-1]) * mean_pv * 0.01
+
+            if v[1] == '>':
+                update_ret[k][0] = mean_pv - std_pv
+            elif v[1] == '<':
+                update_ret[k][0] = mean_pv + std_pv
+>>>>>>> 320953392bccf2b96d4b436bfa1f0c8082685183
             else:
                 print("Please set 'max' or 'last' for the type of value.")
 
