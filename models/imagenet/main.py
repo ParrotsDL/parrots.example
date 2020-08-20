@@ -40,6 +40,8 @@ parser.add_argument('--max_step', default=None, type=int, metavar='N',
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger()
+logger_all = logging.getLogger('all')
 
 
 def main():
