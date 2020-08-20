@@ -1,10 +1,18 @@
 import numpy as np
 import torch
 import logging
-logger = logging.getLogger()
+import pape.distributed as dist
 
 
 def check_keys(model, checkpoint):
+    logger = logging.getLogger()
+    logger_all = logging.getLogger('all')
+    if dist.get_rank() == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
+    logger_all.setLevel(logging.INFO)
+
     model_keys = set(model.state_dict().keys())
     ckpt_keys = set(checkpoint['state_dict'].keys())
     missing_keys = model_keys - ckpt_keys
@@ -84,6 +92,14 @@ class ProgressMeter(object):
         self.prefix = prefix
 
     def display(self, batch):
+        logger = logging.getLogger()
+        logger_all = logging.getLogger('all')
+        if dist.get_rank() == 0:
+            logger.setLevel(logging.INFO)
+        else:
+            logger.setLevel(logging.ERROR)
+        logger_all.setLevel(logging.INFO)
+
         entries = [self.prefix + self.batch_fmtstr.format(batch)]
         entries += [str(meter) for meter in self.meters]
         logger.info(' '.join(entries))
