@@ -37,7 +37,8 @@ parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, h
 parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
-
+parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
+parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
@@ -140,7 +141,7 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
 
     # test mode
     if args.test:

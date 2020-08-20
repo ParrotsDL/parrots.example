@@ -1,6 +1,50 @@
+import io
 import torch
 import torchvision.transforms as transforms
 import pape.data as pdata
+from torch.utils.data import Dataset
+from petrel_client.client import Client
+from PIL import Image
+
+
+class CephDataset(Dataset):
+    r"""
+    Dataset using ceph to read data.
+
+    Arguments
+        * image_dir (string): Root directory of the Dataset.
+        * meta_file (string): The meta file of the Dataset. Each line has a image path
+          and a label. Eg: ``nm091234/image_56.jpg 18``
+        * transform (callable, optional): A function/transform that takes in an PIL image
+          and returns a transformed image.
+    """
+    def __init__(self, image_dir, meta_file, transform=False):
+        self.image_dir = image_dir
+        self.transform = transform
+
+        self.client = Client()
+        meta_file = self.client.Get(meta_file)
+        self.meta_list = bytes.decode(meta_file).split('\n')
+        if self.meta_list[-1] == '':
+            self.meta_list.pop()
+        self.num = len(self.meta_list)
+
+    def __len__(self):
+        return self.num
+
+    def __getitem__(self, index):
+        filename = self.image_dir + self.meta_list[index].split()[0]
+        cls = int(self.meta_list[index].split()[1])
+
+        img_bytes = self.client.Get(filename)
+        img_buf = io.BytesIO(img_bytes)
+        with Image.open(img_buf) as img:
+            img = img.convert('RGB')
+
+        # transform
+        if self.transform is not None:
+            img = self.transform(img)
+        return img, cls
 
 
 def build_augmentation(cfg):
@@ -28,18 +72,23 @@ def build_augmentation(cfg):
     return transforms.Compose(compose_list)
 
 
-def build_dataloader(cfg, world_size):
+def build_dataloader(cfg, world_size, data_reader):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
 
-    train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+    if data_reader == 'MemcachedReader':
+        train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+    elif data_reader == 'CephReader':
+        train_dataset = CephDataset(cfg.train.ceph_image_dir, cfg.train.ceph_meta_file, train_aug)
     train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
-
+    if data_reader == 'MemcachedReader':
+        test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    elif data_reader == 'CephReader':
+        test_dataset = CephDataset(cfg.test.ceph_image_dir, cfg.test.ceph_meta_file, test_aug)
     test_sampler = pdata.DistributedSampler(test_dataset, round_up=False, shuffle=False)
     test_loader = torch.utils.data.DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
