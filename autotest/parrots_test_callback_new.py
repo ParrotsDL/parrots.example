@@ -51,12 +51,18 @@ def after_callback_wrapper(config, run_type):
         pavi_task_id = env['PAVI_TASK_ID']
     else:
         pavi_task_id = env['pavi_task_id']
-    pavi_ret = dict()
+    pavi_ret = dict(test_life=1)
     for k, v in config.items():
+        if k == 'test_life':
+            continue
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
-        pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+        try:
+            pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+        except:
+            pv = 'unknow, {} may not exist on pavi'.format(k)
+            pavi_ret['test_life'] = 0
         pavi_ret[pk] = pv
 
     config.update(pavi_ret)
@@ -98,28 +104,43 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     
     # TODO(shiguang): check pavi value
     update_ret = copy.deepcopy(config)
+    config['test_life'] = 1
     # attr: [thresh, '>/<', '0.5%/1', val1, val2, ...]
     for k, v in config.items():
+        if k == 'test_life':
+            update_ret[k] = v
+            continue
         if k == '__benchmark_pavi_task_id':
             pv = pavi_task_id
             update_ret[k].append(pv)
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
-            pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
-            pv = pv[-1]['value']
+            try:
+                pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
+                pv = pv[-1]['value']
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                config['test_life'] = 0
             update_ret[k].append(pv)
-            # update thresh
-            mean_pv = 1.0 * sum(update_ret[k][3:len(update_ret[k])]) / (len(update_ret[k])-3)
-            std_pv = float(v[2]) if not v[2].endswith('%') else float(
-                v[2][:-1]) * mean_pv * 0.01
+            # get value which is not string
+            vaule_no_str = []
+            for it in update_ret[k][3:]:
+                if not isinstance(it, str):
+                    vaule_no_str.append(it)
+            if len(vaule_no_str) != 0:
+                # update thresh
+                mean_pv = 1.0 * sum(vaule_no_str) / (len(vaule_no_str))
+                std_pv = float(v[2]) if not v[2].endswith('%') else float(
+                    v[2][:-1]) * mean_pv * 0.01
 
-            if v[1] == '>':
-                update_ret[k][0] = mean_pv - std_pv
-            elif v[1] == '<':
-                update_ret[k][0] = mean_pv + std_pv
-            else:
-                raise KeyError('Unsupported operator key')
+                if v[1] == '>':
+                    update_ret[k][0] = mean_pv - std_pv
+                elif v[1] == '<':
+                    update_ret[k][0] = mean_pv + std_pv
+                else:
+                    config['test_life'] = 0
+                    raise KeyError('Unsupported operator key')
 
     full_config[run_type] = update_ret
     config = full_config
@@ -128,7 +149,8 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     org_config.update({framework+'_'+model_name: config})
     dump(org_config, config_path, file_format='yaml', default_flow_style=False)
 
-    print(yaml.dump(config[run_type]))
+    config = config[run_type]
+    print(yaml.dump(config))
 
 
 def pre_callback_wrapper(config, run_type):
@@ -144,6 +166,7 @@ def pre_callback_wrapper(config, run_type):
             config = comm_table
     if 'placeholder' in config.keys():
         del config['placeholder']
+    config['test_life'] = 0
     print(yaml.dump(config))
 
 
