@@ -1,74 +1,439 @@
 mmdet_mask_rcnn_r50_caffe_fpn_mstrain_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.4570
+    - < 
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 3820 
+    - < 
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 6184 
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - b3405ebd-e2b7-45c7-9cdb-26ceb225358a
+    __benchmark_pure_training_time(h): 
+    - 0.0414
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0416 
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 10000
+  - '>'
+  - 50%
+  train.segm_mAP: 
+  - 10000
+  - '>'
+  - 50%
 
 mmdet_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.5502
+    - < 
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 4188
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 5536
+    - < 
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 1f0d2842-1825-4969-87f5-7f6b15fe3fc0
+    __benchmark_pure_training_time(h): 
+    - 0.0508
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0510
+    - < 
+    - 50%
+  train.bbox_mAP: 
+  - 0.369
+  - '>'
+  - 50%
+  train.segm_mAP: 
+  - 0.338 
+  - '>' 
+  - 50%
 
 mmdet_cascade_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.5655
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 4382
+    - < 
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 5974
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 0db7e726-4d75-4e11-a50e-b076f3e1e381
+    __benchmark_pure_training_time(h): 
+    - 0.0511
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0518
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.401
+  - '>'
+  - 50%
 
 mmdet_retinanet_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.4056
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 3480
+    - < 
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 5204
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - d9b9b9af-c52a-43d1-84a5-8d84d642429b
+    __benchmark_pure_training_time(h): 
+    - 0.0380
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0381
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.353
+  - '>' 
+  - 50%
 
 mmdet_mask_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.4441
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 2971
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 4124
+    - < 
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 8e28708c-a56d-4d1a-84cd-c115eefe6b0d
+    __benchmark_pure_training_time(h): 
+    - 0.0391
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0392
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 10000
+  - '>'
+  - 50%
+  train.segm_mAP: 
+  - 10000
+  - '>'
+  - 50%
 
 mmdet_ssd300_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.3069
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 10174
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 10418
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 87f609ab-a26d-4875-b676-8e8a0fd50d72
+    __benchmark_pure_training_time(h): 
+    - 0.0346
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0354
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.254
+  - '>'
+  - 50%
 
 mmdet_faster_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.4314
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 2768
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 3764
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 3fe65e6a-0f84-49af-8c75-fac08ffd65cc
+    __benchmark_pure_training_time(h): 
+    - 0.0403
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0404
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.359
+  - '>'
+  - 50%
 
 mmdet_mask_rcnn_x101_32x4d_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 1.0265
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 7386
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 10494
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - b0615f75-19ca-4946-ac17-e6f4dfb4bcdc
+    __benchmark_pure_training_time(h): 
+    - 0.0913
+    - <
+    - 50%'
+    __benchmark_total_time(h): 
+    - 0.0914
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.408
+  - '>' 
+  - 50%
+  train.segm_mAP: 
+  - 0.368
+  - '>'
+  - 50%
 
 mmdet_faster_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.4472
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 3952
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 5448
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 2ca37e43-346f-400f-b21b-eb3dead7ed1b
+    __benchmark_pure_training_time(h): 
+    - 0.0413
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0415
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.361
+  - '>'
+  - 50%
 
 mmdet_retinanet_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.4101
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 2490
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 3142
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 7c1c15f7-97c1-48b9-b5cc-6a25eb484337
+    __benchmark_pure_training_time(h): 
+    - 0.0386
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0387
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.354
+  -  '>'
+  - 50%
 
 mmdet_mask_rcnn_r101_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.segm_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
-  train.segm_mAP: [10000, '>', '50%']
-
-mmdet_fast_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
-  # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.7659
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 6162
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 8602
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - a8a3ec70-4ab5-4df4-af1e-a2340525abe0
+    __benchmark_pure_training_time(h): 
+    - 0.0690
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0692
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.242
+  - '>'
+  - 50%
+  train.segm_mAP: 
+  - 0.237
+  - '>'
+  - 50%
 
 mmdet_cascade_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.bbox_mAP_50: [10000, '>', '50%']
-  train.bbox_mAP: [10000, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.8058
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 4757
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 6600
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 2cbbede4-876d-4fef-a7f0-9a2db29b9a16
+    __benchmark_pure_training_time(h): 
+    - 0.0718
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0720
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 10000
+  - '>'
+  - 50%
+
+mmdet_mask_rcnn_x101_64x4d_fpn_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 1.0321
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 10474
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 18838
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - a91e37fa-748d-4482-9f92-2ab798bac7d1
+    __benchmark_pure_training_time(h): 
+    - 0.0895
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0896
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 10000
+  - '>'
+  - 50%
+
+mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.6271
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 3972
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 4894
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 596093e4-f242-4009-9cbe-ab5e34ec6033
+    __benchmark_pure_training_time(h): 
+    - 0.0572
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.0573
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 10000
+  - '>' 
+  - 50%
