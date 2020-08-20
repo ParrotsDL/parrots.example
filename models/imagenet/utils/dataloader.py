@@ -77,7 +77,9 @@ def build_dataloader(cfg, world_size, data_reader):
     if data_reader == 'MemcachedReader':
         train_dataset = pdata.McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
     elif data_reader == 'CephReader':
-        train_dataset = CephDataset(cfg.train.ceph_image_dir, cfg.train.ceph_meta_file, train_aug)
+        ceph_image_dir = 's3://parrots_model_data/imagenet/images/train/'
+        ceph_meta_file = 's3://parrots_model_data/imagenet/images/meta/train.txt'
+        train_dataset = CephDataset(ceph_image_dir, ceph_meta_file, train_aug)
     train_sampler = pdata.DistributedSampler(train_dataset, batch_size=cfg.batch_size)
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
@@ -86,7 +88,9 @@ def build_dataloader(cfg, world_size, data_reader):
     if data_reader == 'MemcachedReader':
         test_dataset = pdata.McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
     elif data_reader == 'CephReader':
-        test_dataset = CephDataset(cfg.test.ceph_image_dir, cfg.test.ceph_meta_file, test_aug)
+        ceph_image_dir = 's3://parrots_model_data/imagenet/images/val/'
+        ceph_meta_file = 's3://parrots_model_data/imagenet/images/meta/val.txt'
+        test_dataset = CephDataset(ceph_image_dir, ceph_meta_file, test_aug)
     test_sampler = pdata.DistributedSampler(test_dataset, round_up=False, shuffle=False)
     test_loader = torch.utils.data.DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
