@@ -49,13 +49,13 @@ validate_pipeline = [
 
 # lmdb config
 train_db_info=dict(
-    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819/",
+    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819",
     lmdb_name="Train",
     image_type_in_lmdb="path"
 )
 
 validate_db_info=dict(
-    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819/",
+    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819",
     lmdb_name="Validate",
     image_type_in_lmdb="path"
 )

@@ -16,7 +16,7 @@ log_config = dict(
         #    add_graph=False, add_last_ckpt=True),
     ])
 # yapf:enable
-dist_params = dict(backend='nccl')
+dist_params = dict(backend='nccl', port=25589)
 log_level = 'INFO'
 load_from = None
 resume_flag = False
@@ -32,7 +32,7 @@ lr_config = dict(
     gamma=0.5,
     policy='step',
     warmup='linear',
-    warmup_iters=500,
-    warmup_ratio=0.001,
+    warmup_iters=6000,
+    warmup_ratio=0.000001,
     step=[100, 120, 140, 160, 180])
 total_epochs = 200

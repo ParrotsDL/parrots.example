@@ -1,9 +1,9 @@
 
 #variables
-mb_backbone_channels = [1, 8, 16, 16, 24, 32, 48, 64, 80]
-lb_backbone_channels = [1, 8, 16, 24, 32, 32, 48, 64, 80]
-eb_backbone_channels = [1, 8, 16, 16, 24, 24, 32, 48, 64]
-ebb_backbone_channels = [1, 8, 8, 8, 16, 16, 32, 32]
+mb_backbone_channels = [1, 6, 16, 16, 24, 32, 48, 64, 64]
+lb_backbone_channels = [1, 6, 16, 16, 24, 32, 32, 64, 80]
+eb_backbone_channels = [1, 6, 16, 16, 24, 24, 32, 48, 48]
+ebb_backbone_channels = [1, 6, 8, 16, 16, 24, 24, 32]
 cls_head_channels = 40
 occ_head_channels = 40
 face_landmark_num = 106
@@ -171,22 +171,22 @@ model = dict(
         backbone=dict(
             type='StraightBackbone',
             conv_layer_number=5,
-            layers=[dict(type='ResnetBlock', inchannel=ebb_backbone_channels[1],
-                         outchannel=ebb_backbone_channels[2], kernel_size=3, padding=1, stride=2),  # 8
-                    dict(type='ResnetBlock', inchannel=ebb_backbone_channels[2],
-                         outchannel=ebb_backbone_channels[3], kernel_size=3, padding=1, stride=1),  # 8
-                    dict(type='ResnetBlock', inchannel=ebb_backbone_channels[3],
-                         outchannel=ebb_backbone_channels[4], kernel_size=3, padding=1, stride=2),  # 4
-                    dict(type='ResnetBlock', inchannel=ebb_backbone_channels[4],
-                         outchannel=ebb_backbone_channels[5], kernel_size=3, padding=1, stride=1),  # 4
-                    dict(type='ResnetBlock', inchannel=ebb_backbone_channels[5],
-                         outchannel=ebb_backbone_channels[6], kernel_size=3, padding=1, stride=2),],  # 2
+            layers=[dict(type='Conv2dBlock', inchannel=ebb_backbone_channels[1],
+                         outchannel=ebb_backbone_channels[2], kernel_size=3, padding=0, stride=1),  # 14
+                    dict(type='Conv2dBlock', inchannel=ebb_backbone_channels[2],
+                         outchannel=ebb_backbone_channels[3], kernel_size=3, padding=0, stride=1),  # 12
+                    dict(type='Conv2dBlock', inchannel=ebb_backbone_channels[3],
+                         outchannel=ebb_backbone_channels[4], kernel_size=3, padding=1, stride=2),  # 6
+                    dict(type='Conv2dBlock', inchannel=ebb_backbone_channels[4],
+                         outchannel=ebb_backbone_channels[5], kernel_size=3, padding=0, stride=1),  # 4
+                    dict(type='Conv2dBlock', inchannel=ebb_backbone_channels[5],
+                         outchannel=ebb_backbone_channels[6], kernel_size=3, padding=0, stride=1)],  # 2
         ),
         regression_head=dict(
             type='FCHead',
             face_landmark_num=face_landmark_num,
             conv_layer_number=1,
-            layers=[dict(type='ResnetBlock', inchannel=ebb_backbone_channels[6],
+            layers=[dict(type='Conv2dBlock', inchannel=ebb_backbone_channels[6],
                          outchannel=ebb_backbone_channels[7], kernel_size=3, padding=1, stride=1)],
             fc_number=3,
             fc_channels=[64, 64, eyebrow_landmark_num * 2],  # 第二次融合将在此处进行

@@ -4,7 +4,7 @@
 # need to check outside var
 crop_size = 256
 landmark_num = 282
-final_image_format_type = 'BGR'
+final_image_format_type = 'GRAY'
 
 # dataset only var
 dataset_type="FacialLandmarkFineDataset"
@@ -51,13 +51,13 @@ validate_pipeline = [
 
 # lmdb config
 train_db_info=dict(
-    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0/",
+    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0_fix_bug/",
     lmdb_name="Train",
     image_type_in_lmdb="path"
 )
 
 validate_db_info=dict(
-    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0/",
+    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0_fix_bug/",
     lmdb_name="Validate",
     image_type_in_lmdb="path"
 )
