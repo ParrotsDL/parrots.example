@@ -1,4 +1,32 @@
 mmpose_bottomup_hrnet:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5732305748462677
+    - <
+    - 5%
+    - 0.5459338808059693
+    __benchmark_mem_alloc(mb):
+    - 6570.9
+    - <
+    - 5%
+    - 6258
+    __benchmark_mem_cached(mb):
+    - 6867.0
+    - <
+    - 5%
+    - 6540
+    __benchmark_pavi_task_id:
+    - 14f1e653-082e-4e85-b025-854c902c1e97
+    __benchmark_pure_training_time(h):
+    - 0.23447478942076366
+    - <
+    - 5%
+    - 0.22330932325787015
+    __benchmark_total_time(h):
+    - 0.2346020904680093
+    - <
+    - 5%
+    - 0.22343056235048506
   train.AP:
   - 0.67
   - '>'
@@ -109,32 +137,33 @@ mmpose_topdown_hourglass:
 mmpose_topdown_hrnet:
   benchmark:
     __benchmark_avg_iter_time(s):
-    - 10000
+    - 0.5721987054347991
     - <
     - 5%
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
+    - 0.544951148033142
     __benchmark_mem_alloc(mb):
-    - 10000
+    - 5554.5
     - <
     - 5%
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
+    - 5290
     __benchmark_mem_cached(mb):
-    - 10000
+    - 5951.4
     - <
     - 5%
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
+    - 5668
+    - 5668
     __benchmark_pavi_task_id:
-    - ddf4c77f-187c-43a5-8aa6-b5d83917b7e9
+    - 4d6ef12e-d42c-46c3-b3ec-e5a01cfde91a
     __benchmark_pure_training_time(h):
-    - 10000
+    - 0.669373832722505
     - <
     - 5%
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
+    - 0.6374988883071475
     __benchmark_total_time(h):
-    - 10000
+    - 0.6713692025045555
     - <
     - 5%
-    - unknow, __benchmark_total_time(h) may not exist on pavi
+    - 0.639399240480529
   train.AP:
   - 0.741
   - '>'
