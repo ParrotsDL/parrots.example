@@ -21,11 +21,11 @@ train_pipeline = [
     dict(type="WarpAffineImage"),
     dict(type="MotionBlur", Ls=[10, 20], probs=0.2),
     dict(type="Normalize", **img_norm_cfg),
-    dict(type="ImagePertube", shift_noise=1.5),
-    dict(type="ImageToTensor", keys=['origin_image', 'pertube_image']),
+    dict(type="ImagePerturb", shift_noise=1.5),
+    dict(type="ImageToTensor", keys=['origin_image', 'perturb_image']),
     dict(type="LabelToTensor", keys=['landmark', 'weight', 'shift_noise']),
     dict(type="GaussianBlur", mean=0.0, std=0.05),
-    dict(type="Collect", image_keys=['origin_image', 'pertube_image'],
+    dict(type="Collect", image_keys=['origin_image', 'perturb_image'],
          label_keys=['landmark', 'weight', 'shift_noise'])
 ]
 validate_pipeline = [

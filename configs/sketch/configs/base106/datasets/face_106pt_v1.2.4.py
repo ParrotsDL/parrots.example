@@ -21,12 +21,12 @@ train_pipeline = [
     dict(type="WarpAffineImage"),
     # dict(type="MotionBlur", Ls=[10, 20], probs=0.2),
     dict(type="Normalize", **img_norm_cfg),
-    dict(type="ImagePertube", shift_noise=1.5),
-    dict(type="ImageToTensor", keys=['origin_image', 'pertube_image']),
+    dict(type="ImagePerturb", shift_noise=1.5),
+    dict(type="ImageToTensor", keys=['origin_image', 'perturb_image']),
     dict(type="LabelToTensor", keys=['gt_landmarks', 'weights']),
     dict(type="UtilToTensor", keys=['shift_noise']),
     dict(type="GaussianBlur", mean=0.0, std=0.05),
-    dict(type="Collect", image_keys=['origin_image', 'pertube_image'],
+    dict(type="Collect", image_keys=['origin_image', 'perturb_image'],
          label_keys=['gt_landmarks', 'weights'], util_keys=['shift_noise'])
 ]
 validate_pipeline = [
@@ -49,13 +49,13 @@ validate_pipeline = [
 
 # lmdb config
 train_db_info=dict(
-    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819",
+    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1_OldMeanPose_0821/",
     lmdb_name="Train",
     image_type_in_lmdb="path"
 )
 
 validate_db_info=dict(
-    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1.2.4_0819",
+    lmdb_path="/mnt/lustre/share_data/jiaomenglei/model_pool_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1_OldMeanPose_0821/",
     lmdb_name="Validate",
     image_type_in_lmdb="path"
 )
@@ -359,7 +359,7 @@ data = dict(
                 ceph_clustre="sh1984_ssd",
             ),
         ],
-	    data_versions=dict(
+        data_versions=dict(
             eyelid_version=["v1_mark","v1_modelX-v1.0"],
             eyebrow_version=["v1_mark","v1_modelX-v1.0"],
             nose_version=["v1_mark","v1_modelX-v1.0"],

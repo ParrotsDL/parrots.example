@@ -22,12 +22,12 @@ train_pipeline = [
     dict(type="WarpAffineImage"),
     # dict(type="MotionBlur", Ls=[10, 20], probs=0.2),
     dict(type="Normalize", **img_norm_cfg),
-    dict(type="ImagePertube", shift_noise=1.5),
-    dict(type="ImageToTensor", keys=['origin_image', 'pertube_image']),
+    dict(type="ImagePerturb", shift_noise=1.5),
+    dict(type="ImageToTensor", keys=['origin_image', 'perturb_image']),
     dict(type="LabelToTensor", keys=['gt_landmarks', 'weights', 'gt_rect']),
     dict(type="UtilToTensor", keys=['shift_noise']),
     dict(type="GaussianBlur", mean=0.0, std=0.05),
-    dict(type="Collect", image_keys=['origin_image', 'pertube_image'],
+    dict(type="Collect", image_keys=['origin_image', 'perturb_image'],
          label_keys=['gt_landmarks', 'weights', 'gt_rect'], util_keys=['shift_noise'])
 ]
 validate_pipeline = [
@@ -51,13 +51,13 @@ validate_pipeline = [
 
 # lmdb config
 train_db_info=dict(
-    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0_fix_bug/",
+    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0_test_0821/",
     lmdb_name="Train",
     image_type_in_lmdb="path"
 )
 
 validate_db_info=dict(
-    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0_fix_bug/",
+    lmdb_path="/mnt/lustre/liutinghao/base_training_code/lmdb_path/sketch/mixlmdb_282_v3.0_test_0821/",
     lmdb_name="Validate",
     image_type_in_lmdb="path"
 )
@@ -73,6 +73,14 @@ data = dict(
                 image_rootpath="s3://ARFace.facial_landmark_bucket/CropFace/OldMeanPose/Train/20191216_meitu_2016/Image/",
                 json_rootpath="/mnt/lustre/lisiying1/data/CropFace/OldMeanPose/Train/20191216_meitu_2016/Label/",
                 source="ceph",
+                ceph_clustre="sh40_hdd"),
+            dict(
+                dataset_name="middle_range_15_halfface",
+                repeats=0.1,
+                json_file_list="/mnt/lustre/lisiying1/data/CropFace/OldMeanPose/Train/OccMake/middle_range_15_halfface/json_filelist.txt",
+                image_rootpath="s3://ARFace.facial_landmark_bucket/CropFace/OldMeanPose/Train/OccMake/middle_range_15_halfface/Image/",
+                json_rootpath="/mnt/lustre/lisiying1/data/CropFace/OldMeanPose/Train/OccMake/middle_range_15_halfface/Label/",
+                source="ceph",
                 ceph_clustre="sh40_hdd")
         ],
         data_versions=dict(
@@ -80,7 +88,7 @@ data = dict(
             eyebrow_version=["v2_mark", "v2_AccruateV3_3.0.0"],
             nose_version=["v2_mark", "v2_AccruateV3_3.0.0"],
             lip_version=["v2_mark", "v2_AccruateV3_3.0.0"],
-            contour_version=["v1_mark", "v1_AccruateV3_3.0.0", "v1_modelX"],
+            contour_version=["v1_mark", "v1_AccruateV3_3.0.0", "v1_modelX-v1.0"],
             iris_version=["v2_mark","v2_AccruateV3_3.0.0"]
         ),
         pipeline=train_pipeline
@@ -103,7 +111,7 @@ data = dict(
             eyebrow_version=["v2_mark", "v2_AccruateV3_3.0.0"],
             nose_version=["v2_mark", "v2_AccruateV3_3.0.0"],
             lip_version=["v2_mark", "v2_AccruateV3_3.0.0"],
-            contour_version=["v1_mark", "v1_AccruateV3_3.0.0", "v1_modelX"],
+            contour_version=["v1_mark", "v1_AccruateV3_3.0.0", "v1_modelX-v1.0"],
             iris_version=["v2_mark","v2_AccruateV3_3.0.0"]
         ),
         pipeline=validate_pipeline

@@ -195,14 +195,14 @@ task:
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
 
                 ## sketch
-                # {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project parrots_test'},
-                # {'framework': 'sketch', 'gpus': 8, 'model': 'mobilenet1.0.0', 'py_args': '--pavi --pavi-project parrots_test'},
-                # {'framework': 'sketch', 'gpus': 8, 'model': 'vggfusion', 'py_args': '--pavi --pavi-project parrots_test'},
+                {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project parrots_test'},
+                {'framework': 'sketch', 'gpus': 8, 'model': 'mobilenet1.0.0', 'py_args': '--pavi --pavi-project parrots_test'},
+                {'framework': 'sketch', 'gpus': 8, 'model': 'vggfusion', 'py_args': '--pavi --pavi-project parrots_test'},
             ]
     # Optional
     # callback: "cat"
     pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 all"
-    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 all"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 2 all"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
