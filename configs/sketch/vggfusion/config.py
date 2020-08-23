@@ -1,4 +1,4 @@
-_base_=['../../configs/base106/base106.py']
+_base_=['../configs/base106/base106.py']
 
 backbone_channels = [1, 10, 16, 24, 32, 64, 64, 96, 128, 128]
 cls_head_channels = 40
