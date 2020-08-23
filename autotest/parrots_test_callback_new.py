@@ -9,7 +9,7 @@ import warnings
 import re
 import multiprocessing
 
-
+import psutil
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
 from autoparrots.utils import kill_all
@@ -37,7 +37,7 @@ run_type_table = {
 
 
 def read_log_last(path, last_line_num=5):
-    if osp.exists(path):
+    if not osp.exists(path):
         return None
     try:
         with open(path, 'rb') as f:
@@ -52,7 +52,8 @@ def read_log_last(path, last_line_num=5):
         return None
     return None
 
-def _watch_for_kill_time_limited(framework, model, config):
+def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E] Time limit exceeded'):
+    time.sleep(60)
     this_dir = osp.dirname(os.path.abspath(__file__))
     # find task.yaml
     dir_arr = this_dir.split(os.sep)
@@ -66,19 +67,38 @@ def _watch_for_kill_time_limited(framework, model, config):
     task_yaml_path = os.sep.join(new_dir_arr)
     task_yaml_path = osp.join(task_yaml_path, 'task.yaml')
     # wait for create task.yaml
+    start_time = time.time()
     while True:
         time.sleep(1)
+        interval_time = time.time() - start_time
+        # break if task_yaml_path don't exist for 10 minutes
+        if not osp.exists(task_yaml_path) and interval_time >= 10 * 60:
+            break
         if osp.exists(task_yaml_path):
             break
-    tasks = yaml.load(open(task_yaml_path, 'r'), Loader=yaml.Loader)
+    
+    # wait for job_pid, job_slurm_job_id, job_log_path
+    job_pid = None
+    job_slurm_job_id = None
+    job_log_path = None
+    job_wait_to_run_time_thresh = 1 # wait one hour
+    start_time = time.time()
     while True:
-        time.sleep(2)
+        if not osp.exists(task_yaml_path):
+            break
+        time.sleep(1)
+        interval_time = time.time() - start_time
+        # break if task_yaml_path don't exist for 10 minutes
+        if ((job_pid is None or job_slurm_job_id is None or job_log_path is None)
+                        and interval_time >= job_wait_to_run_time_thresh * 60 * 60):
+            break
+        tasks = yaml.load(open(task_yaml_path, 'r'), Loader=yaml.Loader)
         if not isinstance(tasks, dict):
             return
         jobs = tasks['jobs']
         this_job = None
         for job in jobs:
-            if (job['arg_dict']['mmaction'] == framework and
+            if (job['arg_dict']['framework'] == framework and
                 job['arg_dict']['model'] == model):
                 this_job = job
                 break
@@ -87,20 +107,34 @@ def _watch_for_kill_time_limited(framework, model, config):
         job_pid = this_job['pid']
         job_slurm_job_id = this_job['slurm_job_id']
         job_log_path = this_job['log_path']
+        job_wait_to_run_time_thresh = this_job['wait_to_run_time_thresh']
+        if job_pid and job_slurm_job_id and job_log_path:
+            break
+        # break if job_pid is die.
+        if job_pid and (not psutil.pid_exists(job_pid)):
+            break
+
+    # monitor log
+    while True:
+        if (job_pid is None or job_slurm_job_id is None or job_log_path is None):
+            break
+        time.sleep(1)
         # determine if a 'time limit exceeded' has occurred
         log_lines = read_log_last(job_log_path, last_line_num=10)
         is_time_limit = False
         if log_lines is not None:
             for line in log_lines:
                 line = str(line, encoding="utf-8")
-                if '[E] Time limit exceeded' in line:
-                    kill_all(job_pid)
+                if time_limited_flag in line:
+                    kill_all([job_pid])
                     if job_slurm_job_id:
                         os.system("scancel {}".format(job_slurm_job_id))
                     is_time_limit = True
-        
+        # break if occur '[E] Time limit exceeded'
         if is_time_limit:
-            print('Kill job {}, because of \'[E] Time limit exceeded\''.format(job_pid))
+            break
+        # break if job_pid is die.
+        if not psutil.pid_exists(job_pid):
             break
 
 def after_callback_wrapper(config, run_type):
@@ -239,10 +273,16 @@ def pre_callback_wrapper(config, run_type, framework, model):
         del config['placeholder']
     config['test_life'] = 0
     print(yaml.dump(config))
-    # start a thread for killing time limited
-    p = multiprocessing.Process(target=_watch_for_kill_time_limited, args=(framework, model, config))
-    p.setDaemon(True)
-    p.start()
+    # start a process for killing time limited
+    pid = -1
+    start_time = time.time()
+    while pid < 0:
+        interval_time = time.time() - start_time
+        if interval_time >= 60:
+            break
+        pid = os.fork()
+    if pid == 0:
+        _watch_for_kill_time_limited(framework, model, config)
 
 
 def collect_config(framework, model_name):
