@@ -6,10 +6,13 @@ import yaml
 import pavi
 import time
 import warnings
+import re
+import multiprocessing
 
 
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
+from autoparrots.utils import kill_all
 
 # 公共表
 comm_table = {
@@ -31,6 +34,74 @@ run_type_table = {
     'weeklybenchmark': 0,
     'weeklytest': 1
 }
+
+
+def read_log_last(path, last_line_num=5):
+    if osp.exists(path):
+        return None
+    try:
+        with open(path, 'rb') as f:
+            off = -50
+            while True:
+                f.seek(off, 2)
+                lines = f.readlines()
+                if len(lines) >= last_line_num:
+                    return lines
+                off *= 2
+    except Exception:
+        return None
+    return None
+
+def _watch_for_kill_time_limited(framework, model, config):
+    this_dir = osp.dirname(os.path.abspath(__file__))
+    # find task.yaml
+    dir_arr = this_dir.split(os.sep)
+    new_dir_arr = []
+    for idx, dir in enumerate(dir_arr):
+        new_dir_arr.append(dir)
+        if idx == 0:
+            continue
+        if dir_arr[idx-1] == 'tasks':
+            break
+    task_yaml_path = os.sep.join(new_dir_arr)
+    task_yaml_path = osp.join(task_yaml_path, 'task.yaml')
+    # wait for create task.yaml
+    while True:
+        time.sleep(1)
+        if osp.exists(task_yaml_path):
+            break
+    tasks = yaml.load(open(task_yaml_path, 'r'), Loader=yaml.Loader)
+    while True:
+        time.sleep(2)
+        if not isinstance(tasks, dict):
+            return
+        jobs = tasks['jobs']
+        this_job = None
+        for job in jobs:
+            if (job['arg_dict']['mmaction'] == framework and
+                job['arg_dict']['model'] == model):
+                this_job = job
+                break
+        if this_job == None:
+            continue
+        job_pid = this_job['pid']
+        job_slurm_job_id = this_job['slurm_job_id']
+        job_log_path = this_job['log_path']
+        # determine if a 'time limit exceeded' has occurred
+        log_lines = read_log_last(job_log_path, last_line_num=10)
+        is_time_limit = False
+        if log_lines is not None:
+            for line in log_lines:
+                line = str(line, encoding="utf-8")
+                if '[E] Time limit exceeded' in line:
+                    kill_all(job_pid)
+                    if job_slurm_job_id:
+                        os.system("scancel {}".format(job_slurm_job_id))
+                    is_time_limit = True
+        
+        if is_time_limit:
+            print('Kill job {}, because of \'[E] Time limit exceeded\''.format(job_pid))
+            break
 
 def after_callback_wrapper(config, run_type):
     if run_type in config.keys():
@@ -70,7 +141,7 @@ def after_callback_wrapper(config, run_type):
 
 
 def update_thresh_wrapper(config, framework, model_name, run_type):
-    time.sleep(5)  # wait 10s for pavi scalar uploaded    
+    time.sleep(5)  # wait 10s for pavi scalar uploaded
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
         pavi_task_id = env['PAVI_TASK_ID']
@@ -101,7 +172,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
         # make it compatible with old version
         warnings.warn('__benchmark_pavi_task_id not provided', UserWarning)
         config['__benchmark_pavi_task_id'] = []
-    
+
     # TODO(shiguang): check pavi value
     update_ret = copy.deepcopy(config)
     config['test_life'] = 1
@@ -153,7 +224,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     print(yaml.dump(config))
 
 
-def pre_callback_wrapper(config, run_type):
+def pre_callback_wrapper(config, run_type, framework, model):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -168,6 +239,10 @@ def pre_callback_wrapper(config, run_type):
         del config['placeholder']
     config['test_life'] = 0
     print(yaml.dump(config))
+    # start a thread for killing time limited
+    p = multiprocessing.Process(target=_watch_for_kill_time_limited, args=(framework, model, config))
+    p.setDaemon(True)
+    p.start()
 
 
 def collect_config(framework, model_name):
@@ -187,8 +262,9 @@ if __name__ == '__main__':
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, sys.argv[4])
+            pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
         elif sys.argv[3] == '1':
             after_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
+            update_thresh_wrapper(
+                config, sys.argv[1], sys.argv[2], sys.argv[4])
