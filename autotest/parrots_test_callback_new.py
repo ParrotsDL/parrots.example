@@ -7,7 +7,6 @@ import pavi
 import time
 import warnings
 import re
-import multiprocessing
 
 import psutil
 from autoparrots.utils.fileio import dump
@@ -35,6 +34,9 @@ run_type_table = {
     'weeklytest': 1
 }
 
+wait_time_log_no_change = 20 # 20 minutes for log no change
+wait_time_create_task_yaml = 10 # 10 minutes for create task yaml
+wait_time_fork_subprocess = 60 # 60 seconds for fork subprocess
 
 def read_log_last(path, last_line_num=5):
     if not osp.exists(path):
@@ -51,6 +53,10 @@ def read_log_last(path, last_line_num=5):
     except Exception:
         return None
     return None
+
+def get_hash(lines):
+    lines_str = ' '.join(lines)
+    return hash(lines_str)
 
 def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E] Time limit exceeded'):
     time.sleep(60)
@@ -72,7 +78,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         time.sleep(1)
         interval_time = time.time() - start_time
         # break if task_yaml_path don't exist for 10 minutes
-        if not osp.exists(task_yaml_path) and interval_time >= 10 * 60:
+        if not osp.exists(task_yaml_path) and interval_time >= wait_time_create_task_yaml * 60:
             break
         if osp.exists(task_yaml_path):
             break
@@ -115,16 +121,31 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
             break
 
     # monitor log
+    last_lines_hash = None
+    last_lines_hash_start_time = time.time()
     while True:
         if (job_pid is None or job_slurm_job_id is None or job_log_path is None):
             break
         time.sleep(1)
-        # determine if a 'time limit exceeded' has occurred
-        log_lines = read_log_last(job_log_path, last_line_num=10)
         is_time_limit = False
-        if log_lines is not None:
+        # get last some lines
+        log_lines = read_log_last(job_log_path, last_line_num=10)
+        log_lines = [str(line, encoding="utf-8") for line in log_lines]
+        # get log hash
+        lines_hash = get_hash(log_lines)
+        # monitor whether the log has not changed over time (kill all process if not change for a long time)
+        if lines_hash == last_lines_hash:
+            if time.time() - last_lines_hash_start_time >= wait_time_log_no_change * 60:
+                kill_all([job_pid])
+                if job_slurm_job_id:
+                    os.system("scancel {}".format(job_slurm_job_id))
+                is_time_limit = True
+        else:
+            last_lines_hash = lines_hash
+            last_lines_hash_start_time = time.time()
+        # monitor whether a 'time limit exceeded' has occurred
+        if (log_lines is not None) and (not is_time_limit):
             for line in log_lines:
-                line = str(line, encoding="utf-8")
                 if time_limited_flag in line:
                     kill_all([job_pid])
                     if job_slurm_job_id:
@@ -278,7 +299,7 @@ def pre_callback_wrapper(config, run_type, framework, model):
     start_time = time.time()
     while pid < 0:
         interval_time = time.time() - start_time
-        if interval_time >= 60:
+        if interval_time >= wait_time_fork_subprocess:
             break
         pid = os.fork()
     if pid == 0:
