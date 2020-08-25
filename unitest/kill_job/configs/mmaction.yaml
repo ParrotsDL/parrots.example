@@ -1,0 +1,2 @@
+mmaction_tsm_r50_video_1x1x8_100e_kinetics400_rgb:
+  train.top1_acc: [10000, '>', '20%']
