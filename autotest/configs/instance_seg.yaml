@@ -1,0 +1,4 @@
+instance_seg.yolact_mobilenetv2_concat_32_coco_config:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  placeholder: 'none'
+
