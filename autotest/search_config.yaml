@@ -193,6 +193,10 @@ task:
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                #
+                #
+                # mmtrack
+                # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
             ]
     # Optional
     # callback: "cat"
