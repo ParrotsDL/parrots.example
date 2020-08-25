@@ -198,6 +198,10 @@ task:
                 # {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'sketch', 'gpus': 8, 'model': 'mobilenet1.0.0', 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'sketch', 'gpus': 8, 'model': 'vggfusion', 'py_args': '--pavi --pavi-project parrots_test'},
+                #
+                #
+                # mmtrack
+                # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
             ]
     # Optional
     # callback: "cat"
@@ -215,7 +219,7 @@ scheduler:
     parallel_size: 8
     stop_criterion:
         max_tries: 100
-    wait_to_run_time_thresh: 12 # inf
+    wait_to_run_time_thresh: inf # inf
 
 # Optional
 pavi:

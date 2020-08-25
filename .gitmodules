@@ -80,3 +80,6 @@
 [submodule "models/sketch"]
 	path = models/sketch
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
+[submodule "models/mmtrack"]
+	path = models/mmtrack
+	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
