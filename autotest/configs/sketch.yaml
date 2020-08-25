@@ -1,0 +1,8 @@
+sketch_vgg1.4.3:
+  val.face_106_nme: [10000, '<', '5%']
+
+sketch_mobilenet1.0.0:
+  val.face_106_nme: [10000, '<', '5%']
+
+sketch_vggfusion:
+  val.face_106_nme: [10000, '<', '5%']
