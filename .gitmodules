@@ -86,3 +86,9 @@
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
 	branch = pattern0.3_pat_test
+[submodule "models/sketch"]
+	path = models/sketch
+	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
+[submodule "models/mmtrack"]
+	path = models/mmtrack
+	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
