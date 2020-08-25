@@ -11,6 +11,7 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 
 partition=$1
@@ -18,6 +19,6 @@ train_gpu=$2
 config=$3
 
 
-sh runner/Pattern/train_1.sh $partition $train_gpu   $config  ${EXTRA_ARGS}
-sh runner/Pattern/test_1.sh  $partition 1  $config   ${EXTRA_ARGS} 
+SRUN_ARGS=${SRUN_ARGS}  sh runner/Pattern/train_1.sh $partition $train_gpu   $config  ${EXTRA_ARGS} 
+SRUN_ARGS=${SRUN_ARGS} sh runner/Pattern/test_1.sh  $partition 1  $config   ${EXTRA_ARGS} 
 

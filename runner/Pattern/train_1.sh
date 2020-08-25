@@ -19,8 +19,9 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-#echo --train 1 --config $config --job_name=Pattern_${name}  --partition $partition --train_gpu $train_gpu --extra_args ${EXTRA_ARGS} --srun_args ${SRUN_ARGS} 
+#echo --train 1 --config $config --job_name=Pattern_${name}  --partition $partition --train_gpu $train_gpu  ${EXTRA_ARGS}  ${SRUN_ARGS} 
 
+SRUN_ARGS=${SRUN_ARGS} \
 python -u $pyroot/tools/run.py \
     --train 1 \
     --config $config \

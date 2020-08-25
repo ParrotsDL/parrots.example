@@ -21,7 +21,7 @@ config=$ROOT/configs/Pattern/${name}.yaml
 
 
 
-
+SRUN_ARGS=${SRUN_ARGS} \
 python -u $pyroot/tools/run.py \
     --test 1 \
     --config $config \
