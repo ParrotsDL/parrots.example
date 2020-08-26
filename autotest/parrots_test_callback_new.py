@@ -7,6 +7,7 @@ import pavi
 import time
 import warnings
 
+
 import psutil
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
