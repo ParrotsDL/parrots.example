@@ -35,7 +35,7 @@ run_type_table = {
     'weeklytest': 1
 }
 
-wait_time_log_no_change = 5 # 20 minutes for log no change
+wait_time_log_no_change = 20 # 20 minutes for log no change
 wait_time_create_task_yaml = 10 # 10 minutes for create task yaml
 wait_time_fork_subprocess = 60 # 60 seconds for fork subprocess
 
@@ -136,7 +136,6 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         if not psutil.pid_exists(job_pid):
             break
 
-def after_callback_wrapper(config, run_type):
 value_type_table = {
     "Pattern": "max_value",
     "default": "last_value"
@@ -344,8 +343,8 @@ if __name__ == '__main__':
             # default: read last_value
             value_type = value_type_table["default"]
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, value_type, sys.argv[4])
+            pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
         elif sys.argv[3] == '1':
             after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], value_type, sys.argv[4])
