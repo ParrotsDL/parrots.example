@@ -11,8 +11,8 @@ task:
                 ]
     # Optional
     # callback: "cat"
-    pre_callback: "python unitest/kill_job/parrots_test_callback_new.py {framework} {model} 0 benchmark"
-    after_callback: "python unitest/kill_job/parrots_test_callback_new.py {framework} {model} 1 benchmark"
+    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 benchmark"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 benchmark"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
