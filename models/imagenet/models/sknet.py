@@ -1,120 +1,219 @@
+import torch
 import torch.nn as nn
-from functools import reduce
+import torch.nn.functional as F
+
+def conv3x3(in_planes, out_planes, stride=1, groups=1):
+    """3x3 convolution with padding"""
+    return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+                     padding=1, bias=False, groups=groups)
 
 
-class SKConv(nn.Module):
-    def __init__(self, in_channels, out_channels, stride=1, M=2, r=16, L=32):
-        super(SKConv, self).__init__()
-        d = max(in_channels//r, L)
-        self.M = M
-        self.out_channels = out_channels
-        self.conv = nn.ModuleList()
-        for i in range(M):
-            self.conv.append(
-                nn.Sequential(
-                    nn.Conv2d(in_channels, out_channels, 3, stride, padding=1+i,
-                              dilation=1+i, groups=32, bias=False),
-                    nn.BatchNorm2d(out_channels),
-                    nn.ReLU(inplace=True)))
-        self.global_pool = nn.AdaptiveAvgPool2d(1)
-        self.fc1 = nn.Sequential(nn.Conv2d(out_channels, d, 1, bias=False),
-                                 nn.BatchNorm2d(d),
-                                 nn.ReLU(inplace=True))
-        self.fc2 = nn.Conv2d(d, out_channels*M, 1, 1, bias=False)
-        self.softmax = nn.Softmax(dim=1)
-
-    def forward(self,  input):
-        batch_size = input.size(0)
-        output = []
-        # the part of split
-        for i, conv in enumerate(self.conv):
-            # print(i, conv(input).size())
-            output.append(conv(input))
-        # the part of fusion
-        U = reduce(lambda x, y: x+y, output)
-        s = self.global_pool(U)
-        z = self.fc1(s)
-        a_b = self.fc2(z)
-        a_b = a_b.reshape(batch_size, self.M, self.out_channels, -1)
-        a_b = self.softmax(a_b)
-        # the part of selection
-        a_b = list(a_b.chunk(self.M, dim=1))
-        a_b = list(map(lambda x: x.reshape(batch_size, self.out_channels, 1, 1), a_b))
-        V = list(map(lambda x, y: x * y, output, a_b))
-        V = reduce(lambda x, y: x + y, V)
-        return V
+def conv1x1(in_planes, out_planes, stride=1):
+    """1x1 convolution"""
+    return nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=stride, bias=False)
 
 
-class SKBlock(nn.Module):
-    expansion = 2
+class BasicBlock(nn.Module):
+    expansion = 1
 
     def __init__(self, inplanes, planes, stride=1, downsample=None):
-        super(SKBlock, self).__init__()
-        self.conv1 = nn.Sequential(nn.Conv2d(inplanes, planes, 1, 1, 0, bias=False),
-                                   nn.BatchNorm2d(planes),
-                                   nn.ReLU(inplace=True))
-        self.conv2 = SKConv(planes, planes, stride)
-        self.conv3 = nn.Sequential(nn.Conv2d(planes, planes*self.expansion, 1, 1, 0, bias=False),
-                                   nn.BatchNorm2d(planes*self.expansion))
+        super(BasicBlock, self).__init__()
+        self.conv1 = conv3x3(inplanes, planes, stride)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.relu = nn.ReLU(inplace=True)
+        self.conv2 = conv3x3(planes, planes)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.downsample = downsample
+        self.stride = stride
+
+    def forward(self, x):
+        identity = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.conv2(out)
+        out = self.bn2(out)
+
+        if self.downsample is not None:
+            identity = self.downsample(x)
+
+        out += identity
+        out = self.relu(out)
+
+        return out
+
+
+class Bottleneck(nn.Module):
+    expansion = 4
+
+    def __init__(self, inplanes, planes, stride=1, downsample=None):
+        super(Bottleneck, self).__init__()
+        self.conv1 = conv1x1(inplanes, planes)
+        self.bn1 = nn.BatchNorm2d(planes)
+
+        self.conv2 = conv3x3(planes, planes, stride)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.conv2g = conv3x3(planes, planes, stride, groups = 32)
+        self.bn2g   = nn.BatchNorm2d(planes)
+
+        self.conv3 = conv1x1(planes, planes * self.expansion)
+        self.bn3 = nn.BatchNorm2d(planes * self.expansion)
         self.relu = nn.ReLU(inplace=True)
         self.downsample = downsample
+        self.stride = stride
 
-    def forward(self,  input):
-        shortcut = input
-        output = self.conv1(input)
-        output = self.conv2(output)
-        output = self.conv3(output)
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.conv_fc1 = nn.Conv2d(planes, planes//16, 1, bias=False)
+        self.bn_fc1   = nn.BatchNorm2d(planes//16)
+        self.conv_fc2 = nn.Conv2d(planes//16, 2 * planes, 1, bias=False)
+
+        self.D = planes
+
+    def forward(self, x):
+        identity = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        d1 = self.conv2(out)
+        d1 = self.bn2(d1)
+        d1 = self.relu(d1)
+
+        d2 = self.conv2g(out)
+        d2 = self.bn2g(d2)
+        d2 = self.relu(d2)
+
+        d  = self.avg_pool(d1) + self.avg_pool(d2)
+        d = F.relu(self.bn_fc1(self.conv_fc1(d)))
+        d = self.conv_fc2(d)
+        d = torch.unsqueeze(d, 1).view(-1, 2, self.D, 1, 1)
+        d = F.softmax(d, 1)
+        d1 = d1 * d[:, 0, :, :, :].squeeze(1)
+        d2 = d2 * d[:, 1, :, :, :].squeeze(1)
+        d  = d1 + d2
+
+        out = self.conv3(d)
+        out = self.bn3(out)
+
         if self.downsample is not None:
-            shortcut = self.downsample(input)
-        output += shortcut
-        return self.relu(output)
+            identity = self.downsample(x)
+
+        out += identity
+        out = self.relu(out)
+
+        return out
 
 
-class SKNet(nn.Module):
-    def __init__(self, num_classes=1000, block=SKBlock, nums_block_list=[3,  4,  6,  3]):
-        super(SKNet, self).__init__()
+class ResNet(nn.Module):
+
+    def __init__(self, block, layers, num_classes=1000, zero_init_residual=False):
+        super(ResNet, self).__init__()
         self.inplanes = 64
-        self.conv = nn.Sequential(nn.Conv2d(3, 64, 7, 2, 3, bias=False),
-                                  nn.BatchNorm2d(64),
-                                  nn.ReLU(inplace=True))
-        self.maxpool = nn.MaxPool2d(3, 2, 1)
-        self.layer1 = self._make_layer(block, 128, nums_block_list[0], stride=1)
-        self.layer2 = self._make_layer(block, 256, nums_block_list[1], stride=2)
-        self.layer3 = self._make_layer(block, 512, nums_block_list[2], stride=2)
-        self.layer4 = self._make_layer(block, 1024, nums_block_list[3], stride=2)
-        self.avgpool = nn.AdaptiveAvgPool2d(1)
-        self.fc = nn.Linear(1024*block.expansion, num_classes)
-        self.softmax = nn.Softmax(-1)
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
+                               bias=False)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        self.layer1 = self._make_layer(block, 64, layers[0])
+        self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Linear(512 * block.expansion, num_classes)
 
-    def forward(self,  input):
-        output = self.conv(input)
-        output = self.maxpool(output)
-        output = self.layer1(output)
-        output = self.layer2(output)
-        output = self.layer3(output)
-        output = self.layer4(output)
-        output = self.avgpool(output)
-        output = output.squeeze(-1).squeeze(-1)
-        output = self.fc(output)
-        output = self.softmax(output)
-        return output
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+            elif isinstance(m, nn.BatchNorm2d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
 
-    def _make_layer(self, block, planes, nums_block, stride=1):
+        # Zero-initialize the last BN in each residual branch,
+        # so that the residual branch starts with zeros, and each residual block behaves like an identity.
+        # This improves the model by 0.2~0.3% according to https://arxiv.org/abs/1706.02677
+        if zero_init_residual:
+            for m in self.modules():
+                if isinstance(m, Bottleneck):
+                    nn.init.constant_(m.bn3.weight, 0)
+                elif isinstance(m, BasicBlock):
+                    nn.init.constant_(m.bn2.weight, 0)
+
+    def _make_layer(self, block, planes, blocks, stride=1):
         downsample = None
         if stride != 1 or self.inplanes != planes * block.expansion:
-            downsample = nn.Sequential(nn.Conv2d(self.inplanes, planes*block.expansion, 1, stride, bias=False),
-                                       nn.BatchNorm2d(planes*block.expansion))
+            downsample = nn.Sequential(
+                conv1x1(self.inplanes, planes * block.expansion, stride),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
+
         layers = []
         layers.append(block(self.inplanes, planes, stride, downsample))
         self.inplanes = planes * block.expansion
-        for _ in range(1, nums_block):
+        for _ in range(1, blocks):
             layers.append(block(self.inplanes, planes))
+
         return nn.Sequential(*layers)
 
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
 
-def sknet50(num_classes=1000):
-    return SKNet(num_classes, SKBlock, [3,  4,  6,  3])
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
+
+        return x
 
 
-def sknet101(num_classes=1000):
-    return SKNet(num_classes, SKBlock, [3,  4,  23,  3])
+def sk_resnet18(pretrained=False, **kwargs):
+    """Constructs a ResNet-18 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = ResNet(BasicBlock, [2, 2, 2, 2], **kwargs)
+    return model
+
+
+def sk_resnet34(pretrained=False, **kwargs):
+    """Constructs a ResNet-34 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = ResNet(BasicBlock, [3, 4, 6, 3], **kwargs)
+    return model
+
+
+def sk_resnet50(pretrained=False, **kwargs):
+    """Constructs a ResNet-50 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
+    return model
+
+
+def sk_resnet101(pretrained=False, **kwargs):
+    """Constructs a ResNet-101 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
+    return model
+
+def sk_resnet152(pretrained=False, **kwargs):
+    """Constructs a ResNet-152 model.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    """
+    model = ResNet(Bottleneck, [3, 8, 36, 3], **kwargs)
+    return model

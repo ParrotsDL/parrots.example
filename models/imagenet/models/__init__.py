@@ -23,7 +23,7 @@ from .hrnet import HRNet
 from .mnasnet import mnasnet
 from .efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, \
                           efficientnet_b5, efficientnet_b6, efficientnet_b7
-from .sknet import sknet50, sknet101
+from .sknet import sk_resnet18, sk_resnet34, sk_resnet50, sk_resnet101, sk_resnet152
 from .resnest import ResNest, resnest50, resnest101, resnest200, resnest269
 
 
@@ -104,8 +104,11 @@ __all__ = [
     'efficientnet_b5',
     'efficientnet_b6',
     'efficientnet_b7',
-    'sknet50',
-    'sknet101',
+    'sk_resnet18',
+    'sk_resnet34',
+    'sk_resnet50',
+    'sk_resnet101',
+    'sk_resnet152',
     'ResNest',
     'resnest50',
     'resnest101',
