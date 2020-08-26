@@ -35,8 +35,12 @@ run_type_table = {
     'weeklytest': 1
 }
 
+value_type_table = {
+    "Pattern": "max_value",
+    "default": "last_value"
+}
+
 wait_time_log_no_change = 20 # 20 minutes for log no change
-wait_time_create_task_yaml = 10 # 10 minutes for create task yaml
 wait_time_fork_subprocess = 60 # 60 seconds for fork subprocess
 
 def read_log_last(path, last_line_num=5):
@@ -135,11 +139,6 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         # break if job_pid is die.
         if not psutil.pid_exists(job_pid):
             break
-
-value_type_table = {
-    "Pattern": "max_value",
-    "default": "last_value"
-}
 
 def after_callback_wrapper(config, value_type, run_type):
     if run_type in config.keys():
