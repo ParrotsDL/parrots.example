@@ -228,8 +228,8 @@ if __name__ == '__main__':
             # default: read last_value
             value_type = value_type_table["default"]
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, value_type, sys.argv[4])
+            pre_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '1':
             after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], value_type, sys.argv[4])
