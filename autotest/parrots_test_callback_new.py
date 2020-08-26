@@ -6,7 +6,6 @@ import yaml
 import pavi
 import time
 import warnings
-import re
 
 import psutil
 from autoparrots.utils.fileio import dump
