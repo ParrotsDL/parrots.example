@@ -250,7 +250,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input_, target_  = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
-        iter_start_time = time.time()
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -290,8 +289,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         end = time.time()
         iter_end_time = time.time()
         if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
-            iter_time_list.append(iter_end_time - iter_start_time)
-
+            iter_time_list.append(iter_end_time-iter_start_time)
+        iter_start_time = time.time()
         if i % args.log_freq == 0:
             progress.display(i)
             if args.rank == 0 and monitor_writer:
