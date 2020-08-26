@@ -63,8 +63,8 @@ strategy:
     snapshot_freq: 5000
     print_freq: 20
     load_name: 'iter_195000_ckpt.pth.tar'
-    save_path: '../eye_exp/eye_crop_fir_dts_zzms_clean_v2_invalid_no_zoom_nomotionblur_big_angle_parrots_aten/'
-
+    #save_path: '../eye_exp/eye_crop_fir_dts_zzms_clean_v2_invalid_no_zoom_nomotionblur_big_angle_parrots_aten/'
+    save_path: './Pattern_save/drowsiness/parrots/'
     workers: 32
 data:
     training_param:
@@ -150,17 +150,32 @@ test:
         # -1.6 ~ 1.6
         mean: [0]
         std: [1]
-
-eval:
+#eval:
     open_close_test:
         type: 'drowsiness'
         task: ['eye']
-        prefix: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/images/Image/'
-        json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/open_close.json'
+        data_format: 'ceph'
+        data_format_ceph: 'ceph'
+        data_format_cluster: 'cluster' 
+        prefix: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/images/Image'
+        prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/images/Image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/drowsiness/eye_benchmark_new/images/Image/'
+        #prefix: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/images/Image/'
+        #json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/open_close.json'
+        #prefix: '/mnt/lustre/share_data/wuwenli/drowsiness/eye_benchmark_new'
+        json_path: '/mnt/lustre/share_data/wuwenli/drowsiness/eye_benchmark_new/open_close.json'
         batch_size: 64
+
     valid_invalid_test:
         type: 'drowsiness'
         task: ['valid_eye']
-        prefix: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/images/Image/'
-        json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/valid_invalid_valid_eye.json'
+        data_format: 'ceph'
+        data_format_ceph: 'ceph'
+        data_format_cluster: 'cluster' 
+        #prefix: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/images/Image/'
+        #json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/valid_invalid_valid_eye.json'
+        prefix: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/images/Image'
+        prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/images/Image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/drowsiness/eye_benchmark_new/images/Image/'
+        json_path: '/mnt/lustre/share_data/wuwenli/drowsiness/eye_benchmark_new/valid_invalid_valid_eye.json'
         batch_size: 64

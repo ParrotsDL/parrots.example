@@ -13,11 +13,11 @@ from autoparrots.command.entry import trace_up
 
 # 公共表
 comm_table = {
-    '__benchmark_avg_iter_time(s)': [10000, '<', '50%'],
-    '__benchmark_mem_alloc(mb)': [10000, '<', '50%'],
-    '__benchmark_mem_cached(mb)': [10000, '<', '50%'],
-    '__benchmark_pure_training_time(h)': [10000, '<', '50%'],
-    '__benchmark_total_time(h)': [10000, '<', '50%'],
+    '__benchmark_avg_iter_time(s)': [10000, '<', '5%'],
+    '__benchmark_mem_alloc(mb)': [10000, '<', '5%'],
+    '__benchmark_mem_cached(mb)': [10000, '<', '5%'],
+    '__benchmark_pure_training_time(h)': [10000, '<', '5%'],
+    '__benchmark_total_time(h)': [10000, '<', '5%'],
     '__benchmark_pavi_task_id': []
 }
 
@@ -32,7 +32,12 @@ run_type_table = {
     'weeklytest': 1
 }
 
-def after_callback_wrapper(config, run_type):
+value_type_table = {
+    "Pattern": "max_value",
+    "default": "last_value"
+}
+
+def after_callback_wrapper(config, value_type, run_type):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -58,18 +63,34 @@ def after_callback_wrapper(config, run_type):
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
-        try:
-            pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
-        except:
-            pv = 'unknow, {} may not exist on pavi'.format(k)
-            pavi_ret['test_life'] = 0
-        pavi_ret[pk] = pv
+
+        if value_type == "max_value":
+            try:
+                if v[1] == '>':
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'))[-1]['value']
+                    pavi_ret[pk] = pv
+                else:
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'), reverse = True)[-1]['value']
+                    pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+            
+        elif value_type == "last_value":
+            try:
+                pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+                pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+        else:
+            print("Please set 'max' or 'last' for the type of value.")
 
     config.update(pavi_ret)
     print(yaml.dump(config))
 
 
-def update_thresh_wrapper(config, framework, model_name, run_type):
+def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
     time.sleep(5)  # wait 10s for pavi scalar uploaded    
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
@@ -116,12 +137,27 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
-            try:
-                pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
-                pv = pv[-1]['value']
-            except:
-                pv = 'unknow, {} may not exist on pavi'.format(k)
-                config['test_life'] = 0
+            if value_type == "max_value":
+                try:
+                    if v[1] == '>':
+                        pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'))
+                        pv = pv[-1]['value']
+                    else:
+                        pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'), reverse = True)
+                        pv = pv[-1]['value']
+                except:
+                    pv = 'unknow, {} may not exist on pavi'.format(k)
+                    config['test_life'] = 0
+            elif value_type == "last_value":
+                try:
+                    pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
+                    pv = pv[-1]['value']
+                except:
+                    pv = 'unknow, {} may not exist on pavi'.format(k)
+                    config['test_life'] = 0
+            else:
+                print("Please set 'max' or 'last' for the type of value.")
+
             update_ret[k].append(pv)
             # get value which is not string
             vaule_no_str = []
@@ -186,9 +222,14 @@ if __name__ == '__main__':
     assert sys.argv[4] in run_type_table.keys()
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
+        if sys.argv[1] in value_type_table.keys():
+            value_type = value_type_table[sys.argv[1]]
+        else: 
+            # default: read last_value
+            value_type = value_type_table["default"]
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, sys.argv[4])
+            pre_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '1':
-            after_callback_wrapper(config, sys.argv[4])
+            after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
             update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
