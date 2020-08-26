@@ -1,0 +1,155 @@
+net:
+    backbone:
+        arch: core.model.backbone.arc_resnet.resnet100 # core.model.backbone.resnet.ResNet
+        lr_decay_mult:
+            nn.BatchNorm2d: [1, 0, 1, 0]
+            nn.Conv2d: [1, 1, 2, 0]
+        kwargs:
+            use_se: False
+    neck:
+        prev: backbone
+        arch: core.model.neck.mtfc_neck.MTFCneck
+        kwargs:
+            fc_dim: 512
+            dropout: False
+            norm: False
+    head: # only classifier-loss for verify task
+        arch: core.model.head.msmt_head.MSMThead
+        prev: neck # must have for neck and head module
+        task_names:
+            0:
+                ms1m: ['ms1m']
+        splits: [1]
+        kwargs:
+            task_cfgs:
+                ms1m:
+                    num_class: 93431
+                    mp_flag: True
+                    has_accuracy: True
+                    loss_type:
+                        arcface_cosineface:
+                            scale: 64
+                            margin: 0.5
+                            weight: 1
+strategy:
+    task_type: 'verify'
+    task_mode: 'train'
+    scatter_mode: False
+    syncbn: 0
+    batch_size_mode: 'all'
+    sampler: 'iter'
+    optimizer: 'SGD'
+    max_iter: 300000
+    clip_gradients: True
+    base_lr: 0.1
+    lr_steps: [100000, 160000, 220000]
+    lr_mults: [0.1, 0.1, 0.1]
+    momentum: 0.9
+    warmup_strategy: 'gradual'
+    nesterov: True
+    weight_decay: 0.0005
+    warmup_steps: 0
+    warmup_lr: 0.01
+    shuffle_strategy: 1
+
+    snapshot_freq: 5000
+    print_freq: 100
+    save_path: '../experiments/ms1m_arc-resnet100_arcface_bs512_mp_parrots/'
+    workers: 1
+data:
+    training_param:
+        preprocessor: 'pil'
+        crop: True
+        y_offset: 0
+        crop_height: 112
+        crop_width: 112
+
+        mirror: False
+        mirror_prob: 0.5
+
+        scale: True
+        final_height: 112
+        final_width: 112
+        final_channel: 3
+
+        trans: True
+        trans_max_value: 0.01
+        zoom: True
+        zoom_min: 0.98
+        zoom_max: 1.02
+        normalize: True
+        normalize type: 'mean_std'
+        mean: [127.5, 127.5, 127.5]
+        std: [79.6875, 79.6875, 79.6875]
+
+    ms1m:
+        prefix: ['s3://parrots_model_data/pattern/verify/ms1m/']
+        prefix_ceph: ['s3://parrots_model_data/pattern/verify/ms1m/']
+        prefix_lustre: ['/mnt/lustre/share_data/wuwenli/ms1m/']
+        data_source: [/mnt/lustre/share_data/wuwenli/ms1m/image_list.txt]
+        label_source: [/mnt/lustre/share_data/wuwenli/ms1m/label.txt]
+        format: 'txt'
+        data_format: 'ceph'
+        data_format_ceph: 'ceph'
+        data_format_lustre: 'lustre'
+        batch_size: 64
+test:
+    strategy:
+        task_type: 'verify'
+        task_mode: 'test'
+        scatter_mode: False
+        workers: 4
+    testing_param:
+        preprocessor: 'pil'
+        crop: True
+        y_offset: 0
+        crop_height: 112
+        crop_width: 112
+
+        scale: True
+        final_height: 112
+        final_width: 112
+
+        normalize: True
+        normalize_type: 'mean_std'
+        mean: [127.5, 127.5, 127.5]
+        std: [79.6875, 79.6875, 79.6875]
+
+   
+    lfw_pairA:
+        prefix: 's3://lixiaojie.facedata/benchmark/lfw_112/data/'
+        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/pair_a.txt'
+        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw/index_a.txt'
+        batch_size: 32
+        data_format: 'ceph'
+        save_feature: True
+
+    lfw_pairB:
+        prefix: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/data/'
+        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/pair_b.txt'
+        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw/index_b.txt'
+        batch_size: 32
+
+    Megaface_facescrub:
+        prefix: 's3://lixiaojie.facedata/megaface/facescrub_images_clean/'
+        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/facescrub/facescrub_set1_image_rename_list_clean_all.txt'
+        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/facescrub/facescrub_set1_image_rename_label_clean_all.txt'
+        batch_size: 32
+        save_feature: True
+        data_format: 'ceph'
+
+    Megaface_distractors:
+        prefix: 's3://lixiaojie.facedata/megaface/distractors/'
+        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/distractors/st_align_106_clean/megaface_set1_image_list.txt'
+        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/distractors/st_align_106_clean/megaface_set1_image_label.txt'
+        batch_size: 32
+        data_format: 'ceph'
+
+    iccv_verify_large:
+        prefix: 's3://lixiaojie.facedata/iccv19-challenge-data/'
+        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/trillion_pairs/ms1m_testing_large/db_aligned.txt'
+        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/trillion_pairs/ms1m_testing_large/image_list.label.meta'
+        format: 'txt'
+        batch_size: 32
+        data_format: 'ceph'
+ 

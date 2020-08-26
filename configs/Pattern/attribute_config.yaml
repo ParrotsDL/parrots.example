@@ -113,7 +113,7 @@ strategy:
     task_type: 'attribute'
     data_type: 'msms'
     scatter_mode: True
-    #pavi_mode: False
+    pavi_mode: True
 
     max_iter: 400000
     base_lr: 0.01
@@ -129,7 +129,7 @@ strategy:
     snapshot_freq: 5000
     print_freq: 20
     load_name: ''
-    save_path: './Pattern_save/attribute'
+    save_path: './Pattern_save/attribute/parrots'
 
     workers: 4
 data:
@@ -350,7 +350,12 @@ test:
     age_data_smartphone:
         type: 'attribute'
         task: 'age'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
+        data_format: 'ceph'
+        data_format_ceph: 'ceph'
+        data_format_cluster: 'cluster' 
+        prefix: 's3://parrots_model_data/pattern/attribute/all_attr/smartphone_data'
+        prefix_ceph:  's3://parrots_model_data/pattern/attribute/all_attr/smartphone_data'
+        prefix_luster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
         json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smart_phone_test.json'
         batch_size: 256 # for single gpu
         delta_thres: [5, 10]
