@@ -125,7 +125,10 @@ task:
                     # {'framework': 'mmaction', 'gpus': 2, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     #
                     # mmtrack
-                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 2'},
+                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
+                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config1ms_lr', 'py_args': '--pavi --pavi-project parrots_test --seed 1024  --max-step 1'},
+                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'siamrpnpp', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
+                    #
                     # pod_v2.3.0
                     # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.1'},
                     # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.2'},
