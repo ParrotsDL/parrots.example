@@ -242,7 +242,7 @@ alphatrion_se_resnet50_fp32:
   - 0.7657
   - '>'
   - 20%
-    weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
