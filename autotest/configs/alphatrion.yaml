@@ -266,10 +266,10 @@ alphatrion_se_resnet50_fp32:
     - 50%
     - 0.3280621523327298
     __benchmark_total_time(h):
-    - 16
+    - 18
     - <
     - 50%
-    - 0.341018100115988
+    - 16
 alphatrion_se_resnet50_fp32_benchmark:
   benchmark:
     __benchmark_avg_iter_time(s):
