@@ -446,3 +446,33 @@ mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
   - 0.4140
   - '>' 
   - 50%
+
+mmdet_fsaf_r50_fpn_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 
+    __benchmark_pure_training_time(h): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 10000
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 10000
+  - '>' 
+  - 50%
