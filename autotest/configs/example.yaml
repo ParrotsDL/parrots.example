@@ -1,6 +1,6 @@
 example_resnet50: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
-      weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -32,7 +32,7 @@ example_resnet50: # Required.
 
 example_resnet50.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
-      dailytest:
+  dailytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -70,7 +70,7 @@ example_resnet50.benchmark: # Required.
 
 example_resnet50_sync.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
-        dailytest:
+  dailytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -107,7 +107,7 @@ example_resnet50_sync.benchmark: # Required.
 
 example_resnet50_mix: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 15.790 - 1
-        weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -150,7 +150,7 @@ example_se_resnet50.benchmark: # Required.
 
 example_se_resnet50_mix: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 16.436 - 1
-        weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -184,7 +184,7 @@ example_se_resnet50_mix.benchmark: # Required.
 
 example_inception_v4: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 15.690 - 1
-        weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -224,7 +224,7 @@ example_inception_v4_mix.benchmark: # Required.
 
 example_shuffle_v2: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 14.796 - 1
-      weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -263,7 +263,7 @@ example_shuffle_v2_mix.benchmark: # Required.
 
 example_mobile_v2: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 19.342 - 1
-        weeklytest:
+  weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -312,7 +312,7 @@ example_resnet18_mix: # Required.
 
 example_resnet18_mix.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 20.586 - 1
-        dailytest:
+  dailytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -448,7 +448,7 @@ example_mobile_v2_weekly: # Required.
 
 example_mobile_v1.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
-        dailytest:
+  dailytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
@@ -485,7 +485,7 @@ example_mobile_v1.benchmark: # Required.
 
 example_inceptionv3.short: # Required.  __benchmark_avg_iter_time(s): [100000, '<', '50%']
   Accuracy_Test_top1: [0, '>', '20%']
-        dailytest:
+  dailytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
     - <
