@@ -31,14 +31,6 @@ trainer:
   max_epoch: 100
   test_freq: 1
   log_freq: 20
-  bn:
-    syncbn: False
-  mixed_precision:
-    half: False
-    loss_scale: 128.0
-    float_bn: True
-    #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
-    #float_module_name: "{'fc':('float', 'half')}"
   optimizer:
     type: SGD
     kwargs:
@@ -62,6 +54,6 @@ monitor:
   type: pavi
   _taskid: # continue training
   kwargs:
-    project: pape_test  # change to your own pavi project
+    project: default  # change to your own pavi project
     task: resnet50
     model: resnet50

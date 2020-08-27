@@ -1,8 +1,6 @@
 mkdir -p log
 now=$(date +"%Y%m%d_%H%M%S")
 
-# export PYTHONPATH=/yourpathto/PAPExtension:$PYTHONPATH
-
 cfg=$1
 jobname=$2
 partition=$3

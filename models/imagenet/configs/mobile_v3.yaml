@@ -36,14 +36,6 @@ trainer:
   max_epoch: 100
   test_freq: 1
   log_freq: 20
-  bn:
-    syncbn: False
-  mixed_precision:
-    half: False
-    loss_scale: 128.0
-    float_bn: True
-    #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
-    #float_module_name: "{'fc':('float', 'half')}"
   optimizer:
     type: SGD
     kwargs:
