@@ -5,7 +5,7 @@ import xlwt
 from xlutils.copy import copy
 import argparse
 
-parser = argparse.ArgumentParser(description='Information Of Benchmark ')
+parser = argparse.ArgumentParser(description='Information Of Benchmark')
 parser.add_argument('--config', default='alphatrion.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--times', default=1, type=int,
@@ -52,21 +52,24 @@ if "__main__" == __name__:
     y = yaml.load(file)
     all_key = y.keys()
     all_index=[]
+    msg_list = ['benchmark', 'dailytest', 'weeklytest', 'weeklybenchmark', 'dummydata', 'all']
     for i in all_key:
-        tmp = []
-        if 'benchmark' in y[i]:
-            if len(y[i]['benchmark']['__benchmark_avg_iter_time(s)']) >= args.times+3:
-                tmp.append(str(i))
-                tmp.append(y[i]['benchmark']['__benchmark_avg_iter_time(s)'][args.times+2])
-                tmp.append(y[i]['benchmark']['__benchmark_mem_alloc(mb)'][args.times+2])
-                tmp.append(y[i]['benchmark']['__benchmark_mem_cached(mb)'][args.times+2])
-                tmp.append(y[i]['benchmark']['__benchmark_pure_training_time(h)'][args.times+2])
-                tmp.append(y[i]['benchmark']['__benchmark_total_time(h)'][args.times+2])
-                all_index.append(tmp)
+        for j in msg_list:
+            tmp = []
+            if j in y[i]:
+                if len(y[i][j]['__benchmark_avg_iter_time(s)']) >= args.times + 3:
+                    tmp.append(j)
+                    tmp.append(str(i))
+                    tmp.append(y[i][j]['__benchmark_avg_iter_time(s)'][args.times + 2])
+                    tmp.append(y[i][j]['__benchmark_mem_alloc(mb)'][args.times + 2])
+                    tmp.append(y[i][j]['__benchmark_mem_cached(mb)'][args.times + 2])
+                    tmp.append(y[i][j]['__benchmark_pure_training_time(h)'][args.times + 2])
+                    tmp.append(y[i][j]['__benchmark_total_time(h)'][args.times + 2])
+                    all_index.append(tmp)
 
-    book_name_xls = args.config+'_benchmark.xls'
-    sheet_name_xls = 'benckmark'
-    value_title = [["模型名", "__benchmark_avg_iter_time(s)", "__benchmark_mem_alloc(mb)", "__benchmark_mem_cached(mb)", "__benchmark_pure_training_time(h)","__benchmark_total_time(h)"]]
+    book_name_xls = args.config+'_information.xls'
+    sheet_name_xls = 'information'
+    value_title = [["信息类型","模型名", "__benchmark_avg_iter_time(s)", "__benchmark_mem_alloc(mb)", "__benchmark_mem_cached(mb)", "__benchmark_pure_training_time(h)","__benchmark_total_time(h)"]]
     value = all_index
     write_excel_xls(book_name_xls, sheet_name_xls, value_title)
     write_excel_xls_append(book_name_xls, value)
