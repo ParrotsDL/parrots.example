@@ -8,8 +8,10 @@ import time
 import warnings
 
 
+import psutil
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
+from autoparrots.command.task import kill_task
 
 # 公共表
 comm_table = {
@@ -36,6 +38,106 @@ value_type_table = {
     "Pattern": "max_value",
     "default": "last_value"
 }
+
+wait_time_log_no_change = 20 # 20 minutes for log no change
+wait_time_fork_subprocess = 60 # 60 seconds for fork subprocess
+
+def read_log_last(path, last_line_num=5):
+    if not osp.exists(path):
+        return None
+    try:
+        with open(path, 'rb') as f:
+            off = -50
+            while True:
+                f.seek(off, 2)
+                lines = f.readlines()
+                if len(lines) >= last_line_num:
+                    return lines
+                off *= 2
+    except Exception:
+        return None
+    return None
+
+def get_hash(lines):
+    lines_str = ' '.join(lines)
+    return hash(lines_str)
+
+def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E] Time limit exceeded'):
+    time.sleep(60)
+    # wait for job_pid, job_log_path
+    job_pid = None
+    job_log_path = None
+    workdir = None
+    name = None
+    job_wait_to_run_time_thresh = 1 # wait one hour
+    start_time = time.time()
+    while True:
+        time.sleep(30)
+        interval_time = time.time() - start_time
+        # break if task_yaml_path don't exist for 10 minutes
+        if ((not job_pid or
+             not job_log_path or
+             not workdir or
+             not name) and
+             interval_time >= job_wait_to_run_time_thresh * 60 * 60):
+            break
+
+        try:
+            job_pid = int(os.environ['pid'])
+        except Exception:
+            job_pid = None
+        try:
+            job_wait_to_run_time_thresh = int(os.environ['wait_to_run_time_thresh'])
+        except Exception:
+            job_wait_to_run_time_thresh = 1
+        job_log_path = os.environ['log_path']
+        try:
+            workdir = os.environ['workdir']
+            workdir = os.sep.join(workdir.split(os.sep)[:-2])
+        except:
+            workdir = None
+        name = os.environ['name']
+        if job_pid and job_log_path and workdir and name:
+            break
+        # break if job_pid is die.
+        if job_pid and (not psutil.pid_exists(job_pid)):
+            break
+    # monitor log
+    last_lines_hash = None
+    last_lines_hash_start_time = time.time()
+    while True:
+        if (not job_pid or
+            not job_log_path or
+            not workdir or
+            not name):
+            break
+        time.sleep(60)
+        is_time_limit = False
+        # get last some lines
+        log_lines = read_log_last(job_log_path, last_line_num=10)
+        log_lines = [str(line, encoding="utf-8") for line in log_lines]
+        # get log hash
+        lines_hash = get_hash(log_lines)
+        # monitor whether the log has not changed over time (kill all process if not change for a long time)
+        if lines_hash == last_lines_hash:
+            if time.time() - last_lines_hash_start_time >= wait_time_log_no_change * 60:
+                kill_task(workdir, [name])
+                is_time_limit = True
+        else:
+            last_lines_hash = lines_hash
+            last_lines_hash_start_time = time.time()
+        # monitor whether a 'time limit exceeded' has occurred
+        if (log_lines is not None) and (not is_time_limit):
+            for line in log_lines:
+                if time_limited_flag in line:
+                    kill_task(workdir, [name])
+                    is_time_limit = True
+        # break if occur '[E] Time limit exceeded'
+        if is_time_limit:
+            break
+        # break if job_pid is die.
+        if not psutil.pid_exists(job_pid):
+            break
 
 def after_callback_wrapper(config, value_type, run_type):
     if run_type in config.keys():
@@ -122,7 +224,7 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
         # make it compatible with old version
         warnings.warn('__benchmark_pavi_task_id not provided', UserWarning)
         config['__benchmark_pavi_task_id'] = []
-    
+
     # TODO(shiguang): check pavi value
     update_ret = copy.deepcopy(config)
     config['test_life'] = 1
@@ -189,7 +291,7 @@ def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
     print(yaml.dump(config))
 
 
-def pre_callback_wrapper(config, run_type):
+def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -204,6 +306,17 @@ def pre_callback_wrapper(config, run_type):
         del config['placeholder']
     config['test_life'] = 0
     print(yaml.dump(config))
+    if is_monitor_log:
+        # start a process for killing time limited
+        pid = -1
+        start_time = time.time()
+        while pid < 0:
+            interval_time = time.time() - start_time
+            if interval_time >= wait_time_fork_subprocess:
+                break
+            pid = os.fork()
+        if pid == 0:
+            _watch_for_kill_time_limited(framework, model, config)
 
 
 def collect_config(framework, model_name):
@@ -228,7 +341,7 @@ if __name__ == '__main__':
             # default: read last_value
             value_type = value_type_table["default"]
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, sys.argv[4])
+            pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
         elif sys.argv[3] == '1':
             after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
