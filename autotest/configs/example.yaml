@@ -1,8 +1,66 @@
 example_resnet50: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 32.5
+    - <
+    - 50%
+    - 30.5
+
 
 example_resnet50.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 1.52
+    - <
+    - 50%
+    - 1.02
+
 
 example_resnet50.short.dummy_data: # Required.
   placeholder: 'none'
@@ -12,6 +70,34 @@ example_resnet50.benchmark: # Required.
 
 example_resnet50_sync.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 1.53
+    - <
+    - 50%
+    - 1.03
 
 example_resnet50_sync.short.dummy_data: # Required.
   placeholder: 'none'
@@ -21,6 +107,34 @@ example_resnet50_sync.benchmark: # Required.
 
 example_resnet50_mix: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 15.790 - 1
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 32.25
+    - <
+    - 50%
+    - 30.25
 
 example_resnet50_mix.benchmark: # Required.
   placeholder: 'none'
@@ -36,12 +150,68 @@ example_se_resnet50.benchmark: # Required.
 
 example_se_resnet50_mix: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 16.436 - 1
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 32
+    - <
+    - 50%
+    - 30
 
 example_se_resnet50_mix.benchmark: # Required.
   placeholder: 'none'
 
 example_inception_v4: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 15.690 - 1
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 71
+    - <
+    - 50%
+    - 69
 
 example_inception_v4.benchmark: # Required.
   placeholder: 'none'
@@ -54,7 +224,34 @@ example_inception_v4_mix.benchmark: # Required.
 
 example_shuffle_v2: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 14.796 - 1
-
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 61.33
+    - <
+    - 50%
+    - 59.33
 example_shuffle_v2.benchmark: # Required.
   placeholder: 'none'
 
@@ -66,6 +263,34 @@ example_shuffle_v2_mix.benchmark: # Required.
 
 example_mobile_v2: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 19.342 - 1
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 67
+    - <
+    - 50%
+    - 65
 
 example_mobile_v2.benchmark: # Required.
   placeholder: 'none'
@@ -87,6 +312,34 @@ example_resnet18_mix: # Required.
 
 example_resnet18_mix.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%'] # 20.586 - 1
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 1.01
+    - <
+    - 50%
+    - 0.31
 
 example_resnet18_mix.benchmark: # Required.
   placeholder: 'none'
@@ -195,6 +448,34 @@ example_mobile_v2_weekly: # Required.
 
 example_mobile_v1.short: # Required.
   Accuracy_Test_top1: [0, '>', '20%']
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 1.50
+    - <
+    - 50%
+    - 1.00
 
 example_mobile_v1.short.dummy_data: # Required.
   placeholder: 'none'
@@ -204,6 +485,34 @@ example_mobile_v1.benchmark: # Required.
 
 example_inceptionv3.short: # Required.  __benchmark_avg_iter_time(s): [100000, '<', '50%']
   Accuracy_Test_top1: [0, '>', '20%']
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 1.64
+    - <
+    - 50%
+    - 1.14
 
 example_inceptionv3.short.dummy_data: # Required.  __benchmark_avg_iter_time(s): [100000, '<', '50%']
   placeholder: 'none'

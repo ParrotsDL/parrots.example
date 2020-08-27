@@ -255,6 +255,16 @@ srun -p $1 -n$2 \
     python -u models/mmdet/tools/train.py --config=configs/mmdet/dcn/${name}.py --launcher=slurm $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
     ;;
+    "fsaf_r50_fpn_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${name} ${SRUN_ARGS}\
+    python -u models/mmdet/tools/train.py --config=configs/mmdet/fsaf/${name}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee $ROOT/log/mmdet/train.${name}.log.$T
+    ;;
     *)
       echo "invalid $name"
       exit 1
