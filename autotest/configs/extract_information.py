@@ -5,7 +5,7 @@ import xlwt
 from xlutils.copy import copy
 import argparse
 
-parser = argparse.ArgumentParser(description='Information Of Benchmark')
+parser = argparse.ArgumentParser(description='Information')
 parser.add_argument('--config', default='alphatrion.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--times', default=1, type=int,
