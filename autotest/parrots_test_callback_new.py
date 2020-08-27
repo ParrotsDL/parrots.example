@@ -32,7 +32,12 @@ run_type_table = {
     'weeklytest': 1
 }
 
-def after_callback_wrapper(config, run_type):
+value_type_table = {
+    "Pattern": "max_value",
+    "default": "last_value"
+}
+
+def after_callback_wrapper(config, value_type, run_type):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -51,22 +56,41 @@ def after_callback_wrapper(config, run_type):
         pavi_task_id = env['PAVI_TASK_ID']
     else:
         pavi_task_id = env['pavi_task_id']
-    pavi_ret = dict()
+    pavi_ret = dict(test_life=1)
     for k, v in config.items():
+        if k == 'test_life':
+            continue
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
-        try:
-            pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
-        except:
-            pv = 'unknow, {} may not exist on pavi'.format(k)
-        pavi_ret[pk] = pv
+
+        if value_type == "max_value":
+            try:
+                if v[1] == '>':
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'))[-1]['value']
+                    pavi_ret[pk] = pv
+                else:
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'), reverse = True)[-1]['value']
+                    pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+            
+        elif value_type == "last_value":
+            try:
+                pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+                pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+        else:
+            print("Please set 'max' or 'last' for the type of value.")
 
     config.update(pavi_ret)
     print(yaml.dump(config))
 
 
-def update_thresh_wrapper(config, framework, model_name, run_type):
+def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
     time.sleep(5)  # wait 10s for pavi scalar uploaded    
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
@@ -101,19 +125,39 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     
     # TODO(shiguang): check pavi value
     update_ret = copy.deepcopy(config)
+    config['test_life'] = 1
     # attr: [thresh, '>/<', '0.5%/1', val1, val2, ...]
     for k, v in config.items():
+        if k == 'test_life':
+            update_ret[k] = v
+            continue
         if k == '__benchmark_pavi_task_id':
             pv = pavi_task_id
             update_ret[k].append(pv)
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
-            try:
-                pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
-                pv = pv[-1]['value']
-            except:
-                pv = 'unknow, {} may not exist on pavi'.format(k)
+            if value_type == "max_value":
+                try:
+                    if v[1] == '>':
+                        pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'))
+                        pv = pv[-1]['value']
+                    else:
+                        pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'), reverse = True)
+                        pv = pv[-1]['value']
+                except:
+                    pv = 'unknow, {} may not exist on pavi'.format(k)
+                    config['test_life'] = 0
+            elif value_type == "last_value":
+                try:
+                    pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
+                    pv = pv[-1]['value']
+                except:
+                    pv = 'unknow, {} may not exist on pavi'.format(k)
+                    config['test_life'] = 0
+            else:
+                print("Please set 'max' or 'last' for the type of value.")
+
             update_ret[k].append(pv)
             # get value which is not string
             vaule_no_str = []
@@ -131,6 +175,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
                 elif v[1] == '<':
                     update_ret[k][0] = mean_pv + std_pv
                 else:
+                    config['test_life'] = 0
                     raise KeyError('Unsupported operator key')
 
     full_config[run_type] = update_ret
@@ -140,7 +185,8 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     org_config.update({framework+'_'+model_name: config})
     dump(org_config, config_path, file_format='yaml', default_flow_style=False)
 
-    print(yaml.dump(config[run_type]))
+    config = config[run_type]
+    print(yaml.dump(config))
 
 
 def pre_callback_wrapper(config, run_type):
@@ -156,6 +202,7 @@ def pre_callback_wrapper(config, run_type):
             config = comm_table
     if 'placeholder' in config.keys():
         del config['placeholder']
+    config['test_life'] = 0
     print(yaml.dump(config))
 
 
@@ -175,9 +222,14 @@ if __name__ == '__main__':
     assert sys.argv[4] in run_type_table.keys()
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
+        if sys.argv[1] in value_type_table.keys():
+            value_type = value_type_table[sys.argv[1]]
+        else: 
+            # default: read last_value
+            value_type = value_type_table["default"]
         if sys.argv[3] == '0':
             pre_callback_wrapper(config, sys.argv[4])
         elif sys.argv[3] == '1':
-            after_callback_wrapper(config, sys.argv[4])
+            after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], value_type, sys.argv[4])
