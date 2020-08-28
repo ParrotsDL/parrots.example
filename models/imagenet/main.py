@@ -22,6 +22,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+from utils.loss import LabelSmoothLoss
 
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
@@ -83,7 +84,10 @@ def main():
     model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
-    criterion = nn.CrossEntropyLoss().cuda()
+    if cfgs.get('label_smooth', None):
+        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+    else:
+        criterion = nn.CrossEntropyLoss().cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
