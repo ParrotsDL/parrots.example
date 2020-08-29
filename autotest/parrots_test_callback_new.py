@@ -59,6 +59,8 @@ def read_log_last(path, last_line_num=5):
     return None
 
 def get_hash(lines):
+    if lines is None:
+        return None
     lines_str = ' '.join(lines)
     return hash(lines_str)
 
@@ -115,7 +117,8 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         is_time_limit = False
         # get last some lines
         log_lines = read_log_last(job_log_path, last_line_num=10)
-        log_lines = [str(line, encoding="utf-8") for line in log_lines]
+        if log_lines is not None:
+            log_lines = [str(line, encoding="utf-8") for line in log_lines]
         # get log hash
         lines_hash = get_hash(log_lines)
         # monitor whether the log has not changed over time (kill all process if not change for a long time)
