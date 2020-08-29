@@ -24,13 +24,14 @@ mmdet_mask_rcnn_r50_caffe_fpn_mstrain_1x_coco: # Required. {framework}_{model}
     - <
     - 50%
   train.bbox_mAP: 
-  - 10000
+  - 0.3880
   - '>'
   - 50%
-  train.segm_mAP: 
-  - 10000
+  train.segm_mAP:
+  - 0.3510
   - '>'
   - 50%
+
 
 mmdet_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -152,11 +153,11 @@ mmdet_mask_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
     - <
     - 50%
   train.bbox_mAP: 
-  - 10000
+  - 0.3810
   - '>'
   - 50%
-  train.segm_mAP: 
-  - 10000
+  train.segm_mAP:
+  - 0.3460
   - '>'
   - 50%
 
@@ -374,7 +375,11 @@ mmdet_cascade_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
     - <
     - 50%
   train.bbox_mAP: 
-  - 10000
+  - 0.4110
+  - '>'
+  - 50%
+  train.segm_mAP: 
+  - 0.3580
   - '>'
   - 50%
 
@@ -407,6 +412,10 @@ mmdet_mask_rcnn_x101_64x4d_fpn_1x_coco: # Required. {framework}_{model}
   - 10000
   - '>'
   - 50%
+  train.segm_mAP: 
+  - 10000
+  - '>'
+  - 50%
 
 mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -431,6 +440,36 @@ mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
     - 50%
     __benchmark_total_time(h): 
     - 0.0573
+    - <
+    - 50%
+  train.bbox_mAP: 
+  - 0.4140
+  - '>' 
+  - 50%
+
+mmdet_fsaf_r50_fpn_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 
+    __benchmark_pure_training_time(h): 
+    - 10000
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 10000
     - <
     - 50%
   train.bbox_mAP: 

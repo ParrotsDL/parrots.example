@@ -8,16 +8,18 @@ import time
 import warnings
 
 
+import psutil
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
+from autoparrots.command.task import kill_task
 
 # 公共表
 comm_table = {
-    '__benchmark_avg_iter_time(s)': [10000, '<', '50%'],
-    '__benchmark_mem_alloc(mb)': [10000, '<', '50%'],
-    '__benchmark_mem_cached(mb)': [10000, '<', '50%'],
-    '__benchmark_pure_training_time(h)': [10000, '<', '50%'],
-    '__benchmark_total_time(h)': [10000, '<', '50%'],
+    '__benchmark_avg_iter_time(s)': [10000, '<', '5%'],
+    '__benchmark_mem_alloc(mb)': [10000, '<', '5%'],
+    '__benchmark_mem_cached(mb)': [10000, '<', '5%'],
+    '__benchmark_pure_training_time(h)': [10000, '<', '5%'],
+    '__benchmark_total_time(h)': [10000, '<', '5%'],
     '__benchmark_pavi_task_id': []
 }
 
@@ -32,7 +34,112 @@ run_type_table = {
     'weeklytest': 1
 }
 
-def after_callback_wrapper(config, run_type):
+value_type_table = {
+    "Pattern": "max_value",
+    "default": "last_value"
+}
+
+wait_time_log_no_change = 20 # 20 minutes for log no change
+wait_time_fork_subprocess = 60 # 60 seconds for fork subprocess
+
+def read_log_last(path, last_line_num=5):
+    if not osp.exists(path):
+        return None
+    try:
+        with open(path, 'rb') as f:
+            off = -50
+            while True:
+                f.seek(off, 2)
+                lines = f.readlines()
+                if len(lines) >= last_line_num:
+                    return lines
+                off *= 2
+    except Exception:
+        return None
+    return None
+
+def get_hash(lines):
+    lines_str = ' '.join(lines)
+    return hash(lines_str)
+
+def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E] Time limit exceeded'):
+    time.sleep(60)
+    # wait for job_pid, job_log_path
+    job_pid = None
+    job_log_path = None
+    workdir = None
+    name = None
+    job_wait_to_run_time_thresh = 1 # wait one hour
+    start_time = time.time()
+    while True:
+        time.sleep(30)
+        interval_time = time.time() - start_time
+        # break if task_yaml_path don't exist for 10 minutes
+        if ((not job_pid or
+             not job_log_path or
+             not workdir or
+             not name) and
+             interval_time >= job_wait_to_run_time_thresh * 60 * 60):
+            break
+
+        try:
+            job_pid = int(os.environ['pid'])
+        except Exception:
+            job_pid = None
+        try:
+            job_wait_to_run_time_thresh = int(os.environ['wait_to_run_time_thresh'])
+        except Exception:
+            job_wait_to_run_time_thresh = 1
+        job_log_path = os.environ['log_path']
+        try:
+            workdir = os.environ['workdir']
+            workdir = os.sep.join(workdir.split(os.sep)[:-2])
+        except:
+            workdir = None
+        name = os.environ['name']
+        if job_pid and job_log_path and workdir and name:
+            break
+        # break if job_pid is die.
+        if job_pid and (not psutil.pid_exists(job_pid)):
+            break
+    # monitor log
+    last_lines_hash = None
+    last_lines_hash_start_time = time.time()
+    while True:
+        if (not job_pid or
+            not job_log_path or
+            not workdir or
+            not name):
+            break
+        time.sleep(60)
+        is_time_limit = False
+        # get last some lines
+        log_lines = read_log_last(job_log_path, last_line_num=10)
+        log_lines = [str(line, encoding="utf-8") for line in log_lines]
+        # get log hash
+        lines_hash = get_hash(log_lines)
+        # monitor whether the log has not changed over time (kill all process if not change for a long time)
+        if lines_hash == last_lines_hash:
+            if time.time() - last_lines_hash_start_time >= wait_time_log_no_change * 60:
+                kill_task(workdir, [name])
+                is_time_limit = True
+        else:
+            last_lines_hash = lines_hash
+            last_lines_hash_start_time = time.time()
+        # monitor whether a 'time limit exceeded' has occurred
+        if (log_lines is not None) and (not is_time_limit):
+            for line in log_lines:
+                if time_limited_flag in line:
+                    kill_task(workdir, [name])
+                    is_time_limit = True
+        # break if occur '[E] Time limit exceeded'
+        if is_time_limit:
+            break
+        # break if job_pid is die.
+        if not psutil.pid_exists(job_pid):
+            break
+
+def after_callback_wrapper(config, value_type, run_type):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -58,18 +165,34 @@ def after_callback_wrapper(config, run_type):
         if k == '__benchmark_pavi_task_id':
             continue
         pk = 'pavi_' + k
-        try:
-            pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
-        except:
-            pv = 'unknow, {} may not exist on pavi'.format(k)
-            pavi_ret['test_life'] = 0
-        pavi_ret[pk] = pv
+
+        if value_type == "max_value":
+            try:
+                if v[1] == '>':
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'))[-1]['value']
+                    pavi_ret[pk] = pv
+                else:
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x : x.__getitem__('value'), reverse = True)[-1]['value']
+                    pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+            
+        elif value_type == "last_value":
+            try:
+                pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+                pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+        else:
+            print("Please set 'max' or 'last' for the type of value.")
 
     config.update(pavi_ret)
     print(yaml.dump(config))
 
 
-def update_thresh_wrapper(config, framework, model_name, run_type):
+def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
     time.sleep(5)  # wait 10s for pavi scalar uploaded    
     env = os.environ.copy()
     if env.get('PAVI_TASK_ID') is not None:
@@ -101,7 +224,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
         # make it compatible with old version
         warnings.warn('__benchmark_pavi_task_id not provided', UserWarning)
         config['__benchmark_pavi_task_id'] = []
-    
+
     # TODO(shiguang): check pavi value
     update_ret = copy.deepcopy(config)
     config['test_life'] = 1
@@ -116,12 +239,27 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
         else:
             if len(v) < 3:
                 raise ValueError('{} should provid at least 3 attrs'.format(k))
-            try:
-                pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
-                pv = pv[-1]['value']
-            except:
-                pv = 'unknow, {} may not exist on pavi'.format(k)
-                config['test_life'] = 0
+            if value_type == "max_value":
+                try:
+                    if v[1] == '>':
+                        pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'))
+                        pv = pv[-1]['value']
+                    else:
+                        pv = sorted(pavi.get_scalar(pavi_task_id, k, 10, order_key='time'), key=lambda x : x.__getitem__('value'), reverse = True)
+                        pv = pv[-1]['value']
+                except:
+                    pv = 'unknow, {} may not exist on pavi'.format(k)
+                    config['test_life'] = 0
+            elif value_type == "last_value":
+                try:
+                    pv = pavi.get_scalar(pavi_task_id, k, 1, order_key='time')
+                    pv = pv[-1]['value']
+                except:
+                    pv = 'unknow, {} may not exist on pavi'.format(k)
+                    config['test_life'] = 0
+            else:
+                print("Please set 'max' or 'last' for the type of value.")
+
             update_ret[k].append(pv)
             # get value which is not string
             vaule_no_str = []
@@ -153,7 +291,7 @@ def update_thresh_wrapper(config, framework, model_name, run_type):
     print(yaml.dump(config))
 
 
-def pre_callback_wrapper(config, run_type):
+def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -168,6 +306,17 @@ def pre_callback_wrapper(config, run_type):
         del config['placeholder']
     config['test_life'] = 0
     print(yaml.dump(config))
+    if is_monitor_log:
+        # start a process for killing time limited
+        pid = -1
+        start_time = time.time()
+        while pid < 0:
+            interval_time = time.time() - start_time
+            if interval_time >= wait_time_fork_subprocess:
+                break
+            pid = os.fork()
+        if pid == 0:
+            _watch_for_kill_time_limited(framework, model, config)
 
 
 def collect_config(framework, model_name):
@@ -186,9 +335,14 @@ if __name__ == '__main__':
     assert sys.argv[4] in run_type_table.keys()
     if len(sys.argv) >= 3:
         config = collect_config(sys.argv[1], sys.argv[2])
+        if sys.argv[1] in value_type_table.keys():
+            value_type = value_type_table[sys.argv[1]]
+        else: 
+            # default: read last_value
+            value_type = value_type_table["default"]
         if sys.argv[3] == '0':
-            pre_callback_wrapper(config, sys.argv[4])
+            pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
         elif sys.argv[3] == '1':
-            after_callback_wrapper(config, sys.argv[4])
+            after_callback_wrapper(config, value_type, sys.argv[4])
         elif sys.argv[3] == '2':
-            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], sys.argv[4])
+            update_thresh_wrapper(config, sys.argv[1], sys.argv[2], value_type, sys.argv[4])
