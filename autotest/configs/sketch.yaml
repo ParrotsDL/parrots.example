@@ -1,8 +1,204 @@
-sketch_vgg1.4.3:
-  val.face_106_nme: [10000, '<', '5%']
-
 sketch_mobilenet1.0.0:
-  val.face_106_nme: [10000, '<', '5%']
-
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.050270117162824514
+    - <
+    - 5%
+    - 0.04787630205983287
+    __benchmark_mem_alloc(mb):
+    - 213.15
+    - <
+    - 5%
+    - 203
+    __benchmark_mem_cached(mb):
+    - 222.6
+    - <
+    - 5%
+    - 212
+    __benchmark_pavi_task_id:
+    - c13b8055-5d34-40cd-bd10-a0c41b901be0
+    __benchmark_pure_training_time(h):
+    - 15.438524253865085
+    - <
+    - 5%
+    - 14.70335643225246
+    __benchmark_total_time(h):
+    - 15.438524867822727
+    - <
+    - 5%
+    - 14.703357016974024
+    test_life: 1
+    val.face_106_nme:
+    - 0.04179121361723026
+    - <
+    - 5%
+    - 0.03980115582593358
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.2541998288014552
+    - <
+    - 5%
+    - 0.24209507504900496
+    __benchmark_mem_alloc(mb):
+    - 205.8
+    - <
+    - 5%
+    - 196
+    __benchmark_mem_cached(mb):
+    - 420.0
+    - <
+    - 5%
+    - 400
+    __benchmark_pavi_task_id:
+    - 8227a4f8-b601-4431-b458-9b1144e26f3b
+    __benchmark_pure_training_time(h):
+    - 0.16920932389299076
+    - <
+    - 5%
+    - 0.16115173704094357
+    __benchmark_total_time(h):
+    - 10000
+    - <
+    - 5%
+    - 0.1611521185768975
+    test_life: 1
+  val.face_106_nme:
+  - 10000
+  - <
+  - 5%
+sketch_vgg1.4.3:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.05022310260292534
+    - <
+    - 5%
+    - 0.04783152628850032
+    __benchmark_mem_alloc(mb):
+    - 80.8
+    - <
+    - 5%
+    - 77
+    __benchmark_mem_cached(mb):
+    - 107.1
+    - <
+    - 5%
+    - 102
+    __benchmark_pavi_task_id:
+    - 8ed5dd6a-9c3a-4bd2-bb9f-b402332546b4
+    __benchmark_pure_training_time(h):
+    - 17.78588787612319
+    - <
+    - 5%
+    - 16.938940834403038
+    __benchmark_total_time(h):
+    - 17.785904364734886
+    - <
+    - 5%
+    - 16.93895653784275
+    test_life: 1
+    val.face_106_nme:
+    - 0.04250861398266772
+    - <
+    - 5%
+    - 0.04048439426920735
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.22807071042227578
+    - <
+    - 5%
+    - 0.2172102004021674
+    __benchmark_mem_alloc(mb):
+    - 80.85
+    - <
+    - 5%
+    - 77
+    __benchmark_mem_cached(mb):
+    - 107.1
+    - <
+    - 5%
+    - 102
+    __benchmark_pavi_task_id:
+    - 1c7949c3-a4e3-49ea-8f19-87bcfad65852
+    __benchmark_pure_training_time(h):
+    - 0.13903273737430571
+    - <
+    - 5%
+    - 0.13241213083267211
+    __benchmark_total_time(h):
+    - 0.1390333531399568
+    - <
+    - 5%
+    - 0.13241271727614934
+    test_life: 1
+  val.face_106_nme:
+  - 10000
+  - <
+  - 5%
 sketch_vggfusion:
-  val.face_106_nme: [10000, '<', '5%']
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.05034483087646378
+    - <
+    - 5%
+    - 0.04794745797758455
+    __benchmark_mem_alloc(mb):
+    - 157.5
+    - <
+    - 5%
+    - 150
+    __benchmark_mem_cached(mb):
+    - 180.6
+    - <
+    - 5%
+    - 172
+    __benchmark_pavi_task_id:
+    - 537877ad-e579-488b-8c91-a656d783dd8b
+    __benchmark_pure_training_time(h):
+    - 15.222219873368742
+    - <
+    - 5%
+    - 14.497352260351182
+    __benchmark_total_time(h):
+    - 15.222220227807762
+    - <
+    - 5%
+    - 14.497352597912153
+    test_life: 0
+    val.face_106_nme:
+    - 0.04166199160524859
+    - <
+    - 5%
+    - 0.03967808724309389
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.24059129136425633
+    - <
+    - 5%
+    - 0.22913456320405365
+    __benchmark_mem_alloc(mb):
+    - 157.5
+    - <
+    - 5%
+    - 150
+    __benchmark_mem_cached(mb):
+    - 180.6
+    - <
+    - 5%
+    - 172
+    __benchmark_pavi_task_id:
+    - 990f8cec-eac4-4631-bb95-e09ae30cd784
+    __benchmark_pure_training_time(h):
+    - 0.1466777290503184
+    - <
+    - 5%
+    - 0.13969307528601752
+    __benchmark_total_time(h):
+    - 0.1466793231566747
+    - <
+    - 5%
+    - 0.13969459348254734
+    test_life: 1
+  val.face_106_nme:
+  - 10000
+  - <
+  - 5%
