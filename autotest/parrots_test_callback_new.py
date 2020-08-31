@@ -133,13 +133,18 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
             last_lines_hash_start_time = time.time()
         # monitor whether a 'time limit exceeded' has occurred
         if (log_lines is not None) and (not is_time_limit):
+            is_time_limit_occur = False
             for line in log_lines:
-                if time_limited_flag in line and time_limited_start_time is not None:
-                    if time.time() - time_limited_start_time >= wait_time_occur_time_limited * 60:
+                if time_limited_flag in line:
+                    is_time_limit_occur = True
+                    break
+            if is_time_limit_occur and time_limited_start_time is not None:
+                if time.time() - time_limited_start_time >= wait_time_occur_time_limited * 60:
                         kill_task(workdir, [name])
                         is_time_limit = True
-                else:
-                    time_limited_start_time = time.time()
+            else:
+                time_limited_start_time = time.time()
+
         # break if occur '[E] Time limit exceeded'
         if is_time_limit:
             break
