@@ -83,3 +83,6 @@
 [submodule "models/mmtrack"]
 	path = models/mmtrack
 	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
+[submodule "models/RetinaUnet"]
+	path = models/RetinaUnet
+	url = git@gitlab.bj.sensetime.com:parrots.model/retinaunet.git

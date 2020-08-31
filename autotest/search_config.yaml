@@ -203,6 +203,9 @@ task:
                 #
                 # mmtrack
                 # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+
+                # RetinaUnet
+                # {'framework': 'RetinaUnet', 'gpus': 1, 'model': '2d_runet_infer', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
             ]
     # Optional
     # callback: "cat"

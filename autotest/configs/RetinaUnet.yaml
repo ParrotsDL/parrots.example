@@ -1,0 +1,3 @@
+RetinaUnet_2d_runet_infer:
+  liver_dice: [10000, '>', '5%']
+  lesion_dice: [10000, '>', '5%']
