@@ -41,6 +41,7 @@ value_type_table = {
 
 wait_time_log_no_change = 20 # 20 minutes for log no change
 wait_time_fork_subprocess = 60 # 60 seconds for fork subprocess
+wait_time_occur_time_limited = 20 # 20 minutes for occur time limited
 
 def read_log_last(path, last_line_num=5):
     if not osp.exists(path):
@@ -107,6 +108,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
     # monitor log
     last_lines_hash = None
     last_lines_hash_start_time = time.time()
+    time_limited_start_time = None
     while True:
         if (not job_pid or
             not job_log_path or
@@ -132,9 +134,12 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         # monitor whether a 'time limit exceeded' has occurred
         if (log_lines is not None) and (not is_time_limit):
             for line in log_lines:
-                if time_limited_flag in line:
-                    kill_task(workdir, [name])
-                    is_time_limit = True
+                if time_limited_flag in line and time_limited_start_time is not None:
+                    if time.time() - time_limited_start_time >= wait_time_occur_time_limited * 60:
+                        kill_task(workdir, [name])
+                        is_time_limit = True
+                else:
+                    time_limited_start_time = time.time()
         # break if occur '[E] Time limit exceeded'
         if is_time_limit:
             break
