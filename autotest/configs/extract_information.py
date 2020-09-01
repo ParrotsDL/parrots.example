@@ -65,11 +65,12 @@ if "__main__" == __name__:
                     tmp.append(y[i][j]['__benchmark_mem_cached(mb)'][args.times + 2])
                     tmp.append(y[i][j]['__benchmark_pure_training_time(h)'][args.times + 2])
                     tmp.append(y[i][j]['__benchmark_total_time(h)'][args.times + 2])
+                    tmp.append(y[i][j]['__benchmark_pavi_task_id'][args.times -1])
                     all_index.append(tmp)
 
     book_name_xls = args.config+'_information.xls'
     sheet_name_xls = 'information'
-    value_title = [["信息类型","模型名", "__benchmark_avg_iter_time(s)", "__benchmark_mem_alloc(mb)", "__benchmark_mem_cached(mb)", "__benchmark_pure_training_time(h)","__benchmark_total_time(h)"]]
+    value_title = [["信息类型","模型名", "__benchmark_avg_iter_time(s)", "__benchmark_mem_alloc(mb)", "__benchmark_mem_cached(mb)", "__benchmark_pure_training_time(h)","__benchmark_total_time(h)","__benchmark_pavi_task_id"]]
     value = all_index
     write_excel_xls(book_name_xls, sheet_name_xls, value_title)
     write_excel_xls_append(book_name_xls, value)
