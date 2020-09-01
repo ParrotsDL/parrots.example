@@ -51,7 +51,7 @@ if "__main__" == __name__:
     file = args.config_folder
     book_name_xls = file+'information.xls'
     sheet_name_xls = 'information'
-    value_title = [["信息类型","模型名", "__benchmark_avg_iter_time(s)", "__benchmark_mem_alloc(mb)", "__benchmark_mem_cached(mb)", "__benchmark_pure_training_time(h)","__benchmark_total_time(h)"]]
+    value_title = [["信息类型","模型名", "__benchmark_avg_iter_time(s)", "__benchmark_mem_alloc(mb)", "__benchmark_mem_cached(mb)", "__benchmark_pure_training_time(h)","__benchmark_total_time(h)","__benchmark_pavi_task_id"]]
     write_excel_xls(book_name_xls, sheet_name_xls, value_title)
     for filename in glob(file+'*.yaml'):
         file = open(filename)
@@ -71,6 +71,7 @@ if "__main__" == __name__:
                         tmp.append(y[i][j]['__benchmark_mem_cached(mb)'][args.times+2])
                         tmp.append(y[i][j]['__benchmark_pure_training_time(h)'][args.times+2])
                         tmp.append(y[i][j]['__benchmark_total_time(h)'][args.times+2])
+                        tmp.append(y[i][j]['__benchmark_pavi_task_id'][args.times - 1])
                         all_index.append(tmp)
         value = all_index
         write_excel_xls_append(book_name_xls, value)
