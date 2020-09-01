@@ -451,28 +451,28 @@ mmdet_fsaf_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
   benchmark:
     __benchmark_avg_iter_time(s): 
-    - 10000
+    - 0.304
     - <
     - 50%
     __benchmark_mem_alloc(mb): 
-    - 10000
+    - 2979
     - <
     - 50%
     __benchmark_mem_cached(mb): 
-    - 10000
+    - 4432
     - <
     - 50%
     __benchmark_pavi_task_id: 
-    - 
+    - 07c25fb4-e014-47bb-99fd-9128b9bc9221
     __benchmark_pure_training_time(h): 
-    - 10000
+    - 0.038
     - <
     - 50%
     __benchmark_total_time(h): 
-    - 10000
+    - 0.038
     - <
     - 50%
   train.bbox_mAP: 
-  - 10000
+  - 0.3735
   - '>' 
   - 50%
