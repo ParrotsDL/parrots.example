@@ -187,7 +187,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
             break
 
     if logger:
-        logger.error("Job({})[pid: {}, slurm: {}] The child process monitoring the log has exited, \
+        logger.info("Job({})[pid: {}, slurm: {}] The child process monitoring the log has exited, \
                       with [job_pid: {}, job_log_path: {}, workdir: {}, name: {}, slurm_job_id: {}]".format(
             name, job_pid, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
 
