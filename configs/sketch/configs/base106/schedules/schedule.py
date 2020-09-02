@@ -12,8 +12,8 @@ log_config = dict(
     interval=100,
     hooks=[
         dict(type='TextLoggerHook'),
-        dict(type='PaviLoggerHook',
-           add_graph=False, add_last_ckpt=True),
+        # dict(type='PaviLoggerHook',
+        #    add_graph=False, add_last_ckpt=False),
     ])
 # yapf:enable
 dist_params = dict(backend='nccl')
