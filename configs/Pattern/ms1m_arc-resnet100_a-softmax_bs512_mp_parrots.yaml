@@ -25,7 +25,7 @@ net:
                 ms1m:
                     num_class: 93431
                     mp_flag: True
-                    has_accuracy: True
+                    has_accuracy: False
                     loss_type:
                         a-softmax:
                             base: 1000
@@ -56,8 +56,8 @@ strategy:
 
     snapshot_freq: 5000
     print_freq: 100 #100
-    save_path: './Pattern/verify/ms1m_arc-resnet100_a-softmax_bs512_mp_parrots/'
-    workers: 1
+    save_path: './Pattern_save/verify/ms1m_arc-resnet100_a-softmax_bs512_mp_parrots/parrots'
+    workers: 4
 data:
     training_param:
         preprocessor: 'pil'
@@ -101,6 +101,7 @@ test:
         task_mode: 'test'
         scatter_mode: False
         workers: 4
+
     testing_param:
         preprocessor: 'pil'
         crop: True
@@ -119,39 +120,55 @@ test:
 
    
     lfw_pairA:
-        prefix: 's3://lixiaojie.facedata/benchmark/lfw_112/data/'
-        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/pair_a.txt'
-        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw/index_a.txt'
+        #prefix: 's3://lixiaojie.facedata/benchmark/lfw_112/data/'
+        data_format: 'ceph'
+        data_format_ceph: 'ceph'
+        data_format_lustre: 'lustre'
+        prefix: 's3://parrots_model_data/pattern/verify/benchmark/lfw_112/data/'
+        prefix_ceph: 's3://parrots_model_data/pattern/verify/benchmark/lfw_112/data/'
+        data_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/lfw_112/pair_a.txt'
+        label_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/lfw/index_a.txt'
         batch_size: 32
         data_format: 'ceph'
         save_feature: True
 
     lfw_pairB:
-        prefix: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/data/'
-        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/pair_b.txt'
-        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw/index_b.txt'
+        #prefix: '/mnt/lustre/lixiaojie/imdbface/benchmark/lfw_112/data/'
+        data_format: 'ceph'
+        data_format_ceph: 'ceph'
+        data_format_lustre: 'lustre'
+        prefix: 's3://parrots_model_data/pattern/verify/benchmark/lfw_112/data/'
+        prefix_ceph: 's3://parrots_model_data/pattern/verify/benchmark/lfw_112/data/'
+        data_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/lfw_112/pair_b.txt'
+        label_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/lfw/index_b.txt'
         batch_size: 32
 
-    Megaface_facescrub:
-        prefix: 's3://lixiaojie.facedata/megaface/facescrub_images_clean/'
-        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/facescrub/facescrub_set1_image_rename_list_clean_all.txt'
-        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/facescrub/facescrub_set1_image_rename_label_clean_all.txt'
-        batch_size: 32
-        save_feature: True
-        data_format: 'ceph'
+    #Megaface_facescrub:
+    #    prefix: 's3://lixiaojie.facedata/megaface/facescrub_images_clean/' 
+    #    data_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/Megaface/facescrub/facescrub_set1_image_rename_list_clean_all.txt'
+    #    label_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/Megaface/facescrub/facescrub_set1_image_rename_label_clean_all.txt'
+    #    batch_size: 32
+    #    save_feature: True
+    #    data_format: 'ceph'
 
-    Megaface_distractors:
-        prefix: 's3://lixiaojie.facedata/megaface/distractors/'
-        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/distractors/st_align_106_clean/megaface_set1_image_list.txt'
-        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/Megaface/distractors/st_align_106_clean/megaface_set1_image_label.txt'
-        batch_size: 32
-        data_format: 'ceph'
+    #Megaface_distractors:
+    #    #prefix: 's3://lixiaojie.facedata/megaface/distractors/'
+    #    data_format: 'ceph'
+    #    data_format_ceph: 'ceph'
+    #    data_format_lustre: 'lustre'
+    #    prefix: "s3://parrots_model_data/pattern/verify/benchmark/Megaface/distractors/"
+    #    prefix_ceph: "s3://parrots_model_data/pattern/verify/benchmark/Megaface/distractors/"
+    #    data_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/Megaface/distractors/st_align_106_clean/megaface_set1_image_list.txt'
+    #    label_source: '/mnt/lustre/share_data/wuwenli/ms1m/benchmark/Megaface/distractors/st_align_106_clean/megaface_set1_image_label.txt'
+    #    batch_size: 32
+    #    data_format: 'ceph'
 
-    iccv_verify_large:
-        prefix: 's3://lixiaojie.facedata/iccv19-challenge-data/'
-        data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/trillion_pairs/ms1m_testing_large/db_aligned.txt'
-        label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/trillion_pairs/ms1m_testing_large/image_list.label.meta'
-        format: 'txt'
-        batch_size: 32
-        data_format: 'ceph'
+    # no iccv prefix
+    #iccv_verify_large: 
+    #    prefix: 's3://lixiaojie.facedata/iccv19-challenge-data/'
+    #    data_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/trillion_pairs/ms1m_testing_large/db_aligned.txt'
+    #    label_source: '/mnt/lustre/lixiaojie/imdbface/benchmark/trillion_pairs/ms1m_testing_large/image_list.label.meta'
+    #    format: 'txt'
+    #    batch_size: 32
+    #    data_format: 'ceph'
  

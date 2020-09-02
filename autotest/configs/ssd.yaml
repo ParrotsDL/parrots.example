@@ -3,6 +3,35 @@ ssd_ssd_FSAF:
   - 0.3737
   - '>'
   - 20%
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 15.5
+    - <
+    - 50%
+    - 13.5
+
 ssd_ssd_FSAF_benchmark:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -37,6 +66,35 @@ ssd_ssd_Retina:
   - 0.3450
   - '>'
   - 20%
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 16
+    - <
+    - 50%
+    - 14
+
 ssd_ssd_Retina_benchmark:
   benchmark:
     __benchmark_avg_iter_time(s):

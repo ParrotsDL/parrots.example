@@ -7,7 +7,7 @@ task:
           value: [
                     # (un)commit your config here
                     # mmdet
-                    {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
+                    {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # pod
                     {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
@@ -34,6 +34,7 @@ scheduler:
     parallel_size: 8
     stop_criterion:
         max_tries: 100
+    wait_to_run_time_thresh: inf # inf
 
 # Optional
 pavi:

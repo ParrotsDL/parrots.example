@@ -91,7 +91,7 @@ strategy:
     task_mode: 'train'
     scatter_mode: True
 
-    max_iter: 280000
+    max_iter: 28 #280000
     base_lr: 0.001
     lr_steps: [100000, 140000, 180000, 220000, 260000]
     lr_mults: [0.5, 0.5, 0.5, 0.5, 0.5]
@@ -102,10 +102,10 @@ strategy:
     warmup_steps: 0
     warmup_lr: 0.2
 
-    snapshot_freq: 5000
-    print_freq: 20
+    snapshot_freq: 5 #5000
+    print_freq: 2 #20
     load_name: 'iter_80000_ckpt.pth.tar'
-    save_path: '/mnt/lustre/fangkairen/pattern0.3_exps/fusion/FVN_fusion_small_pytorch'
+    save_path: './Pattern_save/fusion/FVN_fusion_small_pytorch'
 
     workers: 8
 data:
@@ -316,7 +316,8 @@ data:
         type: '106pt'
         task: ['landmark']
         has_label_weight: True
-        prefix: '/mnt/lustre/fangkairen/chenyanjie/to_kairen/106pt/align_and_get_affinemat/'
+        #prefix: '/mnt/lustre/fangkairen/chenyanjie/to_kairen/106pt/align_and_get_affinemat/'
+        prifix: '/mnt/lustrenew/liutinghao/train_data/data/alignment/normal_alignment'
         json_path: '/mnt/lustre/fangkairen/SomeJsonData/20190505_train_data_50000.json'
         batch_size: 16
 

@@ -80,3 +80,13 @@
 [submodule "models/instance_seg"]
 	path = models/instance_seg
 	url = git@gitlab.bj.sensetime.com:parrots.model/instance_seg_pytorch.git
+[submodule "models/sketch"]
+	path = models/sketch
+	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
+[submodule "models/mmtrack"]
+	path = models/mmtrack
+	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
+[submodule "models/pytorch-object-detection-v3.0"]
+	path = models/pytorch-object-detection-v3.0
+	url = git@gitlab.bj.sensetime.com:parrots.model/mapdet.git
+	branch = pod3.0_GL
