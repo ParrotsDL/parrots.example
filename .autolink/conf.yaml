@@ -2,7 +2,14 @@ version: 1.0   #必填，保留字段，现阶段填 1.0 即可
 type: component
 description: 'parrots 训练组件' #必填，组件描述
 color: '#123123'    #选填，color 字段是一个彩蛋，在这里填入一个颜色编码后，在创建 pipeline 时，该组件的主题色就会渲染成该编码对应的颜色。
-entrypoint: source pat_latest && sh ./models/imagenet/train.sh ${artifactsRoot}/config.yaml resnet50 pat_venus  8 #必填，我们会在组件的根目录下执行此处填写的代码，作为组件的入口，可以在搭建 pipeline 时进行重写覆盖
+entrypoint: source pat_latest && sh ./models/imagenet/train.sh ${artifactsRoot}/config.yaml resnet50 ${partition} ${num_card} #必填，我们会在组件的根目录下执行此处填写的代码，作为组件的入口，可以在搭建 pipeline 时进行重写覆盖
+inputs:
+  partition:
+    type: String
+    description: 运行分区
+  num_card:
+    type: String
+    description: 卡数
 artifacts:
   inputs:
     config:
