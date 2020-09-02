@@ -77,6 +77,9 @@
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
 	branch = pattern0.3_pat_test
+[submodule "models/instance_seg"]
+	path = models/instance_seg
+	url = git@gitlab.bj.sensetime.com:parrots.model/instance_seg_pytorch.git
 [submodule "models/sketch"]
 	path = models/sketch
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
