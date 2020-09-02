@@ -1,0 +1,2 @@
+sensemedical_Task01_BrainTumour:
+  Accuracy_Test_top1: [10000, '>', '20%']

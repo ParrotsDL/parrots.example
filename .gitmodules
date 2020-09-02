@@ -90,3 +90,6 @@
 	path = models/pytorch-object-detection-v3.0
 	url = git@gitlab.bj.sensetime.com:parrots.model/mapdet.git
 	branch = pod3.0_GL
+[submodule "models/sensemedical"]
+	path = models/sensemedical
+	url = git@gitlab.bj.sensetime.com:parrots.model/sensemedical.git
