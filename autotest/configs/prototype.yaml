@@ -1,0 +1,5 @@
+prototype_resnet50:
+  placeholder: 'none'
+
+prototype_shufflev2:
+  placeholder: 'none'
