@@ -73,9 +73,6 @@
 [submodule "models/mmdet"]
 	path = models/mmdet
 	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git
-[submodule "models/mmaction"]
-	path = models/mmaction
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
 [submodule "models/mmediting"]
 	path = models/mmediting
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
