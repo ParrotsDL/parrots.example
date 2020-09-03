@@ -9,8 +9,8 @@ name=$3
 g=$(($2<8?$2:8))
 cfg=$ROOT/configs/mmtrack/${name}.py
 
-mkdir -p $pyroot/work_dirs/${name}_${now}
-work_dir=$pyroot/work_dirs/${name}_${now}
+mkdir -p $pyroot/work_dirs/${name}
+work_dir=$pyroot/work_dirs/${name}
 
 array=( $@ )
 len=${#array[@]}
