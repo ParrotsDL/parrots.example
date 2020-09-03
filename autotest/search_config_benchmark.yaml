@@ -97,6 +97,19 @@ task:
                     # {'framework': 'star', 'gpus': 8, 'model': "topdown_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'star', 'gpus': 8, 'model': "bottomup_jnet.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # {'framework': 'star', 'gpus': 8, 'model': "bottomup_hrnet32.benchmark", 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # mmpose
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'bottomup_hrnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1 --batch-size 6'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_darkpose', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_hourglass', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_hrnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1 --batch-size 32'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_mobilev2', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_resnetv1d', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_resnext', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_scnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_senet50', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_shufflev1', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
                     # pattern
                     # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster --max_step 300'},
                     # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
@@ -132,6 +145,8 @@ task:
                     # pod_v2.3.0
                     # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.1'},
                     # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.2'},
+                    # instance_seg
+                    # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 201'},
 
                     ## sketch
                     # {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
@@ -140,7 +155,11 @@ task:
 
                     # RetinaUnet
                     # {'framework': 'RetinaUnet', 'gpus': 1, 'model': '2d_runet_infer', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    # pod_3.0
+                    # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-h', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader --max_tsep 1'}
                 ]
+
+
     # Optional
     # callback: "cat"
     pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 benchmark"

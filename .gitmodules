@@ -61,6 +61,15 @@
 [submodule "models/pytorch-object-detection-v2.3.0"]
 	path = models/pytorch-object-detection-v2.3.0
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
+[submodule "models/mmaction"]
+	path = models/mmaction
+	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
+[submodule "models/TextRecog"]
+	path = models/TextRecog
+	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
+[submodule "models/mmpose"]
+	path = models/mmpose
+	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
 [submodule "models/mmdet"]
 	path = models/mmdet
 	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git
@@ -77,6 +86,9 @@
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
 	branch = pattern0.3_pat_test
+[submodule "models/instance_seg"]
+	path = models/instance_seg
+	url = git@gitlab.bj.sensetime.com:parrots.model/instance_seg_pytorch.git
 [submodule "models/sketch"]
 	path = models/sketch
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
@@ -86,3 +98,10 @@
 [submodule "models/RetinaUnet"]
 	path = models/RetinaUnet
 	url = git@gitlab.bj.sensetime.com:parrots.model/retinaunet.git
+[submodule "models/pytorch-object-detection-v3.0"]
+	path = models/pytorch-object-detection-v3.0
+	url = git@gitlab.bj.sensetime.com:parrots.model/mapdet.git
+	branch = pod3.0_GL
+[submodule "models/encoder"]
+    path = models/encoder
+    url = git@gitlab.bj.sensetime.com:maxiaoming/encoder.git

@@ -1,5 +1,6 @@
 dataset_type = 'CocoDataset'
 data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/'
+ceph_data_root = 's3://parrots_model_data/DSK/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
