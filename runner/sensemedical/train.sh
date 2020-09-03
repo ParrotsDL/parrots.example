@@ -5,7 +5,7 @@ mkdir -p log/sensemedical/
 T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
-cfg=$ROOT/configs/sensemedical/${name}.yaml
+cfg=$ROOT/configs/sensemedical/${name}.py
 g=$(($2<8?$2:8))
 
 array=( $@ )
