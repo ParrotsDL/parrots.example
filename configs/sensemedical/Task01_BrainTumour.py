@@ -55,7 +55,7 @@ optimizer_config = dict()
 # learning policy
 lr_config = dict(policy='fixed', by_epoch=True)
 # runtime settings
-max_epochs = 20
+max_epochs = 200
 checkpoint_config = dict(by_epoch=True, interval=1)
 
 log_config = dict(

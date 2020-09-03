@@ -18,5 +18,5 @@ SRUN_ARGS=${SRUN_ARGS:-""}
 
 srun --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=sensemedical_${name} ${SRUN_ARGS} \
 python3 $ROOT/models/sensemedical/tools/train_seg.py \
-  --config=$cfg  --launcher="slurm" ${EXTRA_ARGS} \
+  $cfg  --launcher="slurm" ${EXTRA_ARGS} \
   2>&1 | tee $ROOT/log/sensemedical/train.${name}.log.$T

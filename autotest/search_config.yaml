@@ -207,12 +207,12 @@ task:
                 # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-h', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader'}   
                 
                 # sensemedical
-                {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi-project parrots_test'},
+                # {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project parrots_test'},
             ]
     # Optional
     # callback: "cat"
     pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 all"
-    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 2 all"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 all"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
