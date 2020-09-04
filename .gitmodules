@@ -76,9 +76,6 @@
 [submodule "models/mmediting"]
 	path = models/mmediting
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
-[submodule "models/TextRecog"]
-	path = models/TextRecog
-	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
 [submodule "models/Pattern"]
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
