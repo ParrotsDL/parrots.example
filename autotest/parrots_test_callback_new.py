@@ -120,7 +120,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
             info = load_taskinfo(workdir)
             job_names = list(
                 filter(lambda j: j['name'] in [name], info['jobs']))
-            if len(job_names) >= 0:
+            if len(job_names) > 0:
                 job_info = job_names[0]
                 try:
                     slurm_job_id = int(job_info['slurm_job_id'])
