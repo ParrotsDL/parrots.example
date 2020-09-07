@@ -31,7 +31,6 @@ mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
   - 309
   - '>'
   - 50%
-  val.val_saved_number: [309, '>', '50%']
 mmediting_deepfillv2_256x256_8x2_celeba:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -65,7 +64,6 @@ mmediting_deepfillv2_256x256_8x2_celeba:
   - 0.125
   - <
   - 50%
-  val.l1: [0.125, '<', '50%']
 mmediting_dim_stage2_v16_pln_1x1_1000k_comp1k:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -103,8 +101,6 @@ mmediting_dim_stage2_v16_pln_1x1_1000k_comp1k:
   - 30.5
   - <
   - 50%
-  val.CONN: [53.4, '<', '50%']
-  val.GRAD: [30.5, '<', '50%']
 mmediting_edsr_x2c64b16_g1_300k_div2k:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -138,7 +134,6 @@ mmediting_edsr_x2c64b16_g1_300k_div2k:
   - 36.7
   - '>'
   - 50%
-  val.PSNR: [36.7, '>', '50%']
 mmediting_esrgan_psnr_x4c64b23g32_g1_1000k_div2k:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -176,8 +171,6 @@ mmediting_esrgan_psnr_x4c64b23g32_g1_1000k_div2k:
   - 0.846
   - '>'
   - 50%
-  val.PSNR: [31.601, '>', '50%']
-  val.SSIM: [0.846, '>', '50%']
 mmediting_gl_256x256_8x12_celeba:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -211,7 +204,6 @@ mmediting_gl_256x256_8x12_celeba:
   - 0.144
   - <
   - 50%
-  val.l1: [0.144, '<', '50%']
 mmediting_indexnet_mobv2_1x16_78k_comp1k:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -249,8 +241,6 @@ mmediting_indexnet_mobv2_1x16_78k_comp1k:
   - 32.7
   - <
   - 50%
-  val.CONN: [50.9, '<', '50%']
-  val.GRAD: [32.7, '<', '50%']
 mmediting_msrresnet_x4c64b16_g1_1000k_div2k:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -288,8 +278,6 @@ mmediting_msrresnet_x4c64b16_g1_1000k_div2k:
   - 0.839
   - '>'
   - 50%
-  val.PSNR: [31.2, '>', '50%']
-  val.SSIM: [0.839, '>', '50%']
 mmediting_pconv_256x256_stage1_8x1_celeba:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -323,7 +311,6 @@ mmediting_pconv_256x256_stage1_8x1_celeba:
   - 0.126
   - <
   - 50%
-  val.l1: [0.126, '<', '50%']
 mmediting_pix2pix_vanilla_unet_bn_1x1_80k_facades:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -357,7 +344,6 @@ mmediting_pix2pix_vanilla_unet_bn_1x1_80k_facades:
   - 106
   - '>'
   - 50%
-  val.val_saved_number: [106, '>', '50%']
 mmediting_srcnn_x4k915_g1_1000k_div2k:
   benchmark:
     __benchmark_avg_iter_time(s):
@@ -395,5 +381,4 @@ mmediting_srcnn_x4k915_g1_1000k_div2k:
   - 0.801
   - '>'
   - 50%
-  val.PSNR: [29.4, '>', '50%']
-  val.SSIM: [0.801, '>', '50%']
+
