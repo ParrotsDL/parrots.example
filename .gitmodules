@@ -99,3 +99,6 @@
 [submodule "models/encoder"]
     path = models/encoder
     url = git@gitlab.bj.sensetime.com:maxiaoming/encoder.git
+[submodule "models/sensemedical"]
+    path = models/sensemedical
+    url = git@gitlab.bj.sensetime.com:parrots.model/sensemedical.git
