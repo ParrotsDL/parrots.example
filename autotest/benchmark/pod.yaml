@@ -1,0 +1,119 @@
+pod_cascade-rcnn-R50-FPN-1x:
+  pavi___benchmark_avg_iter_time(s): 0.3828487561480834
+  pavi___benchmark_mem_alloc(mb): 3938
+  pavi___benchmark_mem_cached(mb): 5144
+  pavi___benchmark_pure_training_time(h): 0.08041564014222886
+  pavi___benchmark_total_time(h): 0.08948757330576579
+  test_life: 1
+pod_faster-rcnn-R50-FPN-1x:
+  pavi___benchmark_avg_iter_time(s): 0.28801326940555383
+  pavi___benchmark_mem_alloc(mb): 3591
+  pavi___benchmark_mem_cached(mb): 5144
+  pavi___benchmark_pure_training_time(h): 0.057649926940600074
+  pavi___benchmark_total_time(h): 0.06685711469915179
+  test_life: 1
+pod_faster-rcnn-R50-FPN-1x-DCN@C3-C5:
+  pavi___benchmark_avg_iter_time(s): 0.3737975347160113
+  pavi___benchmark_mem_alloc(mb): 4181
+  pavi___benchmark_mem_cached(mb): 5144
+  pavi___benchmark_pure_training_time(h): 0.06887923955917358
+  pavi___benchmark_total_time(h): 0.0776898811923133
+  test_life: 1
+pod_faster-rcnn-R50-FPN-1x_mix:
+  pavi___benchmark_avg_iter_time(s): 0.28998903236766854
+  pavi___benchmark_mem_alloc(mb): 2665
+  pavi___benchmark_mem_cached(mb): 4120
+  pavi___benchmark_pure_training_time(h): 0.05514137784639994
+  pavi___benchmark_total_time(h): 0.0641568593846427
+  test_life: 1
+pod_faster-rcnn-R50-PAFPN-1x_mix:
+  pavi___benchmark_avg_iter_time(s): 0.5549615916639271
+  pavi___benchmark_mem_alloc(mb): 4420
+  pavi___benchmark_mem_cached(mb): 5144
+  pavi___benchmark_pure_training_time(h): 0.09613714655240377
+  pavi___benchmark_total_time(h): 0.10844900680912865
+  test_life: 1
+pod_faster-rcnn-mobilenet-FPN-1x:
+  pavi___benchmark_avg_iter_time(s): 0.2466643800829897
+  pavi___benchmark_mem_alloc(mb): 3711
+  pavi___benchmark_mem_cached(mb): 5144
+  pavi___benchmark_pure_training_time(h): 0.04936701483196682
+  pavi___benchmark_total_time(h): 0.059707943267292445
+  test_life: 1
+pod_faster-rcnn-shufflenet-FPN-1x:
+  pavi___benchmark_avg_iter_time(s): 0.21745731806991123
+  pavi___benchmark_mem_alloc(mb): 2124
+  pavi___benchmark_mem_cached(mb): 3128
+  pavi___benchmark_pure_training_time(h): 0.0459712114599016
+  pavi___benchmark_total_time(h): 0.05520535310109456
+  test_life: 1
+pod_grid-rcnn-R50-FPN-2x:
+  pavi___benchmark_avg_iter_time(s): 0.48403242318937095
+  pavi___benchmark_mem_alloc(mb): 4822
+  pavi___benchmark_mem_cached(mb): 6264
+  pavi___benchmark_pure_training_time(h): 0.08255398730436961
+  pavi___benchmark_total_time(h): 0.09156139307551914
+  test_life: 1
+pod_keypoint-rcnn-R50-FPN-1x:
+  pavi___benchmark_avg_iter_time(s): 0.4088182897851019
+  pavi___benchmark_mem_alloc(mb): 6344
+  pavi___benchmark_mem_cached(mb): 7288
+  pavi___benchmark_pure_training_time(h): 0.058872184620963205
+  pavi___benchmark_total_time(h): 0.08270713488260904
+  test_life: 1
+pod_keypoint-rcnn-R50-FPN-1x_mix:
+  pavi___benchmark_avg_iter_time(s): 0.3702668978436158
+  pavi___benchmark_mem_alloc(mb): 4336
+  pavi___benchmark_mem_cached(mb): 5368
+  pavi___benchmark_pure_training_time(h): 0.05082265184985267
+  pavi___benchmark_total_time(h): 0.07532874253061082
+  test_life: 1
+pod_mask-rcnn-R50-FPN-1x:
+  pavi___benchmark_avg_iter_time(s): 0.3491877541683688
+  pavi___benchmark_mem_alloc(mb): 4060
+  pavi___benchmark_mem_cached(mb): 5240
+  pavi___benchmark_pure_training_time(h): 0.06305924899048275
+  pavi___benchmark_total_time(h): 0.07190504782729679
+  test_life: 1
+pod_mask-rcnn-R50-FPN-1x_mix:
+  pavi___benchmark_avg_iter_time(s): 0.36549534656033655
+  pavi___benchmark_mem_alloc(mb): 2945
+  pavi___benchmark_mem_cached(mb): 4344
+  pavi___benchmark_pure_training_time(h): 0.0656369411945343
+  pavi___benchmark_total_time(h): 0.07434033724996779
+  test_life: 1
+pod_retinanet-R50-1x:
+  pavi___benchmark_avg_iter_time(s): 0.27125646336243886
+  pavi___benchmark_mem_alloc(mb): 4199
+  pavi___benchmark_mem_cached(mb): 5136
+  pavi___benchmark_pure_training_time(h): 0.05407512101862166
+  pavi___benchmark_total_time(h): 0.06287905613581339
+  test_life: 1
+pod_retinanet-R50-GN-FA:
+  pavi___benchmark_avg_iter_time(s): 0.6363519253117023
+  pavi___benchmark_mem_alloc(mb): 11497
+  pavi___benchmark_mem_cached(mb): 14072
+  pavi___benchmark_pure_training_time(h): 0.1048423171043396
+  pavi___benchmark_total_time(h): 0.11366470873355866
+  test_life: 1
+pod_retinanet-R50-ghm-1x:
+  pavi___benchmark_avg_iter_time(s): 0.6048119068145752
+  pavi___benchmark_mem_alloc(mb): 5332
+  pavi___benchmark_mem_cached(mb): 6160
+  pavi___benchmark_pure_training_time(h): 0.0909350057442983
+  pavi___benchmark_total_time(h): 0.09985799617237515
+  test_life: 1
+pod_rfcn-mobilenet-1x:
+  pavi___benchmark_avg_iter_time(s): 0.14348421946610554
+  pavi___benchmark_mem_alloc(mb): 2047
+  pavi___benchmark_mem_cached(mb): 3080
+  pavi___benchmark_pure_training_time(h): 0.027796154684490627
+  pavi___benchmark_total_time(h): 0.11389458742406633
+  test_life: 1
+pod_rfcn-shufflenet-1x:
+  pavi___benchmark_avg_iter_time(s): 0.12997217697672325
+  pavi___benchmark_mem_alloc(mb): 1010
+  pavi___benchmark_mem_cached(mb): 2072
+  pavi___benchmark_pure_training_time(h): 0.025130413042174445
+  pavi___benchmark_total_time(h): 0.11752657327387069
+  test_life: 1

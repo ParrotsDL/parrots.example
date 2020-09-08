@@ -1,0 +1,56 @@
+alphatrion_mobilenet_v2_fp16_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.15988635308671706
+  pavi___benchmark_mem_alloc(mb): 1851
+  pavi___benchmark_mem_cached(mb): 2224
+  pavi___benchmark_pure_training_time(h): 0.03628321892685361
+  pavi___benchmark_total_time(h): 0.03659724593162537
+  test_life: 1
+alphatrion_mobilenet_v2_fp32_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.16814859786836228
+  pavi___benchmark_mem_alloc(mb): 2663
+  pavi___benchmark_mem_cached(mb): 3192
+  pavi___benchmark_pure_training_time(h): 0.03492167539066739
+  pavi___benchmark_total_time(h): 0.0355893118513955
+  test_life: 1
+alphatrion_resnet101_fp16_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.21250831962812064
+  pavi___benchmark_mem_alloc(mb): 3309
+  pavi___benchmark_mem_cached(mb): 4368
+  pavi___benchmark_pure_training_time(h): 0.041018352309862775
+  pavi___benchmark_total_time(h): 0.04133773790465461
+  test_life: 1
+alphatrion_resnet101_fp32_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.21496243288021277
+  pavi___benchmark_mem_alloc(mb): 5294
+  pavi___benchmark_mem_cached(mb): 5664
+  pavi___benchmark_pure_training_time(h): 0.04043245169851515
+  pavi___benchmark_total_time(h): 0.04127125528123644
+  test_life: 1
+alphatrion_resnet50_fp16_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.21858471454960285
+  pavi___benchmark_mem_alloc(mb): 2576
+  pavi___benchmark_mem_cached(mb): 3472
+  pavi___benchmark_pure_training_time(h): 0.03968905011812846
+  pavi___benchmark_total_time(h): 0.040000592999988135
+  test_life: 1
+alphatrion_resnet50_fp32_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.21536087281633132
+  pavi___benchmark_mem_alloc(mb): 3972
+  pavi___benchmark_mem_cached(mb): 4640
+  pavi___benchmark_pure_training_time(h): 0.0396538018518024
+  pavi___benchmark_total_time(h): 0.04045839786529541
+  test_life: 1
+alphatrion_se_resnet50_fp16_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.21103841715519972
+  pavi___benchmark_mem_alloc(mb): 2663
+  pavi___benchmark_mem_cached(mb): 3472
+  pavi___benchmark_pure_training_time(h): 0.039814159870147706
+  pavi___benchmark_total_time(h): 0.04015029013156891
+  test_life: 1
+alphatrion_se_resnet50_fp32_benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.21504730753379292
+  pavi___benchmark_mem_alloc(mb): 4144
+  pavi___benchmark_mem_cached(mb): 4640
+  pavi___benchmark_pure_training_time(h): 0.04012661139170329
+  pavi___benchmark_total_time(h): 0.0409068931473626
+  test_life: 1

@@ -1,0 +1,7 @@
+light_nas_single_path_oneshot_search:
+  pavi___benchmark_avg_iter_time(s): 0.2498188349280027
+  pavi___benchmark_mem_alloc(mb): 2933
+  pavi___benchmark_mem_cached(mb): 4120
+  pavi___benchmark_pure_training_time(h): 0.03763987382253011
+  pavi___benchmark_total_time(h): 0.0392216024796168
+  test_life: 1

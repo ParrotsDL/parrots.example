@@ -1,0 +1,21 @@
+seg_deeplab.benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.6433030205008424
+  pavi___benchmark_mem_alloc(mb): 5781
+  pavi___benchmark_mem_cached(mb): 6696
+  pavi___benchmark_pure_training_time(h): 0.03423731956217024
+  pavi___benchmark_total_time(h): 0.03699331091509925
+  test_life: 1
+seg_mobilenet_v2_plus.benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.43340261777242023
+  pavi___benchmark_mem_alloc(mb): 3620
+  pavi___benchmark_mem_cached(mb): 4272
+  pavi___benchmark_pure_training_time(h): 0.027319997482829622
+  pavi___benchmark_total_time(h): 0.02923888736300998
+  test_life: 1
+seg_pspnet.benchmark:
+  pavi___benchmark_avg_iter_time(s): 0.43661870191126695
+  pavi___benchmark_mem_alloc(mb): 3925
+  pavi___benchmark_mem_cached(mb): 4392
+  pavi___benchmark_pure_training_time(h): 0.025406851768493652
+  pavi___benchmark_total_time(h): 0.02770129256778293
+  test_life: 1

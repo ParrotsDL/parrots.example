@@ -1,0 +1,69 @@
+mmdet_cascade_mask_rcnn_r50_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.5006167058327898
+  pavi___benchmark_mem_alloc(mb): 4815
+  pavi___benchmark_mem_cached(mb): 5784
+  pavi___benchmark_pure_training_time(h): 0.0559378237856759
+  pavi___benchmark_total_time(h): 0.05622790111435784
+  test_life: 1
+mmdet_cascade_rcnn_r50_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.3629394194379968
+  pavi___benchmark_mem_alloc(mb): 3932
+  pavi___benchmark_mem_cached(mb): 5784
+  pavi___benchmark_pure_training_time(h): 0.04268964621755812
+  pavi___benchmark_total_time(h): 0.04280634370115068
+  test_life: 1
+mmdet_faster_rcnn_r50_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.288284936354528
+  pavi___benchmark_mem_alloc(mb): 3554
+  pavi___benchmark_mem_cached(mb): 4472
+  pavi___benchmark_pure_training_time(h): 0.03659911361005571
+  pavi___benchmark_total_time(h): 0.03671469277805752
+  test_life: 1
+mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.3771341760360186
+  pavi___benchmark_mem_alloc(mb): 3574
+  pavi___benchmark_mem_cached(mb): 4472
+  pavi___benchmark_pure_training_time(h): 0.0435943603515625
+  pavi___benchmark_total_time(h): 0.04372175256411234
+  test_life: 1
+mmdet_faster_rcnn_r50_fpn_fp16_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.21169987009532415
+  pavi___benchmark_mem_alloc(mb): 2892
+  pavi___benchmark_mem_cached(mb): 4456
+  pavi___benchmark_pure_training_time(h): 0.030059043500158523
+  pavi___benchmark_total_time(h): 0.031419294211599565
+  test_life: 1
+mmdet_mask_rcnn_r101_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.4341555887193822
+  pavi___benchmark_mem_alloc(mb): 6196
+  pavi___benchmark_mem_cached(mb): 7800
+  pavi___benchmark_pure_training_time(h): 0.049067491822772556
+  pavi___benchmark_total_time(h): 0.04922026673952738
+  test_life: 1
+mmdet_mask_rcnn_r50_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.3749000480519005
+  pavi___benchmark_mem_alloc(mb): 4250
+  pavi___benchmark_mem_cached(mb): 5496
+  pavi___benchmark_pure_training_time(h): 0.04488568001323276
+  pavi___benchmark_total_time(h): 0.045008714927567375
+  test_life: 1
+mmdet_mask_rcnn_x101_32x4d_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.5826573941245008
+  pavi___benchmark_mem_alloc(mb): 7434
+  pavi___benchmark_mem_cached(mb): 8824
+  pavi___benchmark_total_time(h): 0.06194769673877292
+  test_life: 0
+mmdet_retinanet_r50_fpn_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.25804562711004003
+  pavi___benchmark_mem_alloc(mb): 3323
+  pavi___benchmark_mem_cached(mb): 4400
+  pavi___benchmark_pure_training_time(h): 0.033270486659473845
+  pavi___benchmark_total_time(h): 0.033385062946213614
+  test_life: 1
+mmdet_retinanet_r50_fpn_fp16_1x_coco:
+  pavi___benchmark_avg_iter_time(s): 0.19171025978392037
+  pavi___benchmark_mem_alloc(mb): 2814
+  pavi___benchmark_mem_cached(mb): 4384
+  pavi___benchmark_pure_training_time(h): 0.02852183593644036
+  pavi___benchmark_total_time(h): 0.029821962118148804
+  test_life: 1
