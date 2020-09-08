@@ -1,5 +1,36 @@
 prototype_resnet50:
-  placeholder: 'none'
-
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.5034664618435191
+    - <
+    - 5%
+    - 0.4794918684223991
+    __benchmark_mem_alloc(mb):
+    - 8367.45
+    - <
+    - 5%
+    - 7969
+    __benchmark_mem_cached(mb):
+    - 8515.5
+    - <
+    - 5%
+    - 8110
+    __benchmark_pavi_task_id:
+    - ab7f7587-4ae4-49ec-8ae5-f13e21d8751d
+    __benchmark_pure_training_time(h):
+    - 12.998135969112315
+    - <
+    - 5%
+    - 12.379177113440301
+    __benchmark_total_time(h):
+    - 13.001786326289178
+    - <
+    - 5%
+    - 12.38265364408493
+  top1:
+  - 76.660
+  - >
+  - 0.5%
+  - 77.046
 prototype_shufflev2:
-  placeholder: 'none'
+  placeholder: none
