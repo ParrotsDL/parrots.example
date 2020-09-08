@@ -92,6 +92,9 @@
 [submodule "models/mmtrack"]
 	path = models/mmtrack
 	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
+[submodule "models/RetinaUnet"]
+	path = models/RetinaUnet
+	url = git@gitlab.bj.sensetime.com:parrots.model/retinaunet.git
 [submodule "models/pytorch-object-detection-v3.0"]
 	path = models/pytorch-object-detection-v3.0
 	url = git@gitlab.bj.sensetime.com:parrots.model/mapdet.git

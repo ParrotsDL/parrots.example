@@ -152,6 +152,9 @@ task:
                     # {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
                     # {'framework': 'sketch', 'gpus': 8, 'model': 'mobilenet1.0.0', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
                     # {'framework': 'sketch', 'gpus': 8, 'model': 'vggfusion', 'py_args': '--pavi --pavi-project parrots_test --max-step 1'},
+
+                    # RetinaUnet
+                    # {'framework': 'RetinaUnet', 'gpus': 1, 'model': '2d_runet_infer', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                     # pod_3.0
                     # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-h', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader --max_tsep 1'}
                 ]
