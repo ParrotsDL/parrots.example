@@ -71,6 +71,7 @@ def del_files(path):
     for name in os.listdir(path):
         if name.endswith(".yaml"):
             os.remove(os.path.join(path, name))
+            print("delete file {}/{}".format(path, name))
 
 
 if __name__ == '__main__':
