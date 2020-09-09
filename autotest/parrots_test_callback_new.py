@@ -247,6 +247,70 @@ def after_callback_wrapper(config, value_type, run_type):
     print(yaml.dump(config))
 
 
+def get_benchmark_value(config, framework, model_name, value_type, run_type):
+    if run_type in config.keys():
+        config = config[run_type]
+    else:
+        for key in run_type_table.keys():
+            if key in config.keys():
+                del config[key]
+        if run_type_table[run_type] == 1:
+            config.update(comm_table)
+        else:
+            config = comm_table
+    if 'placeholder' in config.keys():
+        del config['placeholder']
+
+    env = os.environ.copy()
+    if env.get('PAVI_TASK_ID') is not None:
+        pavi_task_id = env['PAVI_TASK_ID']
+    else:
+        pavi_task_id = env['pavi_task_id']
+    pavi_ret = dict(test_life=1)
+    for k, v in config.items():
+        if k == 'test_life':
+            continue
+        if k == '__benchmark_pavi_task_id':
+            continue
+        pk = 'pavi_' + k
+
+        if value_type == "max_value":
+            try:
+                if v[1] == '>':
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10),
+                                key=lambda x: x.__getitem__('value'))[-1]['value']
+                    pavi_ret[pk] = pv
+                else:
+                    pv = sorted(pavi.get_scalar(pavi_task_id, k, 10), key=lambda x: x.__getitem__(
+                        'value'), reverse=True)[-1]['value']
+                    pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+
+        elif value_type == "last_value":
+            try:
+                pv = pavi.get_scalar(pavi_task_id, k, 1)[-1]['value']
+                pavi_ret[pk] = pv
+            except:
+                pv = 'unknow, {} may not exist on pavi'.format(k)
+                pavi_ret['test_life'] = 0
+        else:
+            print("Please set 'max' or 'last' for the type of value.")
+
+    # TODO(zhouhanyu): get pavi benchmark value
+    root_path = trace_up('.search-run')
+    root_path = root_path.replace('.search-run', 'autotest')
+    configs_dir = osp.join(root_path, 'benchmark')
+    config_path = osp.join(configs_dir, framework+'.yaml')
+    if os.path.exists(config_path):
+        org_config = yaml.load(open(config_path, 'r'), Loader=yaml.Loader)
+        org_config.update({framework+'_'+ model_name: pavi_ret})
+    else:
+        org_config = {framework+'_'+ model_name: pavi_ret}
+    dump(org_config, config_path, file_format='yaml', default_flow_style=False)
+
+
 def update_thresh_wrapper(config, framework, model_name, value_type, run_type):
     time.sleep(5)  # wait 10s for pavi scalar uploaded
     env = os.environ.copy()
@@ -404,3 +468,5 @@ if __name__ == '__main__':
         elif sys.argv[3] == '2':
             update_thresh_wrapper(
                 config, sys.argv[1], sys.argv[2], value_type, sys.argv[4])
+        elif sys.argv[3] == '3':
+            get_benchmark_value(config, sys.argv[1], sys.argv[2], value_type, sys.argv[4])
