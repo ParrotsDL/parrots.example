@@ -36,8 +36,8 @@ def write_csv(w_path, ops, env):
             writer.writerow(op)
 
 
-def save(date_dir, frames, env):
-    if not os.path.exists(date_dir):
+def save(data_dir, frames, env):
+    if not os.path.exists(data_dir):
         save_values = []
         save_values.append(['frame', 'model', 'items', env])
         for frame, models in frames.items():
@@ -45,9 +45,9 @@ def save(date_dir, frames, env):
                 for item, v in items.items():
                     value = [frame, model, item, v]
                     save_values.append(value)
-        write_csv(date_dir, save_values, env)
+        write_csv(data_dir, save_values, env)
     else:
-        read = read_csv(date_dir)
+        read = read_csv(data_dir)
         read_map = dict()
         for idx, val in enumerate(read):
             read_map[val[0] + val[1] + val[2]] = idx
@@ -64,16 +64,24 @@ def save(date_dir, frames, env):
                             value.append(None)
                         value.append(v)
                         read.append(value)
-        write_csv(date_dir, read, env)
+        write_csv(data_dir, read, env)
+
+
+def del_files(path):
+    for name in os.listdir(path):
+        if name.endswith(".yaml"):
+            os.remove(os.path.join(path, name))
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 2, "INPUTERROR: python autotest/benchmark_yamls_to_csv.py pat20200807"
+    assert len(sys.argv) == 3, "INPUTERROR: python autotest/benchmark_yamls_to_csv.py pat20200821 True/False"
     title = sys.argv[1]
     this_dir = osp.dirname(os.path.abspath(__file__))
     frames_dir = osp.join(this_dir, 'benchmark')
-    date_dir = osp.join(frames_dir, 'data')
+    data_dir = osp.join(frames_dir, 'data')
     frames = get_frames(frames_dir)
-    dump(frames, date_dir + '/' + title + '.yaml', file_format='yaml', default_flow_style=False)
+    dump(frames, data_dir + '/' + title + '.yaml', file_format='yaml', default_flow_style=False)
 
-    save(date_dir + '/benchmark.csv', frames, title)
+    if sys.argv[2] == 'True':
+        save(data_dir + '/benchmark.csv', frames, title)
+        del_files(frames_dir)

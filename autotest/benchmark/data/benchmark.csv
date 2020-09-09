@@ -1,4 +1,4 @@
-frame,model,items,pat20200821
+frame,model,items,pat20200807
 mmdet,mmdet_cascade_mask_rcnn_r50_fpn_1x_coco,pavi___benchmark_avg_iter_time(s),0.5006167058327898
 mmdet,mmdet_cascade_mask_rcnn_r50_fpn_1x_coco,pavi___benchmark_mem_alloc(mb),4815
 mmdet,mmdet_cascade_mask_rcnn_r50_fpn_1x_coco,pavi___benchmark_mem_cached(mb),5784

@@ -1,7 +1,0 @@
-seg_nas_single_path_oneshot:
-  pavi___benchmark_avg_iter_time(s): 1.3439559709458124
-  pavi___benchmark_mem_alloc(mb): 1656
-  pavi___benchmark_mem_cached(mb): 2560
-  pavi___benchmark_pure_training_time(h): 0.026264960964520773
-  pavi___benchmark_total_time(h): 0.02767730156580607
-  test_life: 1
