@@ -125,12 +125,12 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+   # train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     # test mode
-    if args.test:
-        test(test_loader, model, criterion, args)
-        return
+   # if args.test:
+   #     test(test_loader, model, criterion, args)
+   #     return
 
     # choose scheduler
     lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
@@ -150,8 +150,8 @@ def main():
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        train_sampler.set_epoch(epoch)
-
+        #train_sampler.set_epoch(epoch)
+        train_loader = [(i, i) for i in range(5005)]
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
 
@@ -198,10 +198,16 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
+    input_ = torch.randn(32, 3, 224, 224, requires_grad=True)
+    target_ = torch.ones(32).long()
+
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
 
+        input = input_.detach()
+        input.requires_grad = True
+        target = target_
         input = input.cuda()
         target = target.cuda()
 
