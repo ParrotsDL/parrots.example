@@ -60,7 +60,7 @@ def save(data_dir, frames, env):
                         read[read_map[key]].append(v)
                     else:
                         value = [frame, model, item]
-                        for i in range(len(read[0]) - 3):
+                        for i in range(len(read[0]) - 4):
                             value.append(None)
                         value.append(v)
                         read.append(value)
