@@ -194,6 +194,21 @@ task:
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                 # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
+                #
+                # mmpose
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_darkpose', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_hourglass', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_scnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_hrnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_mobilev2', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_resnetv1d', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_resnext', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_senet50', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_shufflev1', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'bottomup_hrnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024'},
 
                 ## sketch
                 # {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project parrots_test'},
@@ -203,8 +218,16 @@ task:
                 #
                 # mmtrack
                 # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+
+                # RetinaUnet
+                # {'framework': 'RetinaUnet', 'gpus': 1, 'model': '2d_runet_infer', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 #pod3.0
-                # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-h', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader'}   
+                # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-h', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader'},
+                # encode
+                # {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project parrots_test --max_step 150'},
+                
+                # sensemedical
+                # {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project parrots_test --max_step 20'},
             ]
     # Optional
     # callback: "cat"

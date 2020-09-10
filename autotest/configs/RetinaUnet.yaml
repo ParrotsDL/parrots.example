@@ -1,0 +1,48 @@
+RetinaUnet_2d_runet_infer:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 24.51772474385798
+    - <
+    - 5%
+    - 23.350214041769505
+    __benchmark_mem_alloc(mb):
+    - 3208.8
+    - <
+    - 5%
+    - 3056
+    __benchmark_mem_cached(mb):
+    - 4050.9
+    - <
+    - 5%
+    - 3858
+    __benchmark_pavi_task_id:
+    - 9ce9c5f2-c02e-46a7-8fb7-253586d30526
+    __benchmark_pure_training_time(h):
+    - 0.8717735564808051
+    - <
+    - 5%
+    - 0.8302605299817192
+    __benchmark_total_time(h):
+    - 0.8717795381347339
+    - <
+    - 5%
+    - 0.8302662267949846
+    lesion_dice:
+    - 0.7547775249886213
+    - '>'
+    - 5%
+    - 0.7945026578827592
+    liver_dice:
+    - 0.9185542276396614
+    - '>'
+    - 5%
+    - 0.9668991869891173
+    test_life: 1
+  lesion_dice:
+  - 10000
+  - '>'
+  - 5%
+  liver_dice:
+  - 10000
+  - '>'
+  - 5%
