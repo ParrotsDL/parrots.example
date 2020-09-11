@@ -74,7 +74,7 @@ prototype_shufflev2:
     - 5%
     - 2562
     __benchmark_mem_cached(mb):
-    - 2767.8
+    - 3241
     - <
     - 5%
     - 2636
