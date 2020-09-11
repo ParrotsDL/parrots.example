@@ -29,6 +29,8 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
+                    help='evaluate model on validation set')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -39,7 +41,6 @@ def main():
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
-
     args.rank, args.world_size, args.local_rank = dist.init()
 
     if args.rank == 0:
@@ -125,12 +126,14 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-   # train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
-
+    if not args.dummy_test: 
+        train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+   
     # test mode
-   # if args.test:
-   #     test(test_loader, model, criterion, args)
-   #     return
+    if args.test and not args.dummy_test:
+        
+        test(test_loader, model, criterion, args)
+        return
 
     # choose scheduler
     lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
@@ -150,10 +153,13 @@ def main():
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        #train_sampler.set_epoch(epoch)
-        train_loader = [(i, i) for i in range(5005)]
+        if args.dummy_test:
+            train_loader = [(i, i) for i in range(5005)]
+        else:
+            train_sampler.set_epoch(epoch)
+            
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, cfgs.net.arch, cfgs.dataset['batch_size'])
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -183,10 +189,9 @@ def main():
         lr_scheduler.step()
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, net, batch_size):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
-
     losses = AverageMeter('Loss', ':.4f', 50)
     top1 = AverageMeter('Acc@1', ':.2f', 50)
     top5 = AverageMeter('Acc@5', ':.2f', 50)
@@ -198,16 +203,18 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
-    input_ = torch.randn(32, 3, 224, 224, requires_grad=True)
-    target_ = torch.ones(32).long()
+    if args.dummy_test:
+        N = 299 if 'inception' in net else 224
+        input_ = torch.randn(batch_size, 3, N, N, requires_grad=True)
+        target_ = torch.ones(batch_size).long()
 
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
-
-        input = input_.detach()
-        input.requires_grad = True
-        target = target_
+        if args.dummy_test:
+            input = input_.detach()
+            input.requires_grad = True
+            target = target_
         input = input.cuda()
         target = target.cuda()
 
