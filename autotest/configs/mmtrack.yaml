@@ -11,7 +11,7 @@ mmtrack_config13ms_bn1:
     - 5%
     - 53
     __benchmark_mem_cached(mb):
-    - 86.1
+    - 145
     - <
     - 5%
     - 82
