@@ -432,7 +432,11 @@ def get_slurm_job_id():
             logger.warn("can't get partition from srun_args")
     else:
         try:
-            partition = command.split(' ')[2]
+            command_arr = command.split(' ')
+            for idx, val in enumerate(command_arr):
+                if val == 'train.sh':
+                    partition = command_arr[idx+1]
+                    break
         except Exception as e:
             logger.warn("can't get partition from command")
 
@@ -443,6 +447,7 @@ def get_slurm_job_id():
 
     try:
         slurm_job_id = None
+        status = None
         ret = os.popen(squeue_command).read()
         ret = ret.strip('\n').split('\n')
         ret = ret[1:]
@@ -465,10 +470,12 @@ def get_slurm_job_id():
                     workdir_tmp = item.split('=')[-1]
                     if workdir_tmp == work_dir:
                         slurm_job_id = jobid
+                        status = task_info[3]
                         break
         if not slurm_job_id:
-            raise Exception("can't get slurm from squeue")
-        return slurm_job_id
+            logger.warn("can't get slurm from squeue")
+            return None
+        return slurm_job_id, status
     except Exception as e:
         logger.warn("can't get slurm from squeue")
 
@@ -487,16 +494,18 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
         del config['placeholder']
     config['test_life'] = 0
     # get slurm job id
-    slurm_job_id = None
+    slurm_job_id = ''
+    status = ''
     start_time = time.time()
     while True:
         interval_time = time.time() - start_time
         if interval_time >= wait_time_get_slurm_jobid:
             break
-        slurm_job_id = get_slurm_job_id()
+        slurm_job_id, status = get_slurm_job_id()
         if slurm_job_id:
             break
     config['slurm_job_id'] = slurm_job_id
+    config['slurm_job_status'] = status
     print(yaml.dump(config))
     if is_monitor_log:
         # start a process for killing time limited
