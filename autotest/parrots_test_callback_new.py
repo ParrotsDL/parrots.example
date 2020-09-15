@@ -474,10 +474,11 @@ def get_slurm_job_id():
                         break
         if not slurm_job_id:
             logger.warn("can't get slurm from squeue")
-            return None
+            return None, None
         return slurm_job_id, status
     except Exception as e:
         logger.warn("can't get slurm from squeue")
+        return None, None
 
 def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
     if run_type in config.keys():
