@@ -130,9 +130,11 @@ def main():
         train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
    
     # test mode
-    if args.test and not args.dummy_test:
+    if args.test:
+        if args.dummy_test:
+           test_loader = [(i, i) for i in range(int((196*8)/args.world_size))]
         
-        test(test_loader, model, criterion, args)
+        test(test_loader, model, criterion, args, cfgs.net.arch, cfgs.dataset['batch_size'])
         return
 
     # choose scheduler
@@ -154,7 +156,7 @@ def main():
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         if args.dummy_test:
-            train_loader = [(i, i) for i in range(5005)]
+            train_loader = [(i, i) for i in range(int(5005*8/args.world_size))]
         else:
             train_sampler.set_epoch(epoch)
             
@@ -255,7 +257,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
 
 
-def test(test_loader, model, criterion, args):
+def test(test_loader, model, criterion, args, net, batch_size):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -268,7 +270,17 @@ def test(test_loader, model, criterion, args):
     model.eval()
     with torch.no_grad():
         end = time.time()
+        if args.dummy_test:
+            N = 299 if 'inception' in net else 224
+            input_ = torch.randn(batch_size, 3, N, N, requires_grad=True)
+            target_ = torch.ones(batch_size).long()
+
         for i, (input, target) in enumerate(test_loader):
+
+            if args.dummy_test:
+                input = input_.detach()
+                input.requires_grad = True
+                target = target_
             input = input.cuda()
             target = target.cuda()
 
