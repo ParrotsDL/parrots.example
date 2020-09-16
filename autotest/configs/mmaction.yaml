@@ -62,18 +62,6 @@ mmaction_bmn_400x100_2x8_9e_activitynet_feature:
     - 0.9423461069001092
     - 0.5536091893911361
     test_life: 1
-    train.AR@100:
-    - 65.9
-    - '>'
-    - 20%
-    - unknow, train.AR@100 may not exist on pavi
-    - unknow, train.AR@100 may not exist on pavi
-    train.auc:
-    - 0.739
-    - '>'
-    - 20%
-    - unknow, train.auc may not exist on pavi
-    - unknow, train.auc may not exist on pavi
     val.AR@100:
     - 0.739
     - '>'
