@@ -78,9 +78,9 @@ task:
                 # # nas_lite
                 # {'framework': 'nas_lite', 'gpus': 32, 'model': 'proxyless_search', 'py_args': '--pavi --pavi-project parrots_test'},                
                 # seg
-                # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
-                # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
-                # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
+                # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # # example
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix", 'py_args': '--pavi --pavi-project parrots_test'},
                 # {'framework': 'example', 'gpus': 8, 'model': "dpn92", 'py_args': '--pavi --pavi-project parrots_test'},
