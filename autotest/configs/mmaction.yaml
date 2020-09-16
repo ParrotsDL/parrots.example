@@ -74,6 +74,16 @@ mmaction_bmn_400x100_2x8_9e_activitynet_feature:
     - 20%
     - unknow, train.auc may not exist on pavi
     - unknow, train.auc may not exist on pavi
+    val.AR@100:
+    - 0.739
+    - '>'
+    - 20%
+    - 0.7476
+    val.auc:
+    - 65.9
+    - '>'
+    - 20%
+    - 66.5875
   train.AR@100:
   - 65.9
   - '>'
