@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_dailybuild {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
