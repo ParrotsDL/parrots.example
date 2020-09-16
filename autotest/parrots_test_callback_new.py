@@ -434,7 +434,7 @@ def get_slurm_job_id():
         try:
             command_arr = command.split(' ')
             for idx, val in enumerate(command_arr):
-                if val == 'train.sh':
+                if val.endswith('train.sh'):
                     partition = command_arr[idx+1]
                     break
         except Exception as e:
