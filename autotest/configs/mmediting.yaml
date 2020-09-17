@@ -32,28 +32,16 @@ mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
     - 0.18867670493339425
     - <
     - 5%
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
     - 0.17969209993656596
     __benchmark_mem_alloc(mb):
     - 10452.75
     - <
     - 5%
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
     - 9955
     __benchmark_mem_cached(mb):
     - 10859.1
     - <
     - 5%
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
     - 10342
     __benchmark_pavi_task_id:
     - ''
@@ -65,30 +53,17 @@ mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
     - 1.219198552340269
     - <
     - 5%
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
     - 1.161141478419304
     __benchmark_total_time(h):
     - 1.2191987753510476
     - <
     - 5%
-    - unknow, __benchmark_total_time(h) may not exist on pavi
-    - unknow, __benchmark_total_time(h) may not exist on pavi
-    - unknow, __benchmark_total_time(h) may not exist on pavi
-    - unknow, __benchmark_total_time(h) may not exist on pavi
     - 1.1611416908105214
     test_life: 1
     train.val_saved_number:
     - 309
     - '>'
     - 50%
-    - unknow, train.val_saved_number may not exist on pavi
-    - unknow, train.val_saved_number may not exist on pavi
-    - unknow, train.val_saved_number may not exist on pavi
-    - unknow, train.val_saved_number may not exist on pavi
-    - unknow, train.val_saved_number may not exist on pavi
   train.val_saved_number:
   - 309
   - '>'
