@@ -6,6 +6,8 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here
+                    # mmediting
+                    {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project pulin-daily --data-reader MemcachedReader --seed 1024  --max-step 24650'},
                     # mmaction
                     {'framework': 'mmaction', 'gpus': 8, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 6'},
                     # mmdet

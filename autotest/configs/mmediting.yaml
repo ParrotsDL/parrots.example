@@ -27,6 +27,43 @@ mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
     - <
     - 50%
     - 0.015438721709781222
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.18867670493339425
+    - <
+    - 5%
+    - 0.17969209993656596
+    __benchmark_mem_alloc(mb):
+    - 10452.75
+    - <
+    - 5%
+    - 9955
+    __benchmark_mem_cached(mb):
+    - 10859.1
+    - <
+    - 5%
+    - 10342
+    __benchmark_pavi_task_id:
+    - ''
+    - ''
+    - 36ea7acc-5a43-49bf-8233-755882283856
+    - d867ea83-aa15-44cd-bfd4-766a652aa1ed
+    - 80185342-0a53-4ca5-ac52-b1be01c32dca
+    __benchmark_pure_training_time(h):
+    - 1.219198552340269
+    - <
+    - 5%
+    - 1.161141478419304
+    __benchmark_total_time(h):
+    - 1.2191987753510476
+    - <
+    - 5%
+    - 1.1611416908105214
+    test_life: 1
+    train.val_saved_number:
+    - 309
+    - '>'
+    - 50%
   train.val_saved_number:
   - 309
   - '>'
@@ -381,4 +418,3 @@ mmediting_srcnn_x4k915_g1_1000k_div2k:
   - 0.801
   - '>'
   - 50%
-
