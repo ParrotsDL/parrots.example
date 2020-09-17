@@ -27,11 +27,56 @@ mmaction_bmn_400x100_2x8_9e_activitynet_feature:
     - <
     - 50%
     - 0.20885459866788653
-  train.AR@100:
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 3.0785005237629166
+    - <
+    - 5%
+    - 3.7443311000937847
+    - 2.1194794213593897
+    __benchmark_mem_alloc(mb):
+    - 5699.4
+    - <
+    - 5%
+    - 5419
+    - 5437
+    __benchmark_mem_cached(mb):
+    - 6563.55
+    - <
+    - 5%
+    - 6600
+    - 5902
+    __benchmark_pavi_task_id:
+    - 40906ada-11e7-4d8a-b831-e5772a3d0ffe
+    - 508bddfe-cc2b-43ce-9773-4652cb7a6ba2
+    __benchmark_pure_training_time(h):
+    - 0.7853626960615316
+    - <
+    - 5%
+    - 0.9423366528749466
+    - 0.5535922920041614
+    __benchmark_total_time(h):
+    - 0.7853765305529038
+    - <
+    - 5%
+    - 0.9423461069001092
+    - 0.5536091893911361
+    test_life: 1
+    val.AR@100:
+    - 0.739
+    - '>'
+    - 20%
+    - 0.7476
+    val.auc:
+    - 65.9
+    - '>'
+    - 20%
+    - 66.5875
+  val.AR@100:
   - 65.9
   - '>'
   - 20%
-  train.auc:
+  val.auc:
   - 0.739
   - '>'
   - 20%
