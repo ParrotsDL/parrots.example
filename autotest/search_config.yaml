@@ -101,7 +101,7 @@ task:
                 # {'framework': 'example', 'gpus': 8, 'model': "resnet18_mix", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # {'framework': 'example', 'gpus': 8, 'model': "resnet18", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # {'framework': 'example', 'gpus': 8, 'model': "resnet50_mix", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
-                {'framework': 'example', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                # {'framework': 'example', 'gpus': 8, 'model': "resnet50", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # {'framework': 'example', 'gpus': 8, 'model': "se_resnet50_mix", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # {'framework': 'example', 'gpus': 8, 'model': "se_resnet50", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 # {'framework': 'example', 'gpus': 8, 'model': "shuffle_v2_mix", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
