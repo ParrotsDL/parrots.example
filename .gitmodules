@@ -2,9 +2,6 @@
 	path = models/pytorch-object-detection
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
 	branch = pat0.6/v2.2.3
-[submodule "models/parrots.example"]
-	path = models/parrots.example
-	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/parrots.example.git
 [submodule "models/Light_Seg"]
 	path = models/Light_Seg
 	url = git@gitlab.bj.sensetime.com:xuchi/Light_Seg.git
@@ -92,6 +89,9 @@
 [submodule "models/mmtrack"]
 	path = models/mmtrack
 	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
+[submodule "models/parrots.example"]
+	path = models/parrots.example
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/parrots.example.git
 [submodule "models/RetinaUnet"]
 	path = models/RetinaUnet
 	url = git@gitlab.bj.sensetime.com:parrots.model/retinaunet.git
