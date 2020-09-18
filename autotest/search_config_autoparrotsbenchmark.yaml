@@ -70,7 +70,7 @@ searcher:
 
 scheduler:
     type: FIFO
-    parallel_size: 8
+    parallel_size: 30
     stop_criterion:
         max_tries: 100
     wait_to_run_time_thresh: inf # inf
