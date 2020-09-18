@@ -12,15 +12,17 @@ work_dir=$pyroot/work_dirs/${name}
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:3:$len}
+EXTRA_ARGS=${array[@]:1:$len}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 best_epoch=50
 p1=0.5
 p2=0.05
 p3=0.6
 
-if [[ $3 == "siamrpnpp" ]]; then
-    python $pyroot/mmtrack/face_eval_plus/quantitative/meval.py -c ${cfg} -m SiamRPN -b 8 -e 30 -r ${work_dir}/result-newpart/ -w ${work_dir}/ -rf 20 -bf 1 \
+if [[ $name == "siamrpnpp" ]]; then
+    # python $pyroot/mmtrack/face_eval_plus/quantitative/meval.py -c ${cfg} -m SiamRPN -b 8 -e 30 -r ${work_dir}/result-newpart/ -w ${work_dir}/ -rf 20 -bf 1 \
+    python $pyroot/mmtrack/face_eval_plus/quantitative/meval.py -c ${cfg} -m SiamRPN -b 1 -e 2 -r ${work_dir}/result-newpart/ -w ${work_dir}/ -rf 20 -bf 1 \
     -v /mnt/lustre/share_data/hanyachao/mmtrack/jsons/pm_v2.json \
     /mnt/lustre/share_data/hanyachao/mmtrack/test_data/nme_test/easycase/facial_landmark_nme_easycase.json\
     /mnt/lustre/share_data/hanyachao/mmtrack/jsons/facial_landmark_video_large_yaw_latest_0604_test.json \
