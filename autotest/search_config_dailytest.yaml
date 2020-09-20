@@ -45,7 +45,7 @@ scheduler:
 # Optional
 pavi:
     compare:
-        name: pulin_dailymmpose#parrots.test.dailytest
+        name: pulin_dailymmpose  #parrots.test.dailytest
 
 # slurm_job_id_monitor: true
 
