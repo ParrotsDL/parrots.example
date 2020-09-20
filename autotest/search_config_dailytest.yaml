@@ -1,13 +1,15 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_dailybuild {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
           value: [
                     # (un)commit your config here
+                    # mmpose
+                    {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project pulin-daily --data_reader MemcachedReader --seed 1024 --max-step 10'},
                     # mmediting
-                    {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project pulin-daily --data-reader MemcachedReader --seed 1024  --max-step 24650'},
+                    {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024  --max-step 24650'},
                     # mmaction
                     {'framework': 'mmaction', 'gpus': 8, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 6'},
                     # mmdet
@@ -43,7 +45,7 @@ scheduler:
 # Optional
 pavi:
     compare:
-        name: parrots.test.dailytest
+        name: pulin_dailymmpose#parrots.test.dailytest
 
 # slurm_job_id_monitor: true
 
