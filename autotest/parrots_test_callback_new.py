@@ -17,7 +17,6 @@ from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
 from autoparrots.command.task import kill_task
 from autoparrots.schedulers import load_taskinfo
-from autoparrots.schedulers.job import JobStatus
 
 # 公共表
 comm_table = {
