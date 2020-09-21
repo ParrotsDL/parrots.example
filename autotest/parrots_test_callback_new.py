@@ -83,7 +83,6 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
     job_log_path = None
     workdir = None
     name = None
-    job_status = None
     job_wait_to_run_time_thresh = 1  # wait one hour
     start_time = time.time()
     while True:
@@ -127,12 +126,11 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                 job_info = job_names[0]
                 try:
                     slurm_job_id = int(job_info['slurm_job_id'])
-                    job_status = job_info['status']
                 except Exception:
                     slurm_job_id = None
-                    job_status = None
-        if job_pid and job_log_path and workdir and name and slurm_job_id and job_status:
-            if job_status == JobStatus.RUNNING:
+        if job_pid and job_log_path and workdir and name and slurm_job_id:
+            _, status = get_slurm_job_id()
+            if status == 'R':
                 break
         # break if job_pid is die.
         if job_pid and (not psutil.pid_exists(job_pid)):
