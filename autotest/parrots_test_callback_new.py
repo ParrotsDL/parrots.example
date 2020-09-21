@@ -128,7 +128,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                 try:
                     slurm_job_id = int(job_info['slurm_job_id'])
                     job_status = job_info['status']
-                except Exception as e:
+                except Exception:
                     slurm_job_id = None
                     job_status = None
         if job_pid and job_log_path and workdir and name and slurm_job_id and job_status:
