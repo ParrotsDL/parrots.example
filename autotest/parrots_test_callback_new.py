@@ -127,7 +127,8 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                     slurm_job_id = int(job_info['slurm_job_id'])
                 except Exception:
                     slurm_job_id = None
-        if job_pid and job_log_path and workdir and name and slurm_job_id:
+        _, status = get_slurm_job_id()
+        if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
             break
         # break if job_pid is die.
         if job_pid and (not psutil.pid_exists(job_pid)):
