@@ -203,33 +203,37 @@ def _get_monitor_info(config, run_type):
     # NumCards, TODO: Storage, parse from command
     NumCards = 0
     Storage = ''
+    FrameName = ''
     command_arr = os.environ['command'].split(' ')
     for idx, val in enumerate(command_arr):
         if val.endswith('train.sh'):
             NumCards = command_arr[idx+2]
+            FrameName = command_arr[idx+3]
+            ModelDesc = command_arr[idx+4]
             break
     if NumCards == 0:
         logger.error('Can not get cards num from command')
     # CommitDate and FrameName
+    IsParrots = False
     try:
         import parrots, torch
         if torch.__version__ == 'parrots':
-            FrameName = 'parrots'
+            IsParrots = True
             CommitDate = parrots.info.git_latest_commit_date
             TagOrBranch = parrots.info.git_tag_or_branch
             GitHash = parrots.version.git_hash
         else:
-            FrameName = 'pytorch'
             CommitDate = 'pytorch'
             TagOrBranch = 'pytorch'
             GitHash = 'pytorch'
     except ModuleNotFoundError:
-        FrameName, CommitDate, TagOrBranch, GitHash = '', '', '', ''
+        CommitDate, TagOrBranch, GitHash = '', '', ''
 
     monitor_info = dict(
+        IsParrots=IsParrots,
         DataSource=DataSource,
         FrameName=FrameName,
-        ModelDesc=os.environ['command'],
+        ModelDesc=ModelDesc,
         Partition=partition,
         Storage=Storage,
         CommitDate=CommitDate,
