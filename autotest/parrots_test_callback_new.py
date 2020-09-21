@@ -127,7 +127,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                     slurm_job_id = int(job_info['slurm_job_id'])
                 except Exception:
                     slurm_job_id = None
-        _, status = get_slurm_job_id()
+        _, _, status = get_slurm_job_id()
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
             break
         # break if job_pid is die.
@@ -194,7 +194,60 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
             name, job_pid, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
 
 
-def after_callback_wrapper(config, value_type, run_type):
+def _get_monitor_info(config, run_type):
+    # DataSource: dailybuild, weeklybuild, release_benchmark, weekly_benchmark
+    DataSource = run_type
+    # Partition
+    _, partition, _ = get_slurm_job_id()
+
+    # NumCards, TODO: Storage, parse from command
+    NumCards = 0
+    Storage = ''
+    command_arr = os.environ['command'].split(' ')
+    for idx, val in enumerate(command_arr):
+        if val.endswith('train.sh'):
+            NumCards = command_arr[idx+2]
+            break
+    if NumCards == 0:
+        logger.error('Can not get cards num from command')
+    # CommitDate and FrameName
+    try:
+        import parrots, torch
+        if torch.__version__ == 'parrots':
+            FrameName = 'parrots'
+            CommitDate = parrots.info.git_latest_commit_date
+            TagOrBranch = parrots.info.git_tag_or_branch
+            GitHash = parrots.version.git_hash
+        else:
+            FrameName = 'pytorch'
+            CommitDate = 'pytorch'
+            TagOrBranch = 'pytorch'
+            GitHash = 'pytorch'
+    except ModuleNotFoundError:
+        FrameName, CommitDate, TagOrBranch, GitHash = '', '', '', ''
+
+    monitor_info = dict(
+        DataSource=DataSource,
+        FrameName=FrameName,
+        ModelDesc=os.environ['command'],
+        Partition=partition,
+        Storage=Storage,
+        CommitDate=CommitDate,
+        NumCards=NumCards,
+        HostName=os.environ['host_ip'],
+        IterSpeed=config['pavi___benchmark_avg_iter_time(s)'],
+        FullTime=config['pavi___benchmark_total_time(h)'],
+        AllocatedMem=config['pavi___benchmark_mem_alloc(mb)'],
+        CachedMem=config['pavi___benchmark_mem_cached(mb)'],
+        TagOrBranch=TagOrBranch,
+        GitHash=GitHash,
+        PAVIIUrl='{}/#/task/{}'.format(
+            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id'])
+    )
+    return monitor_info
+
+
+def after_callback_wrapper(config, value_type, run_type, output_monitor=True):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -247,6 +300,10 @@ def after_callback_wrapper(config, value_type, run_type):
 
     config.update(pavi_ret)
     print(yaml.dump(config))
+
+    if output_monitor and config['test_life'] == 1:
+        monitor_info = _get_monitor_info(config, run_type)
+        dump(monitor_info, 'monitor_info.json')
 
 
 def get_benchmark_value(config, framework, model_name, value_type, run_type):
@@ -475,11 +532,11 @@ def get_slurm_job_id():
                         break
         if not slurm_job_id:
             logger.warn("can't get slurm from squeue")
-            return None, None
-        return slurm_job_id, status
+            return None, None, None
+        return slurm_job_id, partition, status
     except Exception as e:
         logger.warn("can't get slurm from squeue")
-        return None, None
+        return None, None, None
 
 def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
     if run_type in config.keys():
@@ -505,7 +562,7 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
         interval_time = time.time() - start_time
         if interval_time >= wait_time_get_slurm_jobid:
             break
-        slurm_job_id, status = get_slurm_job_id()
+        slurm_job_id, _, status = get_slurm_job_id()
         if slurm_job_id:
             break
     config['slurm_job_id'] = slurm_job_id
