@@ -495,7 +495,7 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
     if 'placeholder' in config.keys():
         del config['placeholder']
     config['test_life'] = 0
-    config['__benchmark_total_time(h)'] = 0.33
+    config['__benchmark_total_time(h)'] = 0.2
 
     # get slurm job id
     slurm_job_id = ''
