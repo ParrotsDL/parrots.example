@@ -132,9 +132,8 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         _, status = get_slurm_job_id()
         if status == 'PD':
             status = None
-        if job_pid and job_log_path and workdir and name and slurm_job_id and status:
-            if status == 'R':
-                break
+        if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
+            break
         # break if job_pid is die.
         if job_pid and (not psutil.pid_exists(job_pid)):
             break
