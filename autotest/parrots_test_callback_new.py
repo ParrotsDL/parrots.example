@@ -82,6 +82,7 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
     job_log_path = None
     workdir = None
     name = None
+    status = None
     job_wait_to_run_time_thresh = 1  # wait one hour
     start_time = time.time()
     while True:
@@ -91,7 +92,8 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
              not job_log_path or
              not workdir or
              not name or
-             not slurm_job_id) and
+             not slurm_job_id or
+             not status) and
                 interval_time >= job_wait_to_run_time_thresh * 60 * 60):
             break
 
@@ -127,8 +129,10 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                     slurm_job_id = int(job_info['slurm_job_id'])
                 except Exception:
                     slurm_job_id = None
-        if job_pid and job_log_path and workdir and name and slurm_job_id:
-            _, status = get_slurm_job_id()
+        _, status = get_slurm_job_id()
+        if status == 'PD':
+            status = None
+        if job_pid and job_log_path and workdir and name and slurm_job_id and status:
             if status == 'R':
                 break
         # break if job_pid is die.
