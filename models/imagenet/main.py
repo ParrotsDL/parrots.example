@@ -165,7 +165,7 @@ def main():
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, model, criterion, args)
+            loss, acc1, acc5 = test(test_loader, model, criterion, args, cfgs.net.arch, cfgs.dataset['batch_size'])
 
             if args.rank == 0:
                 if monitor_writer:
