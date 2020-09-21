@@ -82,7 +82,6 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
     job_log_path = None
     workdir = None
     name = None
-    status = None
     job_wait_to_run_time_thresh = 1  # wait one hour
     start_time = time.time()
     while True:
