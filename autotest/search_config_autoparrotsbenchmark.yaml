@@ -69,8 +69,8 @@ task:
 
     # Optional
     # callback: "cat"
-    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 benchmark"
-    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 benchmark"
+    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 autoparrotsbenchmark"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 autoparrotsbenchmark"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
@@ -88,6 +88,6 @@ scheduler:
 # Optional
 pavi:
     compare:
-        name: autoparrots.dailybenchmark
+        name: autoparrots.test.dailybenchmark
 
 # slurm_job_id_monitor: true

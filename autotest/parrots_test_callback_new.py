@@ -36,7 +36,8 @@ run_type_table = {
     'dailytest': 1,
     'dummydata': 0,
     'weeklybenchmark': 0,
-    'weeklytest': 1
+    'weeklytest': 1,
+    'autoparrotsbenchmark':0
 }
 
 value_type_table = {
@@ -495,7 +496,10 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
     if 'placeholder' in config.keys():
         del config['placeholder']
     config['test_life'] = 0
-    config['__benchmark_total_time(h)'] = 10000
+    if run_type == 'autoparrotsbenchmark':
+        config['__benchmark_total_time(h)'] = 0.2
+    else:
+        config['__benchmark_total_time(h)'] = 10000
 
     # get slurm job id
     slurm_job_id = ''
