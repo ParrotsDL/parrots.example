@@ -98,10 +98,6 @@ mmpose_topdown_alexnet:
     - '>'
     - 0.5%
     - 0.396
-    - unknow, train.AP may not exist on pavi
-    - unknow, train.AP may not exist on pavi
-    - unknow, train.AP may not exist on pavi
-    - unknow, train.AP may not exist on pavi
   train.AP:
   - 0.394
   - '>'
