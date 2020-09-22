@@ -36,7 +36,8 @@ run_type_table = {
     'dailytest': 1,
     'dummydata': 0,
     'weeklybenchmark': 0,
-    'weeklytest': 1
+    'weeklytest': 1,
+    'autoparrotsbenchmark':0
 }
 
 value_type_table = {
