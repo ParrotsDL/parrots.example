@@ -66,25 +66,16 @@ mmpose_topdown_alexnet:
     - 1.1779784381389617
     - <
     - 5%
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
-    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
     - 1.1218842267990112
     __benchmark_mem_alloc(mb):
     - 1186.5
     - <
     - 5%
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
-    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
     - 1130
     __benchmark_mem_cached(mb):
     - 2679.6
     - <
     - 5%
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
-    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
     - 2552
     __benchmark_pavi_task_id:
     - ''
@@ -95,17 +86,11 @@ mmpose_topdown_alexnet:
     - 1.2512406677603722
     - <
     - 5%
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
-    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
     - 1.191657778819402
     __benchmark_total_time(h):
     - 1.253122783044974
     - <
     - 5%
-    - unknow, __benchmark_total_time(h) may not exist on pavi
-    - unknow, __benchmark_total_time(h) may not exist on pavi
-    - unknow, __benchmark_total_time(h) may not exist on pavi
     - 1.193450269566642
     test_life: 1
     train.AP:
