@@ -154,8 +154,6 @@ task:
                     # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster --max_step 300'},
                     # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                     # {'framework': 'Pattern', 'gpus': 8, 'model': 'eye_best_config_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
-                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster'},
-                    # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
                     #
                     # 29.instance_seg
                     # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 201'},
