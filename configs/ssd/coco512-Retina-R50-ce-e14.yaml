@@ -24,7 +24,7 @@ MODEL:
 
 TRAIN:
   PRETRAIN: /mnt/lustre/share/fundamental-support/models/alphatrion/resnet50.pth
-  CEPH_PRETRAIN: s3://parrots_data/fundamental-support/models/alphatrion/resnet50.pth
+  CEPH_PRETRAIN: s3://parrots_model_data/ssd_pretrain/resnet50.pth
   BATCH_SIZE: 32
 
 LOSS:
@@ -63,12 +63,12 @@ DATA:
   TRAIN:
     ANNOTATION: datalist/coco_train2017.txt
     ROOT: /mnt/lustre/DATAshare/detection_dataset/coco2017
-    CEPH_ROOT: s3://parrots_data/DSK/datasets/mscoco2017
+    CEPH_ROOT: s3://parrots_model_data/mscoco2017
     AUGMENTATION: RetinaAugmentationFixSizeTrain
   VALID:
     ANNOTATION: datalist/coco_val2017.txt
     ROOT: /mnt/lustre/DATAshare/detection_dataset/coco2017
-    CEPH_ROOT: s3://parrots_data/DSK/datasets/mscoco2017
+    CEPH_ROOT: s3://parrots_model_data/mscoco2017
     AUGMENTATION: RetinaAugmentationFixSizeVal
 
 RECORD:

@@ -1,8 +1,9 @@
-import torch
+import parrots
+import dump_example as d
+
 
 def main():
-    a = torch.ones(2,3)
-    a.requires_grad = True
-    a.backward()
+    a = 3
+    d.dump(a)
 
 main()

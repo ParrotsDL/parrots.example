@@ -7,7 +7,9 @@ net:
 dataset:
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
+    ceph_meta_file: s3://parrots_model_data/imagenet/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
+    ceph_image_dir: s3://parrots_model_data/imagenet/images/train/
     reader: pillow
     random_resize_crop: 299
     colorjitter: [0.2, 0.2, 0.2, 0.1]
@@ -16,7 +18,9 @@ dataset:
     mirror: True
   test:
     meta_file: /mnt/lustre/share/images/meta/val.txt
+    ceph_meta_file: s3://parrots_model_data/imagenet/images/meta/val.txt
     image_dir: /mnt/lustre/share/images/val
+    ceph_image_dir: s3://parrots_model_data/imagenet/images/val/
     reader: pillow
     resize: 331
     center_crop: [299, 299]

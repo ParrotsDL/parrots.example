@@ -23,14 +23,9 @@ mmdet_mask_rcnn_r50_caffe_fpn_mstrain_1x_coco: # Required. {framework}_{model}
     - 0.0416 
     - <
     - 50%
-  train.bbox_mAP: 
-  - 10000
-  - '>'
-  - 50%
-  train.segm_mAP: 
-  - 10000
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.3880, '>', '50%']
+  val.segm_mAP: [0.3510, '>', '50%']
+
 
 mmdet_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -57,14 +52,8 @@ mmdet_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0510
     - < 
     - 50%
-  train.bbox_mAP: 
-  - 0.369
-  - '>'
-  - 50%
-  train.segm_mAP: 
-  - 0.338 
-  - '>' 
-  - 50%
+  val.bbox_mAP: [0.369, '>', '50%']
+  val.segm_mAP: [0.338, '>', '50%']
 
 mmdet_cascade_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -91,10 +80,7 @@ mmdet_cascade_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0518
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.401
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.401, '>', '50%']
 
 mmdet_retinanet_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -121,10 +107,7 @@ mmdet_retinanet_r50_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0381
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.353
-  - '>' 
-  - 50%
+  val.bbox_mAP: [0.353, '>', '50%']
 
 mmdet_mask_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -151,14 +134,8 @@ mmdet_mask_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
     - 0.0392
     - <
     - 50%
-  train.bbox_mAP: 
-  - 10000
-  - '>'
-  - 50%
-  train.segm_mAP: 
-  - 10000
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.3810, '>', '50%']
+  val.segm_mAP: [0.3460, '>', '50%']
 
 mmdet_ssd300_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -185,10 +162,7 @@ mmdet_ssd300_coco: # Required. {framework}_{model}
     - 0.0354
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.254
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.254, '>', '50%']
 
 mmdet_faster_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -215,10 +189,7 @@ mmdet_faster_rcnn_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
     - 0.0404
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.359
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.359, '>', '50%']
 
 mmdet_mask_rcnn_x101_32x4d_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -245,14 +216,8 @@ mmdet_mask_rcnn_x101_32x4d_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0914
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.408
-  - '>' 
-  - 50%
-  train.segm_mAP: 
-  - 0.368
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.408, '>', '50%']
+  val.segm_mAP: [0.368, '>', '50%']
 
 mmdet_faster_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -279,10 +244,7 @@ mmdet_faster_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0415
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.361
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.361, '>', '50%']
 
 mmdet_retinanet_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -309,10 +271,7 @@ mmdet_retinanet_r50_fpn_fp16_1x_coco: # Required. {framework}_{model}
     - 0.0387
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.354
-  -  '>'
-  - 50%
+  val.bbox_mAP: [0.354, '>', '50%']
 
 mmdet_mask_rcnn_r101_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -339,14 +298,8 @@ mmdet_mask_rcnn_r101_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0692
     - <
     - 50%
-  train.bbox_mAP: 
-  - 0.242
-  - '>'
-  - 50%
-  train.segm_mAP: 
-  - 0.237
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.242, '>', '50%']
+  val.segm_mAP: [0.237, '>', '50%']
 
 mmdet_cascade_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -373,10 +326,8 @@ mmdet_cascade_mask_rcnn_r50_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0720
     - <
     - 50%
-  train.bbox_mAP: 
-  - 10000
-  - '>'
-  - 50%
+  val.bbox_mAP: [0.4110, '>', '50%']
+  val.segm_mAP: [0.3580, '>', '50%']
 
 mmdet_mask_rcnn_x101_64x4d_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
@@ -403,12 +354,10 @@ mmdet_mask_rcnn_x101_64x4d_fpn_1x_coco: # Required. {framework}_{model}
     - 0.0896
     - <
     - 50%
-  train.bbox_mAP: 
-  - 10000
-  - '>'
-  - 50%
+  val.bbox_mAP: [10000, '>', '50%']
+  val.segm_mAP: [10000, '>', '50%']
 
-mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
+mmdet_mask_rcnn_x101_64x4d_fpn_1x_coco: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]
   benchmark:
     __benchmark_avg_iter_time(s): 
@@ -433,7 +382,31 @@ mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
     - 0.0573
     - <
     - 50%
-  train.bbox_mAP: 
-  - 10000
-  - '>' 
-  - 50%
+  val.bbox_mAP: [0.4140, '>', '50%']
+
+mmdet_faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco: # Required. {framework}_{model}
+  # attr: [thresh, has_to_higher/has_to_lower]
+  benchmark:
+    __benchmark_avg_iter_time(s): 
+    - 0.304
+    - <
+    - 50%
+    __benchmark_mem_alloc(mb): 
+    - 2979
+    - <
+    - 50%
+    __benchmark_mem_cached(mb): 
+    - 4432
+    - <
+    - 50%
+    __benchmark_pavi_task_id: 
+    - 07c25fb4-e014-47bb-99fd-9128b9bc9221
+    __benchmark_pure_training_time(h): 
+    - 0.038
+    - <
+    - 50%
+    __benchmark_total_time(h): 
+    - 0.038
+    - <
+    - 50%
+  val.bbox_mAP: [0.3735, '>', '50%']

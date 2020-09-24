@@ -120,7 +120,7 @@ optimizers = dict(
 
 # learning policy
 lr_config = dict(
-    policy='Linear', by_epoch=False, target_lr=0, start=123100, interval=1231)
+    policy='Linear', by_epoch=False, target_lr=0, start=12310, interval=1231)
 # checkpoint saving
 checkpoint_config = dict(interval=12310, save_optimizer=True, by_epoch=False)
 evaluation = dict(interval=12310, save_image=True)
