@@ -9,7 +9,7 @@ task:
                      #seg_nas
                     {'framework': 'seg_nas', 'gpus': 8, 'model': 'single_path_oneshot', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                      # mmdet
-                    {'framework': 'mmdet', 'gpus': 8, 'model': 'faster_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
+                    {'framework': 'mmdet', 'gpus': 4, 'model': 'faster_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --max-step 1'},
                      # seg
                     {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                     # alphatrion
@@ -23,9 +23,9 @@ task:
                     # mmaction
                     {'framework': 'mmaction', 'gpus': 8, 'model': 'i3d_r50_video_32x2x1_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     # pod dummy data
-                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'pod', 'gpus': 4, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
                     # example dummy data
-                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 4, 'model': "mobile_v1.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
                 
                    
                     # mmdet
