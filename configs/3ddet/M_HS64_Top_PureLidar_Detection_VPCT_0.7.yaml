@@ -1,0 +1,14 @@
+_base_: [
+    'models/3ddet/tools/cfgs/_base_/models/pointpillars.yaml',
+    'models/3ddet/tools/cfgs/_base_/models/rpn_stage_hourglass_4cls_2head.yaml',
+
+    'models/3ddet/tools/cfgs/_base_/dataset/db_sampler.yaml',
+    'models/3ddet/tools/cfgs/_base_/dataset/data_augment.yaml',
+    # 'tools/cfgs/_base_/dataset/input_data_internal_18W-PK1-2_int-10_around.yaml',
+    'configs/3ddet/input_data_internal_18W-PK1-2_int-10_around.yaml',
+
+    'models/3ddet/tools/cfgs/_base_/processor/voxel_generator_70x70_4cls.yaml',
+    
+    'models/3ddet/tools/cfgs/_base_/schedules/train_4cls.yaml',
+    'models/3ddet/tools/cfgs/_base_/schedules/test_independent_nms_70x70_4cls.yaml']
+

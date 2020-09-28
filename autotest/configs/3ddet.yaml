@@ -1,0 +1,12 @@
+3ddet_M_HS64_Top_PureLidar_Detection_VPCT_0.7:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  placeholder: 'none'
+
+3ddet_M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  placeholder: 'none'
+
+3ddet_M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2:
+  # attr: [thresh, has_to_higher/has_to_lower]
+  placeholder: 'none'
+

@@ -1,0 +1,12 @@
+DATA_SAMPLE_INTERVAL: 1
+
+INPUT_DATA:
+    TRAIN:
+        INFO_PATH: "/mnt/lusre/share_data/parrots_model_data/3ddet/hesai_test_20-0113_P40/internal_18w_P40_around.pkl"
+        DBINFO_PATH: "/mnt/lusre/share_data/parrots_model_data/3ddet/hesai_test_20-0113_P40/internal_18w_P40_db_infos_around.pkl"
+        MAX_NUMBER_OF_VOXELS: 32768
+        SHUFFLE_POINTS: true
+    TEST:
+        INFO_PATH: "/mnt/lusre/share_data/parrots_model_data/3ddet/hesai_test_20-0113_P40/hesai_20-0113_P40_trainval_around.pkl"
+        MAX_NUMBER_OF_VOXELS: 65536
+        SHUFFLE_POINTS: false

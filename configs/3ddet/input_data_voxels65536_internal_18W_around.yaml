@@ -1,0 +1,24 @@
+DATA_SAMPLE_INTERVAL: 1
+
+INPUT_DATA:
+    TRAIN:
+        #INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_1224/hesai_1224_around.pkl;\
+        #  /mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_1101/hesai_1101_train_val_unified.pkl;\
+        INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/internal_1223-1227_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/internal_20-0106-0115_CN001_n10_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/internal_1202-1222_n10_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/internal_1120_before_train_val_around.pkl"
+        #DBINFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_1224/hesai_1224_db_infos_around.pkl;\
+        #  /mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_1101/hesai_1101_train_val_db_infos_norel.pkl;\
+        DBINFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/internal_1223-1227_db_infos_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/internal_20-0106-0115_CN001_n10_db_infos_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/internal_1202-1222_n10_db_infos_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/internal_1120_before_train_val_db_infos_around.pkl"
+        # INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/internal_18W-PK1-2_int-10_around.pkl"
+        # DBINFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/internal_18W-PK1-2_int-10_db_infos_around.pkl"
+        MAX_NUMBER_OF_VOXELS: 32768
+        SHUFFLE_POINTS: true
+    TEST:
+        INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_20-0113/hesai_20-0113_around_alpha.pkl"
+        MAX_NUMBER_OF_VOXELS: 65536
+        SHUFFLE_POINTS: false

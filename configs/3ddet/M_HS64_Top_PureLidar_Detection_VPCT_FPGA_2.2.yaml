@@ -1,0 +1,23 @@
+_base_: [
+    "models/3ddet/tools/cfgs/_base_/models/pointpillars.yaml",
+    "models/3ddet/tools/cfgs/_base_/models/rpn_stage_rpn32_48_88_splitHead2.yaml",
+
+    "models/3ddet/tools/cfgs/_base_/dataset/db_sampler.yaml",
+    'models/3ddet/tools/cfgs/_base_/dataset/data_augment_use_intensity_wo_noise_per_object.yaml',
+    #"models/3ddet/tools/cfgs/_base_/dataset/input_data_voxels65536_internal_18W_around.yaml",
+    "configs/3ddet/input_data_voxels65536_internal_18W_around.yaml",
+
+    "models/3ddet/tools/cfgs/_base_/processor/quantization_16bit_vfe_in10_wo_convclip.yaml",
+    "models/3ddet/tools/cfgs/_base_/processor/voxel_generator_max_points16_70x70_4cls.yaml",
+    
+    "models/3ddet/tools/cfgs/_base_/schedules/train_lr1e-2_wd5e-4_4cls.yaml",
+    "models/3ddet/tools/cfgs/_base_/schedules/test_independent_nms_70x70_4cls_normal_nms.yaml",
+    "models/3ddet/tools/cfgs/_base_/quantization_8bit.yaml"
+]
+
+
+# X120: True
+
+DATA_SAMPLE_INTERVAL: 1
+
+
