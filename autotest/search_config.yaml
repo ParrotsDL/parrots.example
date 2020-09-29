@@ -228,6 +228,9 @@ task:
                 
                 # sensemedical
                 # {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project parrots_test --max_step 20'},
+                # 
+                # instance_seg
+                # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
             ]
     # Optional
     # callback: "cat"
