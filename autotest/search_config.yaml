@@ -230,6 +230,9 @@ task:
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'example_fusion_small_pytorch', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
             
+                # 28 pod_v2.3.0
+                # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
+                # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
 
             ]
     # Optional
