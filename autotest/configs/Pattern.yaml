@@ -1,10 +1,10 @@
 Pattern_attribute_config:
   all:
     __benchmark_avg_iter_time(s):
-    - 1.3519607675671577
+    - 0.8580275638103485
     - <
     - 5%
-    - 1.287581683397293
+    - 0.3467565333843231
     __benchmark_mem_alloc(mb):
     - 1505.7
     - <
@@ -16,28 +16,28 @@ Pattern_attribute_config:
     - 5%
     - 1457
     __benchmark_pavi_task_id:
-    - 9e5ab284-7935-43cf-bc0e-8c225bbfd7f5
-    - 9e5ab284-7935-43cf-bc0e-8c225bbfd7f5
+    - a84e4d3f-3051-4642-8e40-a1564ccf2162
     __benchmark_pure_training_time(h):
-    - 7.637108316620191
+    - 23.20120852974554
     - <
     - 5%
-    - 7.273436492019229
+    - 36.919341659877034
     __benchmark_total_time(h):
-    - 7.641477976669868
+    - 23.210204126641152
     - <
     - 5%
-    - 7.277598073018922
+    - 36.932314549154704
     accuracy_delta_thres-10_age_data_smartphone:
-    - 0.6466656976744186
+    - 0.7009142441860465
     - '>'
     - 1%
-    - 0.6531976744186047
+    - 0.7627906976744186
     accuracy_delta_thres-5_age_data_smartphone:
-    - 0.3965755813953488
+    - 0.45111191860465116
     - '>'
     - 1%
-    - 0.4005813953488372
+    - 0.5107558139534883
+    test_life: 1
 Pattern_eye_best_config_parrots:
   all:
     __benchmark_avg_iter_time(s):

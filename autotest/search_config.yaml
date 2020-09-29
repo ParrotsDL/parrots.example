@@ -212,7 +212,7 @@ task:
                 ## 22.RetinaUnet
                 # {'framework': 'RetinaUnet', 'gpus': 1, 'model': '2d_runet_infer', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 ## 23.pod3.0
-                # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-h', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader'}   
+                # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-hz', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader'},   
                 #
                 # 24.prototype
                 # {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --data_reader MemcachedReader'}
@@ -227,7 +227,7 @@ task:
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'eye_best_config_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
-                # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster'},
+                # {'framework': 'Pattern', 'gpus': 8, 'model': 'example_fusion_small_pytorch', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
             
 
