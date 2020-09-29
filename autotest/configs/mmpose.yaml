@@ -61,6 +61,43 @@ mmpose_topdown_alexnet:
     - <
     - 5%
     - 0.05647386895285712
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 1.1779784381389617
+    - <
+    - 5%
+    - 1.1218842267990112
+    __benchmark_mem_alloc(mb):
+    - 1186.5
+    - <
+    - 5%
+    - 1130
+    __benchmark_mem_cached(mb):
+    - 2679.6
+    - <
+    - 5%
+    - 2552
+    __benchmark_pavi_task_id:
+    - ''
+    - ''
+    - ''
+    - 9da5993d-e275-429a-bbc3-ba77889ca598
+    __benchmark_pure_training_time(h):
+    - 1.2512406677603722
+    - <
+    - 5%
+    - 1.191657778819402
+    __benchmark_total_time(h):
+    - 1.33122783044974
+    - <
+    - 5%
+    - 1.193450269566642
+    test_life: 1
+    train.AP:
+    - 0.39402000000000004
+    - '>'
+    - 0.5%
+    - 0.396
   train.AP:
   - 0.394
   - '>'
