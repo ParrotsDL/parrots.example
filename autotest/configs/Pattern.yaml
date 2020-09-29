@@ -1,20 +1,85 @@
-Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
-    # attr: [thresh, >/<]
-    acc1_ms1m: [0, '>', '50%']
-    acc5_ms1m: [0, '>', '50%']
 Pattern_attribute_config:
-    # attr: [thresh, >/<]
-    acc1_beard: [0, '>', '50%']
-    acc1_emotion: [0, '>', '50%']
-    acc1_eye: [0, '>', '50%']
-    acc1_face_value: [0, '>', '50%']
-    acc1_gender: [0, '>', '50%']
-    acc1_glass: [0, '>', '50%']
-    acc1_mask: [0, '>', '50%']
-    acc1_mouth: [0, '>', '50%']
-    acc1_race: [0, '>', '50%']
-    acc1_smile: [0, '>', '50%']
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.8580275638103485
+    - <
+    - 5%
+    - 0.3467565333843231
+    __benchmark_mem_alloc(mb):
+    - 1505.7
+    - <
+    - 5%
+    - 1434
+    __benchmark_mem_cached(mb):
+    - 1529.85
+    - <
+    - 5%
+    - 1457
+    __benchmark_pavi_task_id:
+    - a84e4d3f-3051-4642-8e40-a1564ccf2162
+    __benchmark_pure_training_time(h):
+    - 23.20120852974554
+    - <
+    - 5%
+    - 36.919341659877034
+    __benchmark_total_time(h):
+    - 23.210204126641152
+    - <
+    - 5%
+    - 36.932314549154704
+    accuracy_delta_thres-10_age_data_smartphone:
+    - 0.7009142441860465
+    - '>'
+    - 1%
+    - 0.7627906976744186
+    accuracy_delta_thres-5_age_data_smartphone:
+    - 0.45111191860465116
+    - '>'
+    - 1%
+    - 0.5107558139534883
+    test_life: 1
 Pattern_eye_best_config_parrots:
-    # attr: [thresh, >/<]
-    acc1_valid_eye_softmax: [0, '<', '50%']
-    acc1_eye_softmax: [0, '<','50%']
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.059942518472671506
+    - <
+    - 5%
+    - 0.05708811283111572
+    __benchmark_mem_alloc(mb):
+    - 90.3
+    - <
+    - 5%
+    - 86
+    __benchmark_mem_cached(mb):
+    - 95.55
+    - <
+    - 5%
+    - 91
+    __benchmark_pavi_task_id:
+    - a10961c2-076d-467f-a8ae-d11d7b54d63b
+    - a10961c2-076d-467f-a8ae-d11d7b54d63b
+    __benchmark_pure_training_time(h):
+    - 3.794909994612137
+    - <
+    - 5%
+    - 3.6141999948687022
+    __benchmark_total_time(h):
+    - 3.799972306251526
+    - <
+    - 5%
+    - 3.619021244049072
+    accuracy_open_close_test:
+    - 0.9348
+    - '>'
+    - 0%
+    - 0.9348
+    accuracy_valid_invalid_test:
+    - 0.8729
+    - '>'
+    - 0%
+    - 0.8729
+Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
+  average_precision:
+  - 0
+  - '>'
+  - 50%

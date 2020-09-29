@@ -1,0 +1,125 @@
+prototype_resnet50:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.5034664618435191
+    - <
+    - 5%
+    - 0.4794918684223991
+    __benchmark_mem_alloc(mb):
+    - 8367.45
+    - <
+    - 5%
+    - 7969
+    __benchmark_mem_cached(mb):
+    - 8515.5
+    - <
+    - 5%
+    - 8110
+    __benchmark_pavi_task_id:
+    - ab7f7587-4ae4-49ec-8ae5-f13e21d8751d
+    __benchmark_pure_training_time(h):
+    - 12.998135969112315
+    - <
+    - 5%
+    - 12.379177113440301
+    __benchmark_total_time(h):
+    - 13.001786326289178
+    - <
+    - 5%
+    - 12.38265364408493
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.574933839200148
+    - <
+    - 5%
+    - 0.5475560373334742
+    __benchmark_mem_alloc(mb):
+    - 8367.45
+    - <
+    - 5%
+    - 7969
+    __benchmark_mem_cached(mb):
+    - 8872.5
+    - <
+    - 5%
+    - 8450
+    __benchmark_pavi_task_id:
+    - 93ba33a7-81cf-45c9-9136-f8aaa293a130
+    __benchmark_pure_training_time(h):
+    - 0.5862553816040358
+    - <
+    - 5%
+    - 0.5583384586705102
+    __benchmark_total_time(h):
+    - 0.5884166184862455
+    - <
+    - 5%
+    - 0.56039677951071
+    test_life: 1
+  top1:
+  - 76.66
+  - ''
+  - 0.5%
+  - 77.046
+prototype_shufflev2:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.4972307986287929
+    - <
+    - 5%
+    - 0.4735531415512313
+    __benchmark_mem_alloc(mb):
+    - 2690.1
+    - <
+    - 5%
+    - 2562
+    __benchmark_mem_cached(mb):
+    - 3241
+    - <
+    - 5%
+    - 2636
+    __benchmark_pavi_task_id:
+    - e88397df-c3e2-4a25-adae-51c1e81904a8
+    __benchmark_pure_training_time(h):
+    - 26.48082195742925
+    - <
+    - 5%
+    - 25.219830435646905
+    __benchmark_total_time(h):
+    - 26.486774562378724
+    - <
+    - 5%
+    - 25.225499583217832
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.57916447724869
+    - <
+    - 5%
+    - 0.5515852164273238
+    __benchmark_mem_alloc(mb):
+    - 2707.95
+    - <
+    - 5%
+    - 2579
+    __benchmark_mem_cached(mb):
+    - 2786.7
+    - <
+    - 5%
+    - 2654
+    __benchmark_pavi_task_id:
+    - accbf352-d6d5-4fb9-a946-52d1a99a5ba5
+    __benchmark_pure_training_time(h):
+    - 0.6140701838433742
+    - <
+    - 5%
+    - 0.5848287465174993
+    __benchmark_total_time(h):
+    - 0.6159598689079284
+    - <
+    - 5%
+    - 0.5866284465789795
+  top1:
+  - 67.915
+  - >
+  - 5%
+  - 68.256

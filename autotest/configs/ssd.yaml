@@ -1,15 +1,126 @@
-ssd_ssd_FSAF: # Required
-  # attr: [thresh, has_to_higher/has_to_lower]
-  epoch/mAP: [10000, '>', '20%']
+ssd_ssd_FSAF:
+  epoch/mAP:
+  - 0.3737
+  - '>'
+  - 20%
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 15.5
+    - <
+    - 50%
+    - 13.5
 
+ssd_ssd_FSAF_benchmark:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 1.3051291409105357
+    - <
+    - 50%
+    - 0.8700860939403572
+    __benchmark_mem_alloc(mb):
+    - 18562.5
+    - <
+    - 50%
+    - 12375
+    __benchmark_mem_cached(mb):
+    - 19104.0
+    - <
+    - 50%
+    - 12736
+    __benchmark_pavi_task_id:
+    - d4cfee40-2c04-4934-812d-b51fb19ecbf1
+    __benchmark_pure_training_time(h):
+    - 1.6300748762488366
+    - <
+    - 50%
+    - 1.086716584165891
+    __benchmark_total_time(h):
+    - 1.7002065000931423
+    - <
+    - 50%
+    - 1.133471000062095
 ssd_ssd_Retina:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  epoch/mAP: [10000, '>', '20%']
-
-ssd_ssd_FSAF_benchmark: # Required
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
+  epoch/mAP:
+  - 0.3450
+  - '>'
+  - 20%
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 16
+    - <
+    - 50%
+    - 14
 
 ssd_ssd_Retina_benchmark:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.668783706013519
+    - <
+    - 50%
+    - 0.44585580400901265
+    __benchmark_mem_alloc(mb):
+    - 18780.0
+    - <
+    - 50%
+    - 12520
+    __benchmark_mem_cached(mb):
+    - 19311.0
+    - <
+    - 50%
+    - 12874
+    __benchmark_pavi_task_id:
+    - 0612b664-15ec-46a4-a114-f6d0a64ebdd1
+    __benchmark_pure_training_time(h):
+    - 0.9974785652756691
+    - <
+    - 50%
+    - 0.6649857101837794
+    __benchmark_total_time(h):
+    - 1.0770672939221064
+    - <
+    - 50%
+    - 0.7180448626147377

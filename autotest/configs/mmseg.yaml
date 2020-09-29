@@ -1,103 +1,103 @@
 mmseg_fcn_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_ann_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_ccnet_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_deeplabv3plus_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_deeplabv3_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_encnet_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_fcn_hr18s_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_gcnet_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_nonlocal_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_ocrnet_hr18s_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_psanet_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_pspnet_r101-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_upernet_r101_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_fcn_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_ann_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_ccnet_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_deeplabv3plus_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_deeplabv3_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_encnet_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_fcn_hr18_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_gcnet_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_nonlocal_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_ocrnet_hr18_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_psanet_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_pspnet_r50-d8_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']
 
 mmseg_upernet_r50_512x1024_40k_cityscapes:
   # attr: [thresh, has_to_higher/has_to_lower]
-  train.mIoU: [10000, '>', '20%']
+  val.mIoU: [10000, '>', '20%']

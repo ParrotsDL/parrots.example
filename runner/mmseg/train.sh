@@ -14,6 +14,7 @@ EXTRA_ARGS=${array[@]:3:$len}
 
 pyroot=$ROOT/models/mmsegmentation
 export PYTHONPATH=$pyroot:$PYTHONPATH
+export PARROTS_ALIGN_TORCH=1
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \

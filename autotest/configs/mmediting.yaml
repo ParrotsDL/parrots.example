@@ -1,52 +1,421 @@
 mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
-  # attr: [thresh, </>]
-  train.val_saved_number: [106, '>', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.2333865966369857
+    - <
+    - 50%
+    - 0.15559106442465712
+    __benchmark_mem_alloc(mb):
+    - 14932.5
+    - <
+    - 50%
+    - 9955
+    __benchmark_mem_cached(mb):
+    - 15513.0
+    - <
+    - 50%
+    - 10342
+    __benchmark_pavi_task_id:
+    - 1e3ed6e1-aefa-4295-9c33-b9da21ab40a4
+    __benchmark_pure_training_time(h):
+    - 0.023157903254032136
+    - <
+    - 50%
+    - 0.015438602169354757
+    __benchmark_total_time(h):
+    - 0.023158082564671834
+    - <
+    - 50%
+    - 0.015438721709781222
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.18867670493339425
+    - <
+    - 5%
+    - 0.17969209993656596
+    __benchmark_mem_alloc(mb):
+    - 10452.75
+    - <
+    - 5%
+    - 9955
+    __benchmark_mem_cached(mb):
+    - 10859.1
+    - <
+    - 5%
+    - 10342
+    __benchmark_pavi_task_id:
+    - ''
+    - ''
+    - 36ea7acc-5a43-49bf-8233-755882283856
+    - d867ea83-aa15-44cd-bfd4-766a652aa1ed
+    - 80185342-0a53-4ca5-ac52-b1be01c32dca
+    __benchmark_pure_training_time(h):
+    - 1.219198552340269
+    - <
+    - 5%
+    - 1.161141478419304
+    __benchmark_total_time(h):
+    - 1.2191987753510476
+    - <
+    - 5%
+    - 1.1611416908105214
+    test_life: 1
+    train.val_saved_number:
+    - 309
+    - '>'
+    - 50%
+  train.val_saved_number:
+  - 309
+  - '>'
+  - 50%
 mmediting_deepfillv2_256x256_8x2_celeba:
-  # attr: [thresh, </>]
-  train.l1: [5.411, '<', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.23287119794247757
+    - <
+    - 50%
+    - 0.15524746529498504
+    __benchmark_mem_alloc(mb):
+    - 2640.0
+    - <
+    - 50%
+    - 1760
+    __benchmark_mem_cached(mb):
+    - 3798.0
+    - <
+    - 50%
+    - 2532
+    __benchmark_pavi_task_id:
+    - 46f6de0f-e2a8-4b4a-b21e-247918c56d6b
+    __benchmark_pure_training_time(h):
+    - 0.02813289890686671
+    - <
+    - 50%
+    - 0.01875526593791114
+    __benchmark_total_time(h):
+    - 0.02813311924537023
+    - <
+    - 50%
+    - 0.01875541283024682
+  train.l1:
+  - 0.125
+  - <
+  - 50%
 mmediting_dim_stage2_v16_pln_1x1_1000k_comp1k:
-  # attr: [thresh, </>]
-  train.CONN: [52.4, '<', '50%']
-  train.GRAD: [29.4, '<', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.12231539790310078
+    - <
+    - 50%
+    - 0.08154359860206718
+    __benchmark_mem_alloc(mb):
+    - 1035.0
+    - <
+    - 50%
+    - 690
+    __benchmark_mem_cached(mb):
+    - 1533.0
+    - <
+    - 50%
+    - 1022
+    __benchmark_pavi_task_id:
+    - 7810fcd6-4d36-424d-bc68-ad19663b41d6
+    __benchmark_pure_training_time(h):
+    - 0.015158596336841582
+    - <
+    - 50%
+    - 0.010105730891227722
+    __benchmark_total_time(h):
+    - 0.015158753494421643
+    - <
+    - 50%
+    - 0.010105835662947761
+  train.CONN:
+  - 53.4
+  - <
+  - 50%
+  train.GRAD:
+  - 30.5
+  - <
+  - 50%
 mmediting_edsr_x2c64b16_g1_300k_div2k:
-  # attr: [thresh, </>]
-  train.PSNR: [35.7592, '>', '50%']
-
-mmediting_edvrm_wotsa_x4_g8_600k_reds:
-  # attr: [thresh, </>]
-  train.PSNR: [30.3430, '>', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.25620411403143584
+    - <
+    - 50%
+    - 0.17080274268762388
+    __benchmark_mem_alloc(mb):
+    - 726.0
+    - <
+    - 50%
+    - 484
+    __benchmark_mem_cached(mb):
+    - 975.0
+    - <
+    - 50%
+    - 650
+    __benchmark_pavi_task_id:
+    - e93c58e1-7810-40f2-8005-123fca920540
+    __benchmark_pure_training_time(h):
+    - 0.025861183404922487
+    - <
+    - 50%
+    - 0.01724078893661499
+    __benchmark_total_time(h):
+    - 0.025861414074897768
+    - <
+    - 50%
+    - 0.017240942716598512
+  train.PSNR:
+  - 36.7
+  - '>'
+  - 50%
 mmediting_esrgan_psnr_x4c64b23g32_g1_1000k_div2k:
-  # attr: [thresh, </>]
-  train.PSNR: [30.6428, '>', '50%']
-  train.SSIM: [0.8559, '>', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.7234991450807942
+    - <
+    - 50%
+    - 0.4823327633871961
+    __benchmark_mem_alloc(mb):
+    - 5985.0
+    - <
+    - 50%
+    - 3990
+    __benchmark_mem_cached(mb):
+    - 6417.0
+    - <
+    - 50%
+    - 4278
+    __benchmark_pavi_task_id:
+    - 6ae17efd-4d71-4962-befb-5c0240de0067
+    __benchmark_pure_training_time(h):
+    - 0.06955055713653564
+    - <
+    - 50%
+    - 0.046367038091023764
+    __benchmark_total_time(h):
+    - 0.06955085476239523
+    - <
+    - 50%
+    - 0.04636723650826348
+  train.PSNR:
+  - 31.601
+  - '>'
+  - 50%
+  train.SSIM:
+  - 0.846
+  - '>'
+  - 50%
 mmediting_gl_256x256_8x12_celeba:
-  # attr: [thresh, </>]
-  train.l1: [6.678, '<', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5014296574379081
+    - <
+    - 50%
+    - 0.33428643829193877
+    __benchmark_mem_alloc(mb):
+    - 4974.0
+    - <
+    - 50%
+    - 3316
+    __benchmark_mem_cached(mb):
+    - 6264.0
+    - <
+    - 50%
+    - 4176
+    __benchmark_pavi_task_id:
+    - d2309ddb-9658-42d2-91ef-b1ceccedeb9d
+    __benchmark_pure_training_time(h):
+    - 0.04653124302625656
+    - <
+    - 50%
+    - 0.03102082868417104
+    __benchmark_total_time(h):
+    - 0.04653159081935883
+    - <
+    - 50%
+    - 0.031021060546239217
+  train.l1:
+  - 0.144
+  - <
+  - 50%
 mmediting_indexnet_mobv2_1x16_78k_comp1k:
-  # attr: [thresh, </>]
-  train.CONN: [44.8, '<', '50%']
-  train.GRAD: [25.5, '<', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.7308760205311562
+    - <
+    - 50%
+    - 0.4872506803541041
+    __benchmark_mem_alloc(mb):
+    - 13759.5
+    - <
+    - 50%
+    - 9173
+    __benchmark_mem_cached(mb):
+    - 13983.0
+    - <
+    - 50%
+    - 9322
+    __benchmark_pavi_task_id:
+    - 5c5138ec-508b-4279-854c-8b3676b6e00f
+    __benchmark_pure_training_time(h):
+    - 0.07101035535335541
+    - <
+    - 50%
+    - 0.04734023690223694
+    __benchmark_total_time(h):
+    - 0.07101062307755153
+    - <
+    - 50%
+    - 0.04734041538503435
+  train.CONN:
+  - 50.9
+  - <
+  - 50%
+  train.GRAD:
+  - 32.7
+  - <
+  - 50%
 mmediting_msrresnet_x4c64b16_g1_1000k_div2k:
-  # attr: [thresh, </>]
-  train.PSNR: [30.2252, '>', '50%']
-  train.SSIM: [0.8491, '>', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.10798483642179574
+    - <
+    - 50%
+    - 0.07198989094786383
+    __benchmark_mem_alloc(mb):
+    - 654.0
+    - <
+    - 50%
+    - 436
+    __benchmark_mem_cached(mb):
+    - 876.0
+    - <
+    - 50%
+    - 584
+    __benchmark_pavi_task_id:
+    - 1538febe-31d3-4004-81f3-4fe7d2b77a7f
+    __benchmark_pure_training_time(h):
+    - 0.01489108145236969
+    - <
+    - 50%
+    - 0.009927387634913127
+    __benchmark_total_time(h):
+    - 0.01489126116037369
+    - <
+    - 50%
+    - 0.009927507440249126
+  train.PSNR:
+  - 31.2
+  - '>'
+  - 50%
+  train.SSIM:
+  - 0.839
+  - '>'
+  - 50%
 mmediting_pconv_256x256_stage1_8x1_celeba:
-  # attr: [thresh, </>]
-  train.l1: [5.990, '<', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.1662429677906321
+    - <
+    - 50%
+    - 0.11082864519375474
+    __benchmark_mem_alloc(mb):
+    - 1746.0
+    - <
+    - 50%
+    - 1164
+    __benchmark_mem_cached(mb):
+    - 1971.0
+    - <
+    - 50%
+    - 1314
+    __benchmark_pavi_task_id:
+    - 5a19755c-bd81-4b25-969b-33e616a3b9ca
+    __benchmark_pure_training_time(h):
+    - 0.01903437634309133
+    - <
+    - 50%
+    - 0.012689584228727553
+    __benchmark_total_time(h):
+    - 0.01903464992841085
+    - <
+    - 50%
+    - 0.012689766618940565
+  train.l1:
+  - 0.126
+  - <
+  - 50%
 mmediting_pix2pix_vanilla_unet_bn_1x1_80k_facades:
-  # attr: [thresh, </>]
-  train.val_saved_number: [106, '>', '50%']
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.05819856942589603
+    - <
+    - 50%
+    - 0.03879904628393069
+    __benchmark_mem_alloc(mb):
+    - 7128.0
+    - <
+    - 50%
+    - 4752
+    __benchmark_mem_cached(mb):
+    - 7173.0
+    - <
+    - 50%
+    - 4782
+    __benchmark_pavi_task_id:
+    - bf0a0db8-df4e-4301-90e1-0fe24e7fce88
+    __benchmark_pure_training_time(h):
+    - 0.006997065742810567
+    - <
+    - 50%
+    - 0.0046647104952070445
+    __benchmark_total_time(h):
+    - 0.006997306644916535
+    - <
+    - 50%
+    - 0.004664871096611023
+  train.val_saved_number:
+  - 106
+  - '>'
+  - 50%
 mmediting_srcnn_x4k915_g1_1000k_div2k:
-  # attr: [thresh, </>]
-  train.PSNR: [28.4316, '>', '50%']
-  train.SSIM: [0.8099, '>', '50%']
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.119021189746572
+    - <
+    - 50%
+    - 0.079347459831048
+    __benchmark_mem_alloc(mb):
+    - 882.0
+    - <
+    - 50%
+    - 588
+    __benchmark_mem_cached(mb):
+    - 939.0
+    - <
+    - 50%
+    - 626
+    __benchmark_pavi_task_id:
+    - 3a0a90ca-51ac-4f2c-a5e2-09dc37d772a9
+    __benchmark_pure_training_time(h):
+    - 0.016047275960445407
+    - <
+    - 50%
+    - 0.01069818397363027
+    __benchmark_total_time(h):
+    - 0.016047449111938478
+    - <
+    - 50%
+    - 0.010698299407958984
+  train.PSNR:
+  - 29.4
+  - '>'
+  - 50%
+  train.SSIM:
+  - 0.801
+  - '>'
+  - 50%
+

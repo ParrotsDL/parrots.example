@@ -14,8 +14,8 @@ resume: ../checkpoint/latest.pth
 label_smooth: 0.1
 
 data_reader: MemcachedReader   # CephReader
-ceph_imagenet_train_root: s3://parrots_data/images/train
-ceph_imagenet_valid_root: s3://parrots_data/images/val
+ceph_imagenet_train_root: s3://parrots_model_data/images/train
+ceph_imagenet_valid_root: s3://parrots_model_data/images/val
 imagenet_train_root: /mnt/lustre/share/images/train
 imagenet_valid_root: /mnt/lustre/share/images/val
 
@@ -26,7 +26,7 @@ data:
         imglist_type: ListImglist
         ceph_imglist_type: CephImglist
         imglist_path: /mnt/lustre/share/images/meta/train.txt
-        ceph_imglist_path: s3://parrots_data/images/meta/train.txt
+        ceph_imglist_path: s3://parrots_model_data/images/meta/train.txt
         root: '@{imagenet_train_root}'
         ceph_root: '@{ceph_imagenet_train_root}'
         reader: '@{data_reader}'
@@ -56,7 +56,7 @@ data:
         imglist_type: ListImglist
         ceph_imglist_type: CephImglist
         imglist_path: /mnt/lustre/share/images/meta/val.txt
-        ceph_imglist_path: s3://parrots_data/images/meta/val.txt 
+        ceph_imglist_path: s3://parrots_model_data/images/meta/val.txt
         root: '@{imagenet_valid_root}'
         ceph_root: '@{ceph_imagenet_valid_root}'
         reader: '@{data_reader}'
@@ -85,7 +85,7 @@ data:
         imglist_type: ListImglist
         ceph_imglist_type: CephImglist
         imglist_path: /mnt/lustre/share_data/wangshiguang/imglist/imagenet/nas_train.txt
-        ceph_imglist_path: s3://parrots_data/wangshiguang/imglist/imagenet/nas_train.txt
+        ceph_imglist_path: s3://parrots_model_data/alphatrion_label/nas_train.txt
         root: '@{imagenet_train_root}'
         ceph_root: '@{ceph_imagenet_train_root}'
         reader: '@{data_reader}'
@@ -115,7 +115,7 @@ data:
         imglist_type: ListImglist
         ceph_imglist_type: CephImglist
         imglist_path: /mnt/lustre/share_data/wangshiguang/imglist/imagenet/nas_train_8000.txt
-        ceph_imglist_path: s3://parrots_data/wangshiguang/imglist/imagenet/nas_train_8000.txt
+        ceph_imglist_path: s3://parrots_model_data/alphatrion_label/nas_train_8000.txt 
         root: '@{imagenet_train_root}'
         ceph_root: '@{ceph_imagenet_train_root}'
         reader: '@{data_reader}'
@@ -145,7 +145,7 @@ data:
         imglist_type: ListImglist
         ceph_imglist_type: CephImglist
         imglist_path: /mnt/lustre/share_data/wangshiguang/imglist/imagenet/nas_valid.txt
-        ceph_imglist_path: s3://parrots_data/wangshiguang/imglist/imagenet/nas_valid.txt
+        ceph_imglist_path: s3://parrots_model_data/alphatrion_label/nas_valid.txt
         root: '@{imagenet_valid_root}'
         ceph_root: '@{ceph_imagenet_valid_root}'
         reader: '@{data_reader}'

@@ -9,6 +9,35 @@ seg_deeplab: # Required.
 seg_mobilenet_v2_plus: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
   mIoU: [10000, '>', '20%']
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.31359564195765127
+    - <
+    - 50%
+    - 0.20906376130510085
+    __benchmark_mem_alloc(mb):
+    - 11823.0
+    - <
+    - 50%
+    - 7882
+    __benchmark_mem_cached(mb):
+    - 12120.0
+    - <
+    - 50%
+    - 8080
+    __benchmark_pavi_task_id:
+    - 6038f047-eaf6-431c-8f35-3e188fd24150
+    __benchmark_pure_training_time(h):
+    - 0.49209322849909465
+    - <
+    - 50%
+    - 0.3280621523327298
+    __benchmark_total_time(h):
+    - 9
+    - <
+    - 50%
+    - 7
+
 
 seg_pspnet.benchmark: # Required. {framework}_{model}
   # attr: [thresh, has_to_higher/has_to_lower]

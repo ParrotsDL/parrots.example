@@ -1,0 +1,3 @@
+encoder_benign: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  test_acc/test_acc: [10000, '>', '5%']

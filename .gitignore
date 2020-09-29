@@ -6,3 +6,5 @@ work_dirs
 checkpoints*
 results*
 .vscode
+snapshot
+*.pyc

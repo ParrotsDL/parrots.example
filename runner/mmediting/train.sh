@@ -2,15 +2,17 @@
 
 mkdir -p log/mmediting
 
-T=`date +%m%d%H%M`
+T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
 EXTRA_ARGS=${@:4}
 
 pyroot=$ROOT/models/mmediting
 export PYTHONPATH=$pyroot:$PYTHONPATH
+export PARROTS_POOL_DATALOADER=1
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
+
 
 PYTHON_ARGS="python -u models/mmediting/tools/train.py configs/mmediting/${name}.py --launcher=slurm"
 
