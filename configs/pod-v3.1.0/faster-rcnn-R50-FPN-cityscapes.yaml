@@ -35,12 +35,13 @@ dataset: # Required.
       kwargs:
         source: train  # dataset id
         has_mask: True
-        meta_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_train.json
+        # meta_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_train.json
+        meta_file: s3://parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_train.json
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/cityscapes/leftImg8bit/train
-            image_dir: s3://parrots_data/DSK/datasets/cityscapes/leftImg8bit/train
+            image_dir: s3://parrots_model_data/DSK/datasets/cityscapes/leftImg8bit/train
             color_mode: RGB
         transformer: [*flip, *train_resize, *to_tensor, *normalize]
   test:
@@ -49,18 +50,20 @@ dataset: # Required.
       kwargs:
         source: val
         has_mask: True
-        meta_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
+        # meta_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
+        meta_file: s3://parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/cityscapes/leftImg8bit/val
-            image_dir: s3://parrots_data/DSK/datasets/cityscapes/leftImg8bit/val
+            image_dir: s3://parrots_model_data/DSK/datasets/cityscapes/leftImg8bit/val
             color_mode: RGB
         transformer: [*test_resize, *to_tensor, *normalize]
         evaluator:
           type: COCO               # choices = {'COCO', 'VOC', 'mAP'}
           kwargs:
-            gt_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
+            # gt_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
+            gt_file: s3://parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
             iou_types: [bbox, segm]      # calcuate AP_bbox only
   batch_sampler:
     type: aspect_ratio_group
@@ -94,9 +97,9 @@ trainer: # Required.
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
+  save_dir: checkpoints/faster-rcnn-R50-FPN-cityscapes     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/faster-rcnn-R50-FPN-cityscapes  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 

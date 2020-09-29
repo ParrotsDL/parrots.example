@@ -1,64 +1,480 @@
-pod-v3.1.0_faster-rcnn-R50-FPN-1x.benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-pod-v3.1.0_faster-rcnn-R50-FPN-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0.526, '>', '20%']  # 0.584 - 10%
-
-pod-v3.1.0_faster-rcnn-mobilenet-FPN-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_mask-rcnn-R50-FPN-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0.526, '>', '20%']  # 0.592 - 10%
-
-pod-v3.1.0_cascade-rcnn-R50-FPN-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_fcos-R50-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_faster-rcnn-R50-FPN-1x-ms-test-aug: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_effnetd0-bifpn-retina-32epoch: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_faster-rcnn-R50-FPN-cityscapes: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_faster-rcnn-R50-FPN-openimages: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_grid-rcnn-R50-FPN-2x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_keypoint-rcnn-R50-FPN-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_mask-rcnn-R50-FPN-2x-lvis: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_retinanet-R50-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_rfcn-R101-ohem-deform-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
-pod-v3.1.0_rfcn-shufflenet-1x: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  metrics/bbox.AP.5: [0, '>', '20%']
-
+pod-v3.1.0_cascade-rcnn-R50-FPN-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.6400844335556031
+    - <
+    - 50%
+    - 0.42672295570373536
+    __benchmark_mem_alloc(mb):
+    - 4372.5
+    - <
+    - 50%
+    - 2915
+    __benchmark_mem_cached(mb):
+    - 5562.0
+    - <
+    - 50%
+    - 3708
+    __benchmark_pavi_task_id:
+    - 80b23c73-377b-428a-a267-9cd0a69c45fb
+    __benchmark_pure_training_time(h):
+    - 0.14639676441748936
+    - <
+    - 50%
+    - 0.09759784294499291
+    __benchmark_total_time(h):
+    - 0.17685643474260965
+    - <
+    - 50%
+    - 0.11790428982840644
+  placeholder: none
+pod-v3.1.0_centernetkp511-R101-60epoch:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.20814159989357
+    - <
+    - 50%
+    - 1.4720943999290466
+    __benchmark_mem_alloc(mb):
+    - 18663.0
+    - <
+    - 50%
+    - 12442
+    __benchmark_mem_cached(mb):
+    - 19209.0
+    - <
+    - 50%
+    - 12806
+    __benchmark_pavi_task_id:
+    - 1e39e008-4d7e-480d-ace4-d9206ad6a9dd
+    __benchmark_pure_training_time(h):
+    - 0.35249628305435177
+    - <
+    - 50%
+    - 0.23499752203623453
+    __benchmark_total_time(h):
+    - 0.3760447916388512
+    - <
+    - 50%
+    - 0.2506965277592341
+  placeholder: none
+pod-v3.1.0_effnetd0-bifpn-retina-32epoch:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5864222502708435
+    - <
+    - 50%
+    - 0.390948166847229
+    __benchmark_mem_alloc(mb):
+    - 14152.5
+    - <
+    - 50%
+    - 9435
+    __benchmark_mem_cached(mb):
+    - 17433.0
+    - <
+    - 50%
+    - 11622
+    __benchmark_pavi_task_id:
+    - e9db4980-5d18-4285-a9f2-7e447326e2fb
+    __benchmark_pure_training_time(h):
+    - 0.9256949529051781
+    - <
+    - 50%
+    - 0.617129968603452
+    __benchmark_total_time(h):
+    - 0.9564255609114964
+    - <
+    - 50%
+    - 0.6376170406076643
+  placeholder: none
+pod-v3.1.0_faster-rcnn-R50-FPN-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.44161870479583737
+    - <
+    - 50%
+    - 0.2944124698638916
+    __benchmark_mem_alloc(mb):
+    - 3894.0
+    - <
+    - 50%
+    - 2596
+    __benchmark_mem_cached(mb):
+    - 4887.0
+    - <
+    - 50%
+    - 3258
+    __benchmark_pavi_task_id:
+    - 0bf41fbf-92ec-4046-aca1-a43cca009717
+    __benchmark_pure_training_time(h):
+    - 0.12284495671590168
+    - <
+    - 50%
+    - 0.08189663781060112
+    __benchmark_total_time(h):
+    - 0.14216427932182948
+    - <
+    - 50%
+    - 0.09477618621455298
+  placeholder: none
+pod-v3.1.0_faster-rcnn-R50-FPN-1x-ms-test-aug:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.44019959449768065
+    - <
+    - 50%
+    - 0.2934663963317871
+    __benchmark_mem_alloc(mb):
+    - 3894.0
+    - <
+    - 50%
+    - 2596
+    __benchmark_mem_cached(mb):
+    - 4887.0
+    - <
+    - 50%
+    - 3258
+    __benchmark_pavi_task_id:
+    - 7717b200-fd4d-4837-a775-3f34dd7dde97
+    __benchmark_pure_training_time(h):
+    - 0.10952339162429175
+    - <
+    - 50%
+    - 0.0730155944161945
+    __benchmark_total_time(h):
+    - 0.13902193268140156
+    - <
+    - 50%
+    - 0.09268128845426771
+  placeholder: none
+pod-v3.1.0_faster-rcnn-R50-FPN-cityscapes:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.8322709465026856
+    - <
+    - 50%
+    - 0.5548472976684571
+    __benchmark_mem_alloc(mb):
+    - 3822.0
+    - <
+    - 50%
+    - 2548
+    __benchmark_mem_cached(mb):
+    - 4104.0
+    - <
+    - 50%
+    - 2736
+    __benchmark_pavi_task_id:
+    - 254e3844-ac11-4357-aa1b-57e67c97264f
+    __benchmark_pure_training_time(h):
+    - 0.11014986912409463
+    - <
+    - 50%
+    - 0.07343324608272976
+    __benchmark_total_time(h):
+    - 0.14282179981470108
+    - <
+    - 50%
+    - 0.09521453320980072
+  placeholder: none
+pod-v3.1.0_faster-rcnn-R50-FPN-openimages:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.47003997445106505
+    - <
+    - 50%
+    - 0.3133599829673767
+    __benchmark_mem_alloc(mb):
+    - 3972.0
+    - <
+    - 50%
+    - 2648
+    __benchmark_mem_cached(mb):
+    - 5478.0
+    - <
+    - 50%
+    - 3652
+    __benchmark_pavi_task_id:
+    - aa5465d7-fbae-46db-b0ef-6b81d77ecf7c
+    __benchmark_pure_training_time(h):
+    - 0.24475555578867592
+    - <
+    - 50%
+    - 0.16317037052578395
+    __benchmark_total_time(h):
+    - 0.2636946180462837
+    - <
+    - 50%
+    - 0.1757964120308558
+  placeholder: none
+pod-v3.1.0_faster-rcnn-mobilenet-FPN-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.4556020331382752
+    - <
+    - 50%
+    - 0.3037346887588501
+    __benchmark_mem_alloc(mb):
+    - 3943.5
+    - <
+    - 50%
+    - 2629
+    __benchmark_mem_cached(mb):
+    - 4968.0
+    - <
+    - 50%
+    - 3312
+    __benchmark_pavi_task_id:
+    - 0b2e6f24-b3ba-445b-86b4-a4d72e449e23
+    __benchmark_pure_training_time(h):
+    - 0.10869947344064712
+    - <
+    - 50%
+    - 0.07246631562709809
+    __benchmark_total_time(h):
+    - 0.12747923801342645
+    - <
+    - 50%
+    - 0.08498615867561764
+  placeholder: none
+pod-v3.1.0_fcos-R50-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.4456786930561065
+    - <
+    - 50%
+    - 0.29711912870407103
+    __benchmark_mem_alloc(mb):
+    - 5613.0
+    - <
+    - 50%
+    - 3742
+    __benchmark_mem_cached(mb):
+    - 9510.0
+    - <
+    - 50%
+    - 6340
+    __benchmark_pavi_task_id:
+    - 0066ddb6-2327-4f01-95be-5ec991db4943
+    __benchmark_pure_training_time(h):
+    - 0.1556015079220136
+    - <
+    - 50%
+    - 0.10373433861467574
+    __benchmark_total_time(h):
+    - 0.18396925777196885
+    - <
+    - 50%
+    - 0.12264617184797923
+  placeholder: none
+pod-v3.1.0_grid-rcnn-R50-FPN-2x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.8212785673141478
+    - <
+    - 50%
+    - 0.5475190448760986
+    __benchmark_mem_alloc(mb):
+    - 6190.5
+    - <
+    - 50%
+    - 4127
+    __benchmark_mem_cached(mb):
+    - 8256.0
+    - <
+    - 50%
+    - 5504
+    __benchmark_pavi_task_id:
+    - c5e14c53-cee1-4e08-9645-ad16558965b6
+    __benchmark_pure_training_time(h):
+    - 0.14394355724255245
+    - <
+    - 50%
+    - 0.09596237149503496
+    __benchmark_total_time(h):
+    - 0.16466984848181407
+    - <
+    - 50%
+    - 0.10977989898787605
+  placeholder: none
+pod-v3.1.0_keypoint-rcnn-R50-FPN-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5275925016403198
+    - <
+    - 50%
+    - 0.3517283344268799
+    __benchmark_mem_alloc(mb):
+    - 4201.5
+    - <
+    - 50%
+    - 2801
+    __benchmark_mem_cached(mb):
+    - 5169.0
+    - <
+    - 50%
+    - 3446
+    __benchmark_pavi_task_id:
+    - c2301a0f-abd9-4aec-971e-7d1076b0b253
+    __benchmark_pure_training_time(h):
+    - 0.12168323993682861
+    - <
+    - 50%
+    - 0.08112215995788574
+    __benchmark_total_time(h):
+    - 0.13852329125006993
+    - <
+    - 50%
+    - 0.09234886083337995
+  placeholder: none
+pod-v3.1.0_mask-rcnn-R50-FPN-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5587720084190368
+    - <
+    - 50%
+    - 0.3725146722793579
+    __benchmark_mem_alloc(mb):
+    - 3943.5
+    - <
+    - 50%
+    - 2629
+    __benchmark_mem_cached(mb):
+    - 4887.0
+    - <
+    - 50%
+    - 3258
+    __benchmark_pavi_task_id:
+    - 8ddfc2d2-c534-490c-8e65-8edda7d9c4a8
+    __benchmark_pure_training_time(h):
+    - 0.19812642355759938
+    - <
+    - 50%
+    - 0.13208428237173292
+    __benchmark_total_time(h):
+    - 0.21888976732889814
+    - <
+    - 50%
+    - 0.14592651155259875
+  placeholder: none
+pod-v3.1.0_mask-rcnn-R50-FPN-2x-lvis:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5251460158824921
+    - <
+    - 50%
+    - 0.35009734392166136
+    __benchmark_mem_alloc(mb):
+    - 2773.5
+    - <
+    - 50%
+    - 1849
+    __benchmark_mem_cached(mb):
+    - 4485.0
+    - <
+    - 50%
+    - 2990
+    __benchmark_pavi_task_id:
+    - 8ba3a28e-13ad-4817-8f15-01508cc1e52a
+    __benchmark_pure_training_time(h):
+    - 1.010950137277444
+    - <
+    - 50%
+    - 0.6739667581849628
+    __benchmark_total_time(h):
+    - 1.0346325196822486
+    - <
+    - 50%
+    - 0.689755013121499
+  placeholder: none
+pod-v3.1.0_retinanet-R50-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.34507797002792356
+    - <
+    - 50%
+    - 0.2300519800186157
+    __benchmark_mem_alloc(mb):
+    - 4117.5
+    - <
+    - 50%
+    - 2745
+    __benchmark_mem_cached(mb):
+    - 4539.0
+    - <
+    - 50%
+    - 3026
+    __benchmark_pavi_task_id:
+    - 3f5d09da-1446-4e32-af07-f776ac46dfa0
+    __benchmark_pure_training_time(h):
+    - 0.10739557693401973
+    - <
+    - 50%
+    - 0.07159705128934649
+    __benchmark_total_time(h):
+    - 0.12610562990109125
+    - <
+    - 50%
+    - 0.08407041993406084
+  placeholder: none
+pod-v3.1.0_rfcn-R101-ohem-deform-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.5832388544082642
+    - <
+    - 50%
+    - 0.3888259029388428
+    __benchmark_mem_alloc(mb):
+    - 5406.0
+    - <
+    - 50%
+    - 3604
+    __benchmark_mem_cached(mb):
+    - 7473.0
+    - <
+    - 50%
+    - 4982
+    __benchmark_pavi_task_id:
+    - 18544666-a659-4bd8-b039-ec002720cfed
+    __benchmark_pure_training_time(h):
+    - 0.22118377745151518
+    - <
+    - 50%
+    - 0.14745585163434347
+    __benchmark_total_time(h):
+    - 0.24257631341616315
+    - <
+    - 50%
+    - 0.1617175422774421
+  placeholder: none
+pod-v3.1.0_rfcn-shufflenet-1x:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.29785177230834964
+    - <
+    - 50%
+    - 0.19856784820556642
+    __benchmark_mem_alloc(mb):
+    - 1519.5
+    - <
+    - 50%
+    - 1013
+    __benchmark_mem_cached(mb):
+    - 2001.0
+    - <
+    - 50%
+    - 1334
+    __benchmark_pavi_task_id:
+    - a1ca8405-3d47-4df6-9267-d355042bd7b2
+    __benchmark_pure_training_time(h):
+    - 0.22501324474811554
+    - <
+    - 50%
+    - 0.15000882983207703
+    __benchmark_total_time(h):
+    - 0.24967625766992568
+    - <
+    - 50%
+    - 0.16645083844661712
+  placeholder: none
