@@ -37,7 +37,7 @@ from batchgenerators.dataloading import SingleThreadedAugmenter
 from batchgenerators.transforms.spatial_transforms import SpatialTransform
 from batchgenerators.transforms.crop_and_pad_transforms import CenterCropTransform
 # from batchgenerators.transforms.utility_transforms import ConvertSegToBoundingBoxCoordinates
-from experiments.liver_ct_zssy_2d_runet.seg_to_bbox import ConvertSegToBoundingBoxCoordinates
+from seg_to_bbox import ConvertSegToBoundingBoxCoordinates
 
 
 def read_json(file_path):
