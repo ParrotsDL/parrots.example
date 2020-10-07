@@ -108,3 +108,6 @@
 [submodule "models/sensemedical"]
     path = models/sensemedical
     url = git@gitlab.bj.sensetime.com:parrots.model/sensemedical.git
+[submodule "models/sr_v3.0"]
+	path = models/sr_v3.0
+	url = git@gitlab.bj.sensetime.com:parrots.model/sr_v3.0.git
