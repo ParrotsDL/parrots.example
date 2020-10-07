@@ -228,7 +228,7 @@ task:
                     # 29.instance_seg
                     # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 201'},
                     # 30 detr
-                    # {'framework': 'detr', 'gpus': 8, 'model': 'dert', 'py_args': '--pavi --pavi-project parrots_test --max_step 1'},
+                    # {'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project parrots_test --max_step 1'},
 
                 ]
 
