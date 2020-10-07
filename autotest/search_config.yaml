@@ -235,6 +235,8 @@ task:
                 # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
 
+                # 33 sr_v3.0
+                # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'sr_v3.0', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024'},
             ]
     # Optional
     # callback: "cat"
