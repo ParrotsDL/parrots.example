@@ -36,7 +36,8 @@ run_type_table = {
     'dailytest': 1,
     'dummydata': 0,
     'weeklybenchmark': 0,
-    'weeklytest': 1
+    'weeklytest': 1,
+    'autoparrotsbenchmark':0
 }
 
 value_type_table = {
@@ -129,6 +130,8 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                     slurm_job_id = None
         _, status = get_slurm_job_id()
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
+            print('slurm_job_status: R')
+            sys.stdout.flush()
             break
         # break if job_pid is die.
         if job_pid and (not psutil.pid_exists(job_pid)):
@@ -419,6 +422,7 @@ def get_slurm_job_id():
     """
     work_dir = os.environ['run_path']
     command = os.environ['command']
+    name = os.environ['name']
     # find srun_args
     partition = None
     srun_args = os.environ.get('SRUN_ARGS', None)
@@ -430,7 +434,7 @@ def get_slurm_job_id():
                     partition = srun_args[idx+1]
                     break
         except Exception as e:
-            logger.warn("can't get partition from srun_args")
+            logger.warn("Job({}): can't get partition from srun_args".format(name))
     else:
         try:
             command_arr = command.split(' ')
@@ -439,7 +443,7 @@ def get_slurm_job_id():
                     partition = command_arr[idx+1]
                     break
         except Exception as e:
-            logger.warn("can't get partition from command")
+            logger.warn("Job({}): can't get partition from command".format(name))
 
     if not partition:
         squeue_command = 'squeue -o "%.50i %.50j %.20u %t %D %N"'
@@ -474,11 +478,9 @@ def get_slurm_job_id():
                         status = task_info[3]
                         break
         if not slurm_job_id:
-            logger.warn("can't get slurm from squeue")
             return None, None
         return slurm_job_id, status
     except Exception as e:
-        logger.warn("can't get slurm from squeue")
         return None, None
 
 def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
@@ -495,15 +497,20 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
     if 'placeholder' in config.keys():
         del config['placeholder']
     config['test_life'] = 0
-    config['__benchmark_total_time(h)'] = 10000
+    if run_type == 'autoparrotsbenchmark':
+        config['__benchmark_total_time(h)'] = 0.2
+    else:
+        config['__benchmark_total_time(h)'] = 10000
 
     # get slurm job id
     slurm_job_id = ''
     status = ''
     start_time = time.time()
+    name = os.environ['name']
     while True:
         interval_time = time.time() - start_time
         if interval_time >= wait_time_get_slurm_jobid:
+            logger.warn("Job({}): can't get slurm from squeue".format(name))
             break
         slurm_job_id, status = get_slurm_job_id()
         if slurm_job_id:

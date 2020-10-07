@@ -32,7 +32,7 @@ dataset: # Required.
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
@@ -45,7 +45,7 @@ dataset: # Required.
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
-            image_dir: s3://parrots_data/share/DSK/datasets/mscoco2017/val2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
             color_mode: RGB
         transformer: [*resize, *to_tensor, *normalize]
         evaluator:
@@ -85,9 +85,9 @@ trainer: # Required.
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
+  save_dir: checkpoints/faster_rcnn_mobilenet     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/mobilenet_v2/mobilenet_v2_1.0.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/faster_rcnn_mobilenet  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
