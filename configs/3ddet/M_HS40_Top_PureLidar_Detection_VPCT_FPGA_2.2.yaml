@@ -12,10 +12,6 @@ _base_: [
                 
     "models/3ddet/tools/cfgs/_base_/schedules/ft_train_lr1e-2_wd5e-4_4cls.yaml",
     "models/3ddet/tools/cfgs/_base_/schedules/test_independent_nms_70x70_4cls_normal_nms.yaml",
-    "models/3ddet/tools/cfgs/_base_/quantization_8bit.yaml"
+    # "models/3ddet/tools/cfgs/_base_/quantization_8bit.yaml"
 ]
-    
-    
-    
-X120: True
-    
+ 
