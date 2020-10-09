@@ -1,4 +1,4 @@
-sr_v3.0_sr_v3.0:
+sr_v3.0_F4_0_300:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 179.11998706128864

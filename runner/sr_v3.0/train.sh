@@ -19,7 +19,7 @@ SIGN="x2_0_300_10f"
 PYTHON_ARGS="python -m lib.train \
                 --id                                                   		$NAME \
                 --save_path                                        $ROOT/log/sr_v3.0/experiments \
-                --configs                                               sr_v3.F4_0_300 \
+                --configs                                               sr_v3.${name} \
                 --isp_base_path    /mnt/lustre/share_data/jiaomenglei/model_pool_data/sr_v3.0/data/xiaomi_F4/data/F4/isp_base.npy \
                 --dataroot         /mnt/lustre/share_data/jiaomenglei/model_pool_data/sr_v3.0/data/xiaomi_F4/F4/hdf5 \
                 --motion_base_path /mnt/lustre/share_data/jiaomenglei/model_pool_data/sr_v3.0/data/xiaomi_F4/data/motion_masks \
