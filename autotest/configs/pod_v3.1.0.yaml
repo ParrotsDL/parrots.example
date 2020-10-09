@@ -1,4 +1,4 @@
-pod-v3.1.0_cascade-rcnn-R50-FPN-1x:
+pod_v3.1.0_cascade-rcnn-R50-FPN-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.6400844335556031
@@ -28,7 +28,7 @@ pod-v3.1.0_cascade-rcnn-R50-FPN-1x:
     - 50%
     - 0.11790428982840644
   placeholder: none
-pod-v3.1.0_centernetkp511-R101-60epoch:
+pod_v3.1.0_centernetkp511-R101-60epoch:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 2.20814159989357
@@ -58,7 +58,7 @@ pod-v3.1.0_centernetkp511-R101-60epoch:
     - 50%
     - 0.2506965277592341
   placeholder: none
-pod-v3.1.0_effnetd0-bifpn-retina-32epoch:
+pod_v3.1.0_effnetd0-bifpn-retina-32epoch:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.5864222502708435
@@ -88,7 +88,7 @@ pod-v3.1.0_effnetd0-bifpn-retina-32epoch:
     - 50%
     - 0.6376170406076643
   placeholder: none
-pod-v3.1.0_faster-rcnn-R50-FPN-1x:
+pod_v3.1.0_faster-rcnn-R50-FPN-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.44161870479583737
@@ -118,7 +118,7 @@ pod-v3.1.0_faster-rcnn-R50-FPN-1x:
     - 50%
     - 0.09477618621455298
   placeholder: none
-pod-v3.1.0_faster-rcnn-R50-FPN-1x-ms-test-aug:
+pod_v3.1.0_faster-rcnn-R50-FPN-1x-ms-test-aug:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.44019959449768065
@@ -148,7 +148,7 @@ pod-v3.1.0_faster-rcnn-R50-FPN-1x-ms-test-aug:
     - 50%
     - 0.09268128845426771
   placeholder: none
-pod-v3.1.0_faster-rcnn-R50-FPN-cityscapes:
+pod_v3.1.0_faster-rcnn-R50-FPN-cityscapes:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.8322709465026856
@@ -178,7 +178,7 @@ pod-v3.1.0_faster-rcnn-R50-FPN-cityscapes:
     - 50%
     - 0.09521453320980072
   placeholder: none
-pod-v3.1.0_faster-rcnn-R50-FPN-openimages:
+pod_v3.1.0_faster-rcnn-R50-FPN-openimages:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.47003997445106505
@@ -208,7 +208,7 @@ pod-v3.1.0_faster-rcnn-R50-FPN-openimages:
     - 50%
     - 0.1757964120308558
   placeholder: none
-pod-v3.1.0_faster-rcnn-mobilenet-FPN-1x:
+pod_v3.1.0_faster-rcnn-mobilenet-FPN-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.4556020331382752
@@ -238,7 +238,7 @@ pod-v3.1.0_faster-rcnn-mobilenet-FPN-1x:
     - 50%
     - 0.08498615867561764
   placeholder: none
-pod-v3.1.0_fcos-R50-1x:
+pod_v3.1.0_fcos-R50-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.4456786930561065
@@ -268,7 +268,7 @@ pod-v3.1.0_fcos-R50-1x:
     - 50%
     - 0.12264617184797923
   placeholder: none
-pod-v3.1.0_grid-rcnn-R50-FPN-2x:
+pod_v3.1.0_grid-rcnn-R50-FPN-2x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.8212785673141478
@@ -298,7 +298,7 @@ pod-v3.1.0_grid-rcnn-R50-FPN-2x:
     - 50%
     - 0.10977989898787605
   placeholder: none
-pod-v3.1.0_keypoint-rcnn-R50-FPN-1x:
+pod_v3.1.0_keypoint-rcnn-R50-FPN-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.5275925016403198
@@ -328,7 +328,7 @@ pod-v3.1.0_keypoint-rcnn-R50-FPN-1x:
     - 50%
     - 0.09234886083337995
   placeholder: none
-pod-v3.1.0_mask-rcnn-R50-FPN-1x:
+pod_v3.1.0_mask-rcnn-R50-FPN-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.5587720084190368
@@ -358,7 +358,7 @@ pod-v3.1.0_mask-rcnn-R50-FPN-1x:
     - 50%
     - 0.14592651155259875
   placeholder: none
-pod-v3.1.0_mask-rcnn-R50-FPN-2x-lvis:
+pod_v3.1.0_mask-rcnn-R50-FPN-2x-lvis:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.5251460158824921
@@ -388,7 +388,7 @@ pod-v3.1.0_mask-rcnn-R50-FPN-2x-lvis:
     - 50%
     - 0.689755013121499
   placeholder: none
-pod-v3.1.0_retinanet-R50-1x:
+pod_v3.1.0_retinanet-R50-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.34507797002792356
@@ -418,7 +418,7 @@ pod-v3.1.0_retinanet-R50-1x:
     - 50%
     - 0.08407041993406084
   placeholder: none
-pod-v3.1.0_rfcn-R101-ohem-deform-1x:
+pod_v3.1.0_rfcn-R101-ohem-deform-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.5832388544082642
@@ -448,7 +448,7 @@ pod-v3.1.0_rfcn-R101-ohem-deform-1x:
     - 50%
     - 0.1617175422774421
   placeholder: none
-pod-v3.1.0_rfcn-shufflenet-1x:
+pod_v3.1.0_rfcn-shufflenet-1x:
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.29785177230834964
