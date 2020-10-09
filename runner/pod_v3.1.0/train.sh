@@ -1,11 +1,11 @@
 #!/bin/bash
 
-mkdir -p log/pod-v3.1.0/
+mkdir -p log/pod_v3.1.0/
 
 T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
-cfg=$ROOT/configs/pod-v3.1.0/${name}.yaml
+cfg=$ROOT/configs/pod_v3.1.0/${name}.yaml
 g=$(($2<8?$2:8))
 
 array=( $@ )
@@ -20,4 +20,4 @@ OMPI_MCA_mpi_warn_on2fork=0 GLOG_vmodule=MemcachedClient=-1 \
 PYTORCH_VERSION=1.3 srun --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=pod_${name} ${SRUN_ARGS}\
 python -m pod train \
   --config=$cfg ${EXTRA_ARGS} \
-  2>&1 | tee $ROOT/log/pod-v3.1.0/train.${name}.log.$T
+  2>&1 | tee $ROOT/log/pod_v3.1.0/train.${name}.log.$T
