@@ -207,12 +207,13 @@ def _get_monitor_info(config, run_type):
     NumCards = 0
     Storage = ''
     FrameName = ''
+    ModelName = ''
     command_arr = os.environ['command'].split(' ')
     for idx, val in enumerate(command_arr):
         if val.endswith('train.sh'):
+            FrameName = val.split('/')[-2]
             NumCards = command_arr[idx+2]
-            FrameName = command_arr[idx+3]
-            ModelDesc = command_arr[idx+4]
+            ModelName = command_arr[idx+3]
             break
     if NumCards == 0:
         logger.error('Can not get cards num from command')
@@ -236,7 +237,8 @@ def _get_monitor_info(config, run_type):
         IsParrots=IsParrots,
         DataSource=DataSource,
         FrameName=FrameName,
-        ModelDesc=ModelDesc,
+        ModelName=ModelName,
+        ModelDesc=os.environ['command'],
         Partition=partition,
         Storage=Storage,
         CommitDate=CommitDate,
@@ -539,10 +541,10 @@ def get_slurm_job_id():
                         status = task_info[3]
                         break
         if not slurm_job_id:
-            return None, None, None
+            return None, partition, None
         return slurm_job_id, partition, status
     except Exception as e:
-        return None, None, None
+        return None, partition, None
 
 def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
     if run_type in config.keys():
