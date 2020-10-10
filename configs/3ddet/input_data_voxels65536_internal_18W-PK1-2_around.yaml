@@ -1,6 +1,7 @@
 DATA_SAMPLE_INTERVAL: 1
 
 INPUT_DATA:
+    PETREL_OSS: ['/mnt/lustre/share_data/', 's3://']
     TRAIN:
         INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_1224/hesai_1224_around.pkl;\
           /mnt/lustre/share_data/parrots_model_data/3ddet/hesai_test_1101/hesai_1101_train_val_unified.pkl;\

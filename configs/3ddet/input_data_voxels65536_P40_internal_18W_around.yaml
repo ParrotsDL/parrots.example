@@ -1,6 +1,7 @@
 DATA_SAMPLE_INTERVAL: 1
 
 INPUT_DATA:
+    PETREL_OSS: ['/mnt/lustre/share_data/', 's3://']
     TRAIN:
         INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/internal_18w_P40_around.pkl"
         DBINFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/internal_18w_P40_db_infos_around.pkl"
