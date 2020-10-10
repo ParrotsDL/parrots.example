@@ -39,7 +39,7 @@ dataset:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/VOC07+12/JPEGImages
-            image_dir: s3://parrots_data/DSK/datasets/VOC07+12/JPEGImages
+            image_dir: s3://parrots_model_data/DSK/datasets/VOC07+12/JPEGImages
             color_mode: RGB
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
@@ -52,7 +52,7 @@ dataset:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/VOC07+12/JPEGImages
-            image_dir: s3://parrots_data/DSK/datasets/VOC07+12/JPEGImages
+            image_dir: s3://parrots_model_data/DSK/datasets/VOC07+12/JPEGImages
             color_mode: RGB
         transformer: [*resize, *to_tensor, *normalize]
         evaluator:
@@ -92,9 +92,9 @@ trainer: # Required.
       gamma: 0.1             # decay rate
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
-  pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/shufflenet_v2/shufflenetv2_x1.0_top168.pth.tar
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  save_dir: checkpoints/rfcn-R101-ohem-deform-1x     # dir to save checkpoints
+  pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet101-5d3b4d8f.pth
+  results_dir: results_dir/rfcn-R101-ohem-deform-1x  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
@@ -110,16 +110,17 @@ hooks:
       summary_writer: pavi
 
 net:
-  - name: backbone
-    type: pod.models.backbones.shufflenet.shufflenetv2
+  - name: backbone              # backbone = resnet50(frozen_layers, out_layers, out_strides)
+    type: pod.models.backbones.resnet101
     kwargs:
-      out_strides: [16]
-      c4_output: True
-      width_mult: 1.0
+      frozen_layers: [0,1]     # layer0...1 is fixed
+      out_layers: [4]          # layer1...4, commonly named Conv2...5
+      out_strides: [16]        # tell the strides of output features
       normalize:
         type: freeze_bn
       initializer:
         method: msra
+      layer_deform: [False, False, False, False, all]
   - name: roi_head
     prev: backbone
     type: pod.models.heads.roi_head.NaiveRPN
@@ -207,6 +208,8 @@ net:
           stds: [0.1, 0.1, 0.2, 0.2]
         share_location: &share_location False         # is share location in bbox regression for all classes
         add_relu_after_feature_conv: False            # add relu after feature conv will bring ~0.3 precision drop
+        ohem:
+          batch_size: 512
         bbox_supervisor:
           type: faster
           kwargs:
@@ -219,10 +222,8 @@ net:
                 negative_iou_thresh: 0.5
                 allow_low_quality_match: False  # positive if a anchor has highest iou with any gt
             sampler:
-              type: naive
-              kwargs:
-                batch_size: 512
-                positive_percent: 0.25
+              type: keep_all
+              kwargs: {}
         bbox_predictor:
           type: faster
           kwargs:

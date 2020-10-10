@@ -38,7 +38,7 @@ task:
     # Optional
     # callback: "cat"
     pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 weeklytest"
-    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 weeklytest"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 2 weeklytest"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
@@ -48,7 +48,7 @@ searcher:
 
 scheduler:
     type: FIFO
-    parallel_size: 8
+    parallel_size: 30
     stop_criterion:
         max_tries: 100
     wait_to_run_time_thresh: inf # inf

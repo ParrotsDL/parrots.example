@@ -28,14 +28,13 @@ dataset: # Required.
       kwargs:
         source: train  # dataset id
         meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        has_grid: True
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/train2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
-            memcached: False
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
     dataset:
@@ -43,19 +42,17 @@ dataset: # Required.
       kwargs:
         source: val
         meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-        # meta_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
         image_reader:
           type: ceph_opencv
           kwargs:
             # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
-            image_dir: s3://parrots_data/DSK/datasets/mscoco2017/val2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
             color_mode: RGB
         transformer: [*resize, *to_tensor, *normalize]
         evaluator:
           type: COCO               # choices = {'COCO', 'VOC', 'MR'}
           kwargs:
             gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
-            # gt_file: s3://parrots_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
             iou_types: [bbox]
   batch_sampler:
     type: aspect_ratio_group
@@ -73,8 +70,8 @@ dataset: # Required.
 
 
 trainer: # Required.
-  max_epoch: 1             # total epochs for the training
-  test_freq: 1
+  max_epoch: 24              # total epochs for the training
+  test_freq: 24
   optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
     type: SGD
     kwargs:
@@ -85,20 +82,16 @@ trainer: # Required.
     warmup_epochs: 1         # set to be 0 to disable warmup. When warmup,  target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
-      milestones: [9,12]     # epochs to decay lr
-      gamma: 0.1             # decay rate
+      milestones: [18,23]     # epochs to decay lr
+      gamma: 0.1
 
 saver: # Required.
-  save_dir: checkpoints     # dir to save checkpoints
+  save_dir: checkpoints/grid-rcnn-R50-FPN-2x     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
-  results_dir: results_dir  # dir to save detection results. i.e., bboxes, masks, keypoints
+  results_dir: results_dir/grid-rcnn-R50-FPN-2x  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
 
-
-fp16:
-  keep_batchnorm_fp32: True
-  scale_factor: dynamic
 
 
 hooks:
@@ -247,13 +240,57 @@ net:
               kwargs:
                 batch_size: 512
                 positive_percent: 0.25
+        grid: True
         bbox_predictor:
-          type: faster
+          type: grid
           kwargs:
-            bbox_normalize: *bbox_norm
-            share_location: *share_location
             nms:
               type: naive
-              nms_iou_thresh: 0.5
-            bbox_score_thresh: 0.0
+              nms_iou_thresh: 0.3
+            bbox_score_thresh: 0.03
             top_n: 100
+  - name: grid_head
+    prev: neck
+    type: pod.models.heads.grid_head.ConvUp
+    kwargs:
+      num_grids: 9     # number of keypoints
+      feat_planes: 576
+      num_convs: 7
+      deconv_kernel: 4
+      normalize:
+        type: sync_bn
+        kwargs:
+          bn_group_size: 8
+      initializer:
+        method: msra
+      cfg:
+        grid_loss:
+          type: sigmoid_cross_entropy
+        fpn:
+          fpn_levels: [0,1,2,3]     # indices of fpn features used for this task. these levels are supposed to be continuous
+          base_scale: 56            # target level of an roi is np.floor(np.log2((w*h)**0.5/base_scale+eps))
+        roipooling:
+          method: 'roialignpool'    # choices=['roialignpool', 'psroipool', 'roipool']. note that 'psroipool' is for RFCN head
+          pool_size: 14
+          sampling_ratio: 2
+        grid_supervisor:
+          type: base
+          kwargs:
+            resample: False
+            label_h: 56         # train only. output size of heatmap
+            label_w: 56         # train only.
+            sampler: # train only
+              type: naive
+              kwargs:
+                batch_size: 192           # train only. grid batch size across all image in a GPU
+                positive_percent: 1.0
+            matcher:
+              type: max_iou
+              kwargs:
+                positive_iou_thresh: 0.5  # train only.
+                negative_iou_thresh: -1   # train only
+                ignore_iou_thresh: -1
+                allow_low_quality_match: False # train only. positive if a anchor has highest iou with any gt
+        grid_predictor:
+          type: base
+          kwargs: {}

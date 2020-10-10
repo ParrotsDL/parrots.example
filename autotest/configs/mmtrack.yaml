@@ -1,4 +1,87 @@
 mmtrack_config13ms_bn1:
-  placeholder: 'none'
-mmtrack_config13ms_bn1.benchmark:
-  placeholder: 'none'
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 1.7110201517343522
+    - <
+    - 5%
+    - 1.629543001651764
+    __benchmark_mem_alloc(mb):
+    - 55.65
+    - <
+    - 5%
+    - 53
+    __benchmark_mem_cached(mb):
+    - 145
+    - <
+    - 5%
+    - 82
+    __benchmark_pavi_task_id:
+    - 7dbbd650-c859-4f17-845a-307723f28a8e
+    __benchmark_pure_training_time(h):
+    - 0.42599851234753927
+    - <
+    - 5%
+    - 0.40571286890241837
+    __benchmark_total_time(h):
+    - 0.4259992805421352
+    - <
+    - 5%
+    - 0.4057136005163193
+mmtrack_config1ms_lr:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.272900811433792
+    - <
+    - 5%
+    - 2.1646674394607546
+    __benchmark_mem_alloc(mb):
+    - 268.8
+    - <
+    - 5%
+    - 256
+    __benchmark_mem_cached(mb):
+    - 310.8
+    - <
+    - 5%
+    - 296
+    __benchmark_pavi_task_id:
+    - 2d85d9ca-1c41-4e01-8aa7-aee458624326
+    __benchmark_pure_training_time(h):
+    - 0.5711561430493991
+    - <
+    - 5%
+    - 0.5439582314756182
+    __benchmark_total_time(h):
+    - 0.5711594836215178
+    - <
+    - 5%
+    - 0.5439614129728741
+mmtrack_siamrpnpp:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.9712940610051155
+    - <
+    - 5%
+    - 0.9250419628620148
+    __benchmark_mem_alloc(mb):
+    - 6053.25
+    - <
+    - 5%
+    - 5765
+    __benchmark_mem_cached(mb):
+    - 6470.1
+    - <
+    - 5%
+    - 6162
+    __benchmark_pavi_task_id:
+    - 6d7f9a10-660e-40e7-bc61-875b8bfd2969
+    __benchmark_pure_training_time(h):
+    - 0.9935656129717827
+    - <
+    - 5%
+    - 0.9462529647350312
+    __benchmark_total_time(h):
+    - 0.9935660945971807
+    - <
+    - 5%
+    - 0.9462534234258864
