@@ -222,7 +222,7 @@ def main():
 
         lr_scheduler.step()
     end_time = time.time()
-    if rank == 0:
+    if args.rank == 0:
         logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
         logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
         logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
