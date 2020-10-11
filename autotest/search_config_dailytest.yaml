@@ -7,7 +7,7 @@ task:
           value: [
                     # (un)commit your config here
                     # pod
-                    {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi --pavi-project pulin-daily'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi --pavi-project parrots_test'},
                     # mmpose
                     {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 10'},
                     # mmediting
