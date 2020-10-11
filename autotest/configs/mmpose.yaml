@@ -93,7 +93,7 @@ mmpose_topdown_alexnet:
     - 5%
     - 1.193450269566642
     test_life: 1
-    train.AP:
+    val.AP:
     - 0.39402000000000004
     - '>'
     - 0.5%
