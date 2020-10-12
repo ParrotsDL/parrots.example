@@ -222,6 +222,13 @@ def main():
 
         lr_scheduler.step()
     end_time = time.time()
+    if args.rank == 0:
+        logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
+        logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
+        logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
+        logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
+        logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
+
     if args.rank == 0 and monitor_writer:
         monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
