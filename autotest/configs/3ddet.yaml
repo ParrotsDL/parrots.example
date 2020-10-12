@@ -1,0 +1,93 @@
+3ddet_M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 1.832741539120674
+    - <
+    - 5%
+    - 1.74546813249588
+    __benchmark_mem_alloc(mb):
+    - 2277.45
+    - <
+    - 5%
+    - 2169
+    __benchmark_mem_cached(mb):
+    - 3152.1
+    - <
+    - 5%
+    - 3002
+    __benchmark_pavi_task_id:
+    - 102065db-e4f9-4d78-9e0d-e22e86ccd7b6
+    __benchmark_pure_training_time(h):
+    - 0.22734726591904958
+    - <
+    - 5%
+    - 0.21652120563719007
+    __benchmark_total_time(h):
+    - 0.26625616998473806
+    - <
+    - 5%
+    - 0.25357730474736956
+    test_life: 1
+  placeholder: none
+3ddet_M_HS64_Top_PureLidar_Detection_VPCT_0.7:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.265109920501709
+    - <
+    - 5%
+    - 2.157247543334961
+    __benchmark_mem_alloc(mb):
+    - 6022.8
+    - <
+    - 5%
+    - 5736
+    __benchmark_mem_cached(mb):
+    - 8064.0
+    - <
+    - 5%
+    - 7680
+    __benchmark_pavi_task_id:
+    - 3cefdf9a-7b99-4cee-baba-db6a05cd0697
+    __benchmark_pure_training_time(h):
+    - 0.32278495816389724
+    - <
+    - 5%
+    - 0.3074142458703783
+    __benchmark_total_time(h):
+    - 0.3537913851042589
+    - <
+    - 5%
+    - 0.33694417628977036
+    test_life: 1
+  placeholder: none
+3ddet_M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 2.0829003821611405
+    - <
+    - 5%
+    - 1.9837146496772766
+    __benchmark_mem_alloc(mb):
+    - 2281.65
+    - <
+    - 5%
+    - 2173
+    __benchmark_mem_cached(mb):
+    - 3154.2
+    - <
+    - 5%
+    - 3004
+    __benchmark_pavi_task_id:
+    - 5ff28877-77cd-49c1-b6cb-b022b71813e0
+    __benchmark_pure_training_time(h):
+    - 0.3088154809474945
+    - <
+    - 5%
+    - 0.2941099818547567
+    __benchmark_total_time(h):
+    - 0.3463643406033516
+    - <
+    - 5%
+    - 0.32987080057462054
+    test_life: 1
+  placeholder: none
