@@ -169,6 +169,40 @@ pod_faster-rcnn-shufflenet-FPN-1x: # Required.
 pod_rfcn-mobilenet-1x: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
   metrics/mAP0.5: [10000, '>', '20%']
+  dailytest:
+    __benchmark_avg_iter_time(s):
+    - 0.5013178478373159
+    - <
+    - 5%
+    - 0.47744556936887234
+    __benchmark_mem_alloc(mb):
+    - 2110.5
+    - <
+    - 5%
+    - 2010
+    __benchmark_mem_cached(mb):
+    - 3061.8
+    - <
+    - 5%
+    - 2916
+    __benchmark_pavi_task_id:
+    - cc28f98d-5b27-4567-aee7-0502c34cb971
+    __benchmark_pure_training_time(h):
+    - 0.418336475054423
+    - <
+    - 5%
+    - 0.3984156905280219
+    __benchmark_total_time(h):
+    - 0.5302990348339082
+    - <
+    - 5%
+    - 0.5050466998418173
+    metrics/mAP0.5:
+    - 0.19446132999062207
+    - '>'
+    - 20%
+    - 0.24307666248827758
+    test_life: 1
 
 pod_rfcn-shufflenet-1x: # Required.
   # attr: [thresh, has_to_higher/has_to_lower]
