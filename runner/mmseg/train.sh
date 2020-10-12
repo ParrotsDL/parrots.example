@@ -1,8 +1,9 @@
 #!/bin/bash
 
 mkdir -p log/mmseg/
+
 cd models/mmsegmentation/
-pip install -e.
+pip install -e. --user
 cd ../../
 T=`date +%m%d%H%M%S`
 name=$3
