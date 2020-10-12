@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p log/detr/
-
+wget -c https://download.pytorch.org/models/resnet50-19c8e357.pth -O ~/.cache/torch/checkpoints/resnet50-19c8e357.pth
 T=`date +%m%d%H%M%S`
 name=$3
 ROOT=.
