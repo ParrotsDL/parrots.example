@@ -6,6 +6,7 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short", 'py_args': '--pavi --pavi-project parrots_test'}, #example
                     # pod
                     {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi --pavi-project parrots_test'},
                     # mmpose
@@ -22,7 +23,6 @@ task:
                     # example
                     {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test'},
                 ]
