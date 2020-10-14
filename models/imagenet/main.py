@@ -160,7 +160,10 @@ def main():
             monitor_kwargs = {'task': cfgs.net.arch + str(args.world_size), 'project': args.pavi_project}
         else:
             monitor_kwargs = cfgs.monitor.kwargs
-            monitor_kwargs['model'] = monitor_kwargs['model'] + "_gpu_{}".format(args.world_size)
+            if args.half:
+                monitor_kwargs['model'] = monitor_kwargs['model'] + "_gpu_mix_{}".format(args.world_size)
+            else:
+                monitor_kwargs['model'] = monitor_kwargs['model'] + "_gpu_{}".format(args.world_size)
             #print(cfgs.monitor.kwargs)
             #if hasattr(cfgs.monitor, 'taskid'):
             #    monitor_kwargs['taskid'] = args.taskid
