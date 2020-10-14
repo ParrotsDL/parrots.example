@@ -160,6 +160,7 @@ def main():
             monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
         else:
             monitor_kwargs = cfgs.monitor.kwargs
+            monitor_kwargs['project'] = a100test
             if args.half:
                 monitor_kwargs['model'] = monitor_kwargs['model'] + "_mix_gpu_{}".format(args.world_size)
             else:
