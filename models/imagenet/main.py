@@ -157,13 +157,15 @@ def main():
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
        # if cfgs.monitor.get('type', None) == 'pavi':
         if args.pavi:
-            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
+            monitor_kwargs = {'task': cfgs.net.arch + str(args.world_size), 'project': args.pavi_project}
         else:
             monitor_kwargs = cfgs.monitor.kwargs
-            if hasattr(args, 'taskid'):
-                monitor_kwargs['taskid'] = args.taskid
-            elif hasattr(cfgs.monitor, '_taskid'):
-                monitor_kwargs['taskid'] = cfgs.monitor._taskid
+            monitor_kwargs['model'] = monitor_kwargs['model'] + "_gpu_{}".format(args.world_size)
+            #print(cfgs.monitor.kwargs)
+            #if hasattr(cfgs.monitor, 'taskid'):
+            #    monitor_kwargs['taskid'] = args.taskid
+            #elif hasattr(cfgs.monitor, '_taskid'):
+            #    monitor_kwargs['taskid'] = cfgs.monitor._taskid
         from pavi import SummaryWriter
         monitor_writer = SummaryWriter(
             session_text=yaml.dump(args.config), **monitor_kwargs)
