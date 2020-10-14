@@ -111,3 +111,6 @@
 [submodule "models/3ddet"]
 	path = models/3ddet
 	url = git@gitlab.hk.sensetime.com:parrots.model/PointCloudDet3D.git
+[submodule "models/pattern_v2_5_sp"]
+	path = models/pattern_v2_5_sp
+	url = git@gitlab.bj.sensetime.com:parrots.model/pattern_v2.5_sp.git
