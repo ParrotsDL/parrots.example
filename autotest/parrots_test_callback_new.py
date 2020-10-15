@@ -38,6 +38,8 @@ run_type_table = {
     'weeklybenchmark': 0,
     'weeklytest': 1,
     'autoparrotsbenchmark':0
+    'user_benchmark': 0,
+    'user_all': 1,
 }
 
 value_type_table = {
