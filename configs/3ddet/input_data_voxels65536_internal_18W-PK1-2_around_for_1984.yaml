@@ -1,0 +1,21 @@
+DATA_SAMPLE_INTERVAL: 1
+
+INPUT_DATA:
+    PETREL_OSS: ['/mnt/lustre/share_data/', 's3://']
+    TRAIN:
+        INFO_PATH: 
+          "/mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_1223-1227_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_20-0106-0115_CN001_n10_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_1202-1222_n10_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_1120_before_train_val_around.pkl"
+        DBINFO_PATH: 
+          "/mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_1223-1227_db_infos_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_20-0106-0115_CN001_n10_db_infos_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_1202-1222_n10_db_infos_around.pkl;\
+          /mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/internal_1120_before_train_val_db_infos_around.pkl"
+        MAX_NUMBER_OF_VOXELS: 65536
+        SHUFFLE_POINTS: true
+    TEST:
+        INFO_PATH: "/mnt/lustre/share_data/parrots_model_data/3ddet/root_1984/hesai_20-0113_around_alpha.pkl"
+        MAX_NUMBER_OF_VOXELS: 65536
+        SHUFFLE_POINTS: false
