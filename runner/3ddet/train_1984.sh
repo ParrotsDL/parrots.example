@@ -19,7 +19,7 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
 
 pyroot=$ROOT/models/3ddet
-export LD_LIBRARY_PATH=/mnt/lustre/share/shishaoshuai/anaconda3/lib/python3.7/site-packages/spconv:$LD_LIBRARY_PATH 
+export LD_LIBRARY_PATH=/mnt/lustre/share_data/LOD/shishaoshuai/anaconda3/lib/python3.7/site-packages/spconv/:$LD_LIBRARY_PATH 
 export PYTHONPATH=${pyroot}/:${pyroot}/parrots_spconv:${pyroot}/spconv:$PYTHONPATH
 
 SRUN_ARGS=${SRUN_ARGS:-""}
