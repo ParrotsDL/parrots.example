@@ -233,25 +233,47 @@ def _get_monitor_info(config, run_type):
     except ModuleNotFoundError:
         CommitDate, TagOrBranch, GitHash = '', '', ''
 
+    IterSpeed = config.pop('pavi___benchmark_avg_iter_time(s)')
+    FullTime = config.pop('pavi___benchmark_total_time(h)')
+    AllocatedMem = config.pop('pavi___benchmark_mem_alloc(mb)')
+    CachedMem = config.pop('pavi___benchmark_mem_cached(mb)')
+    config.pop('pavi___benchmark_pure_training_time(h)')
+    # transform acc
+    acc_list = [None] * 4
+    AccDesc = []
+    idx = 1
+    for k, v in config.items():
+        if k.startswith('pavi_'):
+            accmap = f'acc{idx}: {k}'
+            AccDesc.append(accmap)
+            acc_list[idx] = v
+            idx += 1
+    AccDesc = ', '.join(AccDesc)
     monitor_info = dict(
         IsParrots=IsParrots,
         DataSource=DataSource,
         FrameName=FrameName,
         ModelName=ModelName,
         ModelDesc=os.environ['command'],
-        Partition=partition,
+        cluster_partition=partition,
         Storage=Storage,
         CommitDate=CommitDate,
         NumCards=NumCards,
         HostName=os.environ['host_ip'],
-        IterSpeed=config['pavi___benchmark_avg_iter_time(s)'],
-        FullTime=config['pavi___benchmark_total_time(h)'],
-        AllocatedMem=config['pavi___benchmark_mem_alloc(mb)'],
-        CachedMem=config['pavi___benchmark_mem_cached(mb)'],
+        IterSpeed=IterSpeed,
+        FullTime=FullTime,
+        AllocatedMem=AllocatedMem,
+        CachedMem=CachedMem,
         TagOrBranch=TagOrBranch,
         GitHash=GitHash,
-        PAVIIUrl='{}/#/task/{}'.format(
-            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id'])
+        PAVIUrl='{}/#/task/{}'.format(
+            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id']),
+        ExecDate=os.environ['start_time'],
+        acc1=acc_list[0],
+        acc2=acc_list[1],
+        acc3=acc_list[2],
+        acc4=acc_list[3],
+        AccDesc=AccDesc
     )
     return monitor_info
 
@@ -313,6 +335,9 @@ def after_callback_wrapper(config, value_type, run_type, output_monitor=True):
     if output_monitor and config['test_life'] == 1:
         monitor_info = _get_monitor_info(config, run_type)
         dump(monitor_info, 'monitor_info.json')
+        from insertdata import DataInseter
+        data_inster = DataInseter()
+        data_inster.insert(**monitor_info)
 
 
 def get_benchmark_value(config, framework, model_name, value_type, run_type):
