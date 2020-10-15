@@ -241,10 +241,10 @@ def _get_monitor_info(config, run_type):
     # transform acc
     acc_list = [None] * 4
     AccDesc = []
-    idx = 1
+    idx = 0
     for k, v in config.items():
         if k.startswith('pavi_'):
-            accmap = f'acc{idx}: {k}'
+            accmap = f'acc{idx+1}: {k}'
             AccDesc.append(accmap)
             acc_list[idx] = v
             idx += 1
