@@ -1,9 +1,10 @@
 #!/bin/bash
 
+
 mkdir -p log/mmseg/
 
 cd models/mmsegmentation/
-pip install -e. --user
+export PYTHONPATH=$(pwd):$PYTHONPATH
 cd ../../
 T=`date +%m%d%H%M%S`
 name=$3
