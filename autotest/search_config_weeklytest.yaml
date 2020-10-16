@@ -6,6 +6,8 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here
+                    # 16.mmpose
+                    {'framework': 'mmpose', 'gpus': 16, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # # example
                     {'framework': 'example', 'gpus': 8, 'model': "mobile_v2", 'py_args': '--pavi --pavi-project parrots_test'},
                     {'framework': 'example', 'gpus': 8, 'model': "resnet50_mix", 'py_args': '--pavi --pavi-project parrots_test'},
