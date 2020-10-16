@@ -58,7 +58,7 @@ strategy:
     # pretrained_model: '/mnt/lustre/tanjie/ModelExp/tanjie_GazeModelZoo/v2.6_imagenet_honda2_honda3.pth.tar'
     pretrained_model: ''
     #save_path: '/mnt/lustrenew/share/zhangqi1/ModelExp/honda3/exps/naive_transfer/'
-    save_path: './Pattern_result/gaze/pytorch1013'
+    save_path: './Pattern_result/gaze/pytorch1015'
     workers: 4 
 data:
     training_param:
