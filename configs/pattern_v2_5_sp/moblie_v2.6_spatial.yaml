@@ -1,0 +1,172 @@
+net:
+    backbone:
+        arch: core.model.backbone.mobilenet_v2_6_spatial.MobileNetV2_6
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            ## ? 设置参数，经验？
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+            nn.Linear: [1, 10, 1, 10]
+        kwargs:
+            ## ?
+            feature_dim: 128 # for each single branch
+
+    head: # loss inside
+        arch: core.model.head.msms_roi_head.MSMShead
+        prev: backbone # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            head: [1, 1, 1, 1]
+        task_names:
+            0:
+                gaze_vector: ['honda3_vector_trainset_v1']
+#                gaze_valid: ['honda3_valid_trainset']
+        kwargs:
+            task_cfgs:
+                gaze_vector:
+                    gaze_dim: 3
+                    loss_type: L2
+                    loss_weight: 1
+                    has_accuracy: False
+                gaze_valid:
+                    num_class: 4
+                    loss_type: softmax
+                    loss_weight: 0.1
+                    has_accuracy: True
+strategy:
+    task_type: 'gaze'
+    task_mode: 'train'
+    scatter_mode: True
+
+    max_iter: 200000
+    base_lr: 0.01
+    lr_steps: [10000, 15000, 18000]
+    lr_mults: [0.1, 0.1, 0.1]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0002
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 200
+    print_freq: 20
+    load_name: ''   ##?
+    pretrained_model: ''
+    save_path: '/mnt/lustre/pulin/modelpool/pattern/mobile_v2.6_spatial_1017'
+
+    workers: 4
+
+
+data:
+    training_param:
+        # crop config
+        crop: False
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        final_height: 224
+        final_width: 224
+        # mirror
+        mirror: False
+        mirror_prob: 0.5
+        # zoom
+        zoom: False
+        zoom_min: 0.9
+        zoom_max: 1.1
+        # gray
+        use_gray: True
+        final_channel: 1
+        #rotate
+        rotate: False
+        rotate_angle_max_value: 20
+        #trans(trans_x_max_value and trans_y_max_value are optional)
+        trans: False
+        trans_max_value: 0.067
+        # normalize
+        normalize: False
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        #mean: [127.5]
+        #std: [79.68750]
+    # changcheng_trainset:
+    #     type: 'gaze_vec_with_eye'
+    #     task: ['gaze_vector']
+    #     prefix: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/train/cropped_data_camera1_undist/'
+    #     json_path: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/train/cropped_data_camera1_undist/labels/lists/train_zhongkong_vector_transfer_face_eye_valid.json'
+    #     batch_size: 64 # for single gpu
+
+    honda3_vector_trainset_v1:
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/cropped_Honda_Pro3_data_v1/'
+        json_path: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/cropped_Honda_Pro3_data_v1/labels/transfer/train_honda3_vector_over_15_out.json'
+        batch_size: 8 # for single gpu
+    honda3_vector_trainset_v2:
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v2/'
+        json_path: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v2/labels/lists/train_honda3_vector_transfer.json'
+        batch_size: 8 # for single gpu
+    honda3_vector_trainset_v3:
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3/'
+        json_path: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3/labels/lists/train_honda3_vector_transfer.json'
+        batch_size: 16 # for single gpu
+
+    honda3_vector_trainset_v4: #imitate driving
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v4/'
+        json_path: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v4/labels/lists/train_honda3_vector_transfer.json'
+        batch_size: 16 # for single gpu
+    honda3_vector_trainset_v5: #multi-pose driving
+        type: 'gaze_vec_with_rect'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v5/'
+        json_path: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v5/labels/lists/train_honda3_vector_transfer.json'
+        batch_size: 16 # for single gpu
+
+    honda3_valid_trainset: #hodna3_v1
+        type: 'gaze_cls_with_rect'
+        task: ['gaze_valid']
+        prefix: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1/'
+        json_path: '/mnt/lustrenew/share/zhangqi1/Data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1/labels/use_solve/lists/0428_clean/123video_1234pic/train_honda3_valid_123video_1234pic_use_annotation_4cls_equal.json'
+        batch_size: 32 # for single gpu
+
+test:
+    strategy:
+        task_type: 'gaze'
+        task_mode: 'test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path'] + 'checkpoint'
+        workers: 0
+
+    testing_param:
+        # crop config
+        crop: False
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        final_height: 224
+        final_width: 224
+        # gray
+        use_gray: True
+        final_channel: 1
+        # normalize
+        normalize: False
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        #mean: [127.5, 127.5, 127.5]
+        #std: [79.6875, 79.6875, 79.6875]
+    changcheng_testset:
+        type: 'gaze_vec_with_eye'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/test/cropped_data_camera1_undist/'
+        json_path: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/test/cropped_data_camera1_undist/labels/lists/test_zhongkong_vector_transfer_face_eye_valid.json'
+        batch_size: 64 # for single gpu

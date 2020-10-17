@@ -1,0 +1,175 @@
+net:
+    backbone:
+        arch: core.model.backbone.pattern_fmbn.MobileNetV2
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+        kwargs:
+            block: Bottleneck
+            layers: [3, 4, 6, 3]
+            ratio: 8
+    head: # loss inside
+        arch: core.model.head.msml_tracking_head.MSMLhead
+        prev: backbone # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            neck: [1, 1, 2, 0]
+            head: [1, 1, 1, 1]
+        task_names:
+            0:
+                landmark: ['20190505_train_data']
+        kwargs:
+            task_cfgs:
+                landmark:
+                    fc_dim: 128
+                    num_class: 212 # landmark
+                    loss_type: ['SmoothL1Landmark', 'SmoothL1EyeGap', 'SmoothL1LipGap'] #change
+                    loss_weight: [1, 10, 10]
+                    has_accuracy: [False, False, False]
+
+strategy:
+    task_type: 'tracking'
+    task_mode: 'train'
+    scatter_mode: True
+
+    max_iter: 320001
+    base_lr: 0.0002
+    lr_steps: [160000, 200000, 240000, 280000, 320000]
+    lr_mults: [0.5, 0.5, 0.5, 0.5, 0.5]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0005
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 5000
+    print_freq: 100
+    load_name: 'iter_19000_ckpt.pth.tar'
+    save_path: '../pattern_exps/example_alignment_fmbn_msml/'
+    workers: 4
+data:
+    training_param:
+        # bgr_to_rgb->resize->gray->pad->rotate->trans->zoom->mirror->crop->rescale->normalize->to_tensor
+        # resize
+        resize: False
+        new_width: 112
+        new_height: 112
+        # gray
+        use_gray: True
+        final_channel: 1
+        # rotate
+        rotate: True
+        rotate_angle_max_value: 20
+        # trans(trans_x_max_value and trans_y_max_value are optional)
+        trans: True
+        trans_max_value: 0.1
+        # zoom
+        zoom: True
+        zoom_min: 0.4075
+        zoom_max: 0.4675
+        # mirror
+        mirror: True
+        mirror_prob: 0.5
+        # crop
+        crop: True
+        # y_offset: 5
+        crop_height: 112
+        crop_width: 112
+        # scale
+        scale: False
+        final_height: 112
+        final_width: 112
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [127.5]
+        std: [79.6875]
+        # add_noise
+        add_noise:
+            tasks: ['landmark']
+            mean: 0
+            std: 5
+            x_off: 1.5
+            y_off: 1.5
+            weight: [1]
+        # label_weights
+        label_weights: ['landmark']
+
+    20190505_train_data:
+        type: '106pt'
+        task: ['landmark']
+        # prefix: '/mnt/lustre/fangkairen/data/normal_alignment/'
+        # json_path: '/mnt/lustre/fangkairen/data/20190505_train_data.json'
+        prefix: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/'
+        json_path: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/all_train_honda3_vector_transfer_face_eye_valid.json'
+        
+#        json_path: '/mnt/lustre/fangkairen/PatternPro/20190505_train_data_debug.json'
+        batch_size: 32
+
+test:
+    strategy:
+        task_type: 'tracking'
+        task_mode: 'test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path']
+        workers: 1
+
+    testing_param:
+        # bgr_to_rgb->resize->gray->pad->rotate->trans->zoom->mirror->crop->rescale->normalize->to_tensor
+        # resize
+        resize: False
+        #new_width: 112
+        #new_height: 112
+        # gray
+        use_gray: True
+        final_channel: 1
+        # rotate
+        rotate: False
+        #rotate_angle_max_value: 20
+        # trans(trans_x_max_value and trans_y_max_value are optional)
+        trans: False
+        #trans_max_value: 0.1
+        # zoom
+        zoom: True
+        zoom_min: 0.4375
+        zoom_max: 0.4375
+        # mirror
+        mirror: False
+        #mirror_prob: 0.5
+        # crop
+        crop: True
+        # y_offset: 5
+        crop_height: 112
+        crop_width: 112
+        # scale
+        scale: False
+        final_height: 112
+        final_width: 112
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        mean: [127.5]
+        std: [79.6875]
+
+    meitu_2016:
+        type: '106pt'
+        task: ['landmark']
+        prefix: '/mnt/lustre/fangkairen/data/normal_alignment/meitu_2016/Image/'
+        json_path: '/mnt/lustre/fangkairen/data/20190421_meitu_2016.json'
+#json_path: '/mnt/lustrenew/chenyanjie/alignment/data/pattern_gt/landmark_tinghao_test/20190421_meitu_2016.json'
+        batch_size: 256 # for single gpu
+#eval:
+#    recall:
+#        type: 'smoking'
+#        task: ['cls']
+#        prefix: ''
+#        json_path: '/mnt/lustrenew/fangkairen/pattern_data/Test/recall_test.json'
+#    false_alarm:
+#        type: 'smoking'
+#        task: ['cls','landmark']
+#        prefix: ''
+#        json_path: '/mnt/lustrenew/fangkairen/pattern_data/Test/false_alarm_new.json'
