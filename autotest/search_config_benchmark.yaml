@@ -229,7 +229,7 @@ task:
                     # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 201'},
                     #
                     # 30 detr
-                    # {'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project parrots_test --max_step 1 --seed 42'},
+                    # {'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --max_step 1 --seed 42'},
                     # 34.3ddet
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_0.7', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.2'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.02'},

@@ -17,7 +17,7 @@ pyroot=$ROOT/models/detr
 export PYTHONPATH=$pyroot:$PYTHONPATH
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-srun --mpi=pmi2 -p $1 -n32 --gres gpu:$g --ntasks-per-node $g --job-name=detr_${name} ${SRUN_ARGS} \
+srun --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=detr_${name} ${SRUN_ARGS} \
 python $ROOT/models/detr/detr/main.py \
-  --output_dir coco_train --coco_path $COCO --batch_size 2 ${EXTRA_ARGS} \
+  --output_dir coco_train --coco_path $COCO --batch_size 4 ${EXTRA_ARGS} \
   2>&1 | tee $ROOT/log/detr/train.${name}.log.$T
