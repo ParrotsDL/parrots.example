@@ -240,7 +240,7 @@ task:
                 # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 
                 # 29 detr
-                # { 'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --max_step 300 --seed 42'},
+                # { 'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --max_step 300 --seed 42'},
             ]
     # Optional
     # callback: "cat"
