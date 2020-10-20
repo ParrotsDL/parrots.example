@@ -213,6 +213,8 @@ task:
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.02'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.02'},
 
+                    ## 34. mmdetection3d
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': '', 'py_args': ''},
                 ]
 
 
