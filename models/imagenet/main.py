@@ -50,7 +50,6 @@ def main():
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
-
     args.rank, args.world_size, args.local_rank = dist.init()
 
     if args.rank == 0:
@@ -160,11 +159,14 @@ def main():
             monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
         else:
             monitor_kwargs = cfgs.monitor.kwargs
-            monitor_kwargs['project'] = a100test
+            res = ""
+            if args.dummy_test:
+                 res += "_dummy_test"
+            monitor_kwargs['project'] = 'a100test'
             if args.half:
-                monitor_kwargs['model'] = monitor_kwargs['model'] + "_mix_gpu_{}".format(args.world_size)
+                monitor_kwargs['model'] = monitor_kwargs['model'] + "_mix_gpu_{}".format(args.world_size) + res
             else:
-                monitor_kwargs['model'] = monitor_kwargs['model'] + "_gpu_{}".format(args.world_size)
+                monitor_kwargs['model'] = monitor_kwargs['model'] + "_gpu_{}".format(args.world_size) + res
            # if hasattr(args, 'taskid'):
            #     monitor_kwargs['taskid'] = args.taskid
            # elif hasattr(cfgs.monitor, '_taskid'):
