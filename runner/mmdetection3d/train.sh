@@ -9,7 +9,9 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 PARTITION=$1
 GPUS=$2
 MODEL=$3
-CONFIG=$ROOT/configs/mmdetection3d/${MODEL}.yaml
+
+CONFIG=$ROOT/configs/mmdetection3d/${MODEL}.py
+WORK_DIR=$pyroot/log/mmdetection3d/$MODEL
 
 array=( $@ )
 len=${#array[@]}
@@ -24,4 +26,4 @@ srun -p ${PARTITION} \
      --cpus-per-task=5 \
      --kill-on-bad-exit=1 \
      ${SRUN_ARGS} \
-     python -u tools/train.py ${CONFIG} --word-dir=./ --launcher="slurm" ${EXTRA_ARGS}
+     python -u $ROOT/models/mmdetection3d/tools/train.py ${CONFIG} --word-dir=${WORK_DIR} --launcher="slurm" ${EXTRA_ARGS}
