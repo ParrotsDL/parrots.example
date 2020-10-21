@@ -197,7 +197,8 @@ test_cfg = dict(
 
 # dataset settings
 dataset_type = 'KittiDataset'
-data_root = 'data/kitti/'
+data_root = '/mnt/lustre/share_data/zhangwenwei/data/kitti/'
+ceph_data_root = 's3://parrots_model_data/mmdetection3d/kitti/'
 class_names = ['Pedestrian', 'Cyclist', 'Car']
 input_modality = dict(use_lidar=True, use_camera=False)
 db_sampler = dict(

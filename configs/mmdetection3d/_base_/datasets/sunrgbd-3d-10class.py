@@ -1,5 +1,6 @@
 dataset_type = 'SUNRGBDDataset'
-data_root = 'data/sunrgbd/'
+data_root = '/mnt/lustre/share_data/zhangwenwei/data/sunrgbd_processed/'
+ceph_data_root = 's3://parrots_model_data/mmdetection3d/sunrgbd_processed/'
 class_names = ('bed', 'table', 'sofa', 'chair', 'toilet', 'desk', 'dresser',
                'night_stand', 'bookshelf', 'bathtub')
 train_pipeline = [

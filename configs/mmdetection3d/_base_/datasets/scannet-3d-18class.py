@@ -1,6 +1,7 @@
 # dataset settings
 dataset_type = 'ScanNetDataset'
-data_root = './data/scannet/'
+data_root = '/mnt/lustre/share_data/zhangwenwei/data/scannet_processed/'
+ceph_data_root = 's3://parrots_model_data/mmdetection3d/scannet_processed/'
 class_names = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door', 'window',
                'bookshelf', 'picture', 'counter', 'desk', 'curtain',
                'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub',

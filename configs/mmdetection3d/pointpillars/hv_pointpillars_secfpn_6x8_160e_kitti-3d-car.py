@@ -29,7 +29,8 @@ train_cfg = dict(
 
 # dataset settings
 dataset_type = 'KittiDataset'
-data_root = 'data/kitti/'
+data_root = '/mnt/lustre/share_data/zhangwenwei/data/kitti/'
+ceph_data_root = 's3://parrots_model_data/mmdetection3d/kitti/'
 class_names = ['Car']
 db_sampler = dict(
     data_root=data_root,
