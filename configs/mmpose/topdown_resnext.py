@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/hanyachao/'
+    pretrained='/mnt/lustre/share_data/star/pretrained_models/'
     'resnext50_32x4d_batch256_20200708-c07adbb7.pth',
     backbone=dict(type='ResNeXt', depth=50),
     keypoint_head=dict(

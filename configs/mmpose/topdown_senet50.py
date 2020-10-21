@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/hanyachao/'
+    pretrained='/mnt/lustre/share_data/star/pretrained_models/'
     'se-resnet50_batch256_20200708-657b3c36.pth',
     backbone=dict(type='SEResNet', depth=50),
     keypoint_head=dict(

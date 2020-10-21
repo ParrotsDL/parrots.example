@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/hanyachao/'
+    pretrained='/mnt/lustre/share_data/star/pretrained_models/'
     'mobilenet_v2_batch256_20200708-3b2dc3af.pth',
     backbone=dict(type='MobileNetV2', widen_factor=1., out_indices=(7, )),
     keypoint_head=dict(

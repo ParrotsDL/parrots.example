@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/hanyachao/'
+    pretrained='/mnt/lustre/share_data/star/pretrained_models/'
     'shufflenet_v1_batch1024_20200708-7a087432.pth',
     backbone=dict(type='ShuffleNetV1', groups=3),
     keypoint_head=dict(
