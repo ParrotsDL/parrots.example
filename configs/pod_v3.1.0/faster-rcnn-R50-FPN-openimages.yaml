@@ -36,12 +36,12 @@ dataset: # Required.
         source: train  # dataset id
         num_classes: *num_classes
         ignore_as_gt: True
-        meta_file: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minitrain.json
+        meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minitrain.json
         # meta_file: s3://parrots_model_data/DSK/datasets/OpenImages/annotations/challenge-2018-train-annotations-bbox-minitrain.json
         image_reader:
           type: ceph_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/OpenImages/OpenImages/train
+            # image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
             image_dir: s3://parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
             color_mode: RGB
         transformer: [*flip, *resize, *to_tensor, *normalize]
@@ -51,21 +51,21 @@ dataset: # Required.
       kwargs:
         source: val
         num_classes: *num_classes
-        meta_file: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
+        meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
         # meta_file: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
         image_reader:
           type: ceph_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/OpenImages/OpenImages/train
+            # image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
             image_dir: s3://parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
             color_mode: RGB
         transformer: [*resize_test, *to_tensor, *normalize]
         evaluator:
           type: OID               # choices = {'COCO', 'VOC', 'mAP'}
           kwargs:
-            input_annotations_boxes: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
+            input_annotations_boxes: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
             # input_annotations_boxes: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
-            input_annotations_labels: /mnt/lustre/share/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
+            input_annotations_labels: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
             # input_annotations_labels: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
             iou_thresh: 0.5
             output_metrics: metrics.csv
