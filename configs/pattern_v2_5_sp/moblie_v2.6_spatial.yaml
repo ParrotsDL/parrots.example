@@ -91,12 +91,12 @@ data:
         # -1.6 ~ 1.6
         #mean: [127.5]
         #std: [79.68750]
-    # changcheng_trainset:
-    #     type: 'gaze_vec_with_eye'
-    #     task: ['gaze_vector']
-    #     prefix: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/train/cropped_data_camera1_undist/'
-    #     json_path: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/train/cropped_data_camera1_undist/labels/lists/train_zhongkong_vector_transfer_face_eye_valid.json'
-    #     batch_size: 64 # for single gpu
+    changcheng_trainset:
+        type: 'gaze_vec_with_eye'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/train/cropped_data_camera1_undist/'
+        json_path: '/mnt/lustre/xuezhucun/data/changcheng/cropped_data/train/cropped_data_camera1_undist/labels/lists/train_zhongkong_vector_transfer_face_eye_valid.json'
+        batch_size: 64 # for single gpu
 
     honda3_vector_trainset_v1:
         type: 'gaze_vec_with_rect'
