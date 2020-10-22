@@ -213,7 +213,14 @@ task:
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 ## 34. mmdetection3d
-                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': '', 'py_args': ''},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'votenet_16x8_sunrgbd-3d-10class', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'votenet_8x8_scannet-3d-18class', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_second_secfpn_6x8_80e_kitti-3d-3class', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_second_secfpn_6x8_80e_kitti-3d-car', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_PartA2_secfpn_2x8_cyclic_80e_kitti-3d-3class', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_PartA2_secfpn_2x8_cyclic_80e_kitti-3d-car', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_pointpillars_secfpn_6x8_160e_kitti-3d-3class', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
+                # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_pointpillars_secfpn_6x8_160e_kitti-3d-car', 'py_args': '—pavi —pavi-project default —data_reader CephReader —seed 1024'},
             ]
     # Optional
     # callback: "cat"
