@@ -114,3 +114,7 @@
 [submodule "models/detr"]
     path = models/detr
     url = git@gitlab.sh.sensetime.com:parrots.model/detr.git
+[submodule "models/heart_seg"]
+	path = models/heart_seg
+	url = git@gitlab.bj.sensetime.com:parrots.model/medai_mmwhs_xq.git
+
