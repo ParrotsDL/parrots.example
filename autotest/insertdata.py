@@ -10,9 +10,9 @@ except:
 class DataInseter(object):
     def __init__(self,
                  host='sh.paas.sensetime.com',
-                 user='kkcycanr',
-                 password='zwikygxd',
-                 db='parrots_env',
+                 user='fsneogke',
+                 password='xdcsveww',
+                 db='parrots',
                  port=38152,
                  local_infile=1):
         self.db = pymysql.connect(host=host, user=user, password=password,
@@ -39,6 +39,7 @@ class DataInseter(object):
         ed = edpre.split(".",1)[0]
         timeArray = time.strptime(ed, "%Y-%m-%d %H:%M:%S")
         kwargs["ExecDate"] = time.mktime(timeArray)
+        
         return kwargs
 
     def insert(self, **kwargs):
@@ -48,7 +49,7 @@ class DataInseter(object):
         cursor = self.db.cursor()
         keys_str = ', '.join(list(input_data.keys()))
         tmp_str = '%s, ' * (len(input_data)-1) + '%s'
-        sql_str = f"INSERT INTO benchmark({keys_str}) VALUES ({tmp_str}) "
+        sql_str = f"INSERT INTO modelmonitor({keys_str}) VALUES ({tmp_str}) "
         sql_val = list(input_data.values())
         try:
             cursor.execute(sql_str, sql_val)
