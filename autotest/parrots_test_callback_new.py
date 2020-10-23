@@ -37,7 +37,7 @@ run_type_table = {
     'dummydata': 0,
     'weeklybenchmark': 0,
     'weeklytest': 1,
-    'autoparrotsbenchmark':0
+    'autoparrotsbenchmark': 0,
     'user_benchmark': 0,
     'user_all': 1,
 }
