@@ -34,6 +34,11 @@ class DataInseter(object):
         dt = kwargs["CommitDate"].replace("/", "-")
         timeArray = time.strptime(dt, "%Y-%m-%d %H:%M:%S")
         kwargs["CommitDate"] = time.mktime(timeArray)
+        
+        edpre = kwargs["ExecDate"].replace("/", "-")
+        ed = edpre.split(".",1)[0]
+        timeArray = time.strptime(ed, "%Y-%m-%d %H:%M:%S")
+        kwargs["ExecDate"] = time.mktime(timeArray)
         return kwargs
 
     def insert(self, **kwargs):
