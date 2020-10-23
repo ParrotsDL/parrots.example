@@ -49,7 +49,7 @@ class DataInseter(object):
         cursor = self.db.cursor()
         keys_str = ', '.join(list(input_data.keys()))
         tmp_str = '%s, ' * (len(input_data)-1) + '%s'
-        sql_str = f"INSERT INTO benchmark({keys_str}) VALUES ({tmp_str}) "
+        sql_str = f"INSERT INTO modelmonitor({keys_str}) VALUES ({tmp_str}) "
         sql_val = list(input_data.values())
         try:
             cursor.execute(sql_str, sql_val)
