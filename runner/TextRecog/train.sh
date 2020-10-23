@@ -16,6 +16,11 @@ pyroot=$ROOT/models/TextRecog
 export PYTHONPATH=$pyroot:$PYTHONPATH
 SRUN_ARGS=${SRUN_ARGS:-""}
 
+cd models/TextRecog/
+srun -p $1 --gres=gpu:1 -n 1  python setup.py bdist_wheel
+srun -p $1 --gres=gpu:1 -n 1  pip install --user dist/text_recog-0.2.0-py3-none-any.whl
+cd ../../
+
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
 srun --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --cpus-per-task=3 --job-name=TextRecog_${name} ${SRUN_ARGS} \
 python $ROOT/models/TextRecog/tools/train_val.py \

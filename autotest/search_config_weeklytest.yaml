@@ -6,6 +6,8 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here
+                    ## 15.TextRecog
+                    {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project parrots_test --datareader MemcachedReader'},
                     # 16.mmpose
                     {'framework': 'mmpose', 'gpus': 16, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                     # # example
