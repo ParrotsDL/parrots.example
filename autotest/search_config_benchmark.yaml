@@ -192,8 +192,8 @@ task:
                     ## 21.pod_3.0
                     # {'framework': 'pod_v3.0', 'gpus': 8, 'model': 'mask-rcnn-R152-FPN-1x-hz', 'py_args': '--seed 1024 --pavi  --pavi_project parrots_test  --data_reader CephReader --max_step 1'},
                     ## 22.prototype
-                    # {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --max-step 4000 --data_reader CephReader'}
-                    # {'framework': 'prototype', 'gpus': 16, 'model': 'shufflev2', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --max-step 4000 --data_reader CephReader'}
+                    # {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --max-step 4000 --data_reader CephReader'},
+                    # {'framework': 'prototype', 'gpus': 16, 'model': 'shufflev2', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --max-step 4000 --data_reader CephReader'},
                     ## 23.encoder
                     # {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project parrots_test --max_step 1'},
                     ## 24.sensemedical
