@@ -30,6 +30,6 @@ srun --mpi=pmi2 -p ${PARTITION} \
     ${SRUN_ARGS} --kill-on-bad-exit=1 \
 python ${pyroot}/code/trainSegVNet.py --config ${cfg} \
     --fold 0 --lr 0.001 --batch-size ${BS} --num-workers ${BS} --base-features 16 \
-    --loss cross_entropy --pre-load-data\
-    --output-dir "${pyroot}/OutSeg" --epochs ${EPOCH} ${EXTRA_ARGS} 
+    --loss cross_entropy --pre-load-data --val-interval 5 --test-interval 10\
+    --output-dir "${pyroot}/OutSeg" --epochs ${EPOCH} ${EXTRA_ARGS} \
     2>&1 | tee ${ROOT}/log/heart_seg/train.${JOB_NAME}.log.${now}
