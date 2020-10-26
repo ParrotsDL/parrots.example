@@ -1,0 +1,5 @@
+data:
+  lustre:
+    data_dir: /mnt/lustre/share_data/parrots_model_data/coronary
+  ceph:
+    data_dir: s3://parrots_model_data/coronary
