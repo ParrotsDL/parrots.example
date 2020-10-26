@@ -51,7 +51,7 @@ SRUN_ARGS=${SRUN_ARGS:-""}
 
 
 srun -p ${PARTITION} \
-     --job-name="mmdet3d_${MODEL}" \
+     --job-name="mmdetection3d_${MODEL}" \
      --gres=gpu:8 \
      --ntasks=${GPUS} \
      --ntasks-per-node=8 \
