@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/hanyachao/'
+    pretrained='/mnt/lustre/share_data/star/pretrained_models/'
     'resnext50_32x4d_batch256_20200708-c07adbb7.pth',
     backbone=dict(type='ResNeXt', depth=50),
     keypoint_head=dict(
@@ -122,8 +122,8 @@ test_pipeline = valid_pipeline
 
 data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017/'
 data_root_val = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/'
-ceph_data_root = 's3://parrots_data/DSK/datasets/mscoco2017/train2017/'
-ceph_data_root_val = 's3://parrots_data/DSK/datasets/mscoco2017/val2017/'
+ceph_data_root = 's3://parrots_model_data/DSK/datasets/mscoco2017/train2017/'
+ceph_data_root_val = 's3://parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 data = dict(
     samples_per_gpu=64,
     workers_per_gpu=2,

@@ -5,16 +5,16 @@ dataset: # Required.
     train:
       data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
       data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt
-      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
-      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt
+      ceph_data_root: s3://parrots_model_data/DSK/datasets/cityscapes
+      ceph_data_list: s3://parrots_model_data/DSK/datasets/cityscapes/fine_train.txt
       crop:
         type: rand
         size: [449, 897] # crop image with HxW size
     val:
       data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
       data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_val.txt
-      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
-      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      ceph_data_root: s3://parrots_model_data/DSK/datasets/cityscapes
+      ceph_data_list: s3://parrots_model_data/DSK/datasets/cityscapes/fine_val.txt
       crop:
         type: center
         size: [449, 897] # crop image with HxW size
@@ -31,16 +31,16 @@ dataset: # Required.
     train:
       data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
       data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt # Not enough data in cityscapes, use train as bn_adjust
-      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
-      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_train.txt # Not enough data
+      ceph_data_root: s3://parrots_model_data/DSK/datasets/cityscapes
+      ceph_data_list: s3://parrots_model_data/DSK/datasets/cityscapes/fine_train.txt # Not enough data
       crop:
         type: rand
         size: [449, 897] # crop image with HxW size
     val:
       data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
       data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_val.txt
-      ceph_data_root: s3://parrots_data/wangshiguang/datasets/cityscapes
-      ceph_data_list: s3://parrots_data/wangshiguang/datasets/cityscapes/fine_val.txt
+      ceph_data_root: s3://parrots_model_data/DSK/datasets/cityscapes
+      ceph_data_list: s3://parrots_model_data/DSK/datasets/cityscapes/fine_val.txt
       crop:
         type: center
         size: [449, 897] # crop image with HxW size
@@ -119,7 +119,7 @@ step: # Required.
     ckpt_dir: ''
   evolution:
     sync_bn: True
-    ckpt: '/mnt/lustre/share_data/hanyachao/light_nas/single_path_oneshot/ckpt_search/305.pth'
+    ckpt: '/mnt/lustre/share_data/parrots_model_ckpt/light_nas/single_path_oneshot/ckpt_search/305.pth'
     ceph_ckpt:
     max_iterations: 20
     population: 50

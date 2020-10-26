@@ -9,3 +9,4 @@ results*
 snapshot
 .log-*.txt
 *.pyc
+experiments

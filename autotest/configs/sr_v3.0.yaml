@@ -1,0 +1,56 @@
+sr_v3.0_F4_0_300:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 179.11998706128864
+    - <
+    - 5%
+    - unknow, __benchmark_avg_iter_time(s) may not exist on pavi
+    - 173.28831696510315
+    - 167.87340746396853
+    - 170.60966717461008
+    __benchmark_mem_alloc(mb):
+    - 258.3
+    - <
+    - 5%
+    - unknow, __benchmark_mem_alloc(mb) may not exist on pavi
+    - 246
+    - 246
+    - 246
+    __benchmark_mem_cached(mb):
+    - 277.2
+    - <
+    - 5%
+    - unknow, __benchmark_mem_cached(mb) may not exist on pavi
+    - 264
+    - 264
+    - 264
+    __benchmark_pavi_task_id:
+    - ''
+    - f73f37c1-57b2-4005-ab09-e17cf38173ba
+    - c4f1df70-3095-4aa5-832c-101f8b8fbc9d
+    - e593e6a0-1d80-4155-96dd-3f390d01683c
+    __benchmark_pure_training_time(h):
+    - 0.08991216707560752
+    - <
+    - 5%
+    - unknow, __benchmark_pure_training_time(h) may not exist on pavi
+    - 0.08632088992330764
+    - 0.08400045858489143
+    - 0.08657055742210812
+    __benchmark_total_time(h):
+    - 0.09119703212049272
+    - <
+    - 5%
+    - unknow, __benchmark_total_time(h) may not exist on pavi
+    - 0.08752646327018737
+    - 0.08521784517500136
+    - 0.08781864047050476
+    test_life: 1
+  val/psnr:
+  - 0
+  - '>'
+  - 5%
+  val/ssim:
+  - 0
+  - '>'
+  - 5%

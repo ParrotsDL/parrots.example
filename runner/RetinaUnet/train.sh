@@ -9,6 +9,7 @@ EXTRA_ARGS=${@:4}
 
 pyroot=$ROOT/models/RetinaUnet
 export PYTHONPATH=$pyroot:$PYTHONPATH
+export PYTHONPATH=$ROOT/configs/RetinaUnet/liver_ct_zssy_2d_runet:$PYTHONPATH
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
 

@@ -37,7 +37,9 @@ run_type_table = {
     'dummydata': 0,
     'weeklybenchmark': 0,
     'weeklytest': 1,
-    'autoparrotsbenchmark':0
+    'autoparrotsbenchmark': 0,
+    'user_benchmark': 0,
+    'user_all': 1,
 }
 
 value_type_table = {
@@ -128,8 +130,10 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                     slurm_job_id = int(job_info['slurm_job_id'])
                 except Exception:
                     slurm_job_id = None
-        _, status = get_slurm_job_id()
+        _, _, status = get_slurm_job_id()
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
+            print('slurm_job_status: R')
+            sys.stdout.flush()
             break
         # break if job_pid is die.
         if job_pid and (not psutil.pid_exists(job_pid)):
@@ -195,7 +199,88 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
             name, job_pid, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
 
 
-def after_callback_wrapper(config, value_type, run_type):
+def _get_monitor_info(config, run_type):
+    # DataSource: dailybuild, weeklybuild, release_benchmark, weekly_benchmark
+    DataSource = run_type
+    # Partition
+    _, partition, _ = get_slurm_job_id()
+
+    # NumCards, TODO: Storage, parse from command
+    NumCards = 0
+    Storage = ''
+    FrameName = ''
+    ModelName = ''
+    command_arr = os.environ['command'].split(' ')
+    for idx, val in enumerate(command_arr):
+        if val.endswith('train.sh'):
+            FrameName = val.split('/')[-2]
+            NumCards = command_arr[idx+2]
+            ModelName = command_arr[idx+3]
+            break
+    if NumCards == 0:
+        logger.error('Can not get cards num from command')
+    # CommitDate and FrameName
+    IsParrots = False
+    try:
+        import parrots, torch
+        if torch.__version__ == 'parrots':
+            IsParrots = True
+            CommitDate = parrots.info.git_latest_commit_date
+            TagOrBranch = parrots.info.git_tag_or_branch
+            GitHash = parrots.version.git_hash
+        else:
+            CommitDate = 'pytorch'
+            TagOrBranch = 'pytorch'
+            GitHash = 'pytorch'
+    except ModuleNotFoundError:
+        CommitDate, TagOrBranch, GitHash = '', '', ''
+
+    IterSpeed = config.pop('pavi___benchmark_avg_iter_time(s)')
+    FullTime = config.pop('pavi___benchmark_total_time(h)')
+    AllocatedMem = config.pop('pavi___benchmark_mem_alloc(mb)')
+    CachedMem = config.pop('pavi___benchmark_mem_cached(mb)')
+    config.pop('pavi___benchmark_pure_training_time(h)')
+    # transform acc
+    acc_list = [None] * 4
+    AccDesc = []
+    idx = 0
+    for k, v in config.items():
+        if k.startswith('pavi_'):
+            accmap = f'acc{idx+1}: {k}'
+            AccDesc.append(accmap)
+            acc_list[idx] = v
+            idx += 1
+    AccDesc = ', '.join(AccDesc)
+    monitor_info = dict(
+        IsParrots=IsParrots,
+        DataSource=DataSource,
+        FrameName=FrameName,
+        ModelName=ModelName,
+        ModelDesc=os.environ['command'],
+        cluster_partition=partition,
+        Storage=Storage,
+        CommitDate=CommitDate,
+        NumCards=NumCards,
+        HostName=os.environ['host_ip'],
+        IterSpeed=IterSpeed,
+        FullTime=FullTime,
+        AllocatedMem=AllocatedMem,
+        CachedMem=CachedMem,
+        TagOrBranch=TagOrBranch,
+        GitHash=GitHash,
+        PAVIUrl='{}/#/task/{}'.format(
+            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id']),
+        ExecDate=os.environ['start_time'],
+        acc1=acc_list[0],
+        acc2=acc_list[1],
+        acc3=acc_list[2],
+        acc4=acc_list[3],
+        AccDesc=AccDesc
+    )
+    return monitor_info
+
+
+def after_callback_wrapper(config, value_type, run_type, output_monitor=True):
     if run_type in config.keys():
         config = config[run_type]
     else:
@@ -248,6 +333,13 @@ def after_callback_wrapper(config, value_type, run_type):
 
     config.update(pavi_ret)
     print(yaml.dump(config))
+
+    if output_monitor and config['test_life'] == 1:
+        monitor_info = _get_monitor_info(config, run_type)
+        dump(monitor_info, 'monitor_info.json')
+        from insertdata import DataInseter
+        data_inster = DataInseter()
+        data_inster.insert(**monitor_info)
 
 
 def get_benchmark_value(config, framework, model_name, value_type, run_type):
@@ -420,6 +512,7 @@ def get_slurm_job_id():
     """
     work_dir = os.environ['run_path']
     command = os.environ['command']
+    name = os.environ['name']
     # find srun_args
     partition = None
     srun_args = os.environ.get('SRUN_ARGS', None)
@@ -431,7 +524,7 @@ def get_slurm_job_id():
                     partition = srun_args[idx+1]
                     break
         except Exception as e:
-            logger.warn("can't get partition from srun_args")
+            logger.warn("Job({}): can't get partition from srun_args".format(name))
     else:
         try:
             command_arr = command.split(' ')
@@ -440,7 +533,7 @@ def get_slurm_job_id():
                     partition = command_arr[idx+1]
                     break
         except Exception as e:
-            logger.warn("can't get partition from command")
+            logger.warn("Job({}): can't get partition from command".format(name))
 
     if not partition:
         squeue_command = 'squeue -o "%.50i %.50j %.20u %t %D %N"'
@@ -475,12 +568,10 @@ def get_slurm_job_id():
                         status = task_info[3]
                         break
         if not slurm_job_id:
-            logger.warn("can't get slurm from squeue")
-            return None, None
-        return slurm_job_id, status
+            return None, partition, None
+        return slurm_job_id, partition, status
     except Exception as e:
-        logger.warn("can't get slurm from squeue")
-        return None, None
+        return None, partition, None
 
 def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True):
     if run_type in config.keys():
@@ -505,11 +596,13 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
     slurm_job_id = ''
     status = ''
     start_time = time.time()
+    name = os.environ['name']
     while True:
         interval_time = time.time() - start_time
         if interval_time >= wait_time_get_slurm_jobid:
+            logger.warn("Job({}): can't get slurm from squeue".format(name))
             break
-        slurm_job_id, status = get_slurm_job_id()
+        slurm_job_id, _, status = get_slurm_job_id()
         if slurm_job_id:
             break
     config['slurm_job_id'] = slurm_job_id

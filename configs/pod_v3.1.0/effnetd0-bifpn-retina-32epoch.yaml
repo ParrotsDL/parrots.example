@@ -1,0 +1,198 @@
+version: v3.0.0
+num_classes: &num_classes 81
+
+flip: &flip
+ type: flip
+ kwargs:
+   flip_p: 0.5
+
+ms_resize: &ms_resize
+ type: keep_ar_resize
+ kwargs:
+   scales: "range(256, 768)" 
+   max_size: 853
+
+resize: &resize
+ type: keep_ar_resize
+ kwargs:
+   scales: [512]
+   max_size: 853
+
+to_tensor: &to_tensor
+  type: to_tensor
+
+normalize: &normalize
+ type: normalize
+ kwargs:
+   mean: [0.485, 0.456, 0.406] # ImageNet pretrained statics
+   std: [0.229, 0.224, 0.225]
+
+dataset: # Required.
+  train:
+    dataset:
+      type: coco
+      kwargs:
+        source: train  # dataset id
+        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        image_reader:
+          type: ceph_opencv
+          kwargs:
+            # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
+            color_mode: RGB
+        transformer: [*flip, *ms_resize, *to_tensor, *normalize]
+  test:
+    dataset:
+      type: coco
+      kwargs:
+        source: val
+        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+        image_reader:
+          type: ceph_opencv
+          kwargs:
+            memcached: True
+            # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
+            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
+            color_mode: RGB
+        transformer: [*resize, *to_tensor, *normalize]
+        evaluator:
+          type: COCO               # choices = {'COCO', 'VOC', 'MR'}
+          kwargs:
+            gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+            iou_types: [bbox]
+  batch_sampler:
+    type: aspect_ratio_group
+    kwargs:
+      sampler:
+        type: dist
+        kwargs: {}
+      batch_size: 6
+      aspect_grouping: [1,]
+  dataloader:
+    type: base
+    kwargs:
+      num_workers: 2
+      alignment: 128 
+
+trainer: # Required.
+  max_epoch: 32              # total epochs for the training
+  test_freq: 32
+  optimizer:                 # optimizer = SGD(params,lr=0.001,momentum=0.9,weight_decay=0.0001)
+    type: SGD
+    kwargs:
+      lr: 0.00125
+      momentum: 0.9
+      weight_decay: 0.00004
+  lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
+    warmup_epochs: 2         # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
+    type: PolyLR
+    kwargs:
+      max_epoch: 32
+      power: 0.5
+
+saver: # Required.
+  save_dir: checkpoints/effnetd0-bifpn-retina-32epoch      # dir to save checkpoints
+  pretrain_model: /mnt/lustre/share/prototype_model_zoo/effnet_b0_batch1k_epoch350_stepdecaylr_bn_nowd_fp16_rmsprop/checkpoints/ckpt_375000.pth.tar
+  results_dir: results_dir/effnetd0-bifpn-retina-32epoch   # dir to save detection results. i.e., bboxes, masks, keypoints
+  #vis_gt:
+  #  output_dir: vis_gt
+  #vis_dt:
+  #  output_dir: vis_dt
+  #  bbox_thresh: 0.3
+
+ema:                     
+  enable: True                                                                    
+  kwargs:                           
+      decay: 0.9998
+
+hooks:
+  - type: train_val_logger
+    kwargs: 
+      freq: 10
+      skip_first_k: 5
+      logdir: log
+      summary_writer: pavi
+
+net: # Required.
+  - name: backbone            
+    type: pod.models.backbones.efficientnet.efficientnet_b0
+    kwargs:
+      frozen_layers: [1,2]
+      out_stages: [4,6,9]     # layer1...4, commonly named Conv2...5
+      out_strides: [8,16,32]  # tell the strides of output features
+      initializer:
+        method: xavier
+      normalize:
+        type: sync_bn
+        kwargs:
+          bn_group_size: 8
+  - name: neck
+    prev: backbone
+    type: pod.models.necks.bifpn.BiFPN
+    kwargs:
+      layers : 3
+      outplanes: 64
+      out_levels: 5
+      out_strides: [8,16,32,64,128] # strides of output features. aka., anchor strides for roi_head
+      initializer:
+        method: xavier
+      normalize:
+        type: sync_bn
+        kwargs:
+          bn_group_size: 8
+  - name: roi_head
+    prev: neck
+    type: pod.models.heads.roi_head.RetinaSubNet
+    kwargs:
+      feat_planes: 64        # channels of intermediate conv
+      num_classes: *num_classes   # number of classes including backgroudn. for rpn, it's 2; for RetinaNet, it's 81
+      initializer:
+        method: normal
+        std: 0.01
+      num_conv: 3
+      cfg:
+        cls_loss:
+          type: sigmoid_focal_loss
+          kwargs:
+            alpha: 0.25
+            num_classes: 81
+            gamma: 1.5 
+            init_prior: 0.01
+        loc_loss:
+          type: smooth_l1_loss
+          kwargs:
+            sigma: 3.0
+            loss_weight: 2.0
+        anchor_generator:
+          type: hand_craft
+          kwargs:
+            anchor_ratios: [0.5,1,2]  # anchor strides are provided as feature strides by feature extractor
+            anchor_scales: [4, 5.0396842, 6.34960421] # scale of anchors relative to feature map
+        roi_supervisor:
+          type: retina
+          kwargs:
+            allowed_border: -1            # >=0 for rpn, -1 for retinanet(keep all anchors)
+            matcher:
+              type: max_iou
+              kwargs:
+                positive_iou_thresh: 0.5
+                negative_iou_thresh: 0.4
+                ignore_iou_thresh: 0.5    # Required if provide ignore_regions
+                allow_low_quality_match: True # an anchor is also positive if it has highest iou with any gt
+            sampler:
+              type: keep_all
+              kwargs: {}
+        roi_predictor:
+          type: base
+          kwargs:
+            pre_nms_score_thresh: 0.05  # to reduce computation
+            pre_nms_top_n: 6000
+            post_nms_top_n: 1000
+            roi_min_size: 0               # minimum scale of a valid roi
+            merger:
+              type: retina
+              kwargs:
+                top_n: 100
+                nms:
+                  type: naive
+                  nms_iou_thresh: 0.5     # Required in RetinaNet. DO not nms in FPN across levels
