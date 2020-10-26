@@ -33,9 +33,6 @@
 [submodule "models/springnas-lite"]
 	path = models/springnas-lite
 	url = git@gitlab.bj.sensetime.com:wangshiguang/springnas-lite.git
-[submodule "mild"]
-	path = models/mild
-	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
 [submodule "models/Multi_organ_seg_HR"]
 	path = models/Multi_organ_seg_HR
 	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
