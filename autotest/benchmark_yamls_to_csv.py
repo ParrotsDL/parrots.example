@@ -3,7 +3,7 @@ import os.path as osp
 import sys
 import yaml
 import csv
-#from autoparrots.utils.fileio import dump
+from autoparrots.utils.fileio import dump
 
 
 def get_frames(configs_dir):
@@ -42,9 +42,6 @@ def save(data_dir, frames, env):
         save_values.append(['frame', 'model', 'items', env])
         for frame, models in frames.items():
             for model, items in models.items():
-                print('frame is ', frame)
-                print('model is ', model)
-                print('items is ', items)
                 for item, v in items.items():
                     value = [frame, model, item, v]
                     save_values.append(value)
@@ -87,7 +84,7 @@ if __name__ == '__main__':
     frames_dir = osp.join(this_dir, 'benchmark')
     data_dir = osp.join(frames_dir, 'data')
     frames = get_frames(frames_dir)
-    #dump(frames, data_dir + '/' + title + '.yaml', file_format='yaml', default_flow_style=False)
+    dump(frames, data_dir + '/' + title + '.yaml', file_format='yaml', default_flow_style=False)
 
     if sys.argv[2] == 'True':
         save(data_dir + '/benchmark.csv', frames, title)
