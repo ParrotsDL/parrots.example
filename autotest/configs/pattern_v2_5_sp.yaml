@@ -1,3 +1,5 @@
-moblie_v2.6_spatial: # Required
+pattern_v2_5_sp_moblie_v2.6_spatial:
+  placeholder: none
+ # Required
   # attr: [thresh, has_to_higher/has_to_lower]
-  acc: [10000, '>', '5%']
+  # acc: [10000, '>', '5%']

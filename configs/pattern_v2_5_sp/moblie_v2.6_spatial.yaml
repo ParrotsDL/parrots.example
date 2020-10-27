@@ -53,7 +53,7 @@ strategy:
     print_freq: 20
     load_name: ''   ##?
     pretrained_model: ''
-    save_path: '/mnt/lustre/pulin/modelpool/pattern/mobile_v2.6_spatial_1017'
+    save_path: '../pattern_save/mobile_v2.6_spatial'
 
     workers: 4
 
