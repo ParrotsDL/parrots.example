@@ -94,7 +94,7 @@ data = dict(
             dict(
                 name='300VW',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/300VW_ori/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 '300vw.json',
                 frame_range=100,
                 repeat=100,
@@ -103,7 +103,7 @@ data = dict(
             dict(
                 name='part1',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/IPC/20191030_监控场景人脸追踪视频采集_part1_chenyanjie/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'part1.json',
                 frame_range=4,
                 repeat=2,
@@ -112,7 +112,7 @@ data = dict(
             dict(
                 name='part2',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/IPC/20191031_监控场景人脸追踪视频采集_part2_chenyanjie/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'part2.json',
                 frame_range=4,
                 repeat=0.8,
@@ -121,7 +121,7 @@ data = dict(
             dict(
                 name='facial_landmark_image',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/facial_landmark_image/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'facial_landmark_image.json',
                 frame_range=1,
                 repeat=0.1,
@@ -130,7 +130,7 @@ data = dict(
             dict(
                 name='LandmarkGhostface',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/facial_landmark_video/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'landmark_ghostface.json',
                 frame_range=60,
                 repeat=40,
@@ -139,7 +139,7 @@ data = dict(
             dict(
                 name='LandmarkMidrange',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/facial_landmark_video/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'landmark_midrange.json',
                 frame_range=8,
                 repeat=2,
@@ -148,7 +148,7 @@ data = dict(
             dict(
                 name='movie',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/movie/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'movie.json',
                 frame_range=1,
                 repeat=0.04,
@@ -157,7 +157,7 @@ data = dict(
             dict(
                 name='BilibiliDance1',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/Bilibili_dance_1/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'bilibili_dance_1.json',
                 frame_range=100,
                 repeat=40,
@@ -166,7 +166,7 @@ data = dict(
             dict(
                 name='BilibiliDance2',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/Bilibili_dance_2/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'bilibili_dance_2.json',
                 frame_range=20,
                 repeat=20,
@@ -175,7 +175,7 @@ data = dict(
             dict(
                 name='BilibiliOther1',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/Bilibili_other_1/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'bilibili_other_1.json',
                 frame_range=20,
                 repeat=80,
@@ -184,7 +184,7 @@ data = dict(
             dict(
                 name='HandNegativeWithFace',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/hand_negative/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'hand_rect_negative_with_Face_sample.json',
                 frame_range=1,
                 repeat=0.5,
@@ -193,7 +193,7 @@ data = dict(
             dict(
                 name='HandNegativeNoFace',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/hand_negative/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'hand_rect_negative_no_Face_sample.json',
                 frame_range=1,
                 repeat=0.5,
@@ -202,7 +202,7 @@ data = dict(
             dict(
                 name='large_yaw',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/large_angle_data/large_yaw/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'facial_landmark_video_large_yaw_latest_0604_train.json',
                 frame_range=16,
                 repeat=288,
@@ -211,7 +211,7 @@ data = dict(
             dict(
                 name='mask_glass',
                 root='s3://parrots_model_data/mmtrack/ARFace.Head_SOT_bucket/trainset/occlusion_data/20200508_mask_glass_lisiying/',
-                anno='/mnt/lustre/share_data/hanyachao/mmtrack/jsons/' +
+                anno='/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/' +
                 'facial_landmark_video_mask_occlusion_0615.json',
                 frame_range=8,
                 repeat=8,
@@ -221,7 +221,7 @@ data = dict(
         negative_ratio=0.2,
         template_pipeline=template_pipeline,
         search_pipeline=search_pipeline,
-        db_info="/mnt/lustre/share_data/hanyachao/mmtrack/mmtrack",
+        db_info="/mnt/lustre/share_data/parrots_model_data/mmtrack/mmtrack",
         ))
 
 # TODO: warm up & group params
