@@ -72,6 +72,8 @@ task:
                     ## 14.mmediting
                     {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024'},
                     {'framework': 'mmediting', 'gpus': 1, 'model': 'edsr_x2c64b16_g1_300k_div2k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024'},
+                    {'framework': 'mmediting', 'gpus': 1, 'model': 'dim_stage2_v16_pln_1x1_1000k_comp1k', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024'},
+                    {'framework': 'mmediting', 'gpus': 8, 'model': 'gl_256x256_8x12_celeba', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024'},
                 ]
     # Optional
     # callback: "cat"
