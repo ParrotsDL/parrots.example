@@ -25,9 +25,11 @@ python $ROOT/models/pattern_v2_5_sp/tools/dist_train.py \
 
 
 #########################origin test#######
-start_iter=$3 #need to modify
+#start_iter=$3 #need to modify
+start_iter=400
+end_iter=600
 step=100
-end_iter=5000
+#end_iter=5000
 #model_folder=$2 #need to modify
 model_folder= cfg['strategy']['save_path'] + '/checkpoint'
 while test $start_iter -le $end_iter; do
