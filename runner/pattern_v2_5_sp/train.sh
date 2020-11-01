@@ -26,12 +26,15 @@ python $ROOT/models/pattern_v2_5_sp/tools/dist_train.py \
 
 #########################origin test#######
 #start_iter=$3 #need to modify
-start_iter=400
+start_iter=00
 end_iter=600
 step=100
 #end_iter=5000
 #model_folder=$2 #need to modify
-model_folder= cfg['strategy']['save_path'] + '/checkpoint'
+# model_folder = cfg['strategy']['save_path'] + '/checkpoint'
+model_folder=$(cat $cfg | shyaml get-value strategy.save_path)
+model_folder=$model_folder/checkpoint/
+# pip install shyaml
 while test $start_iter -le $end_iter; do
     model_name="iter_${start_iter}_ckpt.pth.tar"
     echo "testing: "${model_folder}$model_name
@@ -44,7 +47,7 @@ while test $start_iter -le $end_iter; do
           2>&1 | tee $ROOT/log/pattern_v2_5_sp/test.${name}.log.$T
         ((start_iter+=step))
     else
-        echo "sleep"
-        sleep 30m
+        echo "can't find model"
+        ((start_iter+=step))
     fi
 done
