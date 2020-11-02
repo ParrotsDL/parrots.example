@@ -1,0 +1,131 @@
+coronary_seg_resvnet:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 3.7678961024564854
+    - <
+    - 5%
+    - 3.588472478529986
+    __benchmark_mem_alloc(mb):
+    - 14160.201502418518
+    - <
+    - 5%
+    - 13485.906192779541
+    __benchmark_mem_cached(mb):
+    - 16388.4
+    - <
+    - 5%
+    - 15608
+    __benchmark_pavi_task_id:
+    - 2df94783-f8a8-4a12-b662-3a1d1b30cbc2
+    __benchmark_pure_training_time(h):
+    - 24.26382274657488
+    - <
+    - 5%
+    - 23.1084026157856
+    __benchmark_total_time(h):
+    - 24.406800533562897
+    - <
+    - 5%
+    - 23.24457193672657
+    test_avg_coro_acc1:
+    - 0.28382
+    - '>'
+    - 50%
+    - 0.56764
+    test_avg_coro_dice:
+    - 0.4206428527832031
+    - '>'
+    - 50%
+    - 0.8412857055664062
+    test_avg_coro_iou:
+    - 0.36358901858329773
+    - '>'
+    - 50%
+    - 0.7271780371665955
+    test_avg_coro_ov1:
+    - 0.47065999999999997
+    - '>'
+    - 50%
+    - 0.9413199999999999
+    test_avg_vein_acc1:
+    - 0.38098
+    - '>'
+    - 50%
+    - 0.76196
+    test_avg_vein_dice:
+    - 0.411613792181015
+    - '>'
+    - 50%
+    - 0.82322758436203
+    test_avg_vein_iou:
+    - 0.35189953446388245
+    - '>'
+    - 50%
+    - 0.7037990689277649
+    test_avg_vein_ov1:
+    - 0.42169999999999996
+    - '>'
+    - 50%
+    - 0.8433999999999999
+    test_life: 1
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 3.767662722222945
+    - <
+    - 5%
+    - 3.5882502116409003
+    __benchmark_mem_alloc(mb):
+    - 14160.201502418518
+    - <
+    - 5%
+    - 13485.906192779541
+    __benchmark_mem_cached(mb):
+    - 16388.4
+    - <
+    - 5%
+    - 15608
+    __benchmark_pavi_task_id:
+    - dc8b27fe-c3e5-4c5a-9936-48aad3cb0400
+    __benchmark_pure_training_time(h):
+    - 0.2536604150334994
+    - <
+    - 5%
+    - 0.24158134765095182
+    __benchmark_total_time(h):
+    - 0.2539257992506027
+    - <
+    - 5%
+    - 0.24183409452438354
+    test_life: 1
+  test_avg_coro_acc1:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_coro_dice:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_coro_iou:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_coro_ov1:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_vein_acc1:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_vein_dice:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_vein_iou:
+  - 10000
+  - '>'
+  - 50%
+  test_avg_vein_ov1:
+  - 10000
+  - '>'
+  - 50%
