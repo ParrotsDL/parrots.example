@@ -196,28 +196,30 @@ task:
                 ## 22.prototype
                 # {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --data_reader MemcachedReader'}
                 # {'framework': 'prototype', 'gpus': 16, 'model': 'shufflev2', 'py_args': '--seed 1024 --pavi --pavi-project parrots_test --data_reader MemcachedReader'}
-                # 23.encoder
-                # {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project parrots_test --max_step 150'},
+                # 23.encoder cuda10-bug
+                ## {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project parrots_test --max_step 150'},
                 # 24.sensemedical
                 # {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project parrots_test --max_step 20'},
                 # 25.pattern
-                # {'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster --max_step 300'},
+                ## not ready{'framework': 'Pattern', 'gpus': 8, 'model': 'ms1m_arc-resnet100_a-softmax_bs512_mp_parrots', 'py_args': '--pavi True --pavi-project parrots_test --seed 1024 --data_reader cluster --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--start_iter 350000 --step_iter 5000  --end_iter 400000 --pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'eye_best_config_parrots', 'py_args': '--start_iter 160000 --step_iter 5000  --end_iter 200000 --pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'example_fusion_small_pytorch', 'py_args': '--start_iter 250000 --step_iter 5000 --end_iter 280000 --pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph --max_step 300'},
                 # {'framework': 'Pattern', 'gpus': 8, 'model': 'gaze_example', 'py_args': '--start_iter 90000 --step_iter 200  --end_iter 100000 --pavi True --pavi-project parrots_test --seed 1024 --data_reader ceph'},
-                ## 29 detr
+                # 26.instance_seg
+                # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
+                ## 27.detr
                 # { 'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --max_step 300 --seed 42'},
-                ## 30. sr_v3.0
+                ## 28.sr_v3.0
                 # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'F4_0_300', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
-                ## 31.3ddet
+                ## 29.heart_seg
+                # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'}
+                ## 3ddet - pause
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_0.7', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
-                # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
-                ## 32.heart_seg
-                # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'}
+                # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'}, 
                 ## 32.coronary_seg
-                # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project coronary_seg --data_reader MemcachedReader --seed 1024'}
+                    # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project coronary_seg --data_reader MemcachedReader --seed 1024'}
             ]
     # Optional
     # callback: "cat"

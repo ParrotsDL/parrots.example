@@ -5,7 +5,7 @@ GPUS=$2
 GPUS_PER_NODE=$(($2<8?$2:8))
 JOB_NAME=$3
 BS=`expr 4 \* $2`
-EPOCH=3000
+EPOCH=400
 
 now=$(date +"%Y%m%d_%H%M%S")
 ROOT=.
