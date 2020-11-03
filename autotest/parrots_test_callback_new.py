@@ -47,10 +47,10 @@ value_type_table = {
     "default": "last_value"
 }
 
-wait_time_log_no_change = 20  # 20 minutes for log no change
-wait_time_fork_subprocess = 60  # 60 seconds for fork subprocess
-wait_time_get_slurm_jobid = 5 # 10 seconds for geting slurm job id
-wait_time_occur_time_limited = 20  # 20 minutes for occur time limited
+wait_time_log_no_change = 0.33  # 20 minutes for log no change(Unit is Hour)
+wait_time_fork_subprocess = 0.0167  # 60 seconds for fork subprocess(Unit is Hour)
+wait_time_get_slurm_jobid = 0.01 # 36 seconds for geting slurm job id(Unit is Hour)
+wait_time_occur_time_limited = 0.33  # 20 minutes for occur time limited(Unit is Hour)
 
 
 def read_log_last(path, last_line_num=5):
@@ -160,11 +160,11 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         lines_hash = get_hash(log_lines)
         # monitor whether the log has not changed over time (kill all process if not change for a long time)
         if lines_hash == last_lines_hash:
-            if time.time() - last_lines_hash_start_time >= wait_time_log_no_change * 60:
+            if time.time() - last_lines_hash_start_time >= wait_time_log_no_change * 60 * 60:
                 kill_task(workdir, [name])
                 is_time_limit = True
                 if logger:
-                    logger.error("Job({})[pid: {}, slurm: {}] is killed because the log has not changed for {} minutes.".format(
+                    logger.error("Job({})[pid: {}, slurm: {}] is killed because the log has not changed for {} hours.".format(
                         name, job_pid, slurm_job_id, wait_time_log_no_change))
         else:
             last_lines_hash = lines_hash
@@ -177,11 +177,11 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
                     is_time_limit_occur = True
                     break
             if is_time_limit_occur and time_limited_start_time is not None:
-                if time.time() - time_limited_start_time >= wait_time_occur_time_limited * 60:
+                if time.time() - time_limited_start_time >= wait_time_occur_time_limited * 60 * 60:
                     kill_task(workdir, [name])
                     is_time_limit = True
                     if logger:
-                        logger.error("Job({})[pid: {}, slurm: {}] is killed because the log occurs '{}' for {} minutes.".format(
+                        logger.error("Job({})[pid: {}, slurm: {}] is killed because the log occurs '{}' for {} hours.".format(
                             name, job_pid, slurm_job_id, time_limited_flag, wait_time_occur_time_limited))
             else:
                 time_limited_start_time = time.time()
@@ -599,7 +599,7 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
     name = os.environ['name']
     while True:
         interval_time = time.time() - start_time
-        if interval_time >= wait_time_get_slurm_jobid:
+        if interval_time >= wait_time_get_slurm_jobid * 60 * 60:
             logger.warn("Job({}): can't get slurm from squeue".format(name))
             break
         slurm_job_id, _, status = get_slurm_job_id()
@@ -615,7 +615,7 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
         start_time = time.time()
         while pid < 0:
             interval_time = time.time() - start_time
-            if interval_time >= wait_time_fork_subprocess:
+            if interval_time >= wait_time_fork_subprocess * 60 * 60:
                 break
             pid = os.fork()
         if pid == 0:
