@@ -9,3 +9,5 @@ results*
 snapshot
 *.pyc
 experiments
+Pattern_save
+Pattern_result
