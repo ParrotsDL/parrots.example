@@ -45,8 +45,8 @@ dataset: # Required.
         image_reader:
           type: ceph_opencv
           kwargs:
-            image_dir: /mnt/lustre/share_data/wuwenli/AD/pod_try/data/
-            image_dir_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data/
+            image_dir: /mnt/lustre/share_data/wuwenli/AD/pod_try/data
+            image_dir_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data
             color_mode: RGB
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
@@ -61,8 +61,8 @@ dataset: # Required.
         image_reader:
           type: ceph_opencv
           kwargs:
-            image_dir: /mnt/lustre/share_data/wuwenli/AD/pod_try/data/ #need motify
-            image_dir_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data/
+            image_dir: /mnt/lustre/share_data/wuwenli/AD/pod_try/data #need motify
+            image_dir_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data
             color_mode: RGB
         transformer: [*resize, *to_tensor, *normalize]
         evaluator:

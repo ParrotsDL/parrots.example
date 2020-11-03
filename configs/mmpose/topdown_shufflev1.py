@@ -4,7 +4,7 @@ resume_from = None
 dist_params = dict(backend='nccl')
 workflow = [('train', 1)]
 checkpoint_config = dict(interval=10)
-evaluation = dict(interval=10, metric='mAP')
+evaluation = dict(interval=100, metric='mAP')
 
 optimizer = dict(
     type='Adam',
@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/hanyachao/'
+    pretrained='/mnt/lustre/share_data/star/pretrained_models/'
     'shufflenet_v1_batch1024_20200708-7a087432.pth',
     backbone=dict(type='ShuffleNetV1', groups=3),
     keypoint_head=dict(
@@ -122,8 +122,8 @@ test_pipeline = valid_pipeline
 
 data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017/'
 data_root_val = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/'
-ceph_data_root = 's3://parrots_data/DSK/datasets/mscoco2017/train2017/'
-ceph_data_root_val = 's3://parrots_data/DSK/datasets/mscoco2017/val2017/'
+ceph_data_root = 's3://parrots_model_data/DSK/datasets/mscoco2017/train2017/'
+ceph_data_root_val = 's3://parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 data = dict(
     samples_per_gpu=64,
     workers_per_gpu=2,
