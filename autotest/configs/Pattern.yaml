@@ -134,6 +134,63 @@ Pattern_eye_best_config_parrots:
     - '>'
     - 0%
     - 0.8729
+Pattern_gaze_example:
+  accuracy_honda3_valid_use_annotation_testset:
+  - 10000
+  - <
+  - 5%
+  all:
+    __benchmark_avg_iter_time(s):
+    - 10000
+    - <
+    - 5%
+    - 0.16
+    __benchmark_mem_alloc(mb):
+    - 1390.2
+    - <
+    - 5%
+    - 1324
+    __benchmark_mem_cached(mb):
+    - 1425.9
+    - <
+    - 5%
+    - 1358
+    __benchmark_pavi_task_id:
+    - ad23654f-20c3-43ac-9f5e-792f33a6b8ff
+    __benchmark_pure_training_time(h):
+    - 4.980601699173451
+    - <
+    - 5%
+    - 4.7434301896890005
+    __benchmark_total_time(h):
+    - 4.983785284221172
+    - <
+    - 5%
+    - 4.746462175448736
+    accuracy_honda3_valid_use_annotation_testset:
+    - 0.5448091350397175
+    - <
+    - 5%
+    - 0.5188658428949691
+    angle_gaze_vector:
+    - 9.99554366078072
+    - '>'
+    - 5%
+    - 10.521624906084968
+    angle_honda3_vector_testset_v3:
+    - 10.731634959179571
+    - <
+    - 5%
+    - 10.220604723028163
+    test_life: 0
+  angle_gaze_vector:
+  - 10000
+  - '>'
+  - 5%
+  angle_honda3_vector_testset_v3:
+  - 10000
+  - <
+  - 5%
 Pattern_ms1m_arc-resnet100_a-softmax_bs512_mp_parrots:
   average_precision:
   - 0
