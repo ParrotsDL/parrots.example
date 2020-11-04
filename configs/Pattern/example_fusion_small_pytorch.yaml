@@ -289,9 +289,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/Mask0/st_align_106/'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/Mask0/st_align_106/'
-        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/Mask0/st_align_106/'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/Mask0/st_align_106'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/Mask0/st_align_106'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/Mask0/st_align_106'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/mask_data_50000.json' # 546085
         batch_size: 16 # for single gpu
 
@@ -345,9 +345,9 @@ data:
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
         compare_task: True
-        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/smile_data_allshare/AllSampleShare/'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/smile_data_allshare/AllSampleShare/'
-        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/smile_data_allshare/AllSampleShare/'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/smile_data_allshare/AllSampleShare'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/smile_data_allshare/AllSampleShare'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/smile_data_allshare/AllSampleShare'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/smile_data_allshare_50000.json' # 401624
         batch_size: 16
     landmark_data_20190505_train_data:
@@ -456,9 +456,9 @@ test:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/align/aligned_pupil_age_image/'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/align/aligned_pupil_age_image/'
-        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/align/aligned_pupil_age_image/'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/align/aligned_pupil_age_image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/align/aligned_pupil_age_image'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/align/aligned_pupil_age_image'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/age_test_data_student_10000.json'
         batch_size: 256 # for single gpu
         delta_thres: [5, 10] # only for age
@@ -538,9 +538,9 @@ test:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/emotion/aligned_image/'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/emotion/aligned_image/'
-        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/emotion/aligned_image/'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/emotion/aligned_image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/emotion/aligned_image'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/emotion/aligned_image'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/emotion_test_10000_new.json'
         batch_size: 256
     meitu_2016_test:
@@ -550,8 +550,8 @@ test:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/20190508_meitu_2016/align_imgs/'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/20190508_meitu_2016/align_imgs/'
-        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/20190508_meitu_2016/align_imgs/'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/20190508_meitu_2016/align_imgs'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/20190508_meitu_2016/align_imgs'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/20190508_meitu_2016/align_imgs'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/20190508_meitu_2016_test.json'
         batch_size: 256 # for single gpu
