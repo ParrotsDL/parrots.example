@@ -214,12 +214,13 @@ task:
                 # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'F4_0_300', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'},
                 ## 29.heart_seg
                 # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'}
+                ## 30.coronary_seg
+                # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'}
                 ## 3ddet - pause
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_0.7', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'}, 
-                ## 32.coronary_seg
-                # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024'}
+                
             ]
     # Optional
     # callback: "cat"
