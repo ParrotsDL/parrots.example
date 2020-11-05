@@ -42,7 +42,8 @@ run_type_table = {
 
 value_type_table = {
     "Pattern": "max_value",
-    "default": "last_value"
+    "default": "last_value",
+    "pattern_v2_5_sp": "max_value"
 }
 
 wait_time_log_no_change = 20  # 20 minutes for log no change

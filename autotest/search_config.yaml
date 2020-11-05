@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "sh runner/{framework}/train.sh pat_modelpool {gpus} {model} {py_args}"
+    template: "sh runner/{framework}/train.sh pat_weeklybuild {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -213,7 +213,8 @@ task:
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 ## 33.pattern_v2_5_sp
-                 {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'moblie_v2.6_spatial', 'py_args': '--pavi --pavi-project pulin --seed 1024'},
+                 {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--pavi --pavi-project pulin --seed 1024 --max_step 200'},
+                #  {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'moblie_v2.6_spatial', 'py_args': '--pavi --pavi-project pulin --seed 1024'},
             ]
     # Optional
     # callback: "cat"
