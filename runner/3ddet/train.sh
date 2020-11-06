@@ -19,7 +19,8 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
 
 pyroot=$ROOT/models/3ddet
-export PYTHONPATH=${pyroot}/:${pyroot}/spconv/:$PYTHONPATH
+export LD_LIBRARY_PATH=/mnt/lustre/share/shishaoshuai/anaconda3/lib/python3.7/site-packages/spconv:$LD_LIBRARY_PATH 
+export PYTHONPATH=${pyroot}/:${pyroot}/parrots_spconv:${pyroot}/spconv:$PYTHONPATH
 
 SRUN_ARGS=${SRUN_ARGS:-""}
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \

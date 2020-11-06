@@ -4,7 +4,7 @@ resume_from = None
 dist_params = dict(backend='nccl')
 workflow = [('train', 1)]
 checkpoint_config = dict(interval=10)
-evaluation = dict(interval=5, metric='mAP')
+evaluation = dict(interval=100, metric='mAP')
 
 optimizer = dict(
     type='Adam',
@@ -127,8 +127,8 @@ test_pipeline = valid_pipeline
 
 data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017/'
 data_root_val = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/'
-ceph_data_root = 's3://parrots_data/DSK/datasets/mscoco2017/train2017/'
-ceph_data_root_val = 's3://parrots_data/DSK/datasets/mscoco2017/val2017/'
+ceph_data_root = 's3://parrots_model_data/DSK/datasets/mscoco2017/train2017/'
+ceph_data_root_val = 's3://parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 data = dict(
     samples_per_gpu=32,
     workers_per_gpu=2,

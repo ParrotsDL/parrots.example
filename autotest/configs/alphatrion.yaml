@@ -39,6 +39,34 @@ alphatrion_mobilenet_v2_fp32:
   - 20%
   
 alphatrion_mobilenet_v2_fp32_benchmark:
+  autoparrotsbenchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.2438416610849966
+    - <
+    - 50%
+    - 0.16256110738999774
+    __benchmark_mem_alloc(mb):
+    - 4005.0
+    - <
+    - 50%
+    - 2670
+    __benchmark_mem_cached(mb):
+    - 4128.0
+    - <
+    - 50%
+    - 2752
+    __benchmark_pavi_task_id:
+    - fb53f762-6039-4774-8970-24bca0f1be9a
+    __benchmark_pure_training_time(h):
+    - 0.392516187230746
+    - <
+    - 50%
+    - 0.26167745815383064
+    __benchmark_total_time(h):
+    - 0.41202325741449997
+    - <
+    - 50%
+    - 0.2746821716096666
   benchmark:
     __benchmark_avg_iter_time(s):
     - 0.2438416610849966

@@ -33,9 +33,6 @@
 [submodule "models/springnas-lite"]
 	path = models/springnas-lite
 	url = git@gitlab.bj.sensetime.com:wangshiguang/springnas-lite.git
-[submodule "mild"]
-	path = models/mild
-	url = git@gitlab.bj.sensetime.com:parrots_iv_face/mild.git
 [submodule "models/Multi_organ_seg_HR"]
 	path = models/Multi_organ_seg_HR
 	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
@@ -111,6 +108,13 @@
 [submodule "models/3ddet"]
 	path = models/3ddet
 	url = git@gitlab.hk.sensetime.com:parrots.model/PointCloudDet3D.git
-[submodule "models/pattern_v2_5_sp"]
-	path = models/pattern_v2_5_sp
-	url = git@gitlab.bj.sensetime.com:parrots.model/pattern_v2.5_sp.git
+[submodule "models/detr"]
+    path = models/detr
+    url = git@gitlab.sh.sensetime.com:parrots.model/detr.git
+[submodule "models/heart_seg"]
+	path = models/heart_seg
+	url = git@gitlab.bj.sensetime.com:parrots.model/medai_mmwhs_xq.git
+
+[submodule "models/coronary_seg"]
+	path = models/coronary_seg
+	url = git@gitlab.bj.sensetime.com:parrots.model/coronary-seg.git

@@ -90,8 +90,9 @@ strategy:
     task_type: 'tracking'
     task_mode: 'train'
     scatter_mode: True
+    pavi_mode: True
 
-    max_iter: 28 #280000
+    max_iter: 280000
     base_lr: 0.001
     lr_steps: [100000, 140000, 180000, 220000, 260000]
     lr_mults: [0.5, 0.5, 0.5, 0.5, 0.5]
@@ -102,10 +103,10 @@ strategy:
     warmup_steps: 0
     warmup_lr: 0.2
 
-    snapshot_freq: 5 #5000
-    print_freq: 2 #20
+    snapshot_freq: 5000
+    print_freq: 20
     load_name: 'iter_80000_ckpt.pth.tar'
-    save_path: './Pattern_save/fusion/FVN_fusion_small_pytorch'
+    save_path: './Pattern_result/fusion/parrots'
 
     workers: 8
 data:
@@ -164,8 +165,14 @@ data:
     gender_data_imdb_v1:
         type: 'attribute'
         task: ['gender']
-        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/gender/imdbface_v1/st_align'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/gender_data_imdb_v1_50000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        #prefix: '/mnt/lustrenew/wangfei/attritbutes/data/gender/imdbface_v1/st_align'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/imdbface_v1/st_align'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/imdbface_v1/st_align'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/imdbface_v1/st_align'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/gender_data_imdb_v1_50000.json'
         batch_size: 32 # for single gpu
 #    gender_data_imdb_v2:
 #        type: 'attribute'
@@ -201,8 +208,13 @@ data:
     age_data_sz_v1:
         type: 'attribute'
         task: ['age']
-        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/age/age_all_attributes/train_data'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/age_data_sz_v1_50000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/age_all_attributes/train_data'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/age_all_attributes/train_data'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/age_all_attributes/train_data'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/age_data_sz_v1_50000.json'
         batch_size: 16 # for single gpu
         smooth_l1_thrd: 2.5
 #    age_data_sz_v2:
@@ -251,8 +263,13 @@ data:
     race_data_imdb_v1:
         type: 'attribute'
         task: ['race']
-        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/race/imdbface_v1/st_align'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/race_data_imdb_v1_50000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/imdbface_v1/st_align'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/imdbface_v1/st_align'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/imdbface_v1/st_align'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/race_data_imdb_v1_50000.json'
         batch_size: 32 # for single gpu
 #    race_data_imdb_v2:
 #        type: 'attribute'
@@ -269,15 +286,25 @@ data:
     mask_data:
         type: 'attribute'
         task: ['mask']
-        prefix: '/mnt/lustrenew/chenkeyu/Data/MaskData/Mask0/st_align_106/'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/mask_data_50000.json' # 546085
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/Mask0/st_align_106'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/Mask0/st_align_106'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/Mask0/st_align_106'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/mask_data_50000.json' # 546085
         batch_size: 16 # for single gpu
 
     glass_data_glass:
         type: 'attribute'
         task: ['glass']
-        prefix: '/mnt/lustrenew/chenkeyu/Data/GlassData/GlassData/st_align_106'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/glass_data_glass_50000.json' #520760
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/GlassData/st_align_106'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/GlassData/st_align_106'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/GlassData/st_align_106'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/glass_data_glass_50000.json' #520760
         batch_size: 8 # for single gpu
 #    glass_data_sunglass:
 #        type: 'attribute'
@@ -286,11 +313,17 @@ data:
 #        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/train/glass/glass_data_sunglass.json'
 #        batch_size: 8 # for single gpu
 
+#wwl
     emotion_data:
         type: 'attribute'
         task: ['emotion']
-        prefix: '/mnt/lustrenew/chenkeyu/Data/EmotionData/siwei_emotion/aligned_emotion_image'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/emotion_data_50000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/siwei_emotion/aligned_emotion_image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/siwei_emotion/aligned_emotion_image'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/siwei_emotion/aligned_emotion_image'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/emotion_data_50000_new.json'
         batch_size: 16 # for single gpu
 #    emotion_data_cyj:
 #        type: 'attribute'
@@ -308,17 +341,27 @@ data:
     smile_data_allshare:
         type: 'attribute'
         task: ['smile']
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
         compare_task: True
-        prefix: '/mnt/lustre/fangkairen/DATA/smile_data_allshare/AllSampleShare/'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/smile_data_allshare_50000.json' # 401624
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/smile_data_allshare/AllSampleShare'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/smile_data_allshare/AllSampleShare'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/smile_data_allshare/AllSampleShare'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/smile_data_allshare_50000.json' # 401624
         batch_size: 16
     landmark_data_20190505_train_data:
         type: '106pt'
         task: ['landmark']
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
         has_label_weight: True
         #prefix: '/mnt/lustre/fangkairen/chenyanjie/to_kairen/106pt/align_and_get_affinemat/'
-        prifix: '/mnt/lustrenew/liutinghao/train_data/data/alignment/normal_alignment'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/20190505_train_data_50000.json'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/alignment/normal_alignment'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/alignment/normal_alignment'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/alignment/normal_alignment'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/20190505_train_data_50000.json'
         batch_size: 16
 
 
@@ -362,8 +405,13 @@ test:
     gender_test_data_ali30w:
         type: 'attribute'
         task: ['gender']
-        prefix: '/mnt/lustrenew/wangfei/attritbutes/data/gender/alibaba/st_align_106'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/gender_test_data_ali30w_10000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/alibaba/st_align_106'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/alibaba/st_align_106'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/alibaba/st_align_106'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/gender_test_data_ali30w_10000.json'
         batch_size: 256
 #
 #    gender_test_data_sur:
@@ -405,8 +453,13 @@ test:
     age_test_data_student:
         type: 'attribute'
         task: ['age']
-        prefix: '/mnt/lustrenew/jihaorui/annotation/guiyang_age/align/aligned_pupil_age_image/'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/age_test_data_student_10000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/align/aligned_pupil_age_image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/align/aligned_pupil_age_image'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/align/aligned_pupil_age_image'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/age_test_data_student_10000.json'
         batch_size: 256 # for single gpu
         delta_thres: [5, 10] # only for age
 #
@@ -478,16 +531,27 @@ test:
 #        json_path: '/mnt/lustre/dutianyuan/Attribute/data_proprecess/attribute_jsons/test/emotion_7cls/emotion_test_honda.json'
 #        batch_size: 256
 #
+#wwl
     emotion_test:
         type: 'attribute'
         task: ['emotion']
-        prefix: '/mnt/lustre/fangkairen/DATA/attribute_data/emotion_testset/emotion/aligned_image/'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/emotion_test_10000.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/emotion/aligned_image'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/emotion/aligned_image'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/emotion/aligned_image'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/emotion_test_10000_new.json'
         batch_size: 256
     meitu_2016_test:
         type: '106pt'
         task: ['landmark']
         has_label_weight: False
-        prefix: '/mnt/lustre/fangkairen/chenyanjie/to_kairen/106pt/align_and_get_affinemat/20190508_meitu_2016/align_imgs/'
-        json_path: '/mnt/lustre/fangkairen/SomeJsonData/20190508_meitu_2016_test.json'
+        data_format: 'cluster'
+        data_format_cluster: 'cluster'
+        data_format_ceph: 'ceph'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/20190508_meitu_2016/align_imgs'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/ImageData/20190508_meitu_2016/align_imgs'
+        prefix_ceph: 's3://parrots_model_data/pattern/fusion/ImageData/20190508_meitu_2016/align_imgs'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/fusion/SomeJsonData/20190508_meitu_2016_test.json'
         batch_size: 256 # for single gpu

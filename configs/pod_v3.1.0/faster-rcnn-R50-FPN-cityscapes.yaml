@@ -35,12 +35,12 @@ dataset: # Required.
       kwargs:
         source: train  # dataset id
         has_mask: True
-        # meta_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_train.json
+        # meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_train.json
         meta_file: s3://parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_train.json
         image_reader:
           type: ceph_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/cityscapes/leftImg8bit/train
+            # image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/cityscapes/leftImg8bit/train
             image_dir: s3://parrots_model_data/DSK/datasets/cityscapes/leftImg8bit/train
             color_mode: RGB
         transformer: [*flip, *train_resize, *to_tensor, *normalize]
@@ -50,19 +50,19 @@ dataset: # Required.
       kwargs:
         source: val
         has_mask: True
-        # meta_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
+        # meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
         meta_file: s3://parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
         image_reader:
           type: ceph_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/cityscapes/leftImg8bit/val
+            # image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/cityscapes/leftImg8bit/val
             image_dir: s3://parrots_model_data/DSK/datasets/cityscapes/leftImg8bit/val
             color_mode: RGB
         transformer: [*test_resize, *to_tensor, *normalize]
         evaluator:
           type: COCO               # choices = {'COCO', 'VOC', 'mAP'}
           kwargs:
-            # gt_file: /mnt/lustre/share/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
+            # gt_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
             gt_file: s3://parrots_model_data/DSK/datasets/cityscapes/city_coco/instancesonly_filtered_gtFine_val.json
             iou_types: [bbox, segm]      # calcuate AP_bbox only
   batch_sampler:

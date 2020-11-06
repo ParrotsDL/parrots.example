@@ -90,7 +90,7 @@ search_pipeline = [
     dict(type='ToTensor', keys=['bbox','jitter_bbox']),
 ]
 
-anno_root = '/mnt/lustre/share_data/hanyachao/mmtrack/jsons/'
+anno_root = '/mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/'
 data = dict(
     samples_per_gpu=64,
     workers_per_gpu=8,
@@ -227,7 +227,7 @@ data = dict(
         negative_ratio=0.2,
         template_pipeline=template_pipeline,
         search_pipeline=search_pipeline,
-        db_info="/mnt/lustre/share_data/hanyachao/mmtrack/mmtrack",
+        db_info="/mnt/lustre/share_data/parrots_model_data/mmtrack/mmtrack",
         ))
 
 # TODO: warm up & group params
