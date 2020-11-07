@@ -221,7 +221,7 @@ task:
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024'},
                 ## 33.pattern_v2_5_sp
-                 {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                # {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
                 
             ]
     # Optional
