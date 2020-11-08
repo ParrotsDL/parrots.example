@@ -25,7 +25,7 @@ python $ROOT/models/pattern_v2_5_sp/tools/dist_train.py \
 
 # model_folder=$(cat $cfg | shyaml get-value strategy.save_path)
 if [ -z $PARROTS_BENCHMARK ]; then
-    test_iters=200  #000
+    test_iters=200000
     model_name="iter_${test_iters}_ckpt.pth.tar"
     echo "testing: "${model_folder}$model_name
     OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 GLOG_logtostderr=-1 OMPI_MCA_btl_smcuda_use_cuda_ipc=0 \
