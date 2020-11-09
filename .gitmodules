@@ -120,3 +120,6 @@
 [submodule "models/mmdetection3d"]
 	path = models/mmdetection3d
 	url = git@gitlab.bj.sensetime.com:parrots.model/mmdetection3d.git
+[submodule "models/pattern_v2_5_sp"]
+	path = models/pattern_v2_5_sp
+	url = git@gitlab.bj.sensetime.com:parrots.model/pattern_v2.5_sp.git
