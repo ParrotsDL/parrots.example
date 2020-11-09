@@ -214,13 +214,21 @@ task:
                     # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 10'}
                     ## 30.coronary_seg
                     # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 10'}
+                    ## 31. mmdetection3d
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'votenet_16x8_sunrgbd-3d-10class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'votenet_8x8_scannet-3d-18class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_second_secfpn_6x8_80e_kitti-3d-3class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_second_secfpn_6x8_80e_kitti-3d-car', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_PartA2_secfpn_2x8_cyclic_80e_kitti-3d-3class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_PartA2_secfpn_2x8_cyclic_80e_kitti-3d-car', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_pointpillars_secfpn_6x8_160e_kitti-3d-3class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_pointpillars_secfpn_6x8_160e_kitti-3d-car', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
+                    ## 33.pattern_v2_5_sp
+                    # {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--max_step 320 --seed 100 --pavi --pavi-project parrots_test'},
                     ## 3ddet - pause
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_0.7', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.2'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.02'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024 --max-step 0.02'},
-                    ## 33.pattern_v2_5_sp
-                    # {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--max_step 320 --seed 100 --pavi --pavi-project parrots_test'},
-                    
                 ]
 
 
