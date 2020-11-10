@@ -1,0 +1,182 @@
+common:
+    save_path: ./test
+data:
+    train:
+        dataloader_type: iter # [epoch, iter]
+        trajectory_len: 64
+        trajectory_type: sequential  # [epoch: [slide_window], iter: [sequential]]
+        slide_window_step: 64  # only in slide_window
+        use_distributed: True
+        batch_size: 3
+        replay_cache_size: 15
+        use_global_cumulative_stat: True
+        num_workers: 0
+        # total_iter: 1e10
+        total_iter: 10
+        use_ceph: True
+        same_size_map: False
+        units_order_type: 'type'
+        Z_random_type: 'episode'
+        use_repeat: False
+    eval:
+        use_ceph: True
+        ignore_camera: True
+        output_path: '/mnt/zhouhang2/data/test/'
+        batch_size: 1
+        num_workers: 0
+        same_size_map: False
+        units_order_type: 'type'
+        use_repeat: False
+
+train:
+    # max_iterations: 1e9
+    max_iterations: 10
+    criterion:
+        type: 'soft_focal_loss'  # ['cross_entropy', 'label_smooth', 'soft_focal_loss']
+    parallel: True
+    loss_weight:
+        action_type: 30.0
+        repeat: 0.1
+        delay: 9.0
+        queued: 1.0
+        selected_units: 4.0
+        target_units: 4.0
+        target_location: 8.0
+    grad_clip_type: 'max_norm'  # 'max_norm' or 'clip_value'
+    grad_clip_norm_type: '2'  # 'inf' or int
+    grad_clip_threshold: 5.0
+    grad_clip_begin_step: 1000
+    select_loss_type: 'normal'  # 'norm32' 'norm1' 'normal'
+    regularization_type: 'adamW'
+    learning_rate: 1e-3
+    load_optimizer: True
+    use_warm_up: False
+    warm_up_T: 2000
+    use_repeat: False
+api:
+    learner_port: 8293               # learner port
+    coordinator_ip: 10.5.36.31       # learner and coordinator are in same cluster
+    coordinator_port: 8294
+    manager_ip: 10.5.36.31           # could be all cluster
+    manager_port: 8295
+    ceph_path: s3://zhangming
+model:
+    encoder:
+        obs_encoder:
+            encoder_names: [scalar_encoder, spatial_encoder, entity_encoder]
+            scalar_encoder:
+                use_stat: True  # whether use statistics z
+                activation: 'relu'
+                begin_num: 20  # beginning_build_order_num
+                output_dim: 1280  # use_stat(True: 1280, False: 1088)
+            spatial_encoder:
+                input_dim: 52
+                resblock_num: 4
+                fc_dim: 256
+                project_dim: 32
+                downsample_type: 'conv2d'
+                down_channels: [64, 128, 128]
+                activation: 'relu'
+                norm_type: 'none'
+            entity_encoder:
+                input_dim: 1340  # refer to alphastar_obs_wrapper
+                head_dim: 128
+                hidden_dim: 1024
+                output_dim: 256
+                head_num: 2
+                mlp_num: 2
+                layer_num: 3
+                dropout_ratio: 0
+                activation: 'relu'
+                ln_type: 'post'
+            use_score_cumulative: False
+        scatter:
+            input_dim: 256  # entity_encoder.output_dim
+            output_dim: 32
+            scatter_type: 'add'
+        core_lstm:
+            lstm_type: 'normal'
+            input_size: 1792  # spatial_encoder.fc_dim + entity_encoder.output_dim + scalar_encoder.output_dim
+            hidden_size: 384
+            num_layers: 3
+            dropout: 0
+        score_cumulative:
+            input_dim: 13
+            output_dim: 64
+            activation: 'relu'
+    policy:
+        sl_training: True
+        use_repeat: False
+        head:
+            head_names: [action_type_head, delay_head, queued_head, selected_units_head, target_unit_head, location_head]
+            action_type_head:
+                input_dim: 384  # core.hidden_size
+                res_dim: 256
+                res_num: 16
+                action_num: 327
+                action_map_dim: 256
+                gate_dim: 1024
+                context_dim: 256
+                activation: 'relu'
+                norm_type: 'LN'
+                ln_type: 'normal'
+                use_mask: False
+            repeat_head:
+                input_dim: 1024
+                decode_dim: 256
+                repeat_dim: 17
+                repeat_map_dim: 256
+                activation: 'relu'
+            delay_head:
+                input_dim: 1024  # action_type_head.gate_dim
+                decode_dim: 256
+                delay_dim: 128
+                delay_map_dim: 256
+                activation: 'relu'
+            queued_head:
+                input_dim: 1024  # action_type_head.gate_dim
+                decode_dim: 256
+                queued_dim: 2
+                queued_map_dim: 256
+                activation: 'relu'
+            selected_units_head:
+                lstm_type: 'pytorch'
+                lstm_norm_type: 'none'
+                lstm_dropout: 0.
+                input_dim: 1024  # action_type_head.gate_dim
+                entity_embedding_dim: 256  # entity_encoder.output_dim
+                key_dim: 32
+                unit_type_dim: 259
+                func_dim: 256
+                hidden_dim: 32
+                num_layers: 1
+                max_entity_num: 64
+                activation: 'relu'
+                use_mask: False
+                units_reorder: False
+            target_unit_head:
+                input_dim: 1024  # action_type_head.gate_dim
+                entity_embedding_dim: 256  # entity_encoder.output_dim
+                key_dim: 32
+                unit_type_dim: 259
+                func_dim: 256
+                activation: 'relu'
+                use_mask: False
+            location_head:
+                input_dim: 1024
+                upsample_type: 'bilinear'
+                upsample_dims: [128, 64, 1]  # len(upsample_dims)-len(down_channels)+1 = ratio
+                res_dim: 128
+                res_num: 4
+                reshape_size: [16, 16]
+                reshape_channel: 4  # entity_encoder.gate_dim / reshape_size
+                map_skip_dim: 128  # spatial_encoder.down_channels[-1]
+                activation: 'prelu'
+                output_type: 'cls'  # ['cls', 'soft_argmax']
+                use_mask: False
+                location_expand_ratio: 1
+logger:
+    print_freq: 10
+    save_freq: 200
+    eval_freq: 1000
+    var_record_type: 'alphastar'

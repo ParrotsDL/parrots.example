@@ -10,3 +10,4 @@ snapshot
 .log-*.txt
 *.pyc
 experiments
+events*
