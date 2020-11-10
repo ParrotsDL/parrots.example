@@ -1,0 +1,137 @@
+net:
+    backbone:
+        arch: core.model.backbone.mobilenet_v2_6_spatial.MobileNetV2_6
+        lr_decay_mult: # listing all layers with param
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            ## ? 设置参数，经验？
+            nn.Conv2d: [1, 1, 2, 0]
+            nn.BatchNorm2d: [1, 0, 1, 0]
+            nn.Linear: [1, 10, 1, 10]
+        kwargs:
+            ## ?
+            feature_dim: 128 # for each single branch
+
+    head: # loss inside
+        arch: core.model.head.msms_roi_head.MSMShead
+        prev: backbone # must have for neck and head module
+        lr_decay_mult: # different key name for each arch
+            # [w_lr_mult, w_decay_mult, b_lr_mult, b_decay_mult]
+            head: [1, 1, 1, 1]
+        task_names:
+            0:
+                gaze_vector: ['honda_trainset']
+#                gaze_valid: ['honda3_valid_trainset']
+        kwargs:
+            task_cfgs:
+                gaze_vector:
+                    gaze_dim: 3
+                    loss_type: Cos
+                    loss_weight: 1
+                    has_accuracy: False
+#                gaze_valid:
+#                    num_class: 4
+#                    loss_type: softmax
+#                    loss_weight: 0.1
+#                    has_accuracy: True
+strategy:
+    task_type: 'gaze'
+    task_mode: 'train'
+    scatter_mode: True
+
+    max_iter: 200000
+    base_lr: 0.01
+    lr_steps: [100000, 150000, 180000]
+    #base_lr: 0.1
+    #lr_steps: [5000, 16000, 18000]
+    lr_mults: [0.1, 0.1, 0.1]
+    momentum: 0.9
+    optimizer: 'SGD' # 'Adam'
+    weight_decay: 0.0002
+
+    warmup_steps: 0
+    warmup_lr: 0.2
+
+    snapshot_freq: 200
+    print_freq: 20
+    load_name: ''   ##?
+    pretrained_model: '/mnt/lustre/share_data/pulin/v2.6_imagenet_honda2_honda3.pth.tar'
+    # save_path: '/mnt/lustre/pulin/modelpool/pattern1102/parrots.test/.search-run/tasks/parrots/jobs/all/0/pattern_save/mobile_v2.6_spatial'
+    save_path: '/mnt/lustre/pulin/modelpool/pattern1102/parrots.test/.search-run/tasks/pytorch/jobs/all/0/pattern_save/mobile_v2.6_spatial'
+    # save_path: '../pattern_save/mobile_v2.6_spatial'
+
+    workers: 4
+data:
+    training_param:
+        # crop config
+        crop: False
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        final_height: 224
+        final_width: 224
+        # mirror
+        mirror: False
+        mirror_prob: 0.5
+        # zoom
+        zoom: False
+        zoom_min: 0.9
+        zoom_max: 1.1
+        # gray
+        use_gray: True
+        final_channel: 1
+        #rotate
+        rotate: False
+        rotate_angle_max_value: 20
+        #trans(trans_x_max_value and trans_y_max_value are optional)
+        trans: True
+        trans_max_value: 0.067
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        #mean: [127.5]
+        #std: [79.68750]
+    honda_trainset:
+        type: 'gaze_vec_with_eye'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data'
+        json_path: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/all_train_honda3_vector_transfer_face_eye_valid.json'
+        batch_size: 64
+
+   
+
+test:
+    strategy:
+        task_type: 'gaze'
+        task_mode: 'test'
+        scatter_mode: False
+        load_path: '' # if is None or '', copy from config['strategy']['save_path'] + 'checkpoint'
+        workers: 0
+
+    testing_param:
+        # crop config
+        crop: False
+        y_offset: 0
+        crop_height: 64
+        crop_width: 64
+        # scale
+        scale: False
+        final_height: 224
+        final_width: 224
+        # gray
+        use_gray: True
+        final_channel: 1
+        # normalize
+        normalize: True
+        normalize_type: 'z_score' # 'z_score', 'mean_std'
+        # -1.6 ~ 1.6
+        #mean: [127.5, 127.5, 127.5]
+        #std: [79.6875, 79.6875, 79.6875]
+    honda_testset:
+        type: 'gaze_vec_with_eye'
+        task: ['gaze_vector']
+        prefix: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic'
+        json_path: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/test_honda3_vector_transfer_face_eye_valid.json'
+        batch_size: 64 # for single gpu 

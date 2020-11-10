@@ -85,9 +85,9 @@ data:
     ms1m:
         prefix: ['s3://parrots_model_data/pattern/verify/ms1m/']
         prefix_ceph: ['s3://parrots_model_data/pattern/verify/ms1m/']
-        prefix_lustre: ['/mnt/lustre/share_data/wuwenli/ms1m/']
-        data_source: [/mnt/lustre/share_data/wuwenli/ms1m/image_list.txt]
-        label_source: [/mnt/lustre/share_data/wuwenli/ms1m/label.txt]
+        prefix_lustre: ['/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/ms1m/']
+        data_source: [/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/ms1m/image_list.txt]
+        label_source: [/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/ms1m/label.txt]
         format: 'txt'
         data_format: 'ceph'
         data_format_ceph: 'ceph'

@@ -114,7 +114,15 @@
 [submodule "models/heart_seg"]
 	path = models/heart_seg
 	url = git@gitlab.bj.sensetime.com:parrots.model/medai_mmwhs_xq.git
-
 [submodule "models/SenseStar"]
 	path = models/SenseStar
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/SenseStar.git
+[submodule "models/coronary_seg"]
+	path = models/coronary_seg
+	url = git@gitlab.bj.sensetime.com:parrots.model/coronary-seg.git
+[submodule "models/mmdetection3d"]
+	path = models/mmdetection3d
+	url = git@gitlab.bj.sensetime.com:parrots.model/mmdetection3d.git
+[submodule "models/pattern_v2_5_sp"]
+	path = models/pattern_v2_5_sp
+	url = git@gitlab.bj.sensetime.com:parrots.model/pattern_v2.5_sp.git

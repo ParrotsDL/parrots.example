@@ -34,7 +34,7 @@ if [[ $name == "siamrpnpp" ]]; then
     ${EXTRA_ARGS} \
     | tee ${work_dir}/eval-$now.log
 else
-    python $pyroot/mmtrack/face_eval_plus/quantitative/meval.py -c ${cfg} -m SiamRPN -b 8 -e 50 -r ${work_dir}/result-newpart/ -w ${work_dir}/ -rf 20 -bf 1 \
+    python $pyroot/mmtrack/face_eval_plus/quantitative/meval.py -c ${cfg} -m SiamRPN -b 1 -e 2 -r ${work_dir}/result-newpart/ -w ${work_dir}/ -rf 20 -bf 1 \
     -v /mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/pm_v2.json \
     /mnt/lustre/share_data/parrots_model_data/mmtrack/test_data/nme_test/easycase/facial_landmark_nme_easycase.json\
     /mnt/lustre/share_data/parrots_model_data/mmtrack/jsons/facial_landmark_video_large_yaw_latest_0604_test.json \

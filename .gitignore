@@ -11,3 +11,5 @@ snapshot
 *.pyc
 experiments
 events*
+Pattern_save
+Pattern_result
