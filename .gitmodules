@@ -115,3 +115,6 @@
 	path = models/heart_seg
 	url = git@gitlab.bj.sensetime.com:parrots.model/medai_mmwhs_xq.git
 
+[submodule "models/SenseStar"]
+	path = models/SenseStar
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/SenseStar.git
