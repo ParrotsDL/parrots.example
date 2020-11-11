@@ -60,7 +60,7 @@
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
 [submodule "models/TextRecog"]
 	path = models/TextRecog
-	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/TextRecog.git
 [submodule "models/mmpose"]
 	path = models/mmpose
 	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
