@@ -55,9 +55,7 @@ strategy:
     print_freq: 20
     load_name: ''   ##?
     pretrained_model: '/mnt/lustre/share_data/pulin/v2.6_imagenet_honda2_honda3.pth.tar'
-    # save_path: '/mnt/lustre/pulin/modelpool/pattern1102/parrots.test/.search-run/tasks/parrots/jobs/all/0/pattern_save/mobile_v2.6_spatial'
-    save_path: '/mnt/lustre/pulin/modelpool/pattern1102/parrots.test/.search-run/tasks/pytorch/jobs/all/0/pattern_save/mobile_v2.6_spatial'
-    # save_path: '../pattern_save/mobile_v2.6_spatial'
+    save_path: '../pattern_save/mobile_v2.6_spatial'
 
     workers: 4
 data:
