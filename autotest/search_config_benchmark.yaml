@@ -211,9 +211,9 @@ task:
                     ## 28.sr_v3.0
                     # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'F4_0_300', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
                     ## 29.heart_seg
-                    # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 10'}
+                    # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 10'},
                     ## 30.coronary_seg
-                    # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 10'}
+                    # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max_step 10'},
                     ## 31. mmdetection3d
                     # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'votenet_16x8_sunrgbd-3d-10class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
                     # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'votenet_8x8_scannet-3d-18class', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max_step 1'},
