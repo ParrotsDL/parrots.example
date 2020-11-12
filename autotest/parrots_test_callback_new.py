@@ -156,7 +156,11 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         # get last some lines
         log_lines = read_log_last(job_log_path, last_line_num=10)
         if log_lines is not None:
-            log_lines = [str(line, encoding="utf-8") for line in log_lines]
+            try:
+                log_lines = [str(line, encoding="utf-8") for line in log_lines]
+            except Exception:
+                log_lines = ['None']
+
         # get log hash
         lines_hash = get_hash(log_lines)
         # monitor whether the log has not changed over time (kill all process if not change for a long time)
