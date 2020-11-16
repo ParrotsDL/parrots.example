@@ -119,8 +119,8 @@ valid_pipeline = [
 
 test_pipeline = valid_pipeline
 
-data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017/'
-data_root_val = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/'
+data_root = '/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/train2017/'
+data_root_val = '/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 ceph_data_root = 's3://parrots_model_data/DSK/datasets/mscoco2017/train2017/'
 ceph_data_root_val = 's3://parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 data = dict(
