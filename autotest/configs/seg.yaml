@@ -1,14 +1,15 @@
-seg_pspnet: # Required. {framework}_{model}
-  # attr: [thresh, has_to_higher/has_to_lower]
-  eval_mIoU: [10000, '>', '20%']
-
-seg_deeplab: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  eval_mIoU: [10000, '>', '20%']
-
-seg_mobilenet_v2_plus: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  mIoU: [10000, '>', '20%']
+seg_deeplab:
+  eval_mIoU:
+  - 10000
+  - '>'
+  - 20%
+seg_deeplab.benchmark:
+  placeholder: none
+seg_mobilenet_v2_plus:
+  mIoU:
+  - 10000
+  - '>'
+  - 20%
   weeklytest:
     __benchmark_avg_iter_time(s):
     - 0.31359564195765127
@@ -37,16 +38,49 @@ seg_mobilenet_v2_plus: # Required.
     - <
     - 50%
     - 7
-
-
-seg_pspnet.benchmark: # Required. {framework}_{model}
-  # attr: [thresh, has_to_higher/has_to_lower]
-  eval_mIoU: [10000, '>', '20%']
-
-seg_deeplab.benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
-seg_mobilenet_v2_plus.benchmark: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
+seg_mobilenet_v2_plus.benchmark:
+  placeholder: none
+seg_pspnet:
+  eval_mIoU:
+  - 10000
+  - '>'
+  - 20%
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.54811606892833
+    - <
+    - 5%
+    - 0.5220153037412667
+    __benchmark_mem_alloc(mb):
+    - 5010.6
+    - <
+    - 5%
+    - 4772
+    __benchmark_mem_cached(mb):
+    - 5686.8
+    - <
+    - 5%
+    - 5416
+    __benchmark_pavi_task_id:
+    - 8f576e30-4da2-468a-9e6c-914434b6977f
+    __benchmark_pure_training_time(h):
+    - 6.546651119440794
+    - <
+    - 5%
+    - 6.234905828038851
+    __benchmark_total_time(h):
+    - 6.547983547925949
+    - <
+    - 5%
+    - 6.236174807548523
+    eval_mIoU:
+    - 0.6021647445804856
+    - '>'
+    - 20%
+    - 0.7527059307256071
+    test_life: 1
+seg_pspnet.benchmark:
+  eval_mIoU:
+  - 10000
+  - '>'
+  - 20%
