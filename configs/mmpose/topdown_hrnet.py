@@ -39,7 +39,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/star/pretrained_models/hrnet_w32-36af842e.pth',
+    pretrained='/mnt/lustre/share_data/parrots_model_ckpt/star/pretrained_models/hrnet_w32-36af842e.pth',
     backbone=dict(
         type='HRNet',
         in_channels=3,
@@ -99,7 +99,7 @@ data_cfg = dict(
     bbox_thr=1.0,
     use_gt_bbox=False,
     image_thr=0.0,
-    bbox_file='/mnt/lustre/share/DSK/datasets/mscoco2017/person_detection_results/'
+    bbox_file='/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/person_detection_results/'
     'COCO_val2017_detections_AP_H_56_person.json',
 )
 
