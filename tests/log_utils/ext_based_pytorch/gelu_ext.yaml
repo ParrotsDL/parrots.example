@@ -1,0 +1,15 @@
+- gelu:  # extension name
+  - parrots_path: './gelu_src'
+  - extra_include: [gelu_pytorch.hpp]
+  - gelu_forward:
+      # attrs: [int a, int b]
+      input: [input]
+      output: [output]
+      cpu: gelu_fwd_cpu(input, output)
+      gpu: gelu_fwd_gpu(input, output)
+            
+  - gelu_backward:
+      input: [grad_out, input]
+      output: [output]
+      cpu: gelu_bwd_cpu(grad_out, input, output)
+      gpu: gelu_bwd_gpu(grad_out, input, output)
