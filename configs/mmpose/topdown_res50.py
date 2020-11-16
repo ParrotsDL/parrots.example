@@ -4,7 +4,7 @@ resume_from = None
 dist_params = dict(backend='nccl')
 workflow = [('train', 1)]
 checkpoint_config = dict(interval=10)
-evaluation = dict(interval=1, metric='mAP')
+evaluation = dict(interval=1000, metric='mAP')
 # type=topdown_res50
 
 optimizer = dict(

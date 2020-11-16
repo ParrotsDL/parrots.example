@@ -57,6 +57,9 @@ def save(data_dir, frames, env):
                 for item, v in items.items():
                     key = frame + model + item
                     if key in read_map:
+                        miss_num = len(read[0]) - len(read[read_map[key]]) - 1
+                        for m in range(miss_num):
+                            read[read_map[key]].append(None)    
                         read[read_map[key]].append(v)
                     else:
                         value = [frame, model, item]

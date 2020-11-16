@@ -188,9 +188,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_gender'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_gender'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_gender.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_gender'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_gender'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_gender.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_gender'
         batch_size: 32 # for single gpu
     
@@ -200,9 +200,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smart_phone_train.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/smartphone_data'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/smartphone_data'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/smart_phone_train.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/smartphone_data'
         batch_size: 32 # for single gpu
         smooth_l1_thrd: 1
@@ -214,9 +214,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_race'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_race'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_race.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_race'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_race'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_race.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_race'
         batch_size: 16 # for single gpu
     
@@ -226,9 +226,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mask'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mask'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mask.json'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_mask'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_mask'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_mask.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_mask'
         batch_size: 16 # for single gpu
     glass_data:
@@ -237,9 +237,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_glass'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_glass'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_glass.json'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_glass'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_glass'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_glass.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_glass'
         batch_size: 16 # for single gpu
     emotion_data:
@@ -248,9 +248,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_emotion.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_emotion'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_emotion'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_emotion.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_emotion'
         batch_size: 16 # for single gpu
     beard_data:
@@ -259,9 +259,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_beard'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_beard'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_beard.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_beard'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_beard'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_beard.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_beard'
         batch_size: 16 # for single gpu
     eye_data:
@@ -270,9 +270,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_eye'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_eye'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_eye.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_eye'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_eye'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_eye.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_eye'
         batch_size: 16 # for single gpu
     mouth_data:
@@ -281,9 +281,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mouth'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mouth'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_mouth.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_mouth'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_mouth'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_mouth.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_mouth'
         batch_size: 16 # for single gpu
     smile_data:
@@ -293,9 +293,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_smile'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_smile'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_smile.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_smile'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_smile'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_smile.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_smile'
         batch_size: 16 # for single gpu
     face_value_data:
@@ -305,9 +305,9 @@ data:
         data_format: 'cluster'
         data_format_cluster: 'cluster'
         data_format_ceph: 'ceph'
-        prefix_cluster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_face_value'
-        prefix: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_face_value'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/new_face_value.json'
+        prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_face_value'
+        prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_face_value'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/new_face_value.json'
         prefix_ceph: 's3://parrots_model_data/pattern/attribute/all_attr/new_face_value'
         batch_size: 16 # for single gpu
 
@@ -355,7 +355,7 @@ test:
         data_format_cluster: 'cluster' 
         prefix: 's3://parrots_model_data/pattern/attribute/all_attr/smartphone_data'
         prefix_ceph:  's3://parrots_model_data/pattern/attribute/all_attr/smartphone_data'
-        prefix_luster: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smartphone_data'
-        json_path: '/mnt/lustre/share_data/wuwenli/attribute/all_attr/smart_phone_test.json'
+        prefix_luster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/smartphone_data'
+        json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/attribute/all_attr/smart_phone_test.json'
         batch_size: 256 # for single gpu
         delta_thres: [5, 10]

@@ -1,0 +1,7 @@
+data:
+  lustre:
+    data_dir1: /mnt/lustre/share_data/parrots_model_data/medical_heart/train20_npy
+    data_dir2: /mnt/lustre/share_data/parrots_model_data/medical_heart/train40_npy
+  ceph:
+    data_dir1: s3://parrots_model_data/medical_heart/train20_npy
+    data_dir2: s3://parrots_model_data/medical_heart/train40_npy

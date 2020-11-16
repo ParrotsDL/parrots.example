@@ -1,4 +1,31 @@
 instance_seg_yolact_mobilenetv2_concat_32_coco_config:
-  # attr: [thresh, has_to_higher/has_to_lower]
-  placeholder: 'none'
-
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.29167345726490024
+    - <
+    - 5%
+    - 0.2777842450141907
+    __benchmark_mem_alloc(mb):
+    - 12643.20791015625
+    - <
+    - 5%
+    - 12041.150390625
+    __benchmark_mem_cached(mb):
+    - 13200.6
+    - <
+    - 5%
+    - 12572
+    __benchmark_pavi_task_id:
+    - fa1be846-a376-4d8c-9c78-1a22688f2837
+    __benchmark_pure_training_time(h):
+    - 0.030145917425553004
+    - <
+    - 5%
+    - 0.02871039754814572
+    __benchmark_total_time(h):
+    - 0.045175077746311826
+    - <
+    - 5%
+    - 0.043023883567916026
+    test_life: 1
+  placeholder: none
