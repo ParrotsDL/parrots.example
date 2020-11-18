@@ -1,0 +1,5 @@
+data:
+  lustre:
+    data_dir: /mnt/lustre/share/DSK/datasets/mscoco2017
+  ceph:
+    data_dir: s3://parrots_model_data/DSK/datasets/mscoco2017

@@ -1,0 +1,5 @@
+deformable_detr_deformable_detr:
+  AP:
+  - 10000
+  - '>'
+  - 5%
