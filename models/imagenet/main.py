@@ -38,7 +38,7 @@ parser.add_argument('--pavi-project', type=str, default="default", help='pavi pr
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
-parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+parser.add_argument('--data_reader', type=str, default="CephReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
