@@ -113,6 +113,40 @@ mmaction_i3d_r50_video_32x2x1_100e_kinetics400_rgb:
   - 0.645
   - '>'
   - 20%
+  weeklytest:
+    __benchmark_avg_iter_time(s):
+    - 0.5589110345982794
+    - <
+    - 5%
+    - 0.5322962234269327
+    __benchmark_mem_alloc(mb):
+    - 6952.05
+    - <
+    - 5%
+    - 6621
+    __benchmark_mem_cached(mb):
+    - 8097.6
+    - <
+    - 5%
+    - 7712
+    __benchmark_pavi_task_id:
+    - 3a127282-12db-4b5c-b173-4090a2c92388
+    __benchmark_pure_training_time(h):
+    - 59.789102140973014
+    - <
+    - 5%
+    - 56.942002039021915
+    __benchmark_total_time(h):
+    - 59.78912698626518
+    - <
+    - 5%
+    - 56.94202570120493
+    test_life: 0
+    train.top1_acc:
+    - 0.645
+    - '>'
+    - 20%
+    - unknow, train.top1_acc may not exist on pavi
 mmaction_r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb:
   benchmark:
     __benchmark_avg_iter_time(s):
