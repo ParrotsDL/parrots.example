@@ -82,6 +82,7 @@ scheduler:
     parallel_size: 30
     stop_criterion:
         max_tries: 100
+        time_limits: 0.2
     wait_to_run_time_thresh: inf # inf
 
 # Optional
