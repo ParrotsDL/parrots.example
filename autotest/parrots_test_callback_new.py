@@ -593,7 +593,8 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
         del config['placeholder']
     config['test_life'] = 0
     if run_type == 'autoparrotsbenchmark':
-        config['__benchmark_total_time(h)'] = 0.2
+        if config['__benchmark_total_time(h)'] == [10000, '<', '5%']
+            del config['__benchmark_total_time(h)']
     else:
         config['__benchmark_total_time(h)'] = 10000
 
