@@ -1,0 +1,878 @@
+nohup: ignoring input
+2020-11-09 17:42:40,698 log.py                     [line:117] INFO Task parrots_test_weekly_20201109_165907 have been started...
+2020-11-09 17:42:40,700 log.py                     [line:117] INFO pavi tasks have been added to compare: 
+2020-11-09 17:42:40,700 log.py                     [line:117] INFO http://pavi.parrots.sensetime.com/#/compare/fac2dcb6-96ee-4dd8-868f-17ae5ab44c93
+2020-11-09 17:42:40,701 log.py                     [line:117] INFO 
+2020-11-09 17:42:40,701 log.py                     [line:117] INFO ##############################
+2020-11-09 17:42:40,701 log.py                     [line:117] INFO Now open a new terminal, and try ```search-ctl```command to manage your task
+2020-11-09 17:42:40,701 log.py                     [line:117] INFO Please do not close this window and just enjoy
+2020-11-09 17:42:40,701 log.py                     [line:117] INFO ##############################
+2020-11-09 17:44:08,117 log.py                     [line:117] INFO Job(0)[pid: 386627][slurm: 1163641 PD]: sh runner/mmpose/train.sh pat_weeklybuild 16 topdown_res50 --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/0/log
+2020-11-09 17:44:49,720 log.py                     [line:117] INFO Job(1)[pid: 388910][slurm: 1163646 PD]: sh runner/pod/train.sh pat_weeklybuild 16 faster-rcnn-R50-NASFPN-1x_mix --pavi --pavi-project parrots_test --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/1/log
+2020-11-09 17:45:37,743 log.py                     [line:117] INFO Job(2)[pid: 392418][slurm: 1163651 PD]: sh runner/pod/train.sh pat_weeklybuild 16 faster-rcnn-R50-PAFPN-1x_mix --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/2/log
+2020-11-09 17:46:29,211 log.py                     [line:117] INFO Job(3)[pid: 395542][slurm: 1163658 PD]: sh runner/mmediting/train.sh pat_weeklybuild 1 dim_stage2_v16_pln_1x1_1000k_comp1k --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/3/log
+2020-11-09 17:47:13,232 log.py                     [line:117] INFO Job(4)[pid: 398329][slurm: 1163665 PD]: sh runner/mmediting/train.sh pat_weeklybuild 1 edsr_x2c64b16_g1_300k_div2k --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/4/log
+2020-11-09 17:48:00,759 log.py                     [line:117] INFO Job(5)[pid: 401606][slurm: 1163670 PD]: sh runner/mmediting/train.sh pat_weeklybuild 1 cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/5/log
+2020-11-09 17:48:51,430 log.py                     [line:117] INFO Job(6)[pid: 405711][slurm: 1163677 PD]: sh runner/mmaction/train.sh pat_weeklybuild 2 bmn_400x100_2x8_9e_activitynet_feature --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/6/log
+2020-11-09 17:49:31,755 log.py                     [line:117] INFO Job(7)[pid: 408628][slurm: 1163682 PD]: sh runner/example/train.sh pat_weeklybuild 8 shuffle_v2 --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/7/log
+2020-11-09 17:50:17,961 log.py                     [line:117] INFO Job(8)[pid: 412902][slurm: 1163688 PD]: sh runner/mmdet/train.sh pat_weeklybuild 8 ssd300_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/8/log
+2020-11-09 17:51:02,820 log.py                     [line:117] INFO Job(9)[pid: 416234][slurm: 1163693 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_v4 --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/9/log
+2020-11-09 17:51:46,212 log.py                     [line:117] INFO Job(10)[pid: 420407][slurm: 1163699 PD]: sh runner/example/train.sh pat_weeklybuild 8 mobile_v2 --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/10/log
+2020-11-09 17:52:31,177 log.py                     [line:117] INFO Job(11)[pid: 423743][slurm: 1163704 PD]: sh runner/mmdet/train.sh pat_weeklybuild 8 mask_rcnn_r50_fpn_1x_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/11/log
+2020-11-09 17:53:18,637 log.py                     [line:117] INFO Job(12)[pid: 430780][slurm: 1163715 PD]: sh runner/mmdet/train.sh pat_weeklybuild 8 cascade_rcnn_r50_fpn_1x_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/12/log
+2020-11-09 17:53:58,650 log.py                     [line:117] INFO Job(13)[pid: 435114][slurm: 1163722 PD]: sh runner/mmdet/train.sh pat_weeklybuild 8 mask_rcnn_r50_fpn_fp16_1x_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/13/log
+2020-11-09 17:54:45,708 log.py                     [line:117] INFO Job(14)[pid: 439173][slurm: 1163729 PD]: sh runner/example/train.sh pat_weeklybuild 8 se_resnet50_mix --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/14/log
+2020-11-09 17:55:25,388 log.py                     [line:117] INFO Job(15)[pid: 443181][slurm: 1163736 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet50 --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/15/log
+2020-11-09 17:56:08,729 log.py                     [line:117] INFO Job(16)[pid: 446952][slurm: 1163742 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet50_mix --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/16/log
+2020-11-09 17:56:55,091 log.py                     [line:117] INFO Job(17)[pid: 451205][slurm: 1163748 PD]: sh runner/pod/train.sh pat_weeklybuild 8 grid-rcnn-R50-FPN-2x --pavi --pavi-project parrots_test_weekly --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/17/log
+2020-11-09 17:57:35,496 log.py                     [line:117] INFO Job(18)[pid: 455170][slurm: 1163754 PD]: sh runner/mmdet/train.sh pat_weeklybuild 8 faster_rcnn_r50_fpn_fp16_1x_coco --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/18/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-09 17:58:19,812 log.py                     [line:117] INFO Job(19)[pid: 889][slurm: 1163760 PD]: sh runner/mmdet/train.sh pat_weeklybuild 8 retinanet_r50_fpn_1x_coco --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/19/log
+2020-11-09 17:59:02,243 log.py                     [line:117] INFO Job(20)[pid: 5821][slurm: 1163766 PD]: sh runner/pod/train.sh pat_weeklybuild 8 cascade-rcnn-R50-FPN-1x --pavi --pavi-project parrots_test_weekly --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/20/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-09 17:59:48,307 log.py                     [line:117] INFO Job(21)[pid: 10518][slurm: 1163771 PD]: sh runner/pod/train.sh pat_weeklybuild 8 mask-rcnn-R50-FPN-1x --pavi --pavi-project parrots_test_weekly --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/21/log
+2020-11-09 18:00:31,063 log.py                     [line:117] INFO Job(22)[pid: 16307][slurm: 1163778 PD]: sh runner/ssd/train.sh pat_weeklybuild 8 ssd_FSAF --PAVI.USE true --PAVI.WRITER.PROJECT parrots_test_weekly --DATA_READER MemcachedReader --SEED 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/22/log
+2020-11-09 18:01:13,573 log.py                     [line:117] INFO Job(23)[pid: 34643][slurm: 1163784 PD]: sh runner/pod/train.sh pat_weeklybuild 8 keypoint-rcnn-R50-FPN-1x --pavi --pavi-project parrots_test_weekly --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/23/log
+2020-11-09 18:01:53,738 log.py                     [line:117] INFO Job(24)[pid: 50264][slurm: 1163789 PD]: sh runner/pod/train.sh pat_weeklybuild 8 faster-rcnn-R50-FPN-1x --pavi --pavi-project parrots_test_weekly --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/24/log
+2020-11-09 18:02:36,711 log.py                     [line:117] INFO Job(25)[pid: 54542][slurm: 1163797 PD]: sh runner/ssd/train.sh pat_weeklybuild 8 ssd_Retina --PAVI.USE true --PAVI.WRITER.PROJECT parrots_test_weekly --DATA_READER MemcachedReader --SEED 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/25/log
+2020-11-09 18:03:18,780 log.py                     [line:117] INFO Job(26)[pid: 59398][slurm: 1163799 PD]: sh runner/alphatrion/train.sh pat_weeklybuild 8 resnet50_fp32 --pavi.use true --pavi.writer.project parrots_test_weekly --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/26/log
+2020-11-09 18:04:02,296 log.py                     [line:117] INFO Job(27)[pid: 67724][slurm: 1163804 PD]: sh runner/seg/train.sh pat_weeklybuild 8 mobilenet_v2_plus --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/27/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-09 18:04:44,132 log.py                     [line:117] INFO Job(28)[pid: 72458][slurm: 1163806 PD]: sh runner/pod/train.sh pat_weeklybuild 8 retinanet-R50-GN-FA --pavi --pavi-project parrots_test_weekly 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/28/log
+2020-11-09 18:05:24,507 log.py                     [line:117] INFO Job(29)[pid: 77409][slurm: 1163810 PD]: sh runner/pod/train.sh pat_weeklybuild 8 retinanet-R50-ghm-1x --pavi --pavi-project parrots_test_weekly 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/29/log
+2020-11-09 18:06:07,144 log.py                     [line:117] INFO Job(30)[pid: 82223][slurm: 1163814 PD]: sh runner/pod/train.sh pat_weeklybuild 8 faster-rcnn-mobilenet-FPN-1x_mix --pavi --pavi-project parrots_test_weekly 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/30/log
+2020-11-09 18:06:52,995 log.py                     [line:117] INFO Job(31)[pid: 87734][slurm: 1163819 PD]: sh runner/pod/train.sh pat_weeklybuild 8 faster-rcnn-mobilenet-FPN-1x --pavi --pavi-project parrots_test_weekly 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/31/log
+2020-11-09 18:07:36,856 log.py                     [line:117] INFO Job(32)[pid: 93087][slurm: 1163825 PD]: sh runner/pod/train.sh pat_weeklybuild 8 rfcn-R101-ohem-deform-1x --pavi --pavi-project parrots_test_weekly --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/32/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-09 18:08:21,806 log.py                     [line:117] INFO Job(33)[pid: 98578][slurm: 1163831 PD]: sh runner/pod/train.sh pat_weeklybuild 8 faster-rcnn-shufflenet-FPN-1x --pavi --pavi-project parrots_test_weekly 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/33/log
+2020-11-09 18:09:02,214 log.py                     [line:117] INFO Job(34)[pid: 104033][slurm: 1163836 PD]: sh runner/pod/train.sh pat_weeklybuild 8 rfcn-shufflenet-1x --pavi --pavi-project parrots_test_weekly 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/34/log
+2020-11-09 18:09:48,419 log.py                     [line:117] INFO Job(35)[pid: 110116][slurm: 1163844 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet18 --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/35/log
+2020-11-09 18:10:31,184 log.py                     [line:117] INFO Job(36)[pid: 116169][slurm: 1163849 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet18_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/36/log
+2020-11-09 18:11:12,070 log.py                     [line:117] INFO Job(37)[pid: 122589][slurm: 1163854 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet152 --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/37/log
+2020-11-09 18:11:52,918 log.py                     [line:117] INFO Job(38)[pid: 128559][slurm: 1163863 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet152_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/38/log
+2020-11-09 18:12:38,549 log.py                     [line:117] INFO Job(39)[pid: 135645][slurm: 1163874 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet101 --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/39/log
+2020-11-09 18:13:27,960 log.py                     [line:117] INFO Job(40)[pid: 144008][slurm: 1163881 PD]: sh runner/example/train.sh pat_weeklybuild 8 resnet101_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/40/log
+2020-11-09 18:14:10,943 log.py                     [line:117] INFO Job(41)[pid: 150416][slurm: 1163888 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_v3 --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/41/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+2020-11-09 18:14:54,950 log.py                     [line:117] INFO Job(42)[pid: 157898][slurm: 1163895 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_v3_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/42/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'jobs'
+2020-11-09 18:15:37,969 log.py                     [line:117] INFO Job(43)[pid: 165932][slurm: 1163901 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_v2 --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/43/log
+2020-11-09 18:16:25,659 log.py                     [line:117] INFO Job(44)[pid: 176321][slurm: 1163910 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_v2_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/44/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-09 18:17:06,094 log.py                     [line:117] INFO Job(45)[pid: 182787][slurm: 1163916 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_resnet --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/45/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+2020-11-09 18:17:50,357 log.py                     [line:117] INFO Job(46)[pid: 189250][slurm: 1163923 PD]: sh runner/example/train.sh pat_weeklybuild 8 inception_resnet_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/46/log
+2020-11-09 18:18:32,998 log.py                     [line:117] INFO Job(47)[pid: 196366][slurm: 1163930 PD]: sh runner/example/train.sh pat_weeklybuild 8 dpn92 --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/47/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'jobs'
+2020-11-09 18:19:20,259 log.py                     [line:117] INFO Job(48)[pid: 204114][slurm: 1163935 PD]: sh runner/example/train.sh pat_weeklybuild 8 dpn92_mix --pavi --pavi-project parrots_test_weekly --data_reader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/48/log
+2020-11-09 18:20:04,820 log.py                     [line:117] INFO len of threads: 50
+2020-11-09 18:20:45,174 log.py                     [line:127] WARNING Job(49): can't get slurm from squeue
+2020-11-09 18:20:45,789 log.py                     [line:117] INFO Job(49)[pid: 212705][slurm: None None]: sh runner/TextRecog/train.sh pat_weeklybuild 16 print_Big --pavi --pavi-project parrots_test --datareader MemcachedReader 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/49/log
+2020-11-09 19:22:10,296 log.py                     [line:117] INFO Job(49)[pid: 212705, slurm: None] The child process monitoring the log has exited,                       with [job_pid: 212705, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/49/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 49, slurm_job_id: None]
+2020-11-09 20:52:55,420 log.py                     [line:117] INFO Job(0)[pid: 386627][slurm: 1163641] JobStatus.ERROR: sh runner/mmpose/train.sh pat_weeklybuild 16 topdown_res50 --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/0/log
+2020-11-09 20:53:02,941 log.py                     [line:117] INFO Job(4)[pid: 398329][slurm: 1163665] JobStatus.RUNNING: sh runner/mmediting/train.sh pat_weeklybuild 1 edsr_x2c64b16_g1_300k_div2k --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/4/log
+2020-11-09 20:53:03,086 log.py                     [line:117] INFO Job(5)[pid: 401606][slurm: 1163670] JobStatus.RUNNING: sh runner/mmediting/train.sh pat_weeklybuild 1 cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/5/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 125, in _watch_for_kill_time_limited
+    info = load_taskinfo(workdir)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/naive_scheduler.py", line 32, in load_taskinfo
+    return load(os.path.join(workdir, 'task.yaml'), file_format='yaml')
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/io.py", line 42, in load
+    obj = handler.load_from_path(file, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/handlers/base.py", line 21, in load_from_path
+    return self.load_from_fileobj(f, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/handlers/yaml_handler.py", line 46, in load_from_fileobj
+    return yaml.load(file, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/__init__.py", line 114, in load
+    return loader.get_single_data()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 110, in compose_sequence_node
+    while not self.check_event(SequenceEndEvent):
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/parser.py", line 403, in parse_indentless_sequence_entry
+    if self.check_token(BlockEntryToken):
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 116, in check_token
+    self.fetch_more_tokens()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 173, in fetch_more_tokens
+    return self.fetch_stream_end()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 377, in fetch_stream_end
+    self.remove_possible_simple_key()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 319, in remove_possible_simple_key
+    "could not find expected ':'", self.get_mark())
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/task.yaml", line 1192, column 5
+could not find expected ':'
+  in "/mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/task.yaml", line 1192, column 8
+2020-11-09 20:53:04,562 log.py                     [line:117] INFO Job(6)[pid: 405711][slurm: 1163677] JobStatus.RUNNING: sh runner/mmaction/train.sh pat_weeklybuild 2 bmn_400x100_2x8_9e_activitynet_feature --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/6/log
+2020-11-09 20:53:04,833 log.py                     [line:117] INFO Job(3)[pid: 395542][slurm: 1163658] JobStatus.RUNNING: sh runner/mmediting/train.sh pat_weeklybuild 1 dim_stage2_v16_pln_1x1_1000k_comp1k --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/3/log
+2020-11-09 20:53:07,175 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-09 20:53:07,226 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-09 20:53:07,263 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-09 20:53:07,300 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-09 20:53:07,337 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-09 20:53:07,375 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-09 20:53:15,588 ERROR: set_task error [TypeError: list indices must be integers or slices, not str]
+2020-11-09 20:53:15,682 ERROR: add_snapshot_file error [RequestError: Forbidden]
+2020-11-09 20:53:15,913 log.py                     [line:117] INFO Job(0)[pid: 386627][slurm: 1163641] JobStatus.ERROR: sh runner/mmpose/train.sh pat_weeklybuild 16 topdown_res50 --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/0/log
+2020-11-09 20:53:23,226 ERROR: set_task error [TypeError: list indices must be integers or slices, not str]
+2020-11-09 20:53:23,340 ERROR: add_snapshot_file error [RequestError: Forbidden]
+2020-11-09 20:53:26,171 log.py                     [line:117] INFO Job(1)[pid: 388910][slurm: 1163646] JobStatus.RUNNING: sh runner/pod/train.sh pat_weeklybuild 16 faster-rcnn-R50-NASFPN-1x_mix --pavi --pavi-project parrots_test --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/1/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 125, in _watch_for_kill_time_limited
+    info = load_taskinfo(workdir)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/naive_scheduler.py", line 32, in load_taskinfo
+    return load(os.path.join(workdir, 'task.yaml'), file_format='yaml')
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/io.py", line 42, in load
+    obj = handler.load_from_path(file, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/handlers/base.py", line 21, in load_from_path
+    return self.load_from_fileobj(f, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/handlers/yaml_handler.py", line 46, in load_from_fileobj
+    return yaml.load(file, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/__init__.py", line 114, in load
+    return loader.get_single_data()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 64, in compose_node
+    if self.check_event(AliasEvent):
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/parser.py", line 449, in parse_block_mapping_value
+    if not self.check_token(KeyToken, ValueToken, BlockEndToken):
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 116, in check_token
+    self.fetch_more_tokens()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 247, in fetch_more_tokens
+    return self.fetch_single()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 652, in fetch_single
+    self.fetch_flow_scalar(style='\'')
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 666, in fetch_flow_scalar
+    self.tokens.append(self.scan_flow_scalar(style))
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 1151, in scan_flow_scalar
+    chunks.extend(self.scan_flow_scalar_spaces(double, start_mark))
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 1239, in scan_flow_scalar_spaces
+    "found unexpected end of stream", self.get_mark())
+yaml.scanner.ScannerError: while scanning a quoted scalar
+  in "/mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/task.yaml", line 2570, column 17
+found unexpected end of stream
+  in "/mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/task.yaml", line 2570, column 19
+2020-11-09 20:53:31,026 log.py                     [line:117] INFO Job(2)[pid: 392418][slurm: 1163651] JobStatus.RUNNING: sh runner/pod/train.sh pat_weeklybuild 16 faster-rcnn-R50-PAFPN-1x_mix --pavi --pavi-project parrots_test 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/2/log
+2020-11-09 23:12:07,759 log.py                     [line:117] INFO Job(2)[pid: 392418][slurm: 1163651] JobStatus.FINISHED: sh runner/pod/train.sh pat_weeklybuild 16 faster-rcnn-R50-PAFPN-1x_mix --pavi --pavi-project parrots_test 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/2/log
+2020-11-09 23:12:11,947 log.py                     [line:117] INFO Job(7)[pid: 408628][slurm: 1163682] JobStatus.RUNNING: sh runner/example/train.sh pat_weeklybuild 8 shuffle_v2 --pavi --pavi-project parrots_test 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/7/log
+2020-11-09 23:12:27,319 log.py                     [line:117] INFO Job(2)[pid: 392418, slurm: 1163651] The child process monitoring the log has exited,                       with [job_pid: 392418, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/2/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 2, slurm_job_id: 1163651]
+2020-11-09 23:12:32,740 log.py                     [line:117] INFO Job(8)[pid: 412902][slurm: 1163688] JobStatus.RUNNING: sh runner/mmdet/train.sh pat_weeklybuild 8 ssd300_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/8/log
+2020-11-10 02:03:05,445 log.py                     [line:117] INFO Job(6)[pid: 405711][slurm: 1163677] JobStatus.ERROR: sh runner/mmaction/train.sh pat_weeklybuild 2 bmn_400x100_2x8_9e_activitynet_feature --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/6/log
+2020-11-10 02:03:15,326 log.py                     [line:117] INFO Job(6)[pid: 405711, slurm: 1163677] The child process monitoring the log has exited,                       with [job_pid: 405711, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/6/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 6, slurm_job_id: 1163677]
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'jobs'
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-10 04:16:00,641 log.py                     [line:117] INFO Job(4)[pid: 398329][slurm: 1163665] JobStatus.ERROR: sh runner/mmediting/train.sh pat_weeklybuild 1 edsr_x2c64b16_g1_300k_div2k --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/4/log
+2020-11-10 04:16:10,447 log.py                     [line:117] INFO Job(4)[pid: 398329, slurm: 1163665] The child process monitoring the log has exited,                       with [job_pid: 398329, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/4/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 4, slurm_job_id: 1163665]
+2020-11-10 05:58:21,957 log.py                     [line:117] INFO Job(5)[pid: 401606][slurm: 1163670] JobStatus.ERROR: sh runner/mmediting/train.sh pat_weeklybuild 1 cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/5/log
+2020-11-10 05:58:40,002 log.py                     [line:117] INFO Job(5)[pid: 401606, slurm: 1163670] The child process monitoring the log has exited,                       with [job_pid: 401606, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/5/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 5, slurm_job_id: 1163670]
+2020-11-10 06:21:27,405 log.py                     [line:117] INFO Job(1)[pid: 388910][slurm: 1163646] JobStatus.FINISHED: sh runner/pod/train.sh pat_weeklybuild 16 faster-rcnn-R50-NASFPN-1x_mix --pavi --pavi-project parrots_test --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/1/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+2020-11-10 06:21:28,987 log.py                     [line:117] INFO Job(9)[pid: 416234][slurm: 1163693] JobStatus.RUNNING: sh runner/example/train.sh pat_weeklybuild 8 inception_v4 --pavi --pavi-project parrots_test 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/9/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 125, in _watch_for_kill_time_limited
+    info = load_taskinfo(workdir)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/naive_scheduler.py", line 32, in load_taskinfo
+    return load(os.path.join(workdir, 'task.yaml'), file_format='yaml')
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/io.py", line 42, in load
+    obj = handler.load_from_path(file, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/handlers/base.py", line 21, in load_from_path
+    return self.load_from_fileobj(f, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/fileio/handlers/yaml_handler.py", line 46, in load_from_fileobj
+    return yaml.load(file, **kwargs)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/__init__.py", line 114, in load
+    return loader.get_single_data()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/composer.py", line 127, in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/parser.py", line 428, in parse_block_mapping_key
+    if self.check_token(KeyToken):
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 116, in check_token
+    self.fetch_more_tokens()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 173, in fetch_more_tokens
+    return self.fetch_stream_end()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 377, in fetch_stream_end
+    self.remove_possible_simple_key()
+  File "/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/yaml/scanner.py", line 319, in remove_possible_simple_key
+    "could not find expected ':'", self.get_mark())
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/task.yaml", line 2879, column 5
+could not find expected ':'
+  in "/mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/task.yaml", line 2879, column 14
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+2020-11-10 06:21:30,816 log.py                     [line:117] INFO Job(10)[pid: 420407][slurm: 1163699] JobStatus.RUNNING: sh runner/example/train.sh pat_weeklybuild 8 mobile_v2 --pavi --pavi-project parrots_test 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/10/log
+2020-11-10 06:21:32,939 log.py                     [line:117] INFO Job(1)[pid: 388910, slurm: 1163646] The child process monitoring the log has exited,                       with [job_pid: 388910, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/1/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 1, slurm_job_id: 1163646]
+2020-11-10 13:10:50,264 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+2020-11-10 13:10:50,265 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+2020-11-10 13:10:50,266 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+Exception in thread Thread-23:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-35:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-16:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 16:21:22,608 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 16:21:22,609 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 16:21:22,610 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+2020-11-10 16:21:22,611 ERROR: get_compare error [RequestError: Forbidden]
+Exception in thread Thread-28:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-32:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-27:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-31:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 16:21:22,697 ERROR: get_compare error [RequestError: Forbidden]
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+  File "autotest/parrots_test_callback_new.py", line 127, in <lambda>
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'name'
+Exception in thread Thread-20:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 16:42:20,953 log.py                     [line:117] INFO Job(8)[pid: 412902][slurm: 1163688] JobStatus.ERROR: sh runner/mmdet/train.sh pat_weeklybuild 8 ssd300_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/8/log
+2020-11-10 16:42:46,428 log.py                     [line:117] INFO Job(11)[pid: 423743][slurm: 1163704] JobStatus.RUNNING: sh runner/mmdet/train.sh pat_weeklybuild 8 mask_rcnn_r50_fpn_1x_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+                  with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/11/log
+2020-11-10 16:43:03,494 log.py                     [line:117] INFO Job(8)[pid: 412902, slurm: 1163688] The child process monitoring the log has exited,                       with [job_pid: 412902, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/8/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 8, slurm_job_id: 1163688]
+2020-11-10 18:07:41,253 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:07:41,260 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:07:41,261 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+Exception in thread Thread-46:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-17:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-14:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:07:41,302 ERROR: get_compare error [RequestError: Forbidden]
+Exception in thread Thread-49:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:07:41,304 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:07:41,305 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+Exception in thread Thread-45:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-15:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:07:41,310 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-10 18:08:23,462 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:08:23,469 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:08:23,469 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:08:23,470 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:08:23,472 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:08:23,473 ERROR: get_compare error [RequestError: ERROR: StatusCode is 401]
+Exception in thread Thread-43:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-39:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-29:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-50:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-19:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-24:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:08:23,537 ERROR: get_compare error [RequestError: Forbidden]
+Exception in thread Thread-48:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:11:38,051 ERROR: get_compare error [RequestError: Forbidden]
+Exception in thread Thread-41:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:24:16,883 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 18:24:16,884 ERROR: get_scalar error [RequestError: Forbidden]
+Exception in thread Thread-36:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-10 18:42:18,987 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-10 20:50:51,566 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-10 21:36:26,646 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-10 21:51:01,131 ERROR: get_scalar error [RequestError: ERROR: StatusCode is 401]
+2020-11-10 21:51:01,132 ERROR: get_scalar error [RequestError: ERROR: StatusCode is 401]
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+2020-11-10 22:07:16,399 log.py                     [line:117] INFO Job(3)[pid: 395542][slurm: 1163658] JobStatus.ERROR: sh runner/mmediting/train.sh pat_weeklybuild 1 dim_stage2_v16_pln_1x1_1000k_comp1k --pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/3/log
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'jobs'
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+KeyError: 'jobs'
+Traceback (most recent call last):
+  File "autotest/parrots_test_callback_new.py", line 648, in <module>
+    pre_callback_wrapper(config, sys.argv[4], sys.argv[1], sys.argv[2])
+  File "autotest/parrots_test_callback_new.py", line 623, in pre_callback_wrapper
+    _watch_for_kill_time_limited(framework, model, config)
+  File "autotest/parrots_test_callback_new.py", line 127, in _watch_for_kill_time_limited
+    filter(lambda j: j['name'] in [name], info['jobs']))
+TypeError: 'NoneType' object is not subscriptable
+2020-11-10 22:07:33,333 log.py                     [line:117] INFO Job(3)[pid: 395542, slurm: 1163658] The child process monitoring the log has exited,                       with [job_pid: 395542, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/3/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 3, slurm_job_id: 1163658]
+2020-11-10 22:29:03,550 ERROR: get_scalar error [RequestError: Forbidden]
+2020-11-10 22:32:31,449 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 22:32:31,449 ERROR: get_compare error [RequestError: Forbidden]
+2020-11-10 22:32:31,450 ERROR: get_compare error [RequestError: Forbidden]
+Exception in thread Thread-47:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-38:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+Exception in thread Thread-34:
+Traceback (most recent call last):
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/schedulers/base_scheduler.py", line 187, in _run_job
+    task = pavi_get_task(self.pavi_compare_id, job.id)
+  File "/mnt/cache/share/platform/env/miniconda3.6/envs/pat20201106/lib/python3.6/site-packages/autoparrots-1.0rc1+7d757a1-py3.6.egg/autoparrots/utils/pavi_helper.py", line 14, in pavi_get_task
+    trainings = compare.get('trainings', [])
+AttributeError: 'NoneType' object has no attribute 'get'
+
+2020-11-11 02:32:57,240 log.py                     [line:117] INFO Job(11)[pid: 423743][slurm: 1163704] JobStatus.ERROR: sh runner/mmdet/train.sh pat_weeklybuild 8 mask_rcnn_r50_fpn_1x_coco --pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 
+              with log: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/11/log
+2020-11-11 07:47:15,785 log.py                     [line:117] INFO Kill job 12
+2020-11-11 07:47:15,807 log.py                     [line:132] ERROR Job(12)[pid: 430780, slurm: 1163715] is killed because the log has not changed for 0.33 hours.
+2020-11-11 07:47:15,807 log.py                     [line:117] INFO Job(12)[pid: 430780, slurm: 1163715] The child process monitoring the log has exited,                       with [job_pid: 430780, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/12/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 12, slurm_job_id: 1163715]
+2020-11-11 11:21:30,669 log.py                     [line:117] INFO Kill job 13
+2020-11-11 11:21:30,694 log.py                     [line:132] ERROR Job(13)[pid: 435114, slurm: 1163722] is killed because the log has not changed for 0.33 hours.
+2020-11-11 11:21:30,695 log.py                     [line:117] INFO Job(13)[pid: 435114, slurm: 1163722] The child process monitoring the log has exited,                       with [job_pid: 435114, job_log_path: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907/jobs/all/13/log, workdir: /mnt/lustre/parrots.tester.s.02/parrots_weekly/.search-run/tasks/parrots_test_weekly_20201109_165907, name: 13, slurm_job_id: 1163722]
