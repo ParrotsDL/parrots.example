@@ -1,0 +1,78 @@
+# 多机多卡训练的yaml文件，使用方式：kubectl create -f kubernetes.yaml
+apiVersion: supercomputer.sensetime.com/v1alpha1
+kind: Mpirun
+metadata:
+  name: parrots-demo
+  namespace: xialei1
+spec:
+  podNumber: 2
+  scheduleOpts:
+    queue: default
+  backoffLimit: 0
+  mpirunCmd: mpirun
+  mpirunArgs:
+    - --allow-run-as-root
+    - --hostfile
+    - /etc/mpirun.hosts
+    - --np
+    - "2"
+    - --npernode
+    - "2"
+  train:
+    auth:
+      user:
+        id: 21022
+        name: xialei1
+    script: /mnt/lustre/xialei1/parrots.example/models/imagenet/kubernetes.sh
+  podSpec:
+    volumes:
+      - name: dev
+        hostPath:
+          path: /dev
+      - name: xialei1
+        hostPath:
+          path: /mnt/lustre/xialei1
+      - name: share
+        hostPath:
+          path: /mnt/lustre/share
+      - name: petrel
+        hostPath:
+          path: /mnt/lustre/xialei1/petreloss.conf
+          subPath: petreloss.conf
+    containers:
+      - name: parrots
+        image: registry.sensetime.com/cloudnative4ai/parrots/dev:centos-cuda9.0-gcc5.4-aten1.3-py36-1.3-xialei1
+        imagePullPolicy: Always
+        env:
+          - name: LD_PRELOAD
+            value: /usr/local/openmpi-2.1.6-cuda9.0/lib/libmpi.so
+        command:
+          - "sleep"
+          - "1000"
+        workingDir: /mnt/lustre/xialei1/parrots.example/models/imagenet
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+        env:
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: "compute,utility"
+          - name: NVIDIA_REQUIRE_CUDA
+            value: "cuda>=8.0"
+          - name: MV2_ENABLE_AFFINITY
+            value: "0"
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+            nvidia.com/gpu: "2"
+            rdma/hca: 1 # requesting 1 RDMA device
+        volumeMounts:
+          - mountPath: /dev/shm
+            subPath: shm
+            name: dev
+          - mountPath: /mnt/lustre/xialei1
+            name: xialei1
+          - mountPath: /mnt/lustre/share
+            name: share
+          - mountPath: /home/xialei1/petreloss.conf
+            name: petrel

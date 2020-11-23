@@ -1,0 +1,82 @@
+# 多机多卡训练的yaml文件，使用方式：kubectl create -f kubernetes.yaml
+apiVersion: supercomputer.sensetime.com/v1alpha1
+kind: Mpirun
+metadata:
+  name: parrots-demo
+  namespace: xialei1
+spec:
+  podNumber: 2
+  scheduleOpts:
+    queue: default
+  backoffLimit: 0
+  mpirunCmd: mpirun
+  mpirunArgs:
+    - --allow-run-as-root
+    - -x  CUDA_ROOT="/usr/local/cuda" -x    ATEN_ROOT="/usr/local/PatATen"  -x   PPLBASE_ROOT="/usr/local/pplbase" -x    MPI_ROOT="/usr/local/openmpi-2.1.6-cuda9.0" -x    NCCL_ROOT="/usr/local/nccl-2.4.7-cuda9.0" -x    LD_PRELOAD=/usr/local/openmpi-2.1.6-cuda9.0/lib/libmpi.so   -x   LD_LIBRARY_PATH=/usr/local/nvidia/lib64/:/usr/lib64:$/usr/local/openmpi-2.1.6-cuda9.0/lib:/usr/local/nccl-2.4.7-cuda9.0/lib:/usr/local/pplbase/lib:/usr/local/PatATen/lib:/usr/local/cuda/lib64:/usr/local/libmemcached/lib/:/usr/local/memcached_client/lib/:/usr/local/boost/lib/:${LD_LIBRARY_PATH}  -x NCCL_DEBUG=INFO
+    - --hostfile
+    - /etc/mpirun.hosts
+    - --np
+    - "2"
+    - --npernode
+    - "2"
+  train:
+    auth:
+      user:
+        id: 21022
+        name: xialei1
+    script: /mnt/lustre/xialei1/parrots.example/models/imagenet/kubernetes.sh
+  podSpec:
+    volumes:
+      - name: dev
+        hostPath:
+          path: /dev
+      - name: xialei1
+        hostPath:
+          path: /mnt/lustre/xialei1
+      - name: share
+        hostPath:
+          path: /mnt/lustre/share
+      - name: petrel
+        hostPath:
+          path: /mnt/lustre/xialei1/petreloss.conf
+          subPath: petreloss.conf
+    containers:
+      - name: parrots
+        image: registry.sensetime.com/parrots/dev:112001
+        imagePullPolicy: Always
+        command:
+          - "/usr/bin/tini"
+          - "-g"
+          - "-w"
+          - "-vv"
+          - "--"
+          - "/startup.sh"
+        workingDir: /mnt/lustre/xialei1/parrots.example/models/imagenet
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+        env:
+          - name: LD_PRELOAD
+            value: /usr/local/openmpi-2.1.6-cuda9.0/lib/libmpi.so
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: "compute,utility"
+          - name: NVIDIA_REQUIRE_CUDA
+            value: "cuda>=8.0"
+          - name: MV2_ENABLE_AFFINITY
+            value: "0"
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+            nvidia.com/gpu: "2"
+            rdma/hca: 1 # requesting 1 RDMA device
+        volumeMounts:
+          - mountPath: /dev/shm
+            subPath: shm
+            name: dev
+          - mountPath: /mnt/lustre/xialei1
+            name: xialei1
+          - mountPath: /mnt/lustre/share
+            name: share
+          - mountPath: /home/xialei1/petreloss.conf
+            name: petrel
