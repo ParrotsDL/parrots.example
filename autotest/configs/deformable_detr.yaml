@@ -3,3 +3,32 @@ deformable_detr_deformable_detr:
   - 10000
   - '>'
   - 5%
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.6960890990584644
+    - <
+    - 5%
+    - 0.6629419991032994
+    __benchmark_mem_alloc(mb):
+    - 12087.6
+    - <
+    - 5%
+    - 11512
+    __benchmark_mem_cached(mb):
+    - 13261.5
+    - <
+    - 5%
+    - 12630
+    __benchmark_pavi_task_id:
+    - f03ad574-fab6-4161-a559-ceeaa8db7b63
+    __benchmark_pure_training_time(h):
+    - 1.4238390307525794
+    - <
+    - 5%
+    - 1.3560371721453137
+    __benchmark_total_time(h):
+    - 1.4616800605356692
+    - <
+    - 5%
+    - 1.3920762481292088
+    test_life: 1
