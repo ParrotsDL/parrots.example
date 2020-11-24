@@ -77,7 +77,6 @@ def build_dataloader(cfg, world_size, data_reader):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
 
-<<<<<<< models/imagenet/utils/dataloader.py
     if data_reader == 'MemcachedReader':
         train_dataset = McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
     elif data_reader == 'CephReader':
