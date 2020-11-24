@@ -34,7 +34,6 @@ python  -u ${pyroot}/main.py \
         --config ${cfg} \
         --batch_size 2 \
         --num_workers 4 \
-        --cache_mode \
         --output_dir ${EXP_DIR} \
         --checkpoint_enc_ffn \
         --checkpoint_dec_ffn \
