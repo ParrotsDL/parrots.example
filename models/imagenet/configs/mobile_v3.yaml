@@ -1,7 +1,15 @@
+seed: 99
 net:
-    arch: resnet50  # resnet18, resnet34, resnet50, resnet101, resnet152
+    arch: mobile_v3
     kwargs:
         num_classes: 1000
+        scale: 0.75 # 0.75
+        dropout: 0.2
+        mode: small # large
+        bn:
+            use_sync_bn: False
+            kwargs:
+                momentum: 0.99
  
 dataset:
   train:
@@ -17,25 +25,17 @@ dataset:
     image_dir: /mnt/lustre/share/images/val
     resize: 256
     center_crop: [224, 224]
-    colorjitter: [0.2, 0.2, 0.2, 0.1]
+    colorjitter:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
-  batch_size: 64
+  batch_size: 32
   workers: 4
  
 trainer:
-  max_epoch: 120
+  max_epoch: 100
   test_freq: 1
   log_freq: 20
-  bn:
-    syncbn: False
-  mixed_precision:
-    half: True
-    loss_scale: 128.0
-    float_bn: True
-    #float_module_type: "{torch.nn.Conv2d:('float', 'half')}"
-    #float_module_name: "{'fc':('float', 'half')}"
   optimizer:
     type: SGD
     kwargs:
@@ -48,16 +48,16 @@ trainer:
     kwargs:
       milestones: [30,60,90]
       gamma: 0.1
- 
+
 saver:
-  pretrain_model: 
-  resume_model: 
-  save_dir: checkpoints/resnet50_mix   # save checkpoint locally
+  pretrain_model:
+  resume_model:
+  save_dir: checkpoints/mobile_v3   # save checkpoint locally
  
 monitor:
   type: pavi
-  _taskid:  # continue training
+  _taskid: # continue training
   kwargs:
-    project: zyh_imagenet  # change to your own pavi project
-    task: resnet50_mix
-    model: resnet50_mix
+    project: default  # change to your own pavi project
+    task: mobile_v3
+    model: mobile_v3

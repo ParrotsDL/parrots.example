@@ -2,6 +2,7 @@ import os
 import shutil
 import argparse
 import random
+import re
 import time
 import yaml
 import json
@@ -17,14 +18,14 @@ import torch.distributed as dist
 import torch.optim
 from torch.backends import cudnn
 
-import pape
-import pape.distributed as dist
-from pape.parallel import DistributedModel
-from pape.half import HalfModel, HalfOptimizer
+import torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
+from utils.loss import LabelSmoothLoss
+
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -40,6 +41,9 @@ parser.add_argument('--max_step', default=None, type=int, metavar='N',
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
+parser.add_argument('--port', default=12345, type=int, metavar='P',
+                    help='master port')
+
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
@@ -52,7 +56,19 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    args.rank, args.world_size, args.local_rank = dist.init()
+    args.rank = int(os.environ['SLURM_PROCID'])
+    args.world_size = int(os.environ['SLURM_NTASKS'])
+    args.local_rank = int(os.environ['SLURM_LOCALID'])
+
+    node_list = str(os.environ['SLURM_NODELIST'])
+    node_parts = re.findall('[0-9]+', node_list)
+    os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+    os.environ['MASTER_PORT'] = str(args.port)
+    os.environ['WORLD_SIZE'] = str(args.world_size)
+    os.environ['RANK'] = str(args.rank)
+
+    dist.init_process_group(backend="nccl")
+    torch.cuda.set_device(args.local_rank) 
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -61,8 +77,7 @@ def main():
     logger_all.setLevel(logging.INFO)
 
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
-                socket.gethostname()))
-
+                    socket.gethostname()))
 
     dist.barrier()
 
@@ -86,31 +101,16 @@ def main():
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
-    args.syncbn = False
-    if cfgs.trainer.get('bn', None):
-        if cfgs.trainer.bn.get('syncbn', False) is True:
-            model = pape.utils.op.convert_syncbn(model)
-            args.syncbn = True
-
-    args.half = False
-    if cfgs.trainer.get('mixed_precision', None):
-        mix_cfg = cfgs.trainer.mixed_precision
-        if mix_cfg.get('half', False) is True:
-            model = HalfModel(model, float_bn=mix_cfg.get("float_bn", True),
-                              float_module_type=eval(mix_cfg.get("float_module_type", "{}")),
-                              float_module_name=eval(mix_cfg.get("float_module_name", "{}"))
-                             )
-            args.half = True
-
-    model = DistributedModel(model)
+    model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
-    criterion = nn.CrossEntropyLoss().cuda()
+    if cfgs.get('label_smooth', None):
+        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+    else:
+        criterion = nn.CrossEntropyLoss().cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
-    if args.half:
-        optimizer = HalfOptimizer(optimizer, loss_scale=cfgs.trainer.mixed_precision.loss_scale)
     logger.info("optimizer\n{}".format(optimizer))
 
     cudnn.benchmark = True
@@ -162,6 +162,7 @@ def main():
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
     monitor_writer = None
+<<<<<<< models/imagenet/main.py
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
        # if cfgs.monitor.get('type', None) == 'pavi':
         if args.pavi:
@@ -178,6 +179,18 @@ def main():
         args.taskid = monitor_writer.taskid
 
     run_time = time.time()
+=======
+    if args.rank == 0 and cfgs.get('monitor', None):
+        if cfgs.monitor.get('type', None) == 'pavi':
+            from pavi import SummaryWriter
+            if cfgs.monitor.get("_taskid", None):
+                monitor_writer = SummaryWriter(
+                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs, taskid=cfgs.monitor._taskid)
+            else:
+                monitor_writer = SummaryWriter(
+                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
+
+>>>>>>> models/imagenet/main.py
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
@@ -282,7 +295,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
+        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
 
@@ -293,10 +306,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        if args.half:
-            loss *= optimizer.loss_scale
         loss.backward()
-        model.average_gradients()
         optimizer.step()
 
         # measure elapsed time
@@ -373,9 +383,9 @@ def test(test_loader, model, criterion, args):
                         stats_all[2].item()))
 
         loss = torch.tensor([losses.avg])
-        dist.all_reduce(loss)
+        dist.all_reduce(loss.cuda())
         loss_avg = loss.item() / args.world_size
-        dist.all_reduce(stats_all)
+        dist.all_reduce(stats_all.cuda())
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 

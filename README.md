@@ -1,9 +1,9 @@
 ## Parrots2 examples
 full doc：http://pape.parrots.sensetime.com/
 
-* `benchmark`: benchmark scripts for pape.parallel, pape.op and pape.distributed
+* `benchmark`: benchmark scripts for parallel
 * `models/imagenet`: framework for image classification
-* `samples`: code samples for parrots and pape
+* `samples`: code samples for parrots
 
 ### Version
 | version | date |

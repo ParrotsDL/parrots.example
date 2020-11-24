@@ -14,7 +14,6 @@ import torch.utils.data
 import torchvision.transforms as transforms
 import torchvision.models as models
 
-import pape
 import linklink as link
 from utils.linklink_utils import dist_init, reduce_gradients, DistModule
 from utils.memcached_dataset import McDataset
@@ -60,14 +59,13 @@ parser.add_argument('--pretrained', dest='pretrained', action='store_true',
 parser.add_argument('--seed', default=None, type=int,
                     help='seed for initializing training. ')
 
-# pape args
+# parallel args
 parser.add_argument('--parallel', default='overlap',
                     choices=['naive', 'overlap', 'non_overlap'],
-                    help='pape parallel type')
+                    help='parallel type')
 parser.add_argument('--bucket_size', default=1., type=float,
-                    help='pape bucket_size(MB)')
-parser.add_argument('--half', action='store_true', help='use pape half')
-parser.add_argument('--syncbn', action='store_true', help='use pape syncbn')
+                    help='parallel bucket_size(MB)')
+parser.add_argument('--syncbn', action='store_true', help='use syncbn')
 
 # benchmark args
 parser.add_argument('--benchmark', action='store_true',
@@ -101,10 +99,7 @@ def main():
     model.cuda()
 
     if args.syncbn:
-        model = pape.utils.op_util.convert_syncbn(model)
-
-    if args.half:
-        model = pape.half.HalfModel(model)
+        model = torch.nn.SyncBatchNrom.convert_sync_batchnorm(model)
 
     model = DistModule(model)
 
@@ -116,14 +111,9 @@ def main():
     if args.rank == 0:
         print(criterion)
 
-    if args.half:
-        optimizer = pape.half.HalfOptimizer(model, "SGD", loss_scale=128.0,
-                                            lr=args.lr, momentum=args.momentum,
-                                            weight_decay=args.weight_decay)
-    else:
-        optimizer = torch.optim.SGD(model.parameters(), lr=args.lr,
-                                    momentum=args.momentum,
-                                    weight_decay=args.weight_decay)
+    optimizer = torch.optim.SGD(model.parameters(), lr=args.lr,
+                                momentum=args.momentum,
+                                weight_decay=args.weight_decay)
 
     # optionally resume from a checkpoint
     best_acc1 = 0.0
@@ -162,7 +152,6 @@ def main():
             normalize,
         ]))
 
-    # train_sampler = pape.data.DistributedSampler(train_dataset, args.batch_size)
     train_sampler = None
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),
@@ -183,7 +172,6 @@ def main():
             normalize,
         ]))
 
-    # val_sampler = pape.data.DistributedSampler(val_dataset, args.batch_size)
     val_sampler = None
     val_loader = torch.utils.data.DataLoader(
         val_dataset, batch_size=args.batch_size, shuffle=(val_sampler is None),
@@ -242,8 +230,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
     if args.benchmark:
         dummy_input = torch.rand([args.batch_size, 3, 224, 224]).cuda()
-        if args.half:
-            dummy_input = dummy_input.half()
         dummy_target = torch.randint(1000, (args.batch_size,), dtype=torch.long).cuda()
         max_iter = args.max_iter
         progress = ProgressMeter(max_iter, batch_time, prefix="Benchmark: ")
@@ -265,8 +251,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
         input = input.cuda()
         target = target.cuda()
-        if args.half:
-            input = input.half()
 
         # measure data loading time
         data_time.update(time.time() - end)

@@ -1,6 +1,5 @@
-seed: 99
 net:
-    type: vgg16
+    arch: sk_resnet50  # sk_resnet18, sk_resnet34, sk_resnet50, sk_resnet101, sk_resnet152
     kwargs:
         num_classes: 1000
  
@@ -8,7 +7,6 @@ dataset:
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
-    reader: pillow
     random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
@@ -17,20 +15,28 @@ dataset:
   test:
     meta_file: /mnt/lustre/share/images/meta/val.txt
     image_dir: /mnt/lustre/share/images/val
-    reader: pillow
     resize: 256
     center_crop: [224, 224]
+    colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
-  batch_size: 32
+  batch_size: 64
   workers: 4
  
 trainer:
-  max_epoch: 120
-  test_freq: 2
+  max_epoch: 100
+  test_freq: 1
   log_freq: 100
-  label_smooth:
+  label_smooth: 0.1
+  bn:
+    syncbn: False
+  mixed_precision:
+    half: False
+    loss_scale: 128.0
+    float_layers:  # define floating layers when mixed training
+      # loss:
+      #     float_out: True
   optimizer:
     type: SGD
     kwargs:
@@ -45,16 +51,14 @@ trainer:
       gamma: 0.1
  
 saver:
-  pretrian_model: 
+  pretrain_model: 
   resume_model: 
-  save_dir: checkpoints   # save checkpoint locally
-  save_epoch_freq: 1
-  save_latest: True
-  save_best: True
+  save_dir: checkpoints/sknet50_baseline   # save checkpoint locally
  
 monitor:
   type: pavi
+  _taskid:  # continue training
   kwargs:
-    project: default
-    task: vgg16
-    model: vgg16
+    project: hyc_resnet  # change to your own pavi project
+    task: sknet50_baseline
+    model: sknet50

@@ -16,7 +16,7 @@ import torchvision.transforms as transforms
 import torchvision.models as models
 
 import torch.nn.parallel
-import torch.utils.data.distributed
+import torch.utils.data.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 from utils.memcached_dataset import McDataset

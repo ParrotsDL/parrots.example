@@ -1,18 +1,13 @@
 seed: 99
 net:
-    type: preact_resnet18 # preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
+    arch: preact_resnet18 # preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
     kwargs:
         num_classes: 1000
-    #bn:
-    #    group_size: 1
-    #fp16:
-    #    scale_factor: 1024
  
 dataset:
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
     image_dir: /mnt/lustre/share/images/train
-    reader: pillow
     random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
@@ -21,9 +16,9 @@ dataset:
   test:
     meta_file: /mnt/lustre/share/images/meta/val.txt
     image_dir: /mnt/lustre/share/images/val
-    reader: pillow
     resize: 256
     center_crop: [224, 224]
+    random_resize_crop:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
@@ -32,9 +27,8 @@ dataset:
  
 trainer:
   max_epoch: 120
-  test_freq: 2
-  log_freq: 100
-  label_smooth:
+  test_freq: 1
+  log_freq: 20
   optimizer:
     type: SGD
     kwargs:
@@ -51,13 +45,11 @@ trainer:
 saver:
   pretrian_model: 
   resume_model: 
-  save_dir: checkpoints   # save checkpoint locally
-  save_epoch_freq: 1
-  save_latest: False
-  save_best: False
+  save_dir: checkpoints/resnet50v2   # save checkpoint locally
  
 monitor:
   type: pavi
+  _taskid: # continue training
   kwargs:
     project: default
     task: resnet50_v2
