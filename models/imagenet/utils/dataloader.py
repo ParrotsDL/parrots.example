@@ -23,7 +23,7 @@ class CephDataset(Dataset):
         self.transform = transform
 
         self.client = Client()
-        meta_file = self.client.Get(meta_file)
+        meta_file = self.client.Get(meta_file, update_cache=True)
         self.meta_list = bytes.decode(meta_file).split('\n')
         if self.meta_list[-1] == '':
             self.meta_list.pop()
@@ -36,7 +36,7 @@ class CephDataset(Dataset):
         filename = self.image_dir + self.meta_list[index].split()[0]
         cls = int(self.meta_list[index].split()[1])
 
-        img = Image.open(io.BytesIO(self.client.Get(filename)))
+        img = Image.open(io.BytesIO(self.client.Get(filename,update_cache=True)))
         img = img.convert('RGB')
 
         # transform
