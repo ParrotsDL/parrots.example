@@ -139,6 +139,10 @@ example_inceptionv3.short:
     - <
     - 50%
     - 1.14
+    Accuracy_Test_top1:
+    - 0
+    - '>'
+    - 20%
 example_inceptionv3.short.dummy_data:
   placeholder: none
 example_inceptionv3_daily:
@@ -181,6 +185,10 @@ example_mobile_v1.short:
     - <
     - 50%
     - 1.0
+    Accuracy_Test_top1:
+    - 0
+    - '>'
+    - 20%
 example_mobile_v1.short.dummy_data:
   placeholder: none
 example_mobile_v1_daily:
@@ -346,6 +354,10 @@ example_resnet18_mix.short:
     - <
     - 50%
     - 0.31
+    Accuracy_Test_top1:
+    - 0
+    - '>'
+    - 20%
 example_resnet18_mix.short.dummy_data:
   placeholder: none
 example_resnet50:
@@ -416,6 +428,10 @@ example_resnet50.short:
     - <
     - 50%
     - 1.02
+    Accuracy_Test_top1:
+    - 0
+    - '>'
+    - 20%
 example_resnet50.short.dummy_data:
   placeholder: none
 example_resnet50_daily:
@@ -498,6 +514,10 @@ example_resnet50_sync.short:
     - <
     - 50%
     - 1.03
+    Accuracy_Test_top1:
+    - 0
+    - '>'
+    - 20%
 example_resnet50_sync.short.dummy_data:
   placeholder: none
 example_resnet50_weekly:
