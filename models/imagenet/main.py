@@ -8,11 +8,13 @@ import yaml
 import json
 import socket
 import logging
+import numpy as np
 from addict import Dict
 
 import torch
 import torch.nn as nn
 import torch.nn.parallel
+import torch.distributed as dist
 import torch.optim
 from torch.backends import cudnn
 
@@ -30,6 +32,15 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
+                    help='dummy data for speed evaluation')
+parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
+parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
+parser.add_argument('--max_step', default=None, type=int, metavar='N',
+                    help='number of total epochs to run')
+parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
+parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
@@ -39,6 +50,8 @@ logger_all = logging.getLogger('all')
 
 
 def main():
+    start_time = time.time()
+    iter_time_list = []
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
@@ -75,6 +88,13 @@ def main():
         torch.manual_seed(cfgs.seed)
         torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
+    
+    if args.seed != None:
+        random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        torch.cuda.manual_seed(args.seed)
+        cudnn.deterministic = True
+
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
     model.cuda()
@@ -97,6 +117,8 @@ def main():
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
+    if args.max_step is not None:
+        args.max_epoch = args.max_step
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
 
@@ -110,6 +132,7 @@ def main():
         args.start_epoch = checkpoint['epoch']
         best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
+        args.taskid = checkpoint['taskid']
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
@@ -126,7 +149,7 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
 
     # test mode
     if args.test:
@@ -139,6 +162,24 @@ def main():
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
     monitor_writer = None
+<<<<<<< models/imagenet/main.py
+    if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
+       # if cfgs.monitor.get('type', None) == 'pavi':
+        if args.pavi:
+            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
+        else:
+            monitor_kwargs = cfgs.monitor.kwargs
+            if hasattr(args, 'taskid'):
+                monitor_kwargs['taskid'] = args.taskid
+            elif hasattr(cfgs.monitor, '_taskid'):
+                monitor_kwargs['taskid'] = cfgs.monitor._taskid
+        from pavi import SummaryWriter
+        monitor_writer = SummaryWriter(
+            session_text=yaml.dump(args.config), **monitor_kwargs)
+        args.taskid = monitor_writer.taskid
+
+    run_time = time.time()
+=======
     if args.rank == 0 and cfgs.get('monitor', None):
         if cfgs.monitor.get('type', None) == 'pavi':
             from pavi import SummaryWriter
@@ -149,13 +190,31 @@ def main():
                 monitor_writer = SummaryWriter(
                     session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
+>>>>>>> models/imagenet/main.py
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list)
+        
+        mem = torch.cuda.max_memory_allocated()
+        mem_mb = torch.tensor([mem / (1024 * 1024)],
+                       dtype=torch.int,
+                       device=torch.device('cuda'))
+        if  args.world_size > 1:
+            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
 
+        mem_alloc = mem_mb.item()
+        # get max memory cached
+        mem = torch.cuda.max_memory_cached()
+        mem_mb = torch.tensor([mem / (1024 * 1024)],
+                       dtype=torch.int,
+                       device=torch.device('cuda'))
+        if args.world_size > 1:
+            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+        mem_cached = mem_mb.item()
+        
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
@@ -171,7 +230,8 @@ def main():
                     'arch': cfgs.net.arch,
                     'state_dict': model.state_dict(),
                     'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict()
+                    'optimizer': optimizer.state_dict(),
+                    'taskid': args.taskid
                 }
 
                 ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
@@ -182,9 +242,23 @@ def main():
                     shutil.copyfile(ckpt_path, best_ckpt_path)
 
         lr_scheduler.step()
+    end_time = time.time()
+    if args.rank == 0:
+        logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
+        logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
+        logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
+        logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
+        logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
 
+    if args.rank == 0 and monitor_writer:
+        monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
+        monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
+        monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
+        monitor_writer.add_scalar('__benchmark_mem_alloc(mb)',mem_alloc,1)
+        monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
+        monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -199,10 +273,18 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
+    loader_length = len(train_loader)
+    if args.dummy_test:
+        input_, target_  = next(iter(train_loader))
+        train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
 
+        if args.dummy_test:
+            input = input_.detach()
+            input.requires_grad = True
+            target = target_
         input = input.cuda()
         target = target.cuda()
 
@@ -230,17 +312,30 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
-
+        iter_end_time = time.time()
+        if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
+            iter_time_list.append(iter_end_time - iter_start_time)
+            
+        iter_start_time = time.time()
         if i % args.log_freq == 0:
             progress.display(i)
             if args.rank == 0 and monitor_writer:
-                cur_iter = epoch * len(train_loader) + i
+                cur_iter = epoch * loader_length + i
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
+        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
+            return
 
 
 def test(test_loader, model, criterion, args):
+    logger = logging.getLogger()
+    logger_all = logging.getLogger('all')
+    if args.rank == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
+    logger_all.setLevel(logging.INFO)
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -253,7 +348,13 @@ def test(test_loader, model, criterion, args):
     model.eval()
     with torch.no_grad():
         end = time.time()
+        if args.dummy_test:
+            input_, target_ = next(iter(test_loader))
+            test_loader = [(i, i) for i in range(len(test_loader))]
         for i, (input, target) in enumerate(test_loader):
+            if args.dummy_test:
+                input = input_
+                target = target_
             input = input.cuda()
             target = target.cuda()
 
