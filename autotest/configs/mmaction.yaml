@@ -61,7 +61,6 @@ mmaction_bmn_400x100_2x8_9e_activitynet_feature:
     - 5%
     - 0.9423461069001092
     - 0.5536091893911361
-    test_life: 1
     val.AR@100:
     - 0.739
     - '>'
