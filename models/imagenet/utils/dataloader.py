@@ -82,7 +82,7 @@ def build_dataloader(cfg, world_size, data_reader):
         ceph_image_dir = 's3://parrots_model_data/imagenet/images/train/'
         ceph_meta_file = 's3://parrots_model_data/imagenet/images/meta/train.txt'
         train_dataset = CephDataset(ceph_image_dir, ceph_meta_file, train_aug)
-    train_sampler = DistributedSampler(train_dataset, batch_size=cfg.batch_size)
+    train_sampler = DistributedSampler(train_dataset)
     train_loader = DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
