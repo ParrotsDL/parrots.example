@@ -93,7 +93,7 @@ def build_dataloader(cfg, world_size, data_reader):
         ceph_image_dir = 's3://parrots_model_data/imagenet/images/val/'
         ceph_meta_file = 's3://parrots_model_data/imagenet/images/meta/val.txt'
         test_dataset = CephDataset(ceph_image_dir, ceph_meta_file, test_aug)
-    test_sampler = DistributedSampler(test_dataset, round_up=False, shuffle=False)
+    test_sampler = DistributedSampler(test_dataset)
     test_loader = DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=test_sampler, drop_last=False)
