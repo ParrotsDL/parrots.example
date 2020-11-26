@@ -162,7 +162,7 @@ def main():
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
     monitor_writer = None
-<<<<<<< models/imagenet/main.py
+    
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
        # if cfgs.monitor.get('type', None) == 'pavi':
         if args.pavi:
@@ -179,18 +179,7 @@ def main():
         args.taskid = monitor_writer.taskid
 
     run_time = time.time()
-=======
-    if args.rank == 0 and cfgs.get('monitor', None):
-        if cfgs.monitor.get('type', None) == 'pavi':
-            from pavi import SummaryWriter
-            if cfgs.monitor.get("_taskid", None):
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs, taskid=cfgs.monitor._taskid)
-            else:
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
->>>>>>> models/imagenet/main.py
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
