@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import logging
-import pape.distributed as dist
+import torch.distributed as dist
 
 
 def check_keys(model, checkpoint):
