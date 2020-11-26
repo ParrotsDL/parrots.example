@@ -1,7 +1,6 @@
 import io
 import torch
 import torchvision.transforms as transforms
-import pape.data as pdata
 from torch.utils.data import Dataset
 from petrel_client.client import Client
 from PIL import Image
