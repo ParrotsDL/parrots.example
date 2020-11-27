@@ -249,7 +249,7 @@ scheduler:
     type: FIFO
     parallel_size: 8
     stop_criterion:
-        max_tries: 100
+        max_tries: 250
     wait_to_run_time_thresh: inf # inf
 
 # Optional
