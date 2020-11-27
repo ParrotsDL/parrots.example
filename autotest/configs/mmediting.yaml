@@ -59,8 +59,7 @@ mmediting_cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter:
     - <
     - 5%
     - 1.1611416908105214
-    test_life: 1
-    train.val_saved_number:
+    val/val_saved_number/val:
     - 309
     - '>'
     - 50%
