@@ -60,7 +60,7 @@
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
 [submodule "models/TextRecog"]
 	path = models/TextRecog
-	url = git@gitlab.bj.sensetime.com:yangruichao/TextRecog.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/TextRecog.git
 [submodule "models/mmpose"]
 	path = models/mmpose
 	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
@@ -123,3 +123,6 @@
 [submodule "models/pattern_v2_5_sp"]
 	path = models/pattern_v2_5_sp
 	url = git@gitlab.bj.sensetime.com:parrots.model/pattern_v2.5_sp.git
+[submodule "models/deformable_detr"]
+	path = models/deformable_detr
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/detr_dev.git

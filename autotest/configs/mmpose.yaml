@@ -27,7 +27,7 @@ mmpose_bottomup_hrnet:
     - <
     - 5%
     - 0.22343056235048506
-  train.AP:
+  val.AP:
   - 0.67
   - '>'
   - 0.5%
@@ -92,13 +92,12 @@ mmpose_topdown_alexnet:
     - <
     - 5%
     - 1.193450269566642
-    test_life: 1
     val.AP:
     - 0.39402000000000004
     - '>'
     - 0.5%
     - 0.396
-  train.AP:
+  val.AP:
   - 0.394
   - '>'
   - 0.5%
@@ -132,7 +131,7 @@ mmpose_topdown_darkpose:
     - <
     - 5%
     - 0.061353405515352885
-  train.AP:
+  val.AP:
   - 0.715
   - '>'
   - 0.5%
@@ -166,7 +165,7 @@ mmpose_topdown_hourglass:
     - <
     - 5%
     - 0.12296162241035037
-  train.AP:
+  val.AP:
   - 0.723
   - '>'
   - 0.5%
@@ -201,7 +200,7 @@ mmpose_topdown_hrnet:
     - <
     - 5%
     - 0.639399240480529
-  train.AP:
+  val.AP:
   - 0.741
   - '>'
   - 0.5%
@@ -235,7 +234,7 @@ mmpose_topdown_mobilev2:
     - <
     - 5%
     - 0.06826040678554111
-  train.AP:
+  val.AP:
   - 0.636
   - '>'
   - 0.5%
@@ -269,7 +268,7 @@ mmpose_topdown_res50:
     - <
     - 5%
     - 0.18639191647370656
-  train.AP:
+  val.AP:
   - 0.71
   - '>'
   - 0.5%
@@ -303,7 +302,7 @@ mmpose_topdown_resnetv1d:
     - <
     - 5%
     - 0.19142544276184506
-  train.AP:
+  val.AP:
   - 0.718
   - '>'
   - 0.5%
@@ -337,7 +336,7 @@ mmpose_topdown_resnext:
     - <
     - 5%
     - 0.28320298698213364
-  train.AP:
+  val.AP:
   - 0.703
   - '>'
   - 0.5%
@@ -371,7 +370,7 @@ mmpose_topdown_scnet:
     - <
     - 5%
     - 0.0706800424390369
-  train.AP:
+  val.AP:
   - 0.722
   - '>'
   - 0.5%
@@ -405,7 +404,7 @@ mmpose_topdown_senet50:
     - <
     - 5%
     - 0.23570320592986213
-  train.AP:
+  val.AP:
   - 0.72
   - '>'
   - 0.5%
@@ -439,7 +438,7 @@ mmpose_topdown_shufflev1:
     - <
     - 5%
     - 0.05964895016617245
-  train.AP:
+  val.AP:
   - 0.574
   - '>'
   - 0.5%

@@ -156,7 +156,11 @@ def _watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E
         # get last some lines
         log_lines = read_log_last(job_log_path, last_line_num=10)
         if log_lines is not None:
-            log_lines = [str(line, encoding="utf-8") for line in log_lines]
+            try:
+                log_lines = [str(line, encoding="utf-8") for line in log_lines]
+            except Exception:
+                log_lines = ['None']
+
         # get log hash
         lines_hash = get_hash(log_lines)
         # monitor whether the log has not changed over time (kill all process if not change for a long time)
@@ -589,7 +593,8 @@ def pre_callback_wrapper(config, run_type, framework, model, is_monitor_log=True
         del config['placeholder']
     config['test_life'] = 0
     if run_type == 'autoparrotsbenchmark':
-        config['__benchmark_total_time(h)'] = 0.2
+        if config['__benchmark_total_time(h)'] == [10000, '<', '5%']:
+            del config['__benchmark_total_time(h)']
     else:
         config['__benchmark_total_time(h)'] = 10000
 
