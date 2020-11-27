@@ -61,12 +61,12 @@ mmaction_bmn_400x100_2x8_9e_activitynet_feature:
     - 5%
     - 0.9423461069001092
     - 0.5536091893911361
-    val.AR@100:
+    val/AR@100/val:
     - 0.739
     - '>'
     - 20%
     - 0.7476
-    val.auc:
+    val/auc/val:
     - 65.9
     - '>'
     - 20%
