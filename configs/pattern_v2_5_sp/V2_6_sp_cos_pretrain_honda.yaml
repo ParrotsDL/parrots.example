@@ -57,7 +57,7 @@ strategy:
     pretrained_model: '/mnt/lustre/share_data/pulin/v2.6_imagenet_honda2_honda3.pth.tar'
     save_path: '../pattern_save/mobile_v2.6_spatial'
 
-    workers: 4
+    workers: 16 #4
 data:
     training_param:
         # crop config
