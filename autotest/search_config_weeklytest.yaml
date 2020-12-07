@@ -74,6 +74,7 @@ scheduler:
     stop_criterion:
         max_tries: 100
     wait_to_run_time_thresh: inf # inf
+    wait_to_get_pavi_task_thresh: 0.5
 
 # Optional
 pavi:
