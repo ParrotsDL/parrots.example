@@ -66,7 +66,7 @@
 	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
 [submodule "models/mmdet"]
 	path = models/mmdet
-	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git
+        url = git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git
 [submodule "models/mmediting"]
 	path = models/mmediting
 	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
