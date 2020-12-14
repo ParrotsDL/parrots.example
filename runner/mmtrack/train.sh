@@ -16,4 +16,4 @@ EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 SRUN_ARGS=${SRUN_ARGS} sh runner/mmtrack/run_train.sh $p $g $name ${EXTRA_ARGS}
-SRUN_ARGS=${SRUN_ARGS} sh runner/mmtrack/run_test.sh $name ${EXTRA_ARGS} 
+# SRUN_ARGS=${SRUN_ARGS} sh runner/mmtrack/run_test.sh $name ${EXTRA_ARGS} 
