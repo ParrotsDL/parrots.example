@@ -126,3 +126,6 @@
 [submodule "models/deformable_detr"]
 	path = models/deformable_detr
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/detr_dev.git
+[submodule "models/mmocr"]
+	path = models/mmocr
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmocr.git
