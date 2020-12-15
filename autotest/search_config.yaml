@@ -233,6 +233,8 @@ task:
                 # {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--pavi --pavi-project default --seed 1024'},
                 ## 34.deformable_detr
                 # {'framework': 'deformable_detr', 'gpus': 8, 'model': 'deformable_detr', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
+                ## 35.PAR
+                # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--seed 1024 --pavi --pavi-project default'},
             ]
     # Optional
     # callback: "cat"

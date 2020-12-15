@@ -1,0 +1,78 @@
+version: 1.0.0
+type: ParHelper
+config:
+  # Below should be provided by specific task
+  args:
+    dist_sync: True
+    nocudnn: True
+    log_inter: 20
+    attrs: age # Specify which attribute to train. Refer to info_json
+    multi_label_attrs: ['uppercolor','status','pants','bagtype']
+    only_val : False
+    recall_filter: prob,entropy
+    external_model: ~   #external model for backbone
+                          # support['squeezenet1_0', 'squeezenet1_1', 'inception_v3', 'mnasnet0_5'
+                          #'shufflenet_v2_x0_5','shufflenet_v2_x1_0',  'shufflenet_v2_x1_5', 'shufflenet_v2_x2_0', 'mobilenet_v2']
+    opts: ~
+
+    
+  # Below should be provided by specific task
+  dataset: # Required.
+    info_json: ./configs/PAR/ped_attr_info.json
+    list_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/lists/ 
+    test: # config for test set
+      test_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/imgs/ 
+      test_list: st_v2_list 
+    val:         # This filed is required by SCI, but in PAR, we don't use val set. Stay the same as 'test'
+      val_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/imgs/
+      val_list: st_v2_list                                             
+    train: # config for train set
+      train_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/imgs/ 
+
+    dataset_types: ['train', 'test', 'val']  # 'val' is required by sci , let it be the same as 'test'
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    input_h: 256
+    input_w: 128
+    batch_size: 512
+    workers: 32          # number of workers of dataloader for each process
+
+  trainer: # Required.
+    start_epoch: 0     # total epochs for the training
+    end_epoch: 120
+    optimizer:         
+      type: SGD         # Can change to other optimizers 
+      kwargs:
+        lr: 0.05
+        momentum: 0.9   # Modified/Deleted accordingly if optimizer changed
+        weight_decay: 0.0002 # Modified/Deleted accordingly if optimizer changed
+    warmup_epochs: 0
+    lr_scheduler:       
+      warmup_lr: 1e-7
+      type: CosineAnnealingLR # Can change to other schedulers
+      kwargs: # Add arguments according to the choosed scheduler
+
+
+  saver: # Required.
+    save_dir: checkpoints     # dir to save checkpoints
+    embedding_model: /mnt/lustre/share_data/parrots_model_data/pedestrian/reid_pretrain_models/reid_res101_256x128_v1.1.pth
+    #resume_model: /mnt/lustre/wangyige/par_config_scripts/checkpoints/ckpt_epoch061.pth.tar
+    #uncomment the line above when only testing
+    save_pred: True
+    results_dir: predictions
+
+  net: # Required.
+    - name: embedding          # backbone = resnet50(frozen_layers, out_layers, out_strides)
+      type: resnet101
+      fix: True
+    
+     
+      kwargs:
+        sync_stats: True
+
+    - name: classifier
+      type: QuakeBottleneck
+      num_feat: [1024, 256, 128, 64, 32]
+      attrs: age # should be the same as the args field above
+      info_json: ./configs/PAR/ped_attr_info.json #same as in the datasets field; we need this  to acquire class numbers
+      kwargs: ~
