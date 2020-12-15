@@ -31,9 +31,10 @@ class DataInseter(object):
         assert set(kwargs.keys()) == set(
             self.required_keys), f'diff: {set(kwargs.keys()) - set(self.required_keys)}'
 
-        dt = kwargs["CommitDate"].replace("/", "-")
-        timeArray = time.strptime(dt, "%Y-%m-%d %H:%M:%S")
-        kwargs["CommitDate"] = time.mktime(timeArray)
+        if kwargs["CommitDate"] != '':
+            dt = kwargs["CommitDate"].replace("/", "-")
+            timeArray = time.strptime(dt, "%Y-%m-%d %H:%M:%S")
+            kwargs["CommitDate"] = time.mktime(timeArray)
         
         edpre = kwargs["ExecDate"].replace("/", "-")
         ed = edpre.split(".",1)[0]
