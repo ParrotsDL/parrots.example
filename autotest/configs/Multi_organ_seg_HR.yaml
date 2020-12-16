@@ -1,0 +1,68 @@
+Multi_organ_seg_HR_PSPNet:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 7.084917463638164
+    - <
+    - 5%
+    - 6.747540441560156
+    __benchmark_mem_alloc(mb):
+    - 7732.2
+    - <
+    - 5%
+    - 7364
+    __benchmark_mem_cached(mb):
+    - 8664.6
+    - <
+    - 5%
+    - 8252
+    __benchmark_pavi_task_id:
+    - 7634697f-a059-462d-8213-e9bf2a6e5dd1
+    __benchmark_pure_training_time(h):
+    - 9.648804074873526
+    - <
+    - 5%
+    - 9.189337214165263
+    __benchmark_total_time(h):
+    - 9.650827712923288
+    - <
+    - 5%
+    - 9.19126448849837
+    test/avg_dice:
+    - 0.6648032665252686
+    - '>'
+    - 20%
+    - 0.8310040831565857
+    test_life: 1
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 7.0533372583212675
+    - <
+    - 5%
+    - 6.717464055544064
+    __benchmark_mem_alloc(mb):
+    - 7732.2
+    - <
+    - 5%
+    - 7364
+    __benchmark_mem_cached(mb):
+    - 8664.6
+    - <
+    - 5%
+    - 8252
+    __benchmark_pavi_task_id:
+    - 0fe76ccb-a8d9-4af4-8b37-2ff385f1b751
+    __benchmark_pure_training_time(h):
+    - 0.3745053717990716
+    - <
+    - 5%
+    - 0.3566717826657825
+    __benchmark_total_time(h):
+    - 0.3765673284828663
+    - <
+    - 5%
+    - 0.35863555093606314
+    test_life: 1
+  test/avg_dice:
+  - 0
+  - '>'
+  - 20%
