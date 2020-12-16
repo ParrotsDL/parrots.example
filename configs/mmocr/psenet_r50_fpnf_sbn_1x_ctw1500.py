@@ -100,4 +100,4 @@ data = dict(
         # select_first_k=2,
         pipeline=test_pipeline))
 
-evaluation = dict(interval=10, metric='hmean')
+evaluation = dict(interval=100, metric='hmean')
