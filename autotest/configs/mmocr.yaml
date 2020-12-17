@@ -1,0 +1,11 @@
+panet_r18_fpem_ffm_sbn_1x_ctw1500:
+  placeholder: none
+
+panet_r18_fpem_ffm_sbn_1x_icdar2015:
+  placeholder: none
+
+psenet_r50_fpnf_sbn_1x_icdar2015:
+  placeholder: none
+  
+psenet_r50_fpnf_sbn_1x_ctw1500:
+  placeholder: none
