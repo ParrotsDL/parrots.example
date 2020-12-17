@@ -237,6 +237,11 @@ task:
                 # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--seed 1024 --pavi --pavi-project default'},
                 ## 39.Multi_organ_seg_HR
                 # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader LustreReader --seed 1024'},
+                ## 40.mmocr
+                # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 600'},
+                # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 600'},
+                # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 600'},
+                # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 600'},
             ]
     # Optional
     # callback: "cat"
