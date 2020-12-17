@@ -20,7 +20,7 @@ pyroot=$ROOT/models/mmocr/
 export PYTHONPATH=$pyroot:$PYTHONPATH
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git -b pat_v2.4.0
+git clone git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git -b pat_v2.4.0
 cd mmdetection
 pip install -v -e .
 # export PYTHONPATH=$(pwd):$PYTHONPATH
