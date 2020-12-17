@@ -27,7 +27,7 @@ cd ..
 
 export PKG_CONFIG_PATH=/mnt/lustre/share/opencv-3.2/lib/pkgconfig
 export LD_LIBRARY_PATH=/mnt/lustre/share/opencv-3.2/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/lustre/share/cuda-8.0-cudnnv6/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/lustre/share/cuda-8.0-cudnnv6/lib64:
 # export LD_LIBRARY_PATH=/mnt/lustre/share/cuda-10.0/lib64:$LD_LIBRARY_PATH
 
 cd models/mmocr/mmocr/models/utils/instance_det_postprocessing
