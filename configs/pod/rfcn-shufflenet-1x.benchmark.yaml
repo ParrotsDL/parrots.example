@@ -10,10 +10,12 @@ dataset: # Required.
   train:
     meta_file: /mnt/lustre/share/DSK/datasets/VOC07+12/ImageSets/Main/trainval.txt
     image_dir: /mnt/lustre/share/DSK/datasets/VOC07+12
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/VOC07+12
     flip: True
   test:
     meta_file: /mnt/lustre/share/DSK/datasets/VOC07+12/ImageSets/Main/test.txt
     image_dir: /mnt/lustre/share/DSK/datasets/VOC07+12
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/VOC07+12
     flip: False
   aspect_grouping: [1, ]
   alignment: 1        # Align size of images to fit FPN. For fpn-faster-rcnn, 32 is enough; for RetinaNet, it's 128.

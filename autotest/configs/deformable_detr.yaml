@@ -1,4 +1,4 @@
-deformable_detr_deformable_detr:
+deformable_detr_r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage:
   AP:
   - 10000
   - '>'

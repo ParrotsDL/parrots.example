@@ -76,16 +76,16 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
         # get job name
         name = os.environ['name']
         # get slurm_job_id
-        if workdir and name:
-            info = load_taskinfo(workdir)
-            job_names = list(
-                filter(lambda j: j['name'] in [name], info['jobs']))
-            if len(job_names) > 0:
-                job_info = job_names[0]
-                try:
+        try:
+            if workdir and name:
+                info = load_taskinfo(workdir)
+                job_names = list(
+                    filter(lambda j: j['name'] in [name], info['jobs']))
+                if len(job_names) > 0:
+                    job_info = job_names[0]
                     slurm_job_id = int(job_info['slurm_job_id'])
-                except Exception:
-                    slurm_job_id = None
+        except Exception:
+            slurm_job_id = None
         _, _, status = callback_utils.get_slurm_job_id()
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
             print('slurm_job_status: R')
