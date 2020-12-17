@@ -92,4 +92,4 @@ data = dict(
         img_prefix=data_root + '/imgs',
         # select_first_k=100,
         pipeline=test_pipeline))
-evaluation = dict(interval=50, metric='hmean')
+evaluation = dict(interval=100, metric='hmean')
