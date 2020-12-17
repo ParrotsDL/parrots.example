@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -236,10 +236,10 @@ task:
                     ## 39.Multi_organ_seg_HR
                     # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader LustreReader --seed 1024 --max_step 1'},
                     ## 40.mmocr
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
                 ]
 
 
