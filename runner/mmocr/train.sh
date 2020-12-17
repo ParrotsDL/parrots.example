@@ -32,9 +32,7 @@ export LD_LIBRARY_PATH=/mnt/lustre/share/opencv-3.2/lib:$LD_LIBRARY_PATH
 
 cd models/mmocr/mmocr/models/utils/instance_det_postprocessing
 cp Makefile.pse Makefile && srun -p $1 --gres gpu:$g make
-y
 cp Makefile.pan Makefile && srun -p $1 --gres gpu:$g make
-y
 cd ../../../../../..
 
 ln -s /mnt/lustre/share_data/parrots_model_data/mmocr/data data
@@ -44,5 +42,4 @@ srun --mpi=pmi2 -p $1 -n $2 --gres gpu:$g --ntasks-per-node $g --job-name=mmocr_
   $cfg  --work-dir=work_dir/mmocr_${name} --launcher="slurm" ${PY_ARGS} ${EXTRA_ARGS} \
   2>&1 | tee $ROOT/log/mmocr/train.${name}.log.$T
 
-pip uninstall mmdet
-y
+pip uninstall -y mmdet
