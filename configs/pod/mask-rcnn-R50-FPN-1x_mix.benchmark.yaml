@@ -3,10 +3,12 @@ dataset: # Required.
   train:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
     flip: True
   test:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
     flip: False
   has_keypoint: False        # don't use keypoints
   has_mask: True             # don't use segmentations

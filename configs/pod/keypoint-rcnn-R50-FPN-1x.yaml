@@ -4,12 +4,14 @@ dataset: # Required.
   train:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_train2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
     flip: True
     scales: [640, 672, 704, 736, 768, 800] # shorter side of resized image
     max_size: 1333        # longer side of resized image
   test:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
     flip: False
     scales: [800]         # shorter side of resized image
     max_size: 1333        # longer side of resized image
