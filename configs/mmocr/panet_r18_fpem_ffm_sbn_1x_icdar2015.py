@@ -3,7 +3,7 @@ _base_ = [
 ]
 model = dict(
     type='PANet',
-    pretrained='torchvision://resnet18',
+    pretrained='/mnt/lustre/share_data/parrots_model_data/mmocr/premodel/resnet18-5c106cde.pth',
     backbone=dict(
         type='ResNet',
         depth=18,
