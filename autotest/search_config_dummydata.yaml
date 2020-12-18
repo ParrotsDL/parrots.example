@@ -6,8 +6,8 @@ task:
         - type: Nested
           value: [
                     # pod dummy data
-                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
-                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
                     # example dummy data
                     {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
                     {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
