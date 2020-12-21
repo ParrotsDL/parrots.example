@@ -1,0 +1,43 @@
+task:
+    # Required (change partition, num_gpus or others where necessary)
+    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_dailybuild {gpus} {model} {py_args}"
+    # Required
+    search_args:
+        - type: Nested
+          value: [
+                    # (un)commit your config here
+                    # # ssd
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --DATA_READER CephReader --SEED 1024'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --DATA_READER MemcachedReader --SEED 1024'},
+                    {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --DATA_READER DirectReader --SEED 1024'},
+                    # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT parrots_test --DATA_READER MemcachedReader --SEED 1024'},
+                    # mmaction
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'i3d_r50_video_32x2x1_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
+                ]
+
+
+    # Optional
+    # callback: "cat"
+    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 benchmark"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 benchmark"
+
+searcher:
+    # Support GridSearcher, RandomSearcher, SkoptSearcher
+    type: GridSearcher
+    # Required
+    reward_attribute: acc
+
+scheduler:
+    type: FIFO
+    parallel_size: 8
+    stop_criterion:
+        max_tries: 100
+    wait_to_run_time_thresh: inf # inf
+
+# Optional
+pavi:
+    compare:
+        name: parrots.test.datareader
+
+# slurm_job_id_monitor: true
