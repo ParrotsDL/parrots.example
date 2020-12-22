@@ -18,8 +18,8 @@ PYTHON_ARGS="python3 -u -m sc2learner.train.train_sl \
     --use_distributed \
     --config_path configs/SenseStar/config.yaml \
     --noonly_evaluate \
-    --replay_list /mnt/lustre/share_data/parrots_model_data/sensewow/diff_size_total.train \
-    --eval_replay_list /mnt/lustre/share_data/parrots_model_data/sensewow/diff_size_total.train"
+    --replay_list configs/SenseStar/diff_size_total.train \
+    --eval_replay_list configs/SenseStar/diff_size_total.train"
 
 srun --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=SenseStar_${name} ${SRUN_ARGS} \
     $PYTHON_ARGS $EXTRA_ARGS \
