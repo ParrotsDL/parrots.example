@@ -6,25 +6,25 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here
-                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short", 'py_args': '--pavi --pavi-project parrots_test'}, #example
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'}, #example
                     # pod
-                    {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'rfcn-mobilenet-1x', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
                     # mmpose
-                    {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 10'},
+                    {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 10'},
                     # mmediting
-                    {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project parrots_test --data-reader MemcachedReader --seed 1024  --max-step 24650'},
+                    {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project parrots_test --data-reader CephReader --seed 1024  --max-step 24650'},
                     # mmaction
                     {'framework': 'mmaction', 'gpus': 8, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 6'},
                     # mmdet
-                    {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader --seed 1024 --max-step 1'},
+                    {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader --seed 1024 --max-step 1'},
                     # pod
-                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
-                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --data_reader CephReader'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --data_reader CephReader'},
                     # example
-                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
                 ]
     # Optional
     # callback: "cat"
@@ -43,6 +43,7 @@ scheduler:
     stop_criterion:
         max_tries: 100
     wait_to_run_time_thresh: inf # inf
+    wait_to_get_pavi_task_thresh: 0.5
 
 # Optional
 pavi:

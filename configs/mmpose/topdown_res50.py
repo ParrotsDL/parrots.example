@@ -4,7 +4,7 @@ resume_from = None
 dist_params = dict(backend='nccl')
 workflow = [('train', 1)]
 checkpoint_config = dict(interval=10)
-evaluation = dict(interval=100, metric='mAP')
+evaluation = dict(interval=1000, metric='mAP')
 # type=topdown_res50
 
 optimizer = dict(
@@ -40,7 +40,7 @@ channel_cfg = dict(
 # model settings
 model = dict(
     type='TopDown',
-    pretrained='/mnt/lustre/share_data/star/pretrained_models/resnet50-19c8e357.pth',
+    pretrained='/mnt/lustre/share_data/parrots_model_ckpt/star/pretrained_models/resnet50-19c8e357.pth',
     backbone=dict(type='ResNet', depth=50),
     keypoint_head=dict(
         type='TopDownSimpleHead',
@@ -70,7 +70,7 @@ data_cfg = dict(
     bbox_thr=1.0,
     use_gt_bbox=False,
     image_thr=0.0,
-    bbox_file='/mnt/lustre/share/DSK/datasets/mscoco2017/person_detection_results/'
+    bbox_file='/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/person_detection_results/'
     'COCO_val2017_detections_AP_H_56_person.json',
 )
 
@@ -120,8 +120,8 @@ valid_pipeline = [
 
 test_pipeline = valid_pipeline
 
-data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/train2017/'
-data_root_val = '/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/'
+data_root = '/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/train2017/'
+data_root_val = '/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 ceph_data_root = 's3://parrots_model_data/DSK/datasets/mscoco2017/train2017/'
 ceph_data_root_val = 's3://parrots_model_data/DSK/datasets/mscoco2017/val2017/'
 data = dict(
@@ -129,19 +129,19 @@ data = dict(
     workers_per_gpu=2,
     train=dict(
         type='TopDownCocoDataset',
-        ann_file=f'/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_train2017.json',
+        ann_file=f'/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/annotations/person_keypoints_train2017.json',
         img_prefix=data_root,
         data_cfg=data_cfg,
         pipeline=train_pipeline),
     val=dict(
         type='TopDownCocoDataset',
-        ann_file=f'/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
+        ann_file=f'/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
         img_prefix=data_root_val,
         data_cfg=data_cfg,
         pipeline=valid_pipeline),
     test=dict(
         type='TopDownCocoDataset',
-        ann_file=f'/mnt/lustre/share/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
+        ann_file=f'/mnt/lustre/share_data/parrots_model_data/DSK/datasets/mscoco2017/annotations/person_keypoints_val2017.json',
         img_prefix=data_root_val,
         data_cfg=data_cfg,
         pipeline=valid_pipeline),

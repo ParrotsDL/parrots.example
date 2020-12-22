@@ -6,14 +6,14 @@ task:
         - type: Nested
           value: [
                     # pod dummy data
-                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
-                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short.dummy_data', 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
                     # example dummy data
-                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test'},
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 16, 'model': "resnet18_mix.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short.dummy_data", 'py_args': '--dummy_test --pavi --pavi-project parrots_test --data_reader CephReader'},
                 ]
     # Optional
     # callback: "cat"
@@ -32,6 +32,7 @@ scheduler:
     stop_criterion:
         max_tries: 100
     wait_to_run_time_thresh: inf # inf
+    wait_to_get_pavi_task_thresh: 0.5
 
 # Optional
 pavi:

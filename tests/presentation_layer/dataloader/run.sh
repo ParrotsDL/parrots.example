@@ -20,7 +20,7 @@ then
 
     for pid in `cat $num.txt`
     do
-        PID_EXIST=$(ps aux | awk '{print $2}'| grep -w $pid)
+        PID_EXIST=$(ps | awk '{print $2}'| grep -w $pid)
         if [ $PID_EXIST ]
         then
             if [ $type = as ] || [ $type = after_shutdown ]
