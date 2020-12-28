@@ -131,3 +131,6 @@
 [submodule "models/PAR"]
 	path = models/PAR
 	url = git@gitlab.bj.sensetime.com:parrots.model/par.git
+[submodule "models/Crowd"]
+	path = models/Crowd
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/Crowd.git
