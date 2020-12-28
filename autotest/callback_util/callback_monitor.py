@@ -37,7 +37,7 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
     time.sleep(60)
     # wait for job_pid, job_log_path
     job_pid = None
-    slurm_job_id = None
+    slurm_job_id = config['slurm_job_id']
     job_log_path = None
     workdir = None
     name = None
@@ -76,16 +76,17 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
         # get job name
         name = os.environ['name']
         # get slurm_job_id
-        try:
-            if workdir and name:
-                info = load_taskinfo(workdir)
-                job_names = list(
-                    filter(lambda j: j['name'] in [name], info['jobs']))
-                if len(job_names) > 0:
-                    job_info = job_names[0]
-                    slurm_job_id = int(job_info['slurm_job_id'])
-        except Exception:
-            slurm_job_id = None
+        if not slurm_job_id:
+            try:
+                if workdir and name:
+                    info = load_taskinfo(workdir)
+                    job_names = list(
+                        filter(lambda j: j['name'] in [name], info['jobs']))
+                    if len(job_names) > 0:
+                        job_info = job_names[0]
+                        slurm_job_id = int(job_info['slurm_job_id'])
+            except Exception:
+                slurm_job_id = None
         _, _, status = callback_utils.get_slurm_job_id()
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
             print('slurm_job_status: R')
@@ -124,8 +125,8 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
                 kill_task(workdir, [name])
                 is_time_limit = True
                 if logger:
-                    logger.error("Job({})[pid: {}, slurm: {}] is killed because the log has not changed for {} hours.".format(
-                        name, job_pid, slurm_job_id, callback_common.wait_time_log_no_change))
+                    logger.error("Job({})[slurm: {}] is killed because the log has not changed for {} hours.".format(
+                        name, slurm_job_id, callback_common.wait_time_log_no_change))
         else:
             last_lines_hash = lines_hash
             last_lines_hash_start_time = time.time()
@@ -154,6 +155,6 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
             break
 
     if logger:
-        logger.info("Job({})[pid: {}, slurm: {}] The child process monitoring the log has exited, \
+        logger.info("Job({})[slurm: {}] The child process monitoring the log has exited, \
                       with [job_pid: {}, job_log_path: {}, workdir: {}, name: {}, slurm_job_id: {}]".format(
-            name, job_pid, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
+            name, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
