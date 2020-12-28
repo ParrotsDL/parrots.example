@@ -87,7 +87,9 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
                         slurm_job_id = int(job_info['slurm_job_id'])
             except Exception:
                 slurm_job_id = None
-        _, _, status = callback_utils.get_slurm_job_id()
+        slurm_job_id_tmp, _, status = callback_utils.get_slurm_job_id()
+        if slurm_job_id_tmp and not slurm_job_id:
+            slurm_job_id = slurm_job_id_tmp
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
             print('slurm_job_status: R')
             sys.stdout.flush()
