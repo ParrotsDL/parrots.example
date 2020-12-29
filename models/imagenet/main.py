@@ -16,12 +16,12 @@ import torch.nn.parallel
 import torch.distributed as dist
 import torch.optim
 from torch.backends import cudnn
-
+import parrots
+parrots.nn.functions.conv.default_conv2d_backend = 'ppl'
 import pape
 import pape.distributed as dist
 from pape.parallel import DistributedModel
 from pape.half import HalfModel, HalfOptimizer
-
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
@@ -33,6 +33,8 @@ parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
+parser.add_argument('--nhwc', dest='nhwc', action='store_true',
+                    help='nhwc')
 parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
 parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
@@ -83,6 +85,9 @@ def main():
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
     model.cuda()
+    if args.nhwc:
+        print('to NHWC')
+        model.to(memory_format=torch.channels_last)
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
@@ -92,7 +97,7 @@ def main():
             model = pape.utils.op.convert_syncbn(model)
             args.syncbn = True
 
-    args.half = False
+    args.half = True
     if cfgs.trainer.get('mixed_precision', None):
         mix_cfg = cfgs.trainer.mixed_precision
         if mix_cfg.get('half', False) is True:
@@ -223,10 +228,10 @@ def main():
 
                 ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
                 best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
+                # torch.save(checkpoint, ckpt_path)
+                # if acc1 > best_acc1:
+                #     best_acc1 = acc1
+                #     shutil.copyfile(ckpt_path, best_ckpt_path)
 
         lr_scheduler.step()
     end_time = time.time()
@@ -263,6 +268,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     loader_length = len(train_loader)
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
+        input_ = input_.cuda()
+        target_ = target_.cuda()
+        if args.nhwc:
+            input_ = input_.detach().clone().contiguous(memory_format=torch.channels_last)
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
@@ -272,24 +281,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
-        input = input.cuda()
-        target = target.cuda()
-
+        
         # compute output
         output = model(input)
         loss = criterion(output, target)
 
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
-
-        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
-        dist.all_reduce(stats_all)
-        stats_all /= args.world_size
-
-        losses.update(stats_all[0].item())
-        top1.update(stats_all[1].item())
-        top5.update(stats_all[2].item())
-        memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
@@ -308,6 +304,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             
         iter_start_time = time.time()
         if i % args.log_freq == 0:
+            # measure accuracy and record loss
+            acc1, acc5 = accuracy(output, target, topk=(1, 5))
+
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
+            # dist.all_reduce(stats_all)
+            # stats_all /= args.world_size
+
+            losses.update(stats_all[0].item())
+            top1.update(stats_all[1].item())
+            top5.update(stats_all[2].item())
+            memory.update(torch.cuda.max_memory_allocated()/1024/1024)
             progress.display(i)
             if args.rank == 0 and monitor_writer:
                 cur_iter = epoch * loader_length + i
