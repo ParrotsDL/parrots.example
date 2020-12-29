@@ -40,7 +40,7 @@ parser.add_argument('--pavi-project', type=str, default="default", help='pavi pr
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
-parser.add_argument('--data_reader', type=str, default="CephReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -281,6 +281,13 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
+        else:
+            if args.nhwc:
+                input = input.cuda().contiguous(memory_format=torch.channels_last)
+                target = target.cuda()
+            else:
+                input = input.cuda()
+                target = target.cuda()
         
         # compute output
         output = model(input)
@@ -310,8 +317,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float()
             # dist.all_reduce(stats_all)
             # stats_all /= args.world_size
-
-            losses.update(stats_all[0].item())
+            if args.half:
+                losses.update(stats_all[0].item()/optimizer.loss_scale)
+            else:
+                losses.update(stats_all[0].item())
             top1.update(stats_all[1].item())
             top5.update(stats_all[2].item())
             memory.update(torch.cuda.max_memory_allocated()/1024/1024)
