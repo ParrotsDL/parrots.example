@@ -131,3 +131,6 @@
 [submodule "models/PAR"]
 	path = models/PAR
 	url = git@gitlab.bj.sensetime.com:parrots.model/par.git
+[submodule "models/springce_psot"]
+	path = models/springce_psot
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/PSOT.git
