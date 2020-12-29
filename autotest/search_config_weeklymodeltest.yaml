@@ -239,6 +239,11 @@ task:
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.02'},
                     ## 39.Multi_organ_seg_HR
                      {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --data_reader LustreReader --seed 1024 --max_step 1'},
+                    ## 40.mmocr
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 5'},
+                     {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 5'},
 
                 ]
 
@@ -256,7 +261,7 @@ searcher:
 
 scheduler:
     type: FIFO
-    parallel_size: 230
+    parallel_size: 250
     stop_criterion:
         max_tries: 250
     wait_to_run_time_thresh: inf # inf
