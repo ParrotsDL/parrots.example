@@ -246,7 +246,7 @@ task:
                 # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_csr', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
                 # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_sfa', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
                 ## 42.sensestar
-                # {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project parrots_test --data_reader MemcachedReader --seed 1024'}
+                # {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project default --data_reader CephReader --seed 1024'}
             ]
     # Optional
     # callback: "cat"
