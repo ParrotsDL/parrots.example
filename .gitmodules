@@ -22,7 +22,7 @@
 	branch = pat0.6
 [submodule "models/Light_Nas_zpzhang"]
 	path = models/Light_Nas_zpzhang
-	url = git@gitlab.bj.sensetime.com:wangshiguang/Light_Nas_zpzhang.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/Light_Nas_zpzhang.git
 	branch = pat0.6
 [submodule "models/srdemo"]
 	path = models/srdemo
@@ -38,7 +38,7 @@
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
 [submodule "models/light_nas"]
 	path = models/light_nas
-	url = git@gitlab.bj.sensetime.com:hanyachao/light_nas.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/hanyachao_light_nas.git
 [submodule "models/mmsegmentation"]
 	path = models/mmsegmentation
 	url = git@gitlab.bj.sensetime.com:maxiaoming/mmsegmentation.git
