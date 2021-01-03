@@ -130,3 +130,7 @@
 [submodule "models/Crowd"]
 	path = models/Crowd
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/Crowd.git
+[submodule "models/ssd"]
+	path = models/ssd
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/liuguangyu_ssd.git
+	branch = pat0.6
