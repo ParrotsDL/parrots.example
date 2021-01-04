@@ -8,10 +8,6 @@
 [submodule "models/ssd.triondet"]
 	path = models/ssd.triondet
 	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
-[submodule "models/ssd"]
-	path = models/ssd
-	url = git@gitlab.bj.sensetime.com:liuguangyu/ssd.git
-	branch = pat0.6
 [submodule "models/alphatrion"]
 	path = models/alphatrion
 	url = git@gitlab.bj.sensetime.com:liuguangyu/alphatrion.git
@@ -63,9 +59,6 @@
 [submodule "models/mmdet"]
 	path = models/mmdet
         url = git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git
-[submodule "models/mmediting"]
-	path = models/mmediting
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
 [submodule "models/Pattern"]
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
@@ -134,3 +127,11 @@
 [submodule "models/Crowd"]
 	path = models/Crowd
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/Crowd.git
+[submodule "models/ssd"]
+	path = models/ssd
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/liuguangyu_ssd.git
+	branch = pat0.6
+[submodule "models/mmediting"]
+	path = models/mmediting
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmediting.git
+	branch = autotest
