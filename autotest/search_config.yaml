@@ -234,7 +234,7 @@ task:
                 ## 34.deformable_detr
                 # {'framework': 'deformable_detr', 'gpus': 8, 'model': 'r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
                 ## 35.PAR
-                # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--seed 1024 --pavi --pavi-project default'},
+                # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--seed 1024 --pavi --pavi-project default --data_reader MemcachedReader'},
                 ## 39.Multi_organ_seg_HR
                 # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader LustreReader --seed 1024'},
                 ## 40.mmocr
