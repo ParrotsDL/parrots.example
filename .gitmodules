@@ -131,7 +131,3 @@
 	path = models/ssd
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/liuguangyu_ssd.git
 	branch = pat0.6
-[submodule "models/mmediting"]
-	path = models/mmediting
-	url = git@gitlab.sz.sensetime.com:parrots.model/mmediting.git
-	branch = autotest
