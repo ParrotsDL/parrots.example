@@ -59,9 +59,6 @@
 [submodule "models/mmdet"]
 	path = models/mmdet
         url = git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git
-[submodule "models/mmediting"]
-	path = models/mmediting
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
 [submodule "models/Pattern"]
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
@@ -134,3 +131,7 @@
 	path = models/ssd
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/liuguangyu_ssd.git
 	branch = pat0.6
+[submodule "models/mmediting"]
+	path = models/mmediting
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmediting.git
+	branch = autotest
