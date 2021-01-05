@@ -228,7 +228,7 @@ task:
                     ## 34.deformable_detr
                     # {'framework': 'deformable_detr', 'gpus': 8, 'model': 'r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     ## 35.PAR
-                    # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--max_step 1 --seed 1024 --pavi --pavi-project default'},
+                    # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--max_step 1 --seed 1024 --pavi --pavi-project default --data_reader MemcachedReader'},
                     ## 3ddet - pause
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_0.7', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.2'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.02'},
