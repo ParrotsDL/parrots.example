@@ -1,7 +1,4 @@
-try:
-    from autoparrots.utils.log import LOG as logger
-except:
-    logger = None
+from autoparrots.utils.log import LOG as logger
 from autoparrots.utils.fileio import dump
 from autoparrots.command.entry import trace_up
 from autoparrots.command.task import kill_task
