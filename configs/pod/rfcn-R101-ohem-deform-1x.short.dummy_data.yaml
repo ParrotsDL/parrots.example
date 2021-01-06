@@ -41,7 +41,7 @@ trainer: # Required.
       momentum: 0.9
       weight_decay: 0.0001
   lr_scheduler:       # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
-    warmup_epochs: 1  # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
+    warmup_epochs: 0  # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
       milestones: [15,17] # epochs to decay lr

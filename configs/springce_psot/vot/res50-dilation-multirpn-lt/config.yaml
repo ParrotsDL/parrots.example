@@ -1,0 +1,106 @@
+train:
+    sync: true                      # GPU asynchronous communication
+    workers: 1                      # number of data loading workers
+    epochs: 20                      # number of total epochs to run
+    start_epoch: 0                  # manual epoch number (useful to restarts)
+    batch_size: 32                  # mini-batch size
+    momentum: 0.9                   # momentum
+    weight_decay: 0.0001            # weight decay
+    print_freq: 10                  # print frequency
+    resume: ''                      # path to lasted checkpoint
+    pretrained: ''                  # use pre-trained model
+    log: 'log/log.txt'              # log file
+    log_dir: 'log'                  # log dir
+    save_dir: 'snapshot'            # save directory
+    base_lr: 0.001                  # base learning rate, if some param not define lr, fall back to base lr
+    loss_weight: [1, 1.2]           # rpn cls weight, rpn reg weight
+    clip:                           # gradient clip value
+        feature: 10.0
+        rpn: 10.0
+
+    lr:
+        type: 'log'
+        start_lr: 0.005
+        end_lr: 0.0005
+        feature_lr_mult: 1.0
+        rpn_lr_mult: 1.0
+        warmup:
+            start_lr: 0.001
+            end_lr: 0.005
+            type: 'step'
+            step: 1
+            epoch: 5
+
+    anchors:
+        stride: 8
+        ratios: [0.33, 0.5, 1, 2, 3]
+        scales: [8]
+        round_dight: 0
+
+    anchor_target:
+        thr_high: 0.6
+        thr_low: 0.3
+        negative: 16
+        rpn_batch: 64
+        positive: 16 
+
+track:
+    penalty_k: 0.05
+    window_influence: 0.28
+    lr: 0.22
+    exemplar_size: 127
+    instance_size: 255
+    confidence_low: 0.8
+    confidence_high: 0.998
+    lost_instance_size: 831
+    total_size: 8
+    base_size: 8
+    context_amount: 0.5
+    anchors:
+        stride: 8
+        ratios: [0.33, 0.5, 1, 2, 3]
+        scales: [8]
+        round_dight: 0
+
+train_datasets:
+    datasets:
+        vid:
+            name: "vid"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/vid"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/vid/meta_train.json"
+            frame_range: 100
+            num_use: 100000
+        youtubebb:
+            name: "youtubebb"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/ytb"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/ytb/meta_train.json"
+            frame_range: 3
+        coco:
+            name: "coco"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/coco"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/coco/meta_train.json"
+            frame_range: 1
+            num_use: 100000
+        det:
+            name: "det"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/imagenet_det"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/imagenet-det/meta_train.json"
+            num_use: 100000
+            frame_range: 1
+
+    tmplate_size: 127
+    search_size: 255
+    base_size: 8
+    size: 25
+    num: 600000
+
+    augmentation:
+        template:
+            shift: 4
+            scale: 0.05
+        search:
+            shift: 64
+            scale: 0.18
+        neg: 0.2
+        gray: 0.0
+
