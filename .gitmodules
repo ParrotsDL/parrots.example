@@ -135,3 +135,6 @@
 	path = models/mmediting
 	url = git@gitlab.sz.sensetime.com:parrots.model/mmediting.git
 	branch = autotest
+[submodule "models/springce_psot"]
+	path = models/springce_psot
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/PSOT.git

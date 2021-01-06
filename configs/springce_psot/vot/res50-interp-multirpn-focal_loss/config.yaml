@@ -1,0 +1,161 @@
+anchors: &anchors
+    stride: 8
+    ratios: [0.33, 0.5, 1, 2, 3]
+    scales: [8]
+    round_dight: 0
+
+net:
+    type: 'Custom'
+
+    backbone:
+        type: 'resnet50'
+        kwargs:
+            stride: 32
+    neck:
+        type: 'InterpAdjustAllLayerXX'
+        kwargs:
+            in_channels: [512, 1024, 2048]
+            out_channels: [256, 256, 256]
+            center_crop: true
+            interp_cfg:
+                interp_type: ConvInterp
+                interp_kwargs:
+                    train: false
+                    pad_zero: true
+                share_interp_layer: true
+
+    sot_head:
+        type: 'MultiRPN'
+        kwargs:
+            in_channels: [256, 256, 256]
+            hidden: [256, 256, 256]
+            weighted: true
+
+            # cls
+            init_prior: 0.01
+            focal_init: true
+            softmax: false
+
+    loss: 
+        type: 'RPNLoss'
+        kwargs: 
+            loss_weight: [10, 1.2]
+            cls:
+                type: 'FocalLoss'
+                kwargs: 
+                    softmax: false
+                    alpha: [1.0, 1.0]
+                    gamma: 3.0
+                    split: true
+            loc:
+                type: 'L1Loss'
+
+train:
+    sync: true                      # GPU asynchronous communication
+    workers: 1                      # number of data loading workers
+    epochs: 20                      # number of total epochs to run
+    start_epoch: 0                  # manual epoch number (useful to restarts)
+    batch_size: 32                  # mini-batch size
+    momentum: 0.9                   # momentum
+    weight_decay: 0.0001            # weight decay
+    print_freq: 10                  # print frequency
+    resume: ''                      # path to lasted checkpoint
+    pretrained: 'http://10.198.6.233:7480/qiaolei.data.ssd.tracking.siamrpn.pretrain/research/padding/res50/e81-76.204.model'                  # use pre-trained model
+    log: 'logs/log.txt'             # log file
+    log_dir: 'logs'                 # log dir
+    save_dir: 'snapshot'            # save directory
+    base_lr: 0.001                  # base learning rate, if some param not define lr, fall back to base lr
+    clip:                           # gradient clip value
+        feature: 10.0
+        rpn: 10.0
+
+    lr:
+        type: 'log'
+        start_lr: 0.005
+        end_lr: 0.0005
+        features_lr_mult: 0.1
+        warmup:
+            start_lr: 0.001
+            end_lr: 0.005
+            type: 'step'
+            step: 1
+            epoch: 5
+    anchors:
+        <<: *anchors
+
+
+track:
+    penalty_k: 0.04
+    window_influence: 0.3 # 44
+    lr: 0.4
+    exemplar_size: 127
+    instance_size: 255
+    total_size: 8
+    base_size: 8
+    context_amount: 0.5
+    anchors:
+        <<: *anchors
+
+
+train_datasets:
+    datasets:
+        vid:
+            name: "vid"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/vid"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/vid/meta_train.json"
+            frame_range: 100
+            num_use: 100000
+        youtubebb:
+            name: "youtubebb"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/ytb"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/ytb/meta_train.json"
+            frame_range: 3
+        coco:
+            name: "coco"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/coco"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/coco/meta_train.json"
+            frame_range: 1
+            num_use: 100000
+        det:
+            name: "det"
+            root: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/imagenet_det"
+            anno: "s3://parrots_model_data/PSOT/ucg.tracking.academic.train/lists/imagenet-det/meta_train.json"
+            num_use: 100000
+            frame_range: 1
+
+
+    sample_object: video
+    filter_args:
+        area_ratio: 0.25
+        height_ratio: 0.8
+        width_ratio: 0.8
+        aspect_ratio: 10.0
+
+    template_size: 127
+    search_size: 255
+    base_size: 8
+    size: 25
+    num: 600000
+
+    augmentation:
+        template:
+            shift: 4
+            scale: 0.05
+        search:
+            shift: 64
+            scale: 0.18
+        neg: 
+            ratio: 0.2
+            same_video_ratio: 0.3
+            same_dataset_ratio: 0.5 # actual (1-0.3) * 0.5 = 0.35
+        gray: 0.0
+        flip: 0
+
+    anchor_target:
+        thr_high: 0.6
+        thr_low: 0.5 # 0.3 -> 0.406, 0.4 -> 0.38+, 0.5 -> 0.419
+        negative: 1000000
+        rpn_batch: 1000000
+        positive: 1000000
+
+        clip_out_of_image: 0
