@@ -31,7 +31,8 @@ log_config = dict(
 
 
 dataset_type = 'IcdarDataset'
-data_root = 'data/ctw1500/'
+data_root = '/mnt/lustre/share_data/parrots_model_data/mmocr/data/ctw1500/'
+ceph_data_root = 's3://parrots_model_data/mmocr/data/ctw1500/'
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
