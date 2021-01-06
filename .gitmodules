@@ -37,7 +37,7 @@
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/hanyachao_light_nas.git
 [submodule "models/mmsegmentation"]
 	path = models/mmsegmentation
-	url = git@gitlab.bj.sensetime.com:maxiaoming/mmsegmentation.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/mmsegmentation.git
 [submodule "models/STAR"]
 	path = models/STAR
 	url = git@gitlab.bj.sensetime.com:hanyachao/STAR.git
@@ -55,7 +55,7 @@
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/TextRecog.git
 [submodule "models/mmpose"]
 	path = models/mmpose
-	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/hanyachao_mmpose.git
 [submodule "models/mmdet"]
 	path = models/mmdet
         url = git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git
