@@ -38,6 +38,8 @@ dataset: # Required.
       type: custom
       kwargs:
         source: train  # dataset id
+        # meta_file: s3:/
+        meta_file_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data/pod_try/lists/train_stratified_add_road_addflip.json
         meta_file: /mnt/lustre/share_data/wuwenli/AD/pod_try/lists/train_stratified_add_road_addflip.json
         has_mask: True
         num_classes: *num_classes
@@ -55,6 +57,8 @@ dataset: # Required.
       kwargs:
         source: val
         meta_file: /mnt/lustre/share_data/wuwenli/AD/pod_try/lists/val_stratified_add_road.json
+        #meta_file_ceph: /mnt/lustre/share_data/wuwenli/AD/pod_try/lists/val_stratified_add_road.json
+        meta_file_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data/pod_try/lists/val_stratified_add_road.json
         has_mask: True
         num_classes: *num_classes
         class_names: *class_names
@@ -69,6 +73,7 @@ dataset: # Required.
           type: MR               # choices = {'COCO', 'VOC', 'MR'}
           kwargs:
             gt_file: /mnt/lustre/share_data/wuwenli/AD/pod_try/lists/val_stratified_add_road.json
+            gt_file_ceph: s3://parrots_model_data/mask-rcnn-R152-FPN-hz_yuan_add_road6/data/pod_try/lists/val_stratified_add_road.json
             num_classes: *num_classes
             class_names: *class_names
             iou_thresh: 0.5 # iou_types: [bbox, segm]
