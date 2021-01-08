@@ -18,15 +18,15 @@ dataset:
     train: 
         type: h5_sfa
         data_list: /mnt/lustre/share_data/parrots_model_data/SHA/data_list/sfa_train_list.txt
-        ceph_data_list: /mnt/lustre/share_data/parrots_model_data/SHA/data_list/sfa_ceph_train_list.txt
+        ceph_data_list: s3://parrots_model_data/crowd/SHA/data_list/sfa_ceph_train_list.txt
     val: 
         type: h5_sfa 
         data_list: /mnt/lustre/share_data/parrots_model_data/SHA/data_list/sfa_test_list.txt 
-        ceph_data_list: /mnt/lustre/share_data/parrots_model_data/SHA/data_list/sfa_ceph_test_list.txt
+        ceph_data_list: s3://parrots_model_data/crowd/SHA/data_list/sfa_ceph_test_list.txt
     test:  
         type: h5_sfa 
         data_list: /mnt/lustre/share_data/parrots_model_data/SHA/data_list/sfa_test_list.txt 
-        ceph_data_list: /mnt/lustre/share_data/parrots_model_data/SHA/data_list/sfa_ceph_test_list.txt
+        ceph_data_list: s3://parrots_model_data/crowd/SHA/data_list/sfa_ceph_test_list.txt
     test_image: 
         type: dir
         data_root: /mnt/lustre/share_data/parrots_model_data/SHA/test_data/images/
@@ -36,6 +36,7 @@ structure:
     decoder: sfa_decoder 
     head: identity
     pretrain_model_path: ~ 
+    ceph_pretrain_model_path: ~
     middle_channels: [512, 64]
     scale_factor: 1
     metric: 
