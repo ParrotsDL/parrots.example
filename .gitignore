@@ -10,6 +10,7 @@ snapshot
 .log-*.txt
 *.pyc
 experiments
+events*
 Pattern_save
 Pattern_result
 workdir

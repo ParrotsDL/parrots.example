@@ -20,14 +20,18 @@ config:
   dataset: # Required.
     info_json: ./configs/PAR/ped_attr_info.json
     list_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/lists/ 
+    ceph_list_root: s3://parrots_model_data/pedestrian/lists
     test: # config for test set
       test_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/imgs/ 
+      ceph_test_root: s3://parrots_model_data/pedestrian/imgs/
       test_list: st_v2_list 
     val:         # This filed is required by SCI, but in PAR, we don't use val set. Stay the same as 'test'
       val_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/imgs/
+      ceph_val_root: s3://parrots_model_data/pedestrian/imgs/
       val_list: st_v2_list                                             
     train: # config for train set
       train_root: /mnt/lustre/share_data/parrots_model_data/pedestrian/imgs/ 
+      ceph_train_root: s3://parrots_model_data/pedestrian/imgs/
 
     dataset_types: ['train', 'test', 'val']  # 'val' is required by sci , let it be the same as 'test'
     mean: [0.485, 0.456, 0.406]
@@ -56,6 +60,7 @@ config:
   saver: # Required.
     save_dir: checkpoints     # dir to save checkpoints
     embedding_model: /mnt/lustre/share_data/parrots_model_data/pedestrian/reid_pretrain_models/reid_res101_256x128_v1.1.pth
+    ceph_embedding_model: s3://parrots_model_data/pedestrian/pretrain_models/pedestrian/reid_res101_256x128_v1.1.pth
     #resume_model: /mnt/lustre/wangyige/par_config_scripts/checkpoints/ckpt_epoch061.pth.tar
     #uncomment the line above when only testing
     save_pred: True

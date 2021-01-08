@@ -1,0 +1,18 @@
+springce_psot_vot_non_siam:
+  metrics/accuracy: [10000, '>', '5%']
+  metrics/eao: [10000, '>', '5%']
+springce_psot_vot_res50-dilation-multirpn:
+  metrics/accuracy: [10000, '>', '5%']
+  metrics/eao: [10000, '>', '5%']
+springce_psot_vot_res50-interp-multirpn-focal_loss:
+  metrics/accuracy: [10000, '>', '5%']
+  metrics/eao: [10000, '>', '5%']
+springce_psot_vot_res50-interp-multirpn-focal_loss-atss:
+  metrics/accuracy: [10000, '>', '5%']
+  metrics/eao: [10000, '>', '5%']
+springce_psot_vot_res50-interp-multirpn-focal_loss-atss-smoothl1:
+  metrics/accuracy: [10000, '>', '5%']
+  metrics/eao: [10000, '>', '5%']
+springce_psot_vot_res50-interp-multirpn-focal_loss-topk:
+  metrics/accuracy: [10000, '>', '5%']
+  metrics/eao: [10000, '>', '5%']
