@@ -12,7 +12,7 @@ dataset:
     train_root_ceph: ''
     train_source_ceph: s3://parrots_model_data/text_data/label/ceph_train.txt
     train_root: ''
-    train_source: /mnt/lustre/share_data/maxiaoming/text_data/label/train.txt #/mnt/lustre/ocrgroup/dataset/shouxie_liangd/shouxie_shijuan+caiji+zuowen_repeat1+zuoye_train_replace_lower.txt
+    train_source: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/train.txt #/mnt/lustre/ocrgroup/dataset/shouxie_liangd/shouxie_shijuan+caiji+zuowen_repeat1+zuoye_train_replace_lower.txt
     augmentation:
       kwargs:
         perspective_prob: 0.5
@@ -29,18 +29,18 @@ dataset:
     val_root_ceph: ''
     val_source_ceph: s3://parrots_model_data/text_data/label/ceph_test.txt
     val_root: ''
-    val_source: /mnt/lustre/share_data/maxiaoming/text_data/label/test.txt  #/mnt/lustre/ocrgroup/dataset/shouxie_liangd/zuowen_label_test.txt
+    val_source: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/test.txt  #/mnt/lustre/ocrgroup/dataset/shouxie_liangd/zuowen_label_test.txt
   val_list:
     val_root_list_ceph: ['']
     val_source_list_ceph: ['s3://parrots_model_data/text_data/label/ceph_test.txt']
     val_root_list: ['']
-    val_source_list: ['/mnt/lustre/share_data/maxiaoming/text_data/label/test.txt']
+    val_source_list: ['/mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/test.txt']
   test:
     test_root_ceph: ''
     test_source_ceph: s3://parrots_model_data/text_data/label/ceph_test.txt
     test_root: ''
-    test_source: /mnt/lustre/share_data/maxiaoming/text_data/label/test.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_test_replace.txt
-  dict: /mnt/lustre/share_data/maxiaoming/text_data/label/dict.txt  #/mnt/lustre/liuxu2/datasets/hw_dict.txt
+    test_source: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/test.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_test_replace.txt
+  dict: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/dict.txt  #/mnt/lustre/liuxu2/datasets/hw_dict.txt
   dict_ceph: s3://parrots_model_data/text_data/label/dict.txt
   batch_size: 8 # batch size on one GPU
   num_workers: 0
