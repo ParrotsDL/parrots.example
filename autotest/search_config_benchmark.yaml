@@ -241,8 +241,8 @@ task:
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
                     ## 41.Crowd
-                    # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_csr', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
-                    # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_sfa', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+                    # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_csr', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 2'},
+                    # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_sfa', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 16'},
                     ## 42.springce_psot
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_non_siam', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
