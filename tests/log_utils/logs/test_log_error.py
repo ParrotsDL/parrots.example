@@ -8,8 +8,8 @@ LOG_DIR = 'logs'
 LOG_DIR_PATH = os.path.join(os.path.join(os.environ['HOME'], PARROTS_DIR),
                             LOG_DIR)
 LOG_DATE = datetime.datetime.now()
-LOG_DATE_DIR = str(LOG_DATE.year) + "-" + str(LOG_DATE.month).zfill(2) + \
-    "-" + str(LOG_DATE.day).zfill(2)
+LOG_DATE_DIR = str(LOG_DATE.year) + "-" + str(LOG_DATE.month) + \
+    "-" + str(LOG_DATE.day)
 # log文件路径
 LOGFILE_DIR = os.path.join(LOG_DIR_PATH, LOG_DATE_DIR)
 LOGFILENAMES = glob.glob(LOGFILE_DIR + "/.log*")
