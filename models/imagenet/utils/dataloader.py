@@ -1,12 +1,13 @@
 import io
-import torch
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
 from petrel_client.client import Client
-from PIL import Image
+from PIL import Image, ImageFile
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 from .dataset import McDataset
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 class CephDataset(Dataset):
@@ -38,7 +39,7 @@ class CephDataset(Dataset):
         filename = self.image_dir + self.meta_list[index].split()[0]
         cls = int(self.meta_list[index].split()[1])
 
-        img = Image.open(io.BytesIO(self.client.Get(filename,update_cache=True)))
+        img = Image.open(io.BytesIO(self.client.Get(filename, update_cache=True)))
         img = img.convert('RGB')
 
         # transform
