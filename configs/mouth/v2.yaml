@@ -8,7 +8,7 @@ landmark_path: /mnt/lustrenew/share/zhuhao/littleprince/datasets/Anchor/Crop_256
 # image path
 image_path: /mnt/lustrenew/share/zhuhao/littleprince/datasets/Anchor/Crop_256_256/images
 # data path
-data_root: /mnt/lustre/share_data/maxiaoming/mouth/Anchor_0427   #/mnt/lustre/share/wangyuxin1/Anchor_0427
+data_root: /mnt/lustre/share_data/parrots_model_data/mouth/Anchor_0427   #/mnt/lustre/share/wangyuxin1/Anchor_0427
 ceph_root: s3://parrots_model_data/mouth/Anchor_0427
 # width of the heatmap face
 heatmap_width: 256
