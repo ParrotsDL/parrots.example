@@ -85,9 +85,6 @@
 [submodule "models/prototype"]
 	path = models/prototype
 	url = git@gitlab.bj.sensetime.com:parrots.model/prototype.git
-[submodule "models/encoder"]
-    path = models/encoder
-    url = git@gitlab.bj.sensetime.com:maxiaoming/encoder.git
 [submodule "models/sensemedical"]
     path = models/sensemedical
     url = git@gitlab.bj.sensetime.com:parrots.model/sensemedical.git
@@ -141,3 +138,6 @@
 [submodule "models/springce_psot"]
 	path = models/springce_psot
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/PSOT.git
+[submodule "models/encoder"]
+	path = models/encoder
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/encoder.git
