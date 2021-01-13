@@ -22,7 +22,7 @@ data:
     ignore_camera: true
     num_workers: 0
     output_path: null
-    replay_list: configs/SenseStar/diff_size_total.train
+    replay_list: /mnt/lustre/share_data/parrots_model_data/sensewow/diff_size_total.eval
     same_size_map: false
     stepwise: false
     units_order_type: type
@@ -44,10 +44,10 @@ data:
     ignore_camera: true
     num_workers: 0
     replay_cache_size: 15
-    replay_list: configs/SenseStar/diff_size_total.train
+    replay_list: /mnt/lustre/share_data/parrots_model_data/sensewow/diff_size_total.train
     same_size_map: false
     slide_window_step: 64
-    total_iter: 10
+    total_iter: 1e10
     trajectory_len: 64
     trajectory_type: sequential
     units_order_type: type
@@ -59,8 +59,8 @@ data:
     use_repeat: false
     use_stat: true
 data_reader:
-- MemcachedReader
-- MemcachedReader
+- CephReader
+- CephReader
 env: {}
 logger:
   eval_freq: 1000
@@ -271,7 +271,7 @@ model:
         res_dim: 256
         res_num: 16
 pavi: true
-pavi_project: parrots_test
+pavi_project: default
 seed: 1024
 train:
   criterion:
@@ -294,7 +294,7 @@ train:
     target_location: 8.0
     target_units: 4.0
   max_epochs: 1000
-  max_iterations: 10
+  max_iterations: 1e9
   parallel: true
   regularization_type: adamW
   select_loss_type: normal
