@@ -181,7 +181,6 @@ task:
                     # {'framework': 'sketch', 'gpus': 8, 'model': 'vggfusion', 'py_args': '--pavi --pavi-project default --max-step 1'},
                     ## 18.mmtrack
                     # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 2'},
-                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 1'},
                     # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config1ms_lr', 'py_args': '--pavi --pavi-project default --seed 1024  --max-step 1'},
                     # {'framework': 'mmtrack', 'gpus': 8, 'model': 'siamrpnpp', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 1'},
                     ## 19.RetinaUnet
