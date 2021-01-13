@@ -120,7 +120,7 @@ step: # Required.
   evolution:
     sync_bn: True
     ckpt: '/mnt/lustre/share_data/parrots_model_ckpt/light_nas/single_path_oneshot/ckpt_search/305.pth'
-    ceph_ckpt:
+    ceph_ckpt: 's3://parrots_model_data/parrots_model_ckpt/light_nas/single_path_oneshot/ckpt_search/305.pth'
     max_iterations: 20
     population: 50
     top_k: 10

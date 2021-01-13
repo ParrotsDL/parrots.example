@@ -92,10 +92,8 @@ task:
                 ## 9.mouth
                 # {'framework': 'mouth', 'gpus': 1, 'model': 'v2', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --max_step 20'},
                 ## 10.light_nas
-                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --seed 1024'},
-                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --seed 1024'},
-                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search_benchmark', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader'},
-                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution_benchmark', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader'},
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
+                # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
                 ## 11.pod_v3.1.0
                 # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default'},
                 # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default'},
