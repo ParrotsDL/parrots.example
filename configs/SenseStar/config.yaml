@@ -29,8 +29,8 @@ data:
         use_repeat: False
 
 train:
-    max_iterations: 1e9
-    # max_iterations: 10
+    # max_iterations: 1e9
+    max_iterations: 900
     criterion:
         type: 'soft_focal_loss'  # ['cross_entropy', 'label_smooth', 'soft_focal_loss']
     parallel: True

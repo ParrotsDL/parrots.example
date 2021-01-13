@@ -1,4 +1,38 @@
 SenseStar_sensestar:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 16.2254643201828
+    - <
+    - 5%
+    - 15.452823162078857
+    __benchmark_mem_alloc(mb):
+    - 11180.4
+    - <
+    - 5%
+    - 10648
+    __benchmark_mem_cached(mb):
+    - 14191.8
+    - <
+    - 5%
+    - 13516
+    __benchmark_pavi_task_id:
+    - ab9e0a69-3e20-4b95-9f35-58a238b87313
+    __benchmark_pure_training_time(h):
+    - 1.745742734392484
+    - <
+    - 5%
+    - 1.6626121279928419
+    __benchmark_total_time(h):
+    - 1.7493586155076821
+    - <
+    - 5%
+    - 1.6660558242930306
+    test_life: 1
+    total_batch_time:
+    - 5.77139229297638
+    - <
+    - 10%
+    - 5.246720266342163
   benchmark:
     __benchmark_avg_iter_time(s):
     - 30.663794445991517
