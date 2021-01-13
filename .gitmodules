@@ -4,7 +4,7 @@
 	branch = pat0.6/v2.2.3
 [submodule "models/Light_Seg"]
 	path = models/Light_Seg
-	url = git@gitlab.bj.sensetime.com:xuchi/Light_Seg.git
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/Light_Seg.git
 [submodule "models/ssd.triondet"]
 	path = models/ssd.triondet
 	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
