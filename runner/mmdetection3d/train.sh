@@ -56,7 +56,7 @@ do
     if ((COUNTER > 3)); then
         break
     fi
-    git clone -b v2.5.0 https://github.com/open-mmlab/mmdetection.git mmdet_mmdet3d_tmp
+    git clone -b mmdet3d_use git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git mmdet_mmdet3d_tmp
 done
 cd mmdet_mmdet3d_tmp
 export PYTHONPATH=$(pwd):$PYTHONPATH
