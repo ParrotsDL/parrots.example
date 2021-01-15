@@ -108,7 +108,7 @@ mmaction_i3d_r50_video_32x2x1_100e_kinetics400_rgb:
     - <
     - 50%
     - 0.05449023101064894
-  train.top1_acc:
+  train/top1_acc:
   - 0.645
   - '>'
   - 20%
@@ -141,7 +141,7 @@ mmaction_i3d_r50_video_32x2x1_100e_kinetics400_rgb:
     - 5%
     - 56.94202570120493
     test_life: 0
-    train.top1_acc:
+    train/top1_acc:
     - 0.645
     - '>'
     - 20%
@@ -175,7 +175,7 @@ mmaction_r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb:
     - <
     - 50%
     - 0.09939230978488922
-  train.top1_acc:
+  train/top1_acc:
   - 0.6
   - '>'
   - 20%
@@ -208,7 +208,7 @@ mmaction_slowfast_r50_video_4x16x1_256e_kinetics400_rgb:
     - <
     - 50%
     - 0.11022579424911075
-  train.top1_acc:
+  train/top1_acc:
   - 0.425
   - '>'
   - 20%
@@ -241,7 +241,7 @@ mmaction_slowonly_r50_video_4x16x1_256e_kinetics400_rgb:
     - <
     - 50%
     - 0.03398679243193732
-  train.top1_acc:
+  train/top1_acc:
   - 0.637
   - '>'
   - 20%
@@ -274,7 +274,7 @@ mmaction_tsm_r50_video_1x1x8_100e_kinetics400_rgb:
     - <
     - 50%
     - 0.04717227750354343
-  train.top1_acc:
+  train/top1_acc:
   - 0.684
   - '>'
   - 20%
@@ -307,7 +307,7 @@ mmaction_tsn_r50_video_1x1x8_100e_kinetics400_rgb:
     - <
     - 50%
     - 0.15996558063560062
-  train.top1_acc:
+  train/top1_acc:
   - 0.677
   - '>'
   - 20%
