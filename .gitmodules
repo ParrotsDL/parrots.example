@@ -49,7 +49,7 @@
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
 [submodule "models/mmaction"]
 	path = models/mmaction
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmaction2.git
 [submodule "models/TextRecog"]
 	path = models/TextRecog
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/TextRecog.git
