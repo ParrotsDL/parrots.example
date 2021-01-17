@@ -17,16 +17,16 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 cd models/TextRecog/
-srun -p $1 --gres=gpu:1 -n 1  python setup.py bdist_wheel
-srun -p $1 --gres=gpu:1 -n 1  pip install --user dist/text_recog-0.2.0-py3-none-any.whl
+srun -p $1 --gres=gpu:1 -n 1 ${SRUN_ARGS} python setup.py bdist_wheel
+srun -p $1 --gres=gpu:1 -n 1 ${SRUN_ARGS} pip install --user dist/text_recog-0.2.0-py3-none-any.whl
 cd pytorch-ctc/pytorch-ctc-0.3.2
 mkdir build
 cd build
 cmake ..
-srun -p $1 --gres=gpu:1 -n 1 make
+srun -p $1 --gres=gpu:1 -n 1 ${SRUN_ARGS} make
 export WARP_CTC_PATH=`pwd`
 cd ../parrots_binding
-srun -p $1 --gres=gpu:1 -n 1 python setup.py install --user
+srun -p $1 --gres=gpu:1 -n 1 ${SRUN_ARGS} python setup.py install --user
 cd $ROOT
 
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
