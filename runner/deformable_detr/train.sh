@@ -32,10 +32,7 @@ srun --mpi=pmi2 -p ${PARTITION} \
     ${SRUN_ARGS} --kill-on-bad-exit=1 \
 python  -u ${pyroot}/main.py \
         --config ${cfg} \
-        --batch_size 2 \
-        --num_workers 4 \
-        --output_dir ${EXP_DIR} \
-        --checkpoint_enc_ffn \
-        --checkpoint_dec_ffn \
+        --with_box_refine \
+        --two_stage \
         ${EXTRA_ARGS} \
         2>&1 | tee ${ROOT}/log/deformable_detr/train.${JOB_NAME}.log.${now}

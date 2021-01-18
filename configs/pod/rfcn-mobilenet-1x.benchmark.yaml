@@ -9,11 +9,15 @@ dataset: # Required.
         "sheep", "sofa", "train", "tvmonitor"]
   train:
     meta_file: /mnt/lustre/share/DSK/datasets/VOC07+12/ImageSets/Main/trainval.txt
+    ceph_meta_file: s3://parrots_model_data/DSK/datasets/VOC07+12/ImageSets/Main/trainval.txt
     image_dir: /mnt/lustre/share/DSK/datasets/VOC07+12
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/VOC07+12
     flip: True
   test:
     meta_file: /mnt/lustre/share/DSK/datasets/VOC07+12/ImageSets/Main/test.txt
+    ceph_meta_file: s3://parrots_model_data/DSK/datasets/VOC07+12/ImageSets/Main/test.txt 
     image_dir: /mnt/lustre/share/DSK/datasets/VOC07+12
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/VOC07+12
     flip: False
   aspect_grouping: [1, ]
   alignment: 1        # Align size of images to fit FPN. For fpn-faster-rcnn, 32 is enough; for RetinaNet, it's 128.
@@ -27,6 +31,7 @@ dataset: # Required.
     type: VOC         # VOC-style metric 
     kwargs:
       gt_file: /mnt/lustre/share/DSK/datasets/VOC07+12/ImageSets/Main/test.txt  # testset image ids
+      ceph_gt_file: s3://parrots_model_data/DSK/datasets/VOC07+12/ImageSets/Main/test.txt
       iou_thresh: 0.5 # mAP0.5
 
 
@@ -49,6 +54,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/rfcn-mobilenet-1x     # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/mobilenet_v2/mobilenet_v2_1.0.pth
+  ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/mobilenet_v2/mobilenet_v2_1.0.pth
   results_dir: results_dir/rfcn-mobilenet-1x  # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_dt:    # visualize detection results
   #    output_dir: vis_dt

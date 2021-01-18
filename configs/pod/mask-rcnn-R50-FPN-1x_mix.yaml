@@ -2,11 +2,15 @@ dataset: # Required.
   type: coco
   train:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+    ceph_meta_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
     flip: True
   test:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+    ceph_meta_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
     flip: False
   has_keypoint: False        # don't use keypoints
   has_mask: True             # don't use segmentations
@@ -22,6 +26,7 @@ dataset: # Required.
     type: COCO               # choices = {'COCO', 'VOC', 'mAP'} 
     kwargs:
       gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+      ceph_gt_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
       iou_types: [bbox, segm] # calculate AP_bbox & AP_segm
 
 trainer: # Required.
@@ -43,6 +48,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/mask-rcnn-R50-FPN-1x_mix      # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/resnet50-19c8e357.pth
   results_dir: results_dir/mask-rcnn-R50-FPN-1x_mix   # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_gt:
   #  output_dir: vis_gt

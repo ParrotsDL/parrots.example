@@ -1,5 +1,5 @@
 dataset_type = 'MSDDataset'
-data_root =  '/mnt/lustre/share_data/maxiaoming/Task01_BrainTumour'
+data_root =  '/mnt/lustre/share_data/parrots_model_data/sensemedical/Task01_BrainTumour'
 fold = 0
 train_transformer = [
     dict(type='RandPosCrop', spatial_size= [112,112,112], pos_ratio = 0.8),

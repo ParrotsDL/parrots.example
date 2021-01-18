@@ -55,9 +55,10 @@ strategy:
     print_freq: 20
     load_name: ''   ##?
     pretrained_model: '/mnt/lustre/share_data/pulin/v2.6_imagenet_honda2_honda3.pth.tar'
+    ceph_pretrained_model: 's3://parrots_model_data/parrots_model_ckpt/pattern_2_6_sp/v2.6_imagenet_honda2_honda3.pth.tar'
     save_path: '../pattern_save/mobile_v2.6_spatial'
 
-    workers: 4
+    workers: 16 #4
 data:
     training_param:
         # crop config
@@ -95,7 +96,9 @@ data:
         type: 'gaze_vec_with_eye'
         task: ['gaze_vector']
         prefix: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data'
+        ceph_prefix: 's3://parrots_model_data/pattern_2_6_sp/cropped_data'
         json_path: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/all_train_honda3_vector_transfer_face_eye_valid.json'
+        ceph_json_path: 's3://parrots_model_data/pattern_2_6_sp/cropped_data/all_train_honda3_vector_transfer_face_eye_valid.json'
         batch_size: 64
 
    
@@ -131,5 +134,7 @@ test:
         type: 'gaze_vec_with_eye'
         task: ['gaze_vector']
         prefix: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic'
+        ceph_prefix: 's3://parrots_model_data/pattern_2_6_sp/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic'
         json_path: '/mnt/lustre/share_data/parrots_model_data/pattern_2_6_sp/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/test_honda3_vector_transfer_face_eye_valid.json'
+        ceph_json_path: 's3://parrots_model_data/pattern_2_6_sp/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/test_honda3_vector_transfer_face_eye_valid.json'
         batch_size: 64 # for single gpu 

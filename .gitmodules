@@ -4,25 +4,21 @@
 	branch = pat0.6/v2.2.3
 [submodule "models/Light_Seg"]
 	path = models/Light_Seg
-	url = git@gitlab.bj.sensetime.com:xuchi/Light_Seg.git
+	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/Light_Seg.git
 [submodule "models/ssd.triondet"]
 	path = models/ssd.triondet
 	url = git@gitlab.sz.sensetime.com:wangxinjiang/ssd.triondet.git
-[submodule "models/ssd"]
-	path = models/ssd
-	url = git@gitlab.bj.sensetime.com:liuguangyu/ssd.git
-	branch = pat0.6
 [submodule "models/alphatrion"]
 	path = models/alphatrion
-	url = git@gitlab.bj.sensetime.com:liuguangyu/alphatrion.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/liuguangyu_alphatrion.git
 	branch = pat0.6
 [submodule "models/alphatrion_nas"]
 	path = models/alphatrion_nas
-	url = git@gitlab.sz.sensetime.com:wangshiguang/alphatrion_nas.git
+	url = git@gitlab.sz.sensetime.com:parrots.model/alphatrion_nas.git
 	branch = pat0.6
 [submodule "models/Light_Nas_zpzhang"]
 	path = models/Light_Nas_zpzhang
-	url = git@gitlab.bj.sensetime.com:wangshiguang/Light_Nas_zpzhang.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/Light_Nas_zpzhang.git
 	branch = pat0.6
 [submodule "models/srdemo"]
 	path = models/srdemo
@@ -33,19 +29,15 @@
 [submodule "models/springnas-lite"]
 	path = models/springnas-lite
 	url = git@gitlab.bj.sensetime.com:wangshiguang/springnas-lite.git
-[submodule "models/Multi_organ_seg_HR"]
-	path = models/Multi_organ_seg_HR
-	url = git@gitlab.bj.sensetime.com:wuwenli1/Multi_organ_seg_HR.git
-	branch = pat0.6
 [submodule "models/mouth_inpaint_network"]
 	path = models/mouth_inpaint_network
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/user/mouth_inpaint_network.git
 [submodule "models/light_nas"]
 	path = models/light_nas
-	url = git@gitlab.bj.sensetime.com:hanyachao/light_nas.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/hanyachao_light_nas.git
 [submodule "models/mmsegmentation"]
 	path = models/mmsegmentation
-	url = git@gitlab.bj.sensetime.com:maxiaoming/mmsegmentation.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/mmsegmentation.git
 [submodule "models/STAR"]
 	path = models/STAR
 	url = git@gitlab.bj.sensetime.com:hanyachao/STAR.git
@@ -57,19 +49,16 @@
 	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/pytorch-object-detection.git
 [submodule "models/mmaction"]
 	path = models/mmaction
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmaction2.git
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmaction2.git
 [submodule "models/TextRecog"]
 	path = models/TextRecog
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/TextRecog.git
 [submodule "models/mmpose"]
 	path = models/mmpose
-	url = git@gitlab.bj.sensetime.com:hanyachao/mmpose.git
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/hanyachao_mmpose.git
 [submodule "models/mmdet"]
 	path = models/mmdet
-	url = git@gitlab.sz.sensetime.com:yangruichao/mmdetection.git
-[submodule "models/mmediting"]
-	path = models/mmediting
-	url = git@gitlab.sz.sensetime.com:jiaomenglei/mmediting.git
+        url = git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git
 [submodule "models/Pattern"]
 	path = models/Pattern
 	url = git@gitlab.sh.sensetime.com:wuwenli1/Pattern.git
@@ -96,9 +85,6 @@
 [submodule "models/prototype"]
 	path = models/prototype
 	url = git@gitlab.bj.sensetime.com:parrots.model/prototype.git
-[submodule "models/encoder"]
-    path = models/encoder
-    url = git@gitlab.bj.sensetime.com:maxiaoming/encoder.git
 [submodule "models/sensemedical"]
     path = models/sensemedical
     url = git@gitlab.bj.sensetime.com:parrots.model/sensemedical.git
@@ -114,6 +100,9 @@
 [submodule "models/heart_seg"]
 	path = models/heart_seg
 	url = git@gitlab.bj.sensetime.com:parrots.model/medai_mmwhs_xq.git
+[submodule "models/SenseStar"]
+	path = models/SenseStar
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/SenseStar.git
 [submodule "models/coronary_seg"]
 	path = models/coronary_seg
 	url = git@gitlab.bj.sensetime.com:parrots.model/coronary-seg.git
@@ -126,3 +115,29 @@
 [submodule "models/deformable_detr"]
 	path = models/deformable_detr
 	url = git@gitlab.bj.sensetime.com:parrotsmodel/detr_dev.git
+[submodule "models/Multi_organ_seg_HR"]
+	path = models/Multi_organ_seg_HR
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/Multi_organ_seg_HR.git
+[submodule "models/mmocr"]
+	path = models/mmocr
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmocr.git
+[submodule "models/PAR"]
+	path = models/PAR
+	url = git@gitlab.bj.sensetime.com:parrots.model/par.git
+[submodule "models/Crowd"]
+	path = models/Crowd
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/Crowd.git
+[submodule "models/ssd"]
+	path = models/ssd
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/liuguangyu_ssd.git
+	branch = pat0.6
+[submodule "models/mmediting"]
+	path = models/mmediting
+	url = git@gitlab.sz.sensetime.com:parrots.model/mmediting.git
+	branch = autotest
+[submodule "models/springce_psot"]
+	path = models/springce_psot
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/PSOT.git
+[submodule "models/encoder"]
+	path = models/encoder
+	url = git@gitlab.bj.sensetime.com:parrotsmodel/encoder.git

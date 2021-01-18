@@ -49,6 +49,18 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
+let COUNTER=0
+while [ ! -d "./mmdet_mmdet3d_tmp" ];
+do
+    let COUNTER+=1
+    if ((COUNTER > 3)); then
+        break
+    fi
+    git clone -b mmdet3d_use git@gitlab.sz.sensetime.com:parrotsDL-sz/mmdetection.git mmdet_mmdet3d_tmp
+done
+cd mmdet_mmdet3d_tmp
+export PYTHONPATH=$(pwd):$PYTHONPATH
+cd ..
 
 srun -p ${PARTITION} \
      --job-name="mmdetection3d_${MODEL}" \
@@ -59,3 +71,5 @@ srun -p ${PARTITION} \
      --kill-on-bad-exit=1 \
      ${SRUN_ARGS} \
      python -u $ROOT/models/mmdetection3d/tools/train.py ${CONFIG} --work-dir=${WORK_DIR} --launcher="slurm" ${EXTRA_ARGS}
+
+rm -rf mmdet_mmdet3d_tmp

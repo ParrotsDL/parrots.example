@@ -3,11 +3,15 @@ dataset: # Required.
   train:
 #    meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
     meta_file: /mnt/lustre/share/platform/dataset/parrots_test/pod/instances_train2017_short.json
+    ceph_meta_file: /mnt/lustre/share/platform/dataset/parrots_test/pod/instances_train2017_short.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
     flip: True
   test:
     meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+    ceph_meta_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
     image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
+    ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
     flip: False
   has_keypoint: False        # don't use keypoints
   has_mask: False            # don't use segmentations
@@ -23,6 +27,7 @@ dataset: # Required.
     type: COCO
     kwargs:
       gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+      ceph_gt_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
       iou_types: [bbox]
 
 trainer: # Required.
@@ -35,7 +40,7 @@ trainer: # Required.
       momentum: 0.9
       weight_decay: 0.0001
   lr_scheduler:              # lr_scheduler = MultStepLR(optimizer, milestones=[9,14],gamma=0.1)
-    warmup_epochs: 1         # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
+    warmup_epochs: 0         # set to be 0 to disable warmup. target_lr = init_lr * total_batch_size
     type: MultiStepLR
     kwargs:
       milestones: [8,11]     # epochs to decay lr
@@ -44,6 +49,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints      # dir to save checkpoints
   pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/resnet50-19c8e357.pth
   #resume_model: checkpoints/ckpt_exx.pth
   results_dir: results_dir   # dir to save detection results. i.e., bboxes, masks, keypoints
   #vis_gt:
