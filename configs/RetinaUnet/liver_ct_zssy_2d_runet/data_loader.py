@@ -71,20 +71,57 @@ def get_paired_data(root_path, set_name):
     return paired_dataset
 
 
-def get_paired_data_3d(root_path, set_name):
+def get_paired_data_3d(root_path, set_name, cf=None):
     paired_dataset = dict()
     root = os.path.join(root_path, set_name)
-    for f in os.listdir(root):
+    filenames = []
+    is_ceph = 's3://' in root_path
+    if is_ceph:
+        from petrel_client import client
+        data_list = os.path.join(root_path, 'data_list.txt')
+        fin = client.Client().Get(data_list).decode("UTF-8").strip("\n").split("\n")
+        for line in fin:
+            filenames.append(line)
+    else:
+        filenames = os.listdir(root)
+
+
+    for f in filenames:
         # if f.find('volume') > -1 and f.find('pv') > -1:
         if f.find('volume') > -1:
             volume_name = f
             volume_path = os.path.join(root, f)
+            # 从ceph上读取数据
+            if is_ceph:
+                raw_volume_path = volume_path
+                value = client.Client().Get(volume_path)
+                save_path = os.path.join(cf.tmp_dir, f)
+                with open(save_path, 'wb') as ff:
+                    ff.write(value)
+                volume_path = save_path
+                print('downloading data:{} -> {}'.format(raw_volume_path, volume_path))
             liver_name = f.replace('volume', 'liver_mask')
             liver_path = os.path.join(root, liver_name)
+            # 从ceph上读取数据
+            if is_ceph:
+                value = client.Client().Get(liver_path)
+                save_path = os.path.join(cf.tmp_dir, liver_name)
+                with open(save_path, 'wb') as ff:
+                    ff.write(value)
+                liver_path = save_path
+
             if not os.path.exists(liver_path):
                 liver_path = None
             lesion_name = f.replace('volume', 'lesion_mask')
             lesion_path = os.path.join(root, lesion_name)
+            # 从ceph上读取数据
+            if is_ceph:
+                value = client.Client().Get(lesion_path)
+                save_path = os.path.join(cf.tmp_dir, lesion_name)
+                with open(save_path, 'wb') as ff:
+                    ff.write(value)
+                lesion_path = save_path
+
             if not os.path.exists(lesion_path):
                 lesion_path = None
             # 一部分是nii文件
@@ -190,7 +227,7 @@ def get_test_generator(cf, logger):
     """
     每个batch是一个病人, 在test的时候再split
     """
-    test_data = get_paired_data_3d(cf.root_dir, cf.pp_test_name)
+    test_data = get_paired_data_3d(cf.root_dir, cf.pp_test_name, cf)
     # test_data = get_paired_data_3d_300newthick(cf)
     batch_gen = dict()
     batch_gen['val_patient'] = create_data_gen_pipeline(test_data, cf=cf, do_aug=False, rand_sample=False)
