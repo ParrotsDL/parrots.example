@@ -257,6 +257,8 @@ task:
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
                     ## 42.sensestar
                     # {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project default --data_reader CephReader --seed 1024 --max_step 1'}
+                    ## 44.mmocr_ctc
+                    # {'framework': 'mmocr_ctc', 'gpus': 4, 'model': 'icdar2013_ctc', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 5'},
                 ]
 
 
