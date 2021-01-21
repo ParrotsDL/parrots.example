@@ -1,5 +1,5 @@
 #!/bin/bash
- 
+set -x  
 NAMESPACE=$1
 FRAMEWORK_NAME=$2
 MODEL_NAME=$3
@@ -8,12 +8,16 @@ GPUS=$4
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:4:$len}
- 
+
+# 导入mc的包 
+export PYTHONPATH=/mnt/lustre/share/memcached:$PYTHONPATH
+
 # 首先需要将自己开发机home目录下的petreloss.conf 和 .pavi目录复制到nfs上自己的目录下, 不能是软连接
-cp /home/${NAMESPACE}/petreloss.conf /mnt/lustre/${NAMESPACE}/petreloss.conf
-cp -r /home/${NAMESPACE}/.pavi /mnt/lustre/${NAMESPACE}/.pavi
- 
-if [ -z ${container_job_name} ];then
+
+cp /home/${USER}/petreloss.conf /mnt/lustre/${USER}/petreloss.conf
+cp -r /home/${USER}/.pavi /mnt/lustre/${USER}/.pavi
+
+if [ -z ${container_job_name} ];then #“string”的长度为零则为真
         # JOB_NAME不能超过64个字符,且不能有下划线
         JOB_NAME="${FRAMEWORK_NAME}_${MODEL_NAME}_`date +%s`"
         JOB_NAME=`echo -n ${FRAMEWORK_NAME}_${MODEL_NAME} | base64`
@@ -27,13 +31,16 @@ fi
 PARTITION=${NAMESPACE}
 IMAGE="registry.sensetime.com/parrots/parrots:pat20201225"   #镜像名称可能也需要search_config.yaml中指定
 ## 资源信息
-NODES=$((${GPUS}<=4?1:2))
-GPU_PER_NODE=$((${GPUS}>4?4:${GPUS}))       ## 每个节点GPU的计算方法可能也是一个问题，因为有的机器运行着开发机，所以每个节点可能占不到8个GPU
+NODES=$((${GPUS}<=8?1:2))
+GPU_PER_NODE=$((${GPUS}>8?8:${GPUS}))       ## 每个节点GPU的计算方法可能也是一个问题，因为有的机器运行着开发机，所以每个节点可能占不到8个GPU
 CPU_PER_NODE="`expr 2 \* ${GPU_PER_NODE}`"
 MEMORY_PER_NODE="`expr 8 \* ${GPU_PER_NODE}`Gi"
 ## 训练脚本
-WORKING_DIR="/home/${NAMESPACE}/parrots.test"    #工作空间可能也需要search_config.yaml中指定
-#WORKING_DIR="/mnt/lustre/${NAMESPACE}/workspace/first_task/parrots.test"    #工作空间可能也需要search_config.yaml中指定
+
+#wwl-修改1
+#WORKING_DIR="/home/${USER}/parrots.test"    #工作空间可能也需要search_config.yaml中指定
+# WORKING_DIR="/mnt/lustre/${USER}/parrots.test"    #工作空间可能也需要search_config.yaml中指定
+WORKING_DIR=${PWD} 
 TRAIN_SCRIPT="runner/${FRAMEWORK_NAME}/train_mpirun.sh"
 TRAIN_SCRIPT_ARGS="${MODEL_NAME} ${NAMESPACE} ${EXTRA_ARGS}"
 ## 存储挂载
@@ -68,7 +75,8 @@ spc run mpi-job \
         --cpus-per-pod ${CPU_PER_NODE} \
         --mems-per-pod ${MEMORY_PER_NODE} \
         -v ${VOLUMES} \
-        -m ${VOLUME_MOUNTS} \
+        -m ${VOLUME_MOUNTS} z
+        \
         --container ${CONTAINER_NAME}
  
 sleep 5

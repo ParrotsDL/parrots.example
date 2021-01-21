@@ -75,7 +75,7 @@ ceph_data_root_val = 's3://parrots_model_data/mmediting_data/SR/datasets/val_set
 data = dict(
     # train
     samples_per_gpu=16,
-    workers_per_gpu=0,
+    workers_per_gpu=4,
     drop_last=True,
     train=dict(
         type='RepeatDataset',
