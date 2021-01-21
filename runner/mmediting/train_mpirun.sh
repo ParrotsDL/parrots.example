@@ -1,14 +1,14 @@
 #!/bin/bash
 set -x
 
-echo "what"
+source /usr/local/env/pat_latest 
+
 
 MODEL_NAME=$1
 NAMESPACE=$2
 
 array=( $@ )
 len=${#array[@]}
-# EXTRA_ARGS=${@:3}
 EXTRA_ARGS=${array[@]:3:$len}
 
 
@@ -17,7 +17,6 @@ mkdir -p log/mmediting
 T=`date +%m%d%H%M%S`
 
 ROOT=.
-
 pyroot=$ROOT/models/mmediting
 export PYTHONPATH=$pyroot:$PYTHONPATH
 export PARROTS_POOL_DATALOADER=1

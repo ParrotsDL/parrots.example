@@ -29,7 +29,7 @@ else
 fi
  
 PARTITION=${NAMESPACE}
-IMAGE="registry.sensetime.com/parrots/parrots:pat20201225"   #镜像名称可能也需要search_config.yaml中指定
+IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
 ## 资源信息
 NODES=$((${GPUS}<=8?1:2))
 GPU_PER_NODE=$((${GPUS}>8?8:${GPUS}))       ## 每个节点GPU的计算方法可能也是一个问题，因为有的机器运行着开发机，所以每个节点可能占不到8个GPU
@@ -66,6 +66,8 @@ spc run mpi-job \
         -n ${NODES} \
         -i ${IMAGE} \
         -e "${PAVI_ENV}" \
+        --cmd "/usr/bin/tini" \
+        --cmd-args "-g,--,/mpirun_startup.sh" \
         --working-dir ${WORKING_DIR} \
         --mpirun-cmd "mpirun" \
         --mpirun-cmd-args "${MPIRUN_CMD_BASE_ARGS},--np,${NP},--npernode,${NPERNODE}" \
@@ -75,8 +77,7 @@ spc run mpi-job \
         --cpus-per-pod ${CPU_PER_NODE} \
         --mems-per-pod ${MEMORY_PER_NODE} \
         -v ${VOLUMES} \
-        -m ${VOLUME_MOUNTS} z
-        \
+        -m ${VOLUME_MOUNTS} \
         --container ${CONTAINER_NAME}
  
 sleep 5
