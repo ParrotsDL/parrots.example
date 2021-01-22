@@ -102,7 +102,7 @@ data = dict(
     drop_last=True,
     train=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/training_list.json',
+        ann_file='s3://parrots_model_data/mmediting_data/meta/training_list.json',
         data_prefix=data_root,
         pipeline=train_pipeline),
     # validation
@@ -110,13 +110,13 @@ data = dict(
     val_workers_per_gpu=4,
     val=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
+        ann_file='s3://parrots_model_data/mmediting_data/meta/test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline),
     # test
     test=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
+        ann_file='s3://parrots_model_data/mmediting_data/meta/test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline))
 
