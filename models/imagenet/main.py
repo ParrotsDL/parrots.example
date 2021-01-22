@@ -44,6 +44,8 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
+parser.add_argument("--iter_range",default="800,1000",type=str,help="iter range")
+
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
@@ -302,7 +304,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         batch_time.update(time.time() - end)
         end = time.time()
         iter_end_time = time.time()
-        if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
+
+
+        # --iter_range=100,200
+        iter_range = [int(iter) for iter in args.iter_range.split(",")]
+
+        if len(iter_time_list) <= iter_range[1] - iter_range[0]  and i >= iter_range[0] and i <= iter_range[1]:
             iter_time_list.append(iter_end_time - iter_start_time)
             
         iter_start_time = time.time()
@@ -313,7 +320,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
-        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
+        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == iter_range[1] + 10:
             return
 
 
