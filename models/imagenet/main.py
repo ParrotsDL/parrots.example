@@ -44,7 +44,7 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
-parser.add_argument("--iter_range",default="800,1000",type=str,help="iter range")
+parser.add_argument("--benchmark_range",default="800,1000",type=str,help="benchmark_range")
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -307,7 +307,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
 
         # --iter_range=100,200
-        iter_range = [int(iter) for iter in args.iter_range.split(",")]
+        iter_range = [int(iter) for iter in args.benchmark_range.split(",")]
 
         if len(iter_time_list) <= iter_range[1] - iter_range[0]  and i >= iter_range[0] and i <= iter_range[1]:
             iter_time_list.append(iter_end_time - iter_start_time)
