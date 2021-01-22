@@ -1,7 +1,10 @@
 import io
 from PIL import Image
 
-import mc
+try:
+    import mc
+except:
+    print("Import mc failed!")
 from torch.utils.data import Dataset
 
 
