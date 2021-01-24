@@ -45,9 +45,9 @@ ann_file_test = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_dat
 # ceph data
 ceph_data_root = 's3://parrots_model_data/mmaction_data/kinetics400_256'
 ceph_data_root_val = 's3://parrots_model_data/mmaction_data/kinetics400_256'
-ceph_ann_file_train = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_train.txt'
-ceph_ann_file_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_val.txt'
-ceph_ann_file_test = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/k400_val.txt'
+ceph_ann_file_train = 'models/mmaction/data_list/k400_train.txt'
+ceph_ann_file_val = 'models/mmaction/data_list/k400_val.txt'
+ceph_ann_file_test = 'models/mmaction/data_list/k400_val.txt'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
 train_pipeline = [
