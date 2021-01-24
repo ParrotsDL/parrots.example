@@ -234,7 +234,7 @@ task:
                 ## 35.PAR
                 # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--seed 1024 --pavi --pavi-project default --data_reader MemcachedReader'},
                 ## 39.Multi_organ_seg_HR
-                # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader LustreReader --seed 1024'},
+                # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
                 ## 40.mmocr
                 # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 600'},
                 # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 600'},
