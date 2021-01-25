@@ -195,7 +195,7 @@ task:
                 # {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project default --data_reader MemcachedReader'}
                 # {'framework': 'prototype', 'gpus': 16, 'model': 'shufflev2', 'py_args': '--seed 1024 --pavi --pavi-project default --data_reader MemcachedReader'}
                 # 23.encoder cuda10-bug
-                ## {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project default --max_step 150'},
+                ## {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project default --max_step 150 --data_reader CephReader'},
                 # 24.sensemedical
                 # {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project default --max_step 20'},
                 # 25.pattern
