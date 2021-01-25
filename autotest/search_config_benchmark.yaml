@@ -208,7 +208,7 @@ task:
                     ## 27. detr
                     # {'framework': 'detr', 'gpus': 8, 'model': 'detr', 'py_args': '--pavi --pavi-project default --data_reader CephReader --max_step 1 --seed 42'},
                     ## 28.sr_v3.0
-                    # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'F4_0_300', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --seed 1024 --max-step 1'},
+                    # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'F4_0_300', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
                     ## 29.heart_seg
                     # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --seed 1024 --max_step 10'},
                     ## 30.coronary_seg
