@@ -2,8 +2,10 @@ BASE:
     ceph_prefix: s3://parrots_model_data/Multi_organ_seg_HR/
     lustre_prefix: /mnt/lustre/share_data/jiaomenglei/model_pool_data/Multi_organ_seg_HR/
     data_dir: '/mnt/lustre/share_data/jiaomenglei/model_pool_data/Multi_organ_seg_HR/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_b32'
+    data_dir_ceph: 's3://parrots_model_data/Multi_organ_seg_HR/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_b32'
     test_data_dir: '/mnt/lustre/share_data/jiaomenglei/model_pool_data/Multi_organ_seg_HR/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_whole'
-    checkpoint_dir: '/mnt/lustre/share_data/jiaomenglei/model_pool_data/Multi_organ_seg_HR/pat_test_data/checkpoint'
+    test_data_dir_ceph: 's3://parrots_model_data/Multi_organ_seg_HR/pat_test_data/thoracic-oar-nii_1_1_3_centercrop360_whole'
+    checkpoint_dir: './checkpoint'
     output_dir: './workdir'
     model: 'PSPNet'  
     num_classes: 7

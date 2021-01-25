@@ -233,7 +233,7 @@ task:
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.02'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.02'},
                     ## 39.Multi_organ_seg_HR
-                    # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader LustreReader --seed 1024 --max_step 1'},
+                    # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     ## 40.mmocr
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
