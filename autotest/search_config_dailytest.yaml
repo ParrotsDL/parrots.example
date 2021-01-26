@@ -21,10 +21,10 @@ task:
                     {'framework': 'pod', 'gpus': 8, 'model': 'faster-rcnn-R50-C4-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --data_reader CephReader'},
                     {'framework': 'pod', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x.short', 'py_args': '--pavi --pavi-project parrots_test --seed 1024 --data_reader CephReader'},
                     # example
-                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
-                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
-                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader CephReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "mobile_v1.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "inceptionv3.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
+                    {'framework': 'example', 'gpus': 8, 'model': "resnet50_sync.short", 'py_args': '--pavi --pavi-project parrots_test --data_reader MemcachedReader'},
                 ]
     # Optional
     # callback: "cat"
