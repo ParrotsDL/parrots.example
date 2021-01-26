@@ -8,7 +8,7 @@ model = dict(
     loss_alpha=dict(type='CharbonnierLoss', loss_weight=0.5, sample_wise=True),
     loss_comp=dict(
         type='CharbonnierCompLoss', loss_weight=1.5, sample_wise=True),
-    pretrained='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/model_zoo/mattors/indexnet/mobilenet_v2.pth')
+    pretrained='s3://parrots_model_data/mmediting_data/mobilenet_v2.pth')
 # model training and testing settings
 train_cfg = dict(train_backbone=True)
 test_cfg = dict(metrics=['SAD', 'MSE', 'GRAD', 'CONN'])

@@ -115,6 +115,6 @@ dist_params = dict(backend='nccl', port=20003)
 log_level = 'INFO'
 work_dir = './work_dirs/dim_stage2'
 #load_from = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/dim_stage1_v16_1x1_1000k_comp1k_SAD-53.8_20200605_140257-979a420f.pth'
-load_from =None
+load_from ='s3://parrots_model_data/mmediting_data/dim_stage1_v16_1x1_1000k_comp1k_SAD-53.8_20200605_140257-979a420f.pth'
 resume_from = None
 workflow = [('train', 1)]

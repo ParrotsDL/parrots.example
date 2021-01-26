@@ -18,7 +18,7 @@ model = dict(
         },
         perceptual_weight=0.05,
         style_weight=120,
-        pretrained=('/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/vgg16-397923af.pth')),
+        pretrained=('s3://parrots_model_data/mmediting_data/vgg16-397923af.pth')),
     loss_out_percep=True,
     loss_l1_hole=dict(
         type='L1Loss',
