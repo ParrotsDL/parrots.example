@@ -34,9 +34,11 @@ class configs(DefaultConfigs):
         # else:
         #     self.root_dir = 'log/RetinaUnet'
         self.root_dir = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/RetinaUnet/lits_dataset_infer'
+        self.root_dir_ceph = 's3://parrots_model_data/RetinaUnet/lits_dataset_infer/'
         # 默认的情况
         self.rank = 0
         self.world_size = 1
+        self.tmp_dir = 'tmp'
 
         self.image_clip_range = [-100, 300]  # [-50, 250], [-100, 300]
         self.image_norm_range = [0, 1]
