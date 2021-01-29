@@ -85,21 +85,21 @@ data = dict(
     workers_per_gpu=2,
     train=dict(
         type=dataset_type,
-        ann_file=data_root + '/instances_training.json',
+        ann_file=data_root + 'instances_training.json',
         # for debugging top k imgs
         # select_first_k=200,
-        img_prefix=data_root + '/imgs',
+        img_prefix=data_root + 'imgs',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
-        ann_file=data_root + '/instances_test.json',
-        img_prefix=data_root + '/imgs',
+        ann_file=data_root + 'instances_test.json',
+        img_prefix=data_root + 'imgs',
         # select_first_k=100,
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        ann_file=data_root + '/instances_test.json',
-        img_prefix=data_root + '/imgs',
+        ann_file=data_root + 'instances_test.json',
+        img_prefix=data_root + 'imgs',
         # select_first_k=100,
         pipeline=test_pipeline))
 evaluation = dict(interval=100, metric='hmean')
