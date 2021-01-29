@@ -33,7 +33,7 @@ IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能�
 NODES=$((${GPUS}<=8?1:2))
 GPU_PER_NODE=$((${GPUS}>8?8:${GPUS}))       ## 每个节点GPU的计算方法可能也是一个问题，因为有的机器运行着开发机，所以每个节点可能占不到8个GPU
 CPU_PER_NODE="`expr 2 \* ${GPU_PER_NODE}`"
-MEMORY_PER_NODE="`expr 8 \* ${GPU_PER_NODE}`Gi"
+MEMORY_PER_NODE="`expr 32 \* ${GPU_PER_NODE}`Gi"
 ## 训练脚本
 
 #wwl-修改1
@@ -55,16 +55,25 @@ VOLUME_MOUNTS=${VOLUME_MOUNTS:-${VOLUMES}}
 CONTAINER_NAME="parrots"
  
 if [ ${PAVI_COMPARE_ID} ];then
-        PAVI_ENV="PAVI_COMPARE_ID=${PAVI_COMPARE_ID}&AUTOML_SUBTASK_ID=${AUTOML_SUBTASK_ID}"
+        CUSTOM_ENV="PAVI_COMPARE_ID=${PAVI_COMPARE_ID}&AUTOML_SUBTASK_ID=${AUTOML_SUBTASK_ID}"
 fi
  
+if [ ${PARROTS_BENCHMARK} ];then
+        CUSTOM_ENV="PARROTS_BENCHMARK=${PARROTS_BENCHMARK}&${CUSTOM_ENV}"
+fi
+
+PARROTS_BENCHMARK=${PARROTS_BENCHMARK:-""}
+echo "**********"
+echo $PARROTS_BENCHMARK
+echo $CUSTOM_ENV
+
 # download spc: wget -O spc http://file.intra.sensetime.com/d/3f3752597f/files/\?p\=/spc/v0.2.1-rc/spc-linux\&dl\=1
 spc run mpi-job \
         -j ${JOB_NAME} \
         -N ${PARTITION} \
         -n ${NODES} \
         -i ${IMAGE} \
-        -e "${PAVI_ENV}" \
+        -e "${CUSTOM_ENV}" \
         --cmd "/usr/bin/tini" \
         --cmd-args "-g,--,/mpirun_startup.sh" \
         --working-dir ${WORKING_DIR} \
