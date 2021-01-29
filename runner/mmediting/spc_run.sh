@@ -10,14 +10,13 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:4:$len}
 
 # 导入mc的包 
-export PYTHONPATH=/mnt/lustre/share/memcached:$PYTHONPATH
 
 # 首先需要将自己开发机home目录下的petreloss.conf 和 .pavi目录复制到nfs上自己的目录下, 不能是软连接
 
 cp /home/${USER}/petreloss.conf /mnt/lustre/${USER}/petreloss.conf
 cp -r /home/${USER}/.pavi /mnt/lustre/${USER}/.pavi
 
-if [ -z ${container_job_name} ];then #“string”的长度为零则为真
+if [ -z ${container_job_name} ];then #“string”的长度为零则为真 取 ${framework_name}_${model_name}_${date} base64编码的前后16位
         # JOB_NAME不能超过64个字符,且不能有下划线
         JOB_NAME="${FRAMEWORK_NAME}_${MODEL_NAME}_`date +%s`"
         JOB_NAME=`echo -n ${FRAMEWORK_NAME}_${MODEL_NAME} | base64`
@@ -39,7 +38,7 @@ MEMORY_PER_NODE="`expr 8 \* ${GPU_PER_NODE}`Gi"
 
 #wwl-修改1
 #WORKING_DIR="/home/${USER}/parrots.test"    #工作空间可能也需要search_config.yaml中指定
-# WORKING_DIR="/mnt/lustre/${USER}/parrots.test"    #工作空间可能也需要search_config.yaml中指定
+#WORKING_DIR="/mnt/lustre/${USER}/parrots.test"    #工作空间可能也需要search_config.yaml中指定
 WORKING_DIR=${PWD} 
 TRAIN_SCRIPT="runner/${FRAMEWORK_NAME}/train_mpirun.sh"
 TRAIN_SCRIPT_ARGS="${MODEL_NAME} ${NAMESPACE} ${EXTRA_ARGS}"

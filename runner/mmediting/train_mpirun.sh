@@ -20,9 +20,7 @@ ROOT=.
 pyroot=$ROOT/models/mmediting
 export PYTHONPATH=$pyroot:$PYTHONPATH
 export PARROTS_POOL_DATALOADER=1
-# g=$(($2<8?$2:8))
-# SRUN_ARGS=${SRUN_ARGS:-""}
-
+export PYTHONPATH=/mnt/lustre/share/memcached:$PYTHONPATH
 
 
 
