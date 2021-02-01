@@ -3,3 +3,4 @@ data:
     data_dir: /mnt/lustre/share_data/parrots_model_data/coronary_npy
   ceph:
     data_dir: s3://parrots_model_data/coronary_npy
+    meta_file: s3://parrots_model_data/coronary_npy/meta_file.txt
