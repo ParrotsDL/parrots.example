@@ -110,6 +110,7 @@ data:
         prefix_cluster: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
         prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/totag'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/drowsiness/big_angle_eye/big_angle_eye_open_close.json'
+        ceph_json_path: 's3://parrots_model_data/pattern/drowsiness/big_angle_eye/big_angle_eye_open_close.json'
         batch_size: 4
 
     big_angle_valid_invalid:
@@ -122,6 +123,7 @@ data:
         prefix_cluster: '/mnt/lustre/zhangqiming/106pt/crop_eye/big_angle/totag'
         prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/totag'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/drowsiness/big_angle_eye/big_angle_eye_valid_invalid_valid_eye.json'
+        ceph_json_path: 's3://parrots_model_data/pattern/drowsiness/big_angle_eye/big_angle_eye_valid_invalid_valid_eye.json'
         batch_size: 2
 
 
@@ -164,6 +166,7 @@ test:
         #json_path: '/mnt/lustre/zhangqiming/data/eye_benchmark_new/open_close.json'
         #prefix: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/drowsiness/eye_benchmark_new'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/drowsiness/eye_benchmark_new/open_close.json'
+        ceph_json_path: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/open_close.json'
         batch_size: 64
 
     valid_invalid_test:
@@ -178,4 +181,5 @@ test:
         prefix_ceph: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/images/Image'
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/drowsiness/eye_benchmark_new/images/Image/'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/drowsiness/eye_benchmark_new/valid_invalid_valid_eye.json'
+        ceph_json_path: 's3://parrots_model_data/pattern/drowsiness/eye_benchmark_new/valid_invalid_valid_eye.json'
         batch_size: 64

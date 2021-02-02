@@ -86,7 +86,7 @@ data = dict(
             type=train_dataset_type,
             lq_folder= data_root + 'DIV2K_train_LR_bicubic/X4_sub',
             gt_folder= data_root + 'DIV2K_train_HR_sub',
-            ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/meta_info_DIV2K800sub_GT.txt',
+            ann_file='s3://parrots_model_data/mmediting_data/meta/meta_info_DIV2K800sub_GT.txt',
             pipeline=train_pipeline,
             scale=scale)),
     # val
