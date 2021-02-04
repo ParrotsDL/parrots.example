@@ -8,7 +8,7 @@ model = dict(
     loss_alpha=dict(type='CharbonnierLoss', loss_weight=0.5, sample_wise=True),
     loss_comp=dict(
         type='CharbonnierCompLoss', loss_weight=1.5, sample_wise=True),
-    pretrained='s3://parrots_model_data/mmediting_data/mobilenet_v2.pth')
+    pretrained='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/model_zoo/mattors/indexnet/mobilenet_v2.pth')
 # model training and testing settings
 train_cfg = dict(train_backbone=True)
 test_cfg = dict(metrics=['SAD', 'MSE', 'GRAD', 'CONN'])
@@ -102,7 +102,7 @@ data = dict(
     drop_last=True,
     train=dict(
         type=dataset_type,
-        ann_file='s3://parrots_model_data/mmediting_data/meta/training_list.json',
+        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/training_list.json',
         data_prefix=data_root,
         pipeline=train_pipeline),
     # validation
@@ -110,13 +110,13 @@ data = dict(
     val_workers_per_gpu=4,
     val=dict(
         type=dataset_type,
-        ann_file='s3://parrots_model_data/mmediting_data/meta/test_list.json',
+        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline),
     # test
     test=dict(
         type=dataset_type,
-        ann_file='s3://parrots_model_data/mmediting_data/meta/test_list.json',
+        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline))
 
