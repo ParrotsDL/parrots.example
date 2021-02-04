@@ -104,7 +104,6 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3'
         prefix_ceph: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3/labels/lists/train_honda3_vector_transfer.json'
-        ceph_json_path: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v3/labels/lists/train_honda3_vector_transfer.json'
         batch_size: 16 # for single gpu
 
     honda3_valid_trainset: #hodna3_v1
@@ -117,7 +116,6 @@ data:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1'
         prefix_ceph: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1/labels/use_solve/lists/0428_clean/123video_1234pic/train_honda3_valid_123video_1234pic_use_annotation_4cls_equal.json'
-        ceph_json_path: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/cropped_Honda_Pro3_data_v1/labels/use_solve/lists/0428_clean/123video_1234pic/train_honda3_valid_123video_1234pic_use_annotation_4cls_equal.json'
         batch_size: 16 # for single gpu
 
 test:
@@ -159,7 +157,6 @@ test:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic'
         prefix_ceph: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/labels/lists_0830/test_honda3_vector_transfer.json'
-        ceph_json_path: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_video_testset_vector_aoi/test_pic/labels/lists_0830/test_honda3_vector_transfer.json'
         batch_size: 32 # for single gpu
 
     honda3_valid_use_annotation_testset:
@@ -172,5 +169,4 @@ test:
         prefix_cluster: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/test'
         prefix_ceph: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/test'
         json_path: '/mnt/lustre/share_data/wuwenli/Pattern0.3_modelpool/gaze/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_testset_valid_invalid/cropped_Honda_Pro3_data_1012_1014_valid_invalid_multicase/make_valid_invalid_list/make_testset/test_honda3_valid_invalid.json'
-        ceph_json_path: 's3://parrots_model_data/pattern/gaze/data/honda_pro3/cropped_data/test/cropped_Honda_Pro3_image_testset_valid_invalid/cropped_Honda_Pro3_data_1012_1014_valid_invalid_multicase/make_valid_invalid_list/make_testset/test_honda3_valid_invalid.json'
         batch_size: 32 # for single gpu
