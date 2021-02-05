@@ -1,15 +1,13 @@
-exp_name = 'msrresnet_x4c64b16_g1_1000k_div2k'
+exp_name = 'srcnn_x4k915_g1_1000k_div2k'
 
 scale = 4
 # model settings
 model = dict(
     type='BasicRestorer',
     generator=dict(
-        type='MSRResNet',
-        in_channels=3,
-        out_channels=3,
-        mid_channels=64,
-        num_blocks=16,
+        type='SRCNN',
+        channels=(3, 64, 32, 3),
+        kernel_sizes=(9, 1, 5),
         upscale_factor=scale),
     pixel_loss=dict(type='L1Loss', loss_weight=1.0, reduction='mean'))
 # model training and testing settings
@@ -86,7 +84,7 @@ data = dict(
             type=train_dataset_type,
             lq_folder= data_root + 'DIV2K_train_LR_bicubic/X4_sub',
             gt_folder= data_root + 'DIV2K_train_HR_sub',
-            ann_file='s3://parrots_model_data/mmediting_data/meta/meta_info_DIV2K800sub_GT.txt',
+            ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/SR/datasets/DIV2K/meta_info_DIV2K800sub_GT.txt',
             pipeline=train_pipeline,
             scale=scale)),
     # val
@@ -132,7 +130,7 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-dist_params = dict(backend='nccl', port=20009)
+dist_params = dict(backend='nccl', port=20012)
 log_level = 'INFO'
 work_dir = f'./work_dirs/{exp_name}'
 load_from = None

@@ -1,50 +1,58 @@
 # model settings
 model = dict(
-    type='Pix2Pix',
+    type='CycleGAN',
     generator=dict(
-        type='UnetGenerator',
+        type='ResnetGenerator',
         in_channels=3,
         out_channels=3,
-        num_down=8,
         base_channels=64,
-        norm_cfg=dict(type='BN'),
-        use_dropout=True,
+        norm_cfg=dict(type='IN'),
+        use_dropout=False,
+        num_blocks=9,
+        padding_mode='reflect',
         init_cfg=dict(type='normal', gain=0.02)),
     discriminator=dict(
         type='PatchDiscriminator',
-        in_channels=6,
+        in_channels=3,
         base_channels=64,
         num_conv=3,
-        norm_cfg=dict(type='BN'),
+        norm_cfg=dict(type='IN'),
         init_cfg=dict(type='normal', gain=0.02)),
     gan_loss=dict(
         type='GANLoss',
-        gan_type='vanilla',
+        gan_type='lsgan',
         real_label_val=1.0,
         fake_label_val=0.0,
         loss_weight=1.0),
-    pixel_loss=dict(type='L1Loss', loss_weight=100.0, reduction='mean'))
+    cycle_loss=dict(type='L1Loss', loss_weight=10.0, reduction='mean'),
+    id_loss=dict(type='L1Loss', loss_weight=0, reduction='mean'))
 # model training and testing settings
-train_cfg = dict(direction='b2a')  # model default: a2b
-test_cfg = dict(direction='b2a', show_input=True)
+train_cfg = dict(direction='a2b', buffer_size=50)  # model default: a2b
+test_cfg = dict(direction='a2b', show_input=True)
 
 # dataset settings
-train_dataset_type = 'GenerationPairedDataset'
-val_dataset_type = 'GenerationPairedDataset'
+train_dataset_type = 'GenerationUnpairedDataset'
+val_dataset_type = 'GenerationUnpairedDataset'
 img_norm_cfg = dict(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 train_pipeline = [
     dict(
-        type='LoadPairedImageFromFile',
-        io_backend='disk',
-        key='pair',
+        type='LoadImageFromFile', io_backend='disk', key='img_a',
+        flag='color'),
+    dict(
+        type='LoadImageFromFile', io_backend='disk', key='img_b',
         flag='color'),
     dict(
         type='Resize',
         keys=['img_a', 'img_b'],
         scale=(286, 286),
         interpolation='bicubic'),
-    dict(type='FixedCrop', keys=['img_a', 'img_b'], crop_size=(256, 256)),
-    dict(type='Flip', keys=['img_a', 'img_b'], direction='horizontal'),
+    dict(
+        type='Crop',
+        keys=['img_a', 'img_b'],
+        crop_size=(256, 256),
+        random_crop=True),
+    dict(type='Flip', keys=['img_a'], direction='horizontal'),
+    dict(type='Flip', keys=['img_b'], direction='horizontal'),
     dict(type='RescaleToZeroOne', keys=['img_a', 'img_b']),
     dict(
         type='Normalize', keys=['img_a', 'img_b'], to_rgb=True,
@@ -57,9 +65,10 @@ train_pipeline = [
 ]
 test_pipeline = [
     dict(
-        type='LoadPairedImageFromFile',
-        io_backend='disk',
-        key='pair',
+        type='LoadImageFromFile', io_backend='disk', key='img_a',
+        flag='color'),
+    dict(
+        type='LoadImageFromFile', io_backend='disk', key='img_b',
         flag='color'),
     dict(
         type='Resize',
@@ -77,9 +86,9 @@ test_pipeline = [
         meta_keys=['img_a_path', 'img_b_path'])
 ]
 
-data_root = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/GM/paired/facades'
+data_root = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/GM/unpaired/summer2winter_yosemite'
 data_root_val = None
-ceph_data_root = 's3://parrots_model_data/mmediting_data/GM/paired/facades'
+ceph_data_root = 's3://parrots_model_data/mmediting_data/GM/unpaired/summer2winter_yosemite'
 ceph_data_root_val = None
 
 data = dict(
@@ -106,15 +115,15 @@ data = dict(
 
 # optimizer
 optimizers = dict(
-    generator=dict(type='Adam', lr=2e-4, betas=(0.5, 0.999)),
-    discriminator=dict(type='Adam', lr=2e-4, betas=(0.5, 0.999)))
+    generators=dict(type='Adam', lr=2e-4, betas=(0.5, 0.999)),
+    discriminators=dict(type='Adam', lr=2e-4, betas=(0.5, 0.999)))
 
 # learning policy
-lr_config = dict(policy='Fixed', by_epoch=False)
-
+lr_config = dict(
+    policy='Linear', by_epoch=False, target_lr=0, start=12310, interval=1231)
 # checkpoint saving
-checkpoint_config = dict(interval=4000, save_optimizer=True, by_epoch=False)
-evaluation = dict(interval=4000, save_image=True)
+checkpoint_config = dict(interval=12310, save_optimizer=True, by_epoch=False)
+evaluation = dict(interval=12310, save_image=True)
 log_config = dict(
     interval=100,
     hooks=[
@@ -125,12 +134,12 @@ log_config = dict(
 visual_config = None
 
 # runtime settings
-total_iters = 80000
+total_iters = 246200
 cudnn_benchmark = True
-dist_params = dict(backend='nccl', port=20011)
+dist_params = dict(backend='nccl', port=20001)
 log_level = 'INFO'
 load_from = None
 resume_from = None
 workflow = [('train', 1)]
-exp_name = 'pix2pix_facades'
+exp_name = 'cyclegan_summer2winter_id0'
 work_dir = f'./work_dirs/{exp_name}'
