@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh wenli {framework} {model} {gpus} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh #your-namespace#  {framework} {model} {gpus} {py_args}"
     # Required
     search_args:
         - type: Nested
