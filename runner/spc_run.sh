@@ -13,16 +13,10 @@ EXTRA_ARGS=${array[@]:4:$len}
 cp /home/${USER}/petreloss.conf /mnt/lustre/${USER}/petreloss.conf
 cp -r /home/${USER}/.pavi /mnt/lustre/${USER}/.pavi
 
-if [ -z ${container_job_name} ];then #“string”的长度为零则为真 取 ${framework_name}_${model_name}_${date} base64编码的前后16位
-        # JOB_NAME不能超过64个字符,且不能有下划线
-        JOB_NAME="${FRAMEWORK_NAME}_${MODEL_NAME}_`date +%s`"
-        JOB_NAME=`echo -n ${JOB_NAME} | base64`
-        jobname1=${JOB_NAME:0:16}
-        jobname2=${JOB_NAME:0-18:16}
-        JOB_NAME=${jobname1,,}${jobname2,,}
-else
-        JOB_NAME=${container_job_name}
-fi
+current=`date "+%Y-%m-%d %H:%M:%S"`
+timeStamp=`date -d "$current" +%s`
+currentTimeStamp=$((timeStamp*1000+10#`date "+%N"`/1000000))
+JOB_NAME=${currentTimeStamp}
  
 PARTITION=${NAMESPACE}
 IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
