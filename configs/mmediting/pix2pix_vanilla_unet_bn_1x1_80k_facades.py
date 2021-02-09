@@ -82,6 +82,9 @@ data_root_val = None
 ceph_data_root = 's3://parrots_model_data/mmediting_data/GM/paired/facades'
 ceph_data_root_val = None
 
+ceph_ann_file_prefix = None
+ann_file_prefix = None
+
 data = dict(
     samples_per_gpu=1,
     workers_per_gpu=4,
