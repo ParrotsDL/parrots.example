@@ -21,8 +21,8 @@ if [ -z ${container_job_name} ];then
 else
         JOB_NAME=${container_job_name}
 fi
-
  
+
 PARTITION=${NAMESPACE}
 IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
 
