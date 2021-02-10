@@ -6,6 +6,9 @@ task:
         - type: Nested
           value: [
                     # (un)commit your config here, same as search_config_benchmark.yaml
+                    ## 5.ssd
+                    # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT default --DATA_READER CephReader --SEED 1024'},
+                    # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT default --DATA_READER CephReader --SEED 1024'},
                     
                 ]
     # Optional

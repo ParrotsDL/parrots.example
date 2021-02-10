@@ -13,11 +13,16 @@ EXTRA_ARGS=${array[@]:4:$len}
 cp /home/${USER}/petreloss.conf /mnt/lustre/${USER}/petreloss.conf
 cp -r /home/${USER}/.pavi /mnt/lustre/${USER}/.pavi
 
-current=`date "+%Y-%m-%d %H:%M:%S"`
-timeStamp=`date -d "$current" +%s`
-currentTimeStamp=$((timeStamp*1000+10#`date "+%N"`/1000000))
-JOB_NAME=${currentTimeStamp}
+if [ -z ${container_job_name} ];then 
+        current=`date "+%Y-%m-%d %H:%M:%S"`
+        timeStamp=`date -d "$current" +%s`
+        currentTimeStamp=$((timeStamp*1000+10#`date "+%N"`/1000000))
+        JOB_NAME=${currentTimeStamp}
+else
+        JOB_NAME=${container_job_name}
+fi
  
+
 PARTITION=${NAMESPACE}
 IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
 ## 资源信息
