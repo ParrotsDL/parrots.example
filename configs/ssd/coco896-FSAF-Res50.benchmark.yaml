@@ -32,7 +32,7 @@ LOSS:
 TRAIN:
   PRETRAIN: /mnt/lustre/share/fundamental-support/models/alphatrion/resnet50.pth
   CEPH_PRETRAIN: s3://parrots_model_data/ssd_pretrain/resnet50.pth
-  BATCH_SIZE: 32
+  BATCH_SIZE: 32 #total-bs: bs/worldsize for each GPU
 
 VALID:
   EPOCH: 1
