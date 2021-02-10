@@ -18,6 +18,10 @@ data_root_val = None
 ceph_data_root = 's3://parrots_model_data/mmediting_data/Combined_Dataset/'
 ceph_data_root_val = None
 
+
+ceph_ann_file_prefix = 's3://parrots_model_data/mmediting_data/meta/'
+ann_file_prefix = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/'
+
 img_norm_cfg = dict(
     mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], to_rgb=True)
 train_pipeline = [
@@ -77,17 +81,17 @@ data = dict(
     drop_last=False,
     train=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/training_list.json',
+        ann_file=ann_file_prefix + 'training_list.json',
         data_prefix=data_root,
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
+        ann_file=ann_file_prefix + 'test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
+        ann_file=ann_file_prefix + 'test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline))
 
@@ -114,6 +118,7 @@ total_iters = 1000000
 dist_params = dict(backend='nccl', port=20003)
 log_level = 'INFO'
 work_dir = './work_dirs/dim_stage2'
-load_from = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/dim_stage1_v16_1x1_1000k_comp1k_SAD-53.8_20200605_140257-979a420f.pth'
+#load_from = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/dim_stage1_v16_1x1_1000k_comp1k_SAD-53.8_20200605_140257-979a420f.pth'
+load_from ='s3://parrots_model_data/mmediting_data/dim_stage1_v16_1x1_1000k_comp1k_SAD-53.8_20200605_140257-979a420f.pth'
 resume_from = None
 workflow = [('train', 1)]

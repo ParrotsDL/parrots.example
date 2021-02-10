@@ -25,6 +25,7 @@ fi
 
 PARTITION=${NAMESPACE}
 IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
+
 ## 资源信息
 NODES=$((${GPUS}<=8?1:2))
 GPU_PER_NODE=$((${GPUS}>8?8:${GPUS}))       ## 每个节点GPU的计算方法可能也是一个问题，因为有的机器运行着开发机，所以每个节点可能占不到8个GPU

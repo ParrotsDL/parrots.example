@@ -91,6 +91,11 @@ data_root_val = None
 ceph_data_root = 's3://parrots_model_data/mmediting_data/CelebA-HQ/'
 ceph_data_root_val = None
 
+
+
+ceph_ann_file_prefix = 's3://parrots_model_data/mmediting_data/meta/'
+ann_file_prefix = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/CelebA-HQ/'
+
 data = dict(
     samples_per_gpu=12,
     workers_per_gpu=8,
@@ -99,19 +104,19 @@ data = dict(
     drop_last=True,
     train=dict(
         type=dataset_type,
-        ann_file=('/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/CelebA-HQ/train_celeba_img_list.txt'),
+        ann_file=(ann_file_prefix + 'train_celeba_img_list.txt'),
         data_prefix=data_root,
         pipeline=train_pipeline,
         test_mode=False),
     val=dict(
         type=dataset_type,
-        ann_file=('/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/CelebA-HQ/val_celeba_img_list.txt'),
+        ann_file=(ann_file_prefix + 'val_celeba_img_list.txt'),
         data_prefix=data_root,
         pipeline=test_pipeline,
         test_mode=True),
     test=dict(
         type=dataset_type,
-        ann_file=('/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/CelebA-HQ/val_celeba_img_list.txt'),
+        ann_file=(ann_file_prefix +  'val_celeba_img_list.txt'),
         data_prefix=data_root,
         pipeline=test_pipeline,
         test_mode=True))
