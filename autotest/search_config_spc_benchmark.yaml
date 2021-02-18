@@ -18,6 +18,9 @@ task:
                     ## 5.ssd
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT default --DATA_READER CephReader --SEED 1024'},
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT default --DATA_READER CephReader --SEED 1024'},
+                    ## 6.alphatrion_nas
+                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
+                    # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
                     ## 14.mmediting
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 8, 'model': 'deepfillv2_256x256_8x2_celeba', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
