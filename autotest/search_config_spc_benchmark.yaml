@@ -21,6 +21,23 @@ task:
                     ## 6.alphatrion_nas
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
+                    ## 11.pod_v3.1.0
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'cascade-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'fcos-R50-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'effnetd0-bifpn-retina-32epoch', 'py_args': '--seed 1024 --pavi-project default --max-step 0.2 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x-ms-test-aug', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'grid-rcnn-R50-FPN-2x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'keypoint-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.1 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-2x-lvis', 'py_args': '--seed 1024 --pavi-project default --max-step 0.2 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'retinanet-R50-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-cityscapes', 'py_args': '--seed 1024 --pavi-project default --max-step 1 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-openimages', 'py_args': '--seed 1024 --pavi-project default --max-step 0.05 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-mobilenet-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.05 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.5 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.5 --data-reader CephReader'},
+                    # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'centernetkp511-R101-60epoch', 'py_args': '--seed 1024 --pavi-project default --max-step 0.4 --data-reader CephReader'},
                     ## 14.mmediting
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 8, 'model': 'deepfillv2_256x256_8x2_celeba', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
