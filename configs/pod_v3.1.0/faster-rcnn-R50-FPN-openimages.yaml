@@ -103,8 +103,7 @@ trainer: # Required.
 saver: # Required.
   save_dir: checkpoints/faster-rcnn-R50-FPN-openimages     # dir to save checkpoints
   lustre_pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
-  # ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/resnet50-19c8e357.pth
-  ceph_pretrain_model: s3://zj_parrots/model_zoo/resnet_resave.pth
+  ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/resnet50-19c8e357.pth
   results_dir: results_dir/faster-rcnn-R50-FPN-openimages  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)
