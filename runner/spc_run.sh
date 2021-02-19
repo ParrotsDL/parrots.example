@@ -78,5 +78,9 @@ spc run mpi-job \
         -m ${VOLUME_MOUNTS} \
         --container ${CONTAINER_NAME}
  
-sleep 5
 spc log -N ${NAMESPACE} -p ${JOB_NAME}-1 --sync
+while (($? != 0))
+do
+        spc log -N ${NAMESPACE} -p ${JOB_NAME}-1 --sync
+done
+
