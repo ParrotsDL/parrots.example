@@ -21,6 +21,9 @@ task:
                     ## 6.alphatrion_nas
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
+                    ## 10.light_nas
+                    # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_search', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'light_nas', 'gpus': 8, 'model': 'single_path_oneshot_evolution', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
                     ## 11.pod_v3.1.0
                     # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'faster-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
                     # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'mask-rcnn-R50-FPN-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.06 --data-reader CephReader'},
