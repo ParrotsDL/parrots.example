@@ -1,23 +1,17 @@
 #!/bin/bash
 set -x
-
 source /usr/local/env/pat_latest
-pip install easydict --user
-
-export PYTHONPATH=/senseparrots/python:/PAPExtension:/mnt/lustre/share/memcached:$PYTHONPATH
-export LD_LIBRARY_PATH=/usr/local/libmemcached/lib:$LD_LIBRARY_PATH
 
 name=$1
-NAMESPACE=$2
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:2:$len}
+EXTRA_ARGS=${array[@]:1:$len}
  
 ## 下面是未定的存储和pavi使用方案，我先暂时这样写了
-if [ $OMPI_COMM_WORLD_LOCAL_RANK == '0' ]
+if [ "x$OMPI_COMM_WORLD_LOCAL_RANK" == "x0" ]
 then
-    cp /mnt/lustre/${NAMESPACE}/petreloss.conf /home/${NAMESPACE}/petreloss.conf
-    cp -r /mnt/lustre/${NAMESPACE}/.pavi /home/${NAMESPACE}/.pavi
+    cp /mnt/lustre/${USER}/petreloss.conf /home/${USER}/petreloss.conf
+    cp -r /mnt/lustre/${USER}/.pavi /home/${USER}/.pavi
 fi
 
 mkdir -p log/light_nas/
