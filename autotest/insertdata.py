@@ -3,7 +3,7 @@ import pymysql
 import time
 import sys
 try:
-    from autoparrots.utils.log import LOG as logger
+    from callback_util import logger
 except:
     logger = None
 
@@ -66,7 +66,7 @@ class DataInseter(object):
         self.db.close()
 
 if __name__ == '__main__':
-    from autoparrots.utils.fileio import load
+    from callback_util import load
     dump_info = load('monitor_info.json', file_format='json')
     benchmark_inserter = DataInseter()
     benchmark_inserter.insert(**dump_info)

@@ -36,13 +36,13 @@ dataset: # Required.
         source: train  # dataset id
         num_classes: *num_classes
         ignore_as_gt: True
-        meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minitrain.json
-        # meta_file: s3://parrots_model_data/DSK/datasets/OpenImages/annotations/challenge-2018-train-annotations-bbox-minitrain.json
+        lustre_meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minitrain.json
+        ceph_meta_file: s3://parrots_model_data/DSK/datasets/OpenImages/annotations/challenge-2018-train-annotations-bbox-minitrain.json
         image_reader:
-          type: ceph_opencv
+          type: mix_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
-            image_dir: s3://parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
+            lustre_image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
+            ceph_image_dir: s3://parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
             color_mode: RGB
         transformer: [*flip, *resize, *to_tensor, *normalize]
   test:
@@ -51,22 +51,22 @@ dataset: # Required.
       kwargs:
         source: val
         num_classes: *num_classes
-        meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
-        # meta_file: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
+        lustre_meta_file: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
+        ceph_meta_file: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-train-annotations-bbox-minival.json
         image_reader:
-          type: ceph_opencv
+          type: mix_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
-            image_dir: s3://parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
+            lustre_image_dir: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
+            ceph_image_dir: s3://parrots_model_data/DSK/datasets/OpenImages/OpenImages/train
             color_mode: RGB
         transformer: [*resize_test, *to_tensor, *normalize]
         evaluator:
           type: OID               # choices = {'COCO', 'VOC', 'mAP'}
           kwargs:
-            input_annotations_boxes: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
-            # input_annotations_boxes: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
-            input_annotations_labels: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
-            # input_annotations_labels: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
+            lustre_input_annotations_boxes: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
+            ceph_input_annotations_boxes: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-bbox_expanded.csv
+            lustre_input_annotations_labels: /mnt/lustre/share_data/parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
+            ceph_input_annotations_labels: s3://parrots_model_data/DSK/datasets/OpenImages/challenge2019/Object_Detection/challenge-2018-minival-annotations-human-imagelabels_expanded.csv
             iou_thresh: 0.5
             output_metrics: metrics.csv
   batch_sampler:
@@ -102,7 +102,8 @@ trainer: # Required.
 
 saver: # Required.
   save_dir: checkpoints/faster-rcnn-R50-FPN-openimages     # dir to save checkpoints
-  pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  lustre_pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet50-19c8e357.pth
+  ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/resnet50-19c8e357.pth
   results_dir: results_dir/faster-rcnn-R50-FPN-openimages  # dir to save detection results. i.e., bboxes, masks, keypoints
   auto_resume: False  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)

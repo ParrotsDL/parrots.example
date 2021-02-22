@@ -60,6 +60,11 @@ class CallBack(object):
         else:
             config['__benchmark_total_time(h)'] = 10000
 
+        job_type = os.environ['type']
+        if job_type == 'ContainerJob':
+            print(yaml.dump(config))
+            return
+
         # get slurm job id
         slurm_job_id = ''
         status = ''
@@ -102,6 +107,10 @@ class CallBack(object):
 
         config.update(pavi_ret)
         print(yaml.dump(config))
+
+        job_type = os.environ['type']
+        if job_type == 'ContainerJob':
+            return
 
         if output_monitor and config['test_life'] == 1:
             monitor_info = callback_utils.get_monitor_info(config, run_type)

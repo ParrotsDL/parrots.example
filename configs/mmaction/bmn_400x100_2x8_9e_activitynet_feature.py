@@ -21,6 +21,14 @@ ann_file_train = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_da
 ann_file_val = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/ActivityNet/anet_anno_val.json'
 ann_file_test = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/ActivityNet/anet_anno_val.json'
 
+# ceph
+ceph_dataset_type = 'ActivityNetDataset'
+ceph_data_root = 's3://parrots_model_data/mmaction_data/ActivityNet/activitynet_feature_cuhk/csv_mean_100/'
+ceph_data_root_val = 's3://parrots_model_data/mmaction_data/ActivityNet/activitynet_feature_cuhk/csv_mean_100/'
+ceph_ann_file_train = 's3://parrots_model_data/mmaction_data/ActivityNet/anet_anno_train.json'
+ceph_ann_file_val = 's3://parrots_model_data/mmaction_data/ActivityNet/anet_anno_val.json'
+ceph_ann_file_test = 's3://parrots_model_data/mmaction_data/ActivityNet/anet_anno_val.json'
+
 test_pipeline = [
     dict(type='LoadLocalizationFeature'),
     dict(

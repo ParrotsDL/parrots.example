@@ -8,7 +8,7 @@ model = dict(
     loss_alpha=dict(type='CharbonnierLoss', loss_weight=0.5, sample_wise=True),
     loss_comp=dict(
         type='CharbonnierCompLoss', loss_weight=1.5, sample_wise=True),
-    pretrained='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/model_zoo/mattors/indexnet/mobilenet_v2.pth')
+    pretrained='s3://parrots_model_data/mmediting_data/mobilenet_v2.pth')
 # model training and testing settings
 train_cfg = dict(train_backbone=True)
 test_cfg = dict(metrics=['SAD', 'MSE', 'GRAD', 'CONN'])
@@ -19,6 +19,10 @@ data_root = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/C
 data_root_val = None
 ceph_data_root = 's3://parrots_model_data/mmediting_data/Combined_Dataset/'
 ceph_data_root_val = None
+
+
+ceph_ann_file_prefix = 's3://parrots_model_data/mmediting_data/meta/'
+ann_file_prefix = '/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/'
 
 img_norm_cfg = dict(
     mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], to_rgb=True)
@@ -102,7 +106,7 @@ data = dict(
     drop_last=True,
     train=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/training_list.json',
+        ann_file=ann_file_prefix + 'training_list.json',
         data_prefix=data_root,
         pipeline=train_pipeline),
     # validation
@@ -110,13 +114,13 @@ data = dict(
     val_workers_per_gpu=4,
     val=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
+        ann_file=ann_file_prefix + 'test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline),
     # test
     test=dict(
         type=dataset_type,
-        ann_file='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmediting_data/Combined_Dataset/test_list.json',
+        ann_file=ann_file_prefix + 'test_list.json',
         data_prefix=data_root,
         pipeline=test_pipeline))
 

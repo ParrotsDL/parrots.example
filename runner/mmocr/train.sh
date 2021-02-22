@@ -35,8 +35,6 @@ cp Makefile.pse Makefile && srun -p $1 --gres gpu:$g make
 cp Makefile.pan Makefile && srun -p $1 --gres gpu:$g make
 cd ../../../../../..
 
-ln -s /mnt/lustre/share_data/parrots_model_data/mmocr/data data
-
 srun --mpi=pmi2 -p $1 -n $2 --gres gpu:$g --ntasks-per-node $g --job-name=mmocr_${name} --kill-on-bad-exit=1 ${SRUN_ARGS} \
   python -u $ROOT/models/mmocr/tools/train.py \
   $cfg  --work-dir=work_dir/mmocr_${name} --launcher="slurm" ${PY_ARGS} ${EXTRA_ARGS} \

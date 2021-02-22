@@ -20,9 +20,9 @@ PYTHON_ARGS="python -m lib.train \
                 --id                                                   		$NAME \
                 --save_path                                        $ROOT/log/sr_v3.0/experiments \
                 --configs                                               sr_v3.${name} \
-                --isp_base_path    /mnt/lustre/share_data/jiaomenglei/model_pool_data/sr_v3.0/data/xiaomi_F4/data/F4/isp_base.npy \
-                --dataroot         /mnt/lustre/share_data/jiaomenglei/model_pool_data/sr_v3.0/data/xiaomi_F4/F4/hdf5 \
-                --motion_base_path /mnt/lustre/share_data/jiaomenglei/model_pool_data/sr_v3.0/data/xiaomi_F4/data/motion_masks \
+                --isp_base_path    s3://parrots_model_data/SR_V3.0/xiaomi_F4/data/F4/isp_base.npy \
+                --dataroot         s3://parrots_model_data/SR_V3.0/data/xiaomi_F4/F4/hdf5 \
+                --motion_base_path s3://parrots_model_data/SR_V3.0/xiaomi_F4/data/motion_masks \
                 --model                                              MRUSFT_ch4_b9 \
                 --with_motion                                                    1 \
                 --sharpen_reg                                                    1 \

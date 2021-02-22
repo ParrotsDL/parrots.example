@@ -31,7 +31,8 @@ log_config = dict(
 
 
 dataset_type = 'IcdarDataset'
-data_root = 'data/ctw1500/'
+data_root = '/mnt/lustre/share_data/parrots_model_data/mmocr/data/ctw1500/'
+ceph_data_root = 's3://parrots_model_data/mmocr/data/ctw1500/'
 
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
@@ -84,21 +85,21 @@ data = dict(
     workers_per_gpu=2,
     train=dict(
         type=dataset_type,
-        ann_file=data_root + '/instances_training.json',
+        ann_file=data_root + 'instances_training.json',
         # for debugging top k imgs
         # select_first_k=200,
-        img_prefix=data_root + '/imgs',
+        img_prefix=data_root + 'imgs',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
-        ann_file=data_root + '/instances_test.json',
-        img_prefix=data_root + '/imgs',
+        ann_file=data_root + 'instances_test.json',
+        img_prefix=data_root + 'imgs',
         # select_first_k=100,
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        ann_file=data_root + '/instances_test.json',
-        img_prefix=data_root + '/imgs',
+        ann_file=data_root + 'instances_test.json',
+        img_prefix=data_root + 'imgs',
         # select_first_k=100,
         pipeline=test_pipeline))
 evaluation = dict(interval=100, metric='hmean')

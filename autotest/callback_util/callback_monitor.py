@@ -29,22 +29,23 @@ def read_log_last(path, last_line_num=5):
 def get_hash(lines):
     if lines is None:
         return None
-    lines_str = ' '.join(lines)
+    lines_str = ' '.join(lines).strip('\n').strip(' ')
     return hash(lines_str)
 
 
 def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E] Time limit exceeded'):
-    time.sleep(60)
+    time.sleep(10)
     # wait for job_pid, job_log_path
     job_pid = None
-    slurm_job_id = config['slurm_job_id']
+    # slurm_job_id = config['slurm_job_id']
+    slurm_job_id = None
     job_log_path = None
     workdir = None
     name = None
     job_wait_to_run_time_thresh = 1  # wait one hour
     start_time = time.time()
     while True:
-        time.sleep(30)
+        time.sleep(10)
         interval_time = time.time() - start_time
         if ((not job_pid or
              not job_log_path or
@@ -76,20 +77,32 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
         # get job name
         name = os.environ['name']
         # get slurm_job_id
-        if not slurm_job_id:
-            try:
-                if workdir and name:
-                    info = load_taskinfo(workdir)
-                    job_names = list(
-                        filter(lambda j: j['name'] in [name], info['jobs']))
-                    if len(job_names) > 0:
-                        job_info = job_names[0]
-                        slurm_job_id = int(job_info['slurm_job_id'])
-            except Exception:
-                slurm_job_id = None
-        slurm_job_id_tmp, _, status = callback_utils.get_slurm_job_id()
-        if slurm_job_id_tmp and not slurm_job_id:
-            slurm_job_id = slurm_job_id_tmp
+        # if not slurm_job_id:
+        #     try:
+        #         if workdir and name:
+        #             info = load_taskinfo(workdir)
+        #             job_names = list(
+        #                 filter(lambda j: j['name'] in [name], info['jobs']))
+        #             if len(job_names) > 0:
+        #                 job_info = job_names[0]
+        #                 slurm_job_id = int(job_info['slurm_job_id'])
+        #     except Exception:
+        #         slurm_job_id = None
+        # slurm_job_id_tmp, _, status = callback_utils.get_slurm_job_id()
+        # if slurm_job_id_tmp and not slurm_job_id:
+        #     slurm_job_id = slurm_job_id_tmp
+        try:
+            if workdir and name:
+                info = load_taskinfo(workdir)
+                job_names = list(
+                    filter(lambda j: j['name'] in [name], info['jobs']))
+                if len(job_names) > 0:
+                    job_info = job_names[0]
+                    slurm_job_id = int(job_info['slurm_job_id'])
+        except Exception:
+            slurm_job_id = None
+        _, _, status = callback_utils.get_slurm_job_id()
+
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
             print('slurm_job_status: R')
             sys.stdout.flush()
@@ -109,7 +122,7 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
             not name or
                 not slurm_job_id):
             break
-        time.sleep(60)
+        time.sleep(10)
         is_time_limit = False
         # get last some lines
         log_lines = read_log_last(job_log_path, last_line_num=10)
@@ -125,10 +138,11 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
         if lines_hash == last_lines_hash:
             if time.time() - last_lines_hash_start_time >= callback_common.wait_time_log_no_change * 60 * 60:
                 kill_task(workdir, [name])
+                # kill second time to avoid tasks not being scanned
+                os.system("scancel {}".format(slurm_job_id))
                 is_time_limit = True
-                if logger:
-                    logger.error("Job({})[slurm: {}] is killed because the log has not changed for {} hours.".format(
-                        name, slurm_job_id, callback_common.wait_time_log_no_change))
+                logger.error("Job({})[pid: {}, slurm: {}] is killed because the log has not changed for {} hours.".format(
+                        name, job_pid, slurm_job_id, callback_common.wait_time_log_no_change))
         else:
             last_lines_hash = lines_hash
             last_lines_hash_start_time = time.time()
@@ -142,6 +156,8 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
             if is_time_limit_occur and time_limited_start_time is not None:
                 if time.time() - time_limited_start_time >= callback_common.wait_time_occur_time_limited * 60 * 60:
                     kill_task(workdir, [name])
+                    # kill second time to avoid tasks not being scanned
+                    os.system("scancel {}".format(slurm_job_id))
                     is_time_limit = True
                     if logger:
                         logger.error("Job({})[pid: {}, slurm: {}] is killed because the log occurs '{}' for {} hours.".format(
@@ -157,6 +173,7 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
             break
 
     if logger:
-        logger.info("Job({})[slurm: {}] The child process monitoring the log has exited, \
+        logger.info("Job({})[pid: {}, slurm: {}] The child process monitoring the log has exited, \
                       with [job_pid: {}, job_log_path: {}, workdir: {}, name: {}, slurm_job_id: {}]".format(
-            name, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
+            name, job_pid, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
+

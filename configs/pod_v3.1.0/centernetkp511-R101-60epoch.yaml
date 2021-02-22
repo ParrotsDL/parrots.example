@@ -49,12 +49,13 @@ dataset: # Required.
       type: coco
       kwargs:
         source: train  # dataset id
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        lustre_meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_train2017.json
+        ceph_meta_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_train2017.json
         image_reader:
-          type: ceph_opencv
+          type: mix_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
-            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
+            lustre_image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/train2017
+            ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/train2017
             color_mode: RGB
         transformer: [*flip, *resize, *jitter, *target_transform, *to_tensor, *normalize]
   test:
@@ -62,18 +63,20 @@ dataset: # Required.
       type: coco
       kwargs:
         source: val
-        meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+        lustre_meta_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+        ceph_meta_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
         image_reader:
-          type: ceph_opencv
+          type: mix_opencv
           kwargs:
-            # image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
-            image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
+            lustre_image_dir: /mnt/lustre/share/DSK/datasets/mscoco2017/val2017
+            ceph_image_dir: s3://parrots_model_data/DSK/datasets/mscoco2017/val2017
             color_mode: RGB
         transformer: [*crop, *to_tensor, *normalize]
         evaluator:
           type: COCO               # choices = {'COCO', 'VOC', 'MR'}
           kwargs:
-            gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+            lustre_gt_file: /mnt/lustre/share/DSK/datasets/mscoco2017/annotations/instances_val2017.json
+            ceph_gt_file: s3://parrots_model_data/DSK/datasets/mscoco2017/annotations/instances_val2017.json
             iou_types: [bbox]
   batch_sampler:
     type: aspect_ratio_group
@@ -106,7 +109,8 @@ trainer: # Required.
 
 saver: # Required.
   save_dir: checkpoints/centernetkp511-R101-60epoch     # dir to save checkpoints
-  pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet101-5d3b4d8f.pth
+  lustre_pretrain_model: /mnt/lustre/share/DSK/model_zoo/pytorch/imagenet/resnet101-5d3b4d8f.pth
+  ceph_pretrain_model: s3://parrots_model_data/parrots_model_ckpt/model_zoo/resnet101-5d3b4d8f.pth
   results_dir: results_dir/centernetkp511-R101-60epoch  # dir to save detection results. i.e., bboxes, masks, keypoints
   # auto_resume: True  # find last checkpoint from save_dir and resume from it automatically
                      # this option has the highest priority (auto_resume > opts > resume_model > pretrain_model)

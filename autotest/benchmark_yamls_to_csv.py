@@ -3,7 +3,7 @@ import os.path as osp
 import sys
 import yaml
 import csv
-from autoparrots.utils.fileio import dump
+from callback_util import dump
 
 
 def get_frames(configs_dir):

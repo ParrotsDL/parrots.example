@@ -5,3 +5,5 @@ data:
   ceph:
     data_dir1: s3://parrots_model_data/medical_heart/train20_npy
     data_dir2: s3://parrots_model_data/medical_heart/train40_npy
+    meta_file1: s3://parrots_model_data/medical_heart/train20_npy_meta.txt
+    meta_file2: s3://parrots_model_data/medical_heart/train40_npy_meta.txt
