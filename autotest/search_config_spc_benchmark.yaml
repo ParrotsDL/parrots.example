@@ -97,6 +97,10 @@ task:
                     # {'framework': 'mmediting', 'gpus': 8, 'model': 'pconv_256x256_stage1_8x1_celeba', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
+                    ## 18.mmtrack
+                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 2'},
+                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config1ms_lr', 'py_args': '--pavi --pavi-project default --seed 1024  --max-step 1'},
+                    # {'framework': 'mmtrack', 'gpus': 8, 'model': 'siamrpnpp', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 1'},
                     ## 26.instance_seg
                     # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 201'},
                     ## 34.deformable_detr
