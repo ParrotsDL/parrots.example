@@ -4,7 +4,7 @@ dataset: # Required.
     data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
     data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt
     ceph_data_root: s3://parrots_model_data/DSK/datasets/cityscapes
-    ceph_data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt
+    ceph_data_list: s3://parrots_model_data/DSK/datasets/cityscapes/fine_train.txt
     crop:
       type: rand
       size: [448, 896] # crop image with HxW size
@@ -12,7 +12,7 @@ dataset: # Required.
     data_root: /mnt/lustre/share/HiLight/dataset/cityscapes
     data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_val.txt
     ceph_data_root: s3://parrots_model_data/DSK/datasets/cityscapes
-    ceph_data_list: /mnt/lustre/share/HiLight/dataset/cityscapes/fine_train.txt
+    ceph_data_list: s3://parrots_model_data/DSK/datasets/cityscapes/fine_train.txt
     resize: [512, 1024]
     crop:
       type: center
