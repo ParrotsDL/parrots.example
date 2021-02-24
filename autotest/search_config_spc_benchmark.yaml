@@ -59,6 +59,10 @@ task:
                     ## 6.alphatrion_nas
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
+                    ## 7.seg
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'pspnet.benchmark', 'py_args': '--pavi --pavi-project default --data_reader CephReader'},
+                    # {'framework': 'seg', 'gpus': 16, 'model': 'deeplab.benchmark', 'py_args': '--pavi --pavi-project default --data_reader CephReader'},
+                    # {'framework': 'seg', 'gpus': 8, 'model': 'mobilenet_v2_plus.benchmark', 'py_args': '--pavi --pavi-project default --data_reader CephReader'},
                     ## 8.example
                     # {'framework': 'example', 'gpus': 8, 'model': "dpn92_mix.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     # {'framework': 'example', 'gpus': 8, 'model': "dpn92.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
