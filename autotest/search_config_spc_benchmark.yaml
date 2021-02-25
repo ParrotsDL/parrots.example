@@ -127,6 +127,8 @@ task:
                     # {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project default --max_step 1 --data_reader CephReader'},
                     ## 26.instance_seg
                     # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 201'},
+                    ## 29.heart_seg
+                    # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 2'},
                     ## 30.coronary_seg
                     # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 3'},
                     ## 34.deformable_detr
