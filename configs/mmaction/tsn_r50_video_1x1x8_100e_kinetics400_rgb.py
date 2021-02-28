@@ -3,7 +3,7 @@ model = dict(
     type='Recognizer2D',
     backbone=dict(
         type='ResNet',
-        pretrained='/mnt/lustre/share_data/jiaomenglei/model_pool_data/mmaction_data/resnet50-19c8e357.pth',
+        pretrained='s3://parrots_model_data/mmaction_data/resnet50-19c8e357.pth',
         depth=50,
         norm_eval=False),
     cls_head=dict(
@@ -87,7 +87,7 @@ test_pipeline = [
     dict(type='ToTensor', keys=['imgs'])
 ]
 data = dict(
-    videos_per_gpu=32,
+    videos_per_gpu=20,
     workers_per_gpu=4,
     train=dict(
         type=dataset_type,

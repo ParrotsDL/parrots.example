@@ -1,0 +1,74 @@
+model:
+  arch: textnet_middle_v2.Textnet_Middle_V2
+  normalize:
+    normalize_type: sync_bn
+    bn_group_size: 1
+  scale: [1, 8] # T: out sequence length, W: input image's width, T = for i in range(len(scale)): int(W / scale[i]) + shift[i]
+  shift: [-1, 1]
+  kwargs:
+    in_channels: 1
+dataset:
+  train:
+    train_root_ceph: ''
+    train_source_ceph: s3://parrots_model_data/text_data/label/ceph_train.txt
+    train_root: ''
+    train_source: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/train.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_train_add_express_digit_shujutang_air_en_replace.txt
+    augmentation:
+      kwargs:
+        perspective_prob: 0.5
+        perspective_offset: 0.25 # for every corner point, the max offset of x and y direction is perspective_offset * new_h
+        new_width_prob: 1
+        min_new_width: 0.7
+        max_new_width: 1.3
+        reverse_prob: 0
+    kwargs:
+      max_w: 1500 # if image's width (after resize) > max_w, skip this image
+      max_label_length: 100
+      min_std: 1 # for gray image, if std < min_std, skip it
+  val:
+    val_root_ceph: ''
+    val_source_ceph: s3://parrots_model_data/text_data/label/ceph_test.txt
+    val_root: ''
+    val_source: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/test.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_test_replace.txt
+  val_list:
+    val_root_list_ceph: ['']
+    val_source_list_ceph: ['s3://parrots_model_data/text_data/label/ceph_test.txt']
+    val_root_list: ['']
+    val_source_list: ['/mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/test.txt']
+  test:
+    test_root_ceph: ''
+    test_source_ceph: s3://parrots_model_data/text_data/label/ceph_test.txt
+    test_root: ''
+    test_source: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/test.txt  #/mnt/lustre/ocrgroup/dataset/print_recog/recog_print_test_replace.txt
+  dict: /mnt/lustre/share_data/parrots_model_data/TextRecog/text_data/label/dict.txt  #/mnt/lustre/ocrgroup/dataset/labels/print_dict_add_express_digit_shujutang_air_en.txt
+  dict_ceph: s3://parrots_model_data/text_data/label/dict.txt
+  batch_size: 16 # batch size on one GPU
+  num_workers: 0
+  new_h: 32 # resize image's height to new_h and keep the aspect ratio
+  color: False # RGB if True else Gray
+solver:
+  optimizer:
+    type: SGD
+    base_lr: 0.01
+    kwargs:
+      momentum: 0.9
+      weight_decay: 0.0001
+      nesterov: True
+  lr_scheduler:
+    lr_mode: step
+    milestones: [120000, 180000]
+    lr_mults: 0.1
+    warmup_from: 0.0001 # linear increase
+    warmup_steps: 5000 # 10000
+    max_iter: 5000 #200000
+  clip_type: norm # norm or value
+  max_norm: 10
+checkpoint:
+  checkpoint_freq: 1000
+  checkpoint_path: # finetune from checkpoint_path
+  recover: False # True if you want to recover optimizer status from checkpoint_path
+  strict: True # whether to strictly enforce that the keys in :attr:`state_dict` match the keys returned by this module's
+phase: train
+print_freq: 10
+val_freq: 500 #1000
+work_dir: experiments/textnet_middle_v2/print_align

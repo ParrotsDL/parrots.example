@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh #your-namespace#  {framework} {model} {gpus} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh jiaomenglei  {framework} {model} {gpus} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -56,7 +56,7 @@ task:
                     ## 5.ssd
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_FSAF_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT default --DATA_READER CephReader --SEED 1024'},
                     # {'framework': 'ssd', 'gpus': 8, 'model': 'ssd_Retina_benchmark', 'py_args': '--PAVI.USE true --PAVI.WRITER.PROJECT default --DATA_READER CephReader --SEED 1024'},
-                    ## 6.alphatrion_nas
+                    # ## 6.alphatrion_nas
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
                     # {'framework': 'alphatrion_nas', 'gpus': 8, 'model': 'super_resnet_range1_fp16_benchmark', 'py_args': '--pavi.use true --pavi.writer.project default --data_reader CephReader --seed 1024'},
                     ## 7.seg
@@ -105,6 +105,14 @@ task:
                     # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'rfcn-R101-ohem-deform-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.5 --data-reader CephReader'},
                     # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'rfcn-shufflenet-1x', 'py_args': '--seed 1024 --pavi-project default --max-step 0.5 --data-reader CephReader'},
                     # {'framework': 'pod_v3.1.0', 'gpus': 8, 'model': 'centernetkp511-R101-60epoch', 'py_args': '--seed 1024 --pavi-project default --max-step 0.4 --data-reader CephReader'},
+                    # ## 12.mmaction
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'i3d_r50_video_32x2x1_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'r2plus1d_r34_video_8x8x1_180e_kinetics400_rgb', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'slowfast_r50_video_4x16x1_256e_kinetics400_rgb', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'slowonly_r50_video_4x16x1_256e_kinetics400_rgb', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'tsm_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 8, 'model': 'tsn_r50_video_1x1x8_100e_kinetics400_rgb', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # {'framework': 'mmaction', 'gpus': 2, 'model': 'bmn_400x100_2x8_9e_activitynet_feature', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
                     ## 14.mmediting
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'cyclegan_lsgan_id0_resnet_in_1x1_246200_summer2winter', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 8, 'model': 'deepfillv2_256x256_8x2_celeba', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
@@ -117,6 +125,26 @@ task:
                     # {'framework': 'mmediting', 'gpus': 8, 'model': 'pconv_256x256_stage1_8x1_celeba', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 500'},
+                    # ## 15.TextRecog
+                    # {'framework': 'TextRecog', 'gpus': 1, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 301'},
+                    # {'framework': 'TextRecog', 'gpus': 1, 'model': 'print_Big', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 301'},
+                    # {'framework': 'TextRecog', 'gpus': 1, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 301'},
+                    # {'framework': 'TextRecog', 'gpus': 1, 'model': 'crnn', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 301'},
+                    # ## 17.sketch
+                    # {'framework': 'sketch', 'gpus': 8, 'model': 'vgg1.4.3', 'py_args': '--pavi --pavi-project default --max-step 1'},
+                    # {'framework': 'sketch', 'gpus': 8, 'model': 'mobilenet1.0.0', 'py_args': '--pavi --pavi-project default --max-step 1'},
+                    # {'framework': 'sketch', 'gpus': 8, 'model': 'vggfusion', 'py_args': '--pavi --pavi-project default --max-step 1'},
+                    # ## 19.RetinaUnet
+                    # {'framework': 'RetinaUnet', 'gpus': 1, 'model': '2d_runet_infer', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024'},
+                    # ## 20.pod_v2.3.0
+                    # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'retinanet-v11-18w', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.1'},
+                    # {'framework': 'pod_v2.3.0', 'gpus': 8, 'model': 'fcos-v11-80w-stride4', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.2'},
+                    # ## 26.instance_seg
+                    # {'framework': 'instance_seg', 'gpus': 1, 'model': 'yolact_mobilenetv2_concat_32_coco_config', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 201'},
+                    # ## 28.sr_v3.0
+                    # {'framework': 'sr_v3.0', 'gpus': 1, 'model': 'F4_0_300', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+                    # ## 39.Multi_organ_seg_HR
+                    # {'framework': 'Multi_organ_seg_HR', 'gpus': 1, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     ## 16.mmpose
                     ## bottomup_hrnet decrease batch_size due to the gpu memory limit of 16G.
                     # {'framework': 'mmpose', 'gpus': 8, 'model': 'bottomup_hrnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1 --batch-size 8'},
@@ -155,12 +183,11 @@ task:
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-atss', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-atss-smoothl1', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-topk', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
-                    
                 ]
     # Optional
     # callback: "cat"
-    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 all"
-    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 all"
+    pre_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 0 benchmark"
+    after_callback: "python autotest/parrots_test_callback_new.py {framework} {model} 1 benchmark"
 
 searcher:
     # Support GridSearcher, RandomSearcher, SkoptSearcher
@@ -174,6 +201,7 @@ scheduler:
     stop_criterion:
         max_tries: 100
     wait_to_run_time_thresh: inf # inf
+    wait_to_get_pavi_task_thresh: inf
 
 # Optional
 pavi:
