@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir -p log/TextRecog/
+export CUDA_TOOLKIT_ROOT_DIR=/mnt/lustre/share/cuda-9.0
 
 T=`date +%m%d%H%M%S`
 name=$3
