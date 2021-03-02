@@ -173,6 +173,8 @@ task:
                     # {'framework': 'heart_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 2'},
                     ## 30.coronary_seg
                     # {'framework': 'coronary_seg', 'gpus': 1, 'model': 'resvnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 3'},
+                    ## 33.pattern_v2_5_sp
+                    # {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--max_step 320 --data_reader CephReader --seed 100 --pavi --pavi-project default'},
                     ## 34.deformable_detr
                     # {'framework': 'deformable_detr', 'gpus': 8, 'model': 'r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     ## 42.springce_psot
