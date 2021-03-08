@@ -248,12 +248,13 @@ task:
                     ## 39.springce_psot
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_non_siam', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
-                    # not ready {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn-lt', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
+                     # not ready {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn-lt', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-atss', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-atss-smoothl1', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-topk', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
-                   
+                    ## 40.mmocr_ctc
+                     { 'framework': 'mmocr_ctc', 'gpus': 4, 'model': 'icdar2013_ctc', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 5' },
 
                 ]
 
