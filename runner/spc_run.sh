@@ -27,10 +27,10 @@ PARTITION=${NAMESPACE}
 IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
 
 ## 资源信息
-NODES=$((${GPUS}<=8?1:2))
+NODES=$((${GPUS}<=8?1:(${GPUS}+7)/8))
 GPU_PER_NODE=$((${GPUS}>8?8:${GPUS}))       ## 每个节点GPU的计算方法可能也是一个问题，因为有的机器运行着开发机，所以每个节点可能占不到8个GPU
 CPU_PER_NODE="`expr 2 \* ${GPU_PER_NODE}`"
-MEMORY_PER_NODE_VALUE=`expr 30 \* ${GPU_PER_NODE}`   ## 每个模型占用内存大小不同，如果不够再讨论解决办法
+MEMORY_PER_NODE_VALUE=`expr 20 \* ${GPU_PER_NODE}`   ## 每个模型占用内存大小不同，如果不够再讨论解决办法
 MEMORY_PER_NODE="$((${MEMORY_PER_NODE_VALUE}>=32?${MEMORY_PER_NODE_VALUE}:32))Gi"    # 最少分配32G内存(单卡模型)
 ## 训练脚本
 WORKING_DIR=${PWD} 
@@ -72,8 +72,8 @@ spc run mpi-job \
         --train-script ${TRAIN_SCRIPT} \
         --train-script-args "${TRAIN_SCRIPT_ARGS}" \
         --gpus-per-pod ${GPU_PER_NODE} \
-        --cpus-per-pod ${CPU_PER_NODE} \
-        --mems-per-pod ${MEMORY_PER_NODE} \
+        --mincpus-per-pod ${CPU_PER_NODE} \
+        --minmems-per-pod ${MEMORY_PER_NODE} \
         -v ${VOLUMES} \
         -m ${VOLUME_MOUNTS} \
         --container ${CONTAINER_NAME}
