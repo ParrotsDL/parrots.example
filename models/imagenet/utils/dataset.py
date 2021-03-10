@@ -1,7 +1,7 @@
 import io
 from PIL import Image
 
-import mc
+#import mc
 from torch.utils.data import Dataset
 
 
@@ -43,13 +43,13 @@ class McDataset(Dataset):
         filename = self.root + '/' + self.metas[index][0]
         cls = self.metas[index][1]
 
-        # memcached
-        self._init_memcached()
-        value = mc.pyvector()
-        self.mclient.Get(filename, value)
-        value_buf = mc.ConvertBuffer(value)
-        buff = io.BytesIO(value_buf)
-        with Image.open(buff) as img:
+       # memcached
+       # self._init_memcached()
+       # value = mc.pyvector()
+       # self.mclient.Get(filename, value)
+       # value_buf = mc.ConvertBuffer(value)
+       # buff = io.BytesIO(value_buf)
+        with Image.open(filename) as img:
             img = img.convert('RGB')
 
         # transform

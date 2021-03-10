@@ -6,14 +6,14 @@ net:
  
 dataset:
   train:
-    image_dir: /mnt/lustre/share/images/train
+    image_dir: /mnt/nfs/share_dcu/images/train
     random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: True
   test:
-    image_dir: /mnt/lustre/share/images/val
+    image_dir: /mnt/nfs/share_dcu/images/val
     resize: 256
     center_crop: [224, 224]
     colorjitter:
@@ -44,10 +44,10 @@ saver:
   resume_model: 
   save_dir: checkpoints/dpn92   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default # change to your own pavi project
-    task: dpn92
-    model: dpn92
+#monitor:
+#  type: pavi
+#  _taskid: # continue training
+#  kwargs:
+#    project: default # change to your own pavi project
+#    task: dpn92
+#    model: dpn92

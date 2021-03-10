@@ -9,7 +9,6 @@ from .dataset import McDataset
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-
 class CephDataset(Dataset):
     r"""
     Dataset using ceph to read data.
@@ -47,7 +46,6 @@ class CephDataset(Dataset):
             img = self.transform(img)
         return img, cls
 
-
 def build_augmentation(cfg):
     compose_list = []
     if cfg.random_resize_crop:
@@ -65,7 +63,6 @@ def build_augmentation(cfg):
         compose_list.append(transforms.ColorJitter(*cfg.colorjitter))
 
     compose_list.append(transforms.ToTensor())
-
     data_normalize = transforms.Normalize(mean=cfg.get('mean', [0.485, 0.456, 0.406]),
                                           std=cfg.get('std', [0.229, 0.224, 0.225]))
     compose_list.append(data_normalize)
