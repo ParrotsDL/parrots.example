@@ -163,6 +163,9 @@ task:
                     # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 2'},
                     # {'framework': 'mmtrack', 'gpus': 8, 'model': 'config1ms_lr', 'py_args': '--pavi --pavi-project default --seed 1024  --max-step 1'},
                     # {'framework': 'mmtrack', 'gpus': 8, 'model': 'siamrpnpp', 'py_args': '--pavi --pavi-project default --seed 1024 --max-step 1'},
+                    ## 22.prototype
+                    # {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project default --max-step 4000 --data_reader CephReader'},
+                    # {'framework': 'prototype', 'gpus': 16, 'model': 'shufflev2', 'py_args': '--seed 1024 --pavi --pavi-project default --max-step 4000 --data_reader CephReader'},
                     ## 23.encoder cuda10error pause
                     # {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project default --max_step 1 --data_reader CephReader'},
                     ## 24.sensemedical
