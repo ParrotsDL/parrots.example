@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 
-source /usr/local/env/pat_latest
+source $1
 
 cd models/RetinaUnet
 pip install -v -e . --user
@@ -13,11 +13,11 @@ then
     cp -r /mnt/lustre/${USER}/.pavi /home/${USER}/.pavi
 fi
 
-MODEL_NAME=$1
+MODEL_NAME=$2
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 
 mkdir -p log/RetinaUnet
 

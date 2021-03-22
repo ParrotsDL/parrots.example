@@ -1,12 +1,12 @@
 #!/bin/bash
 #!/bin/bash
 set -x
-source /usr/local/env/pat_latest
+source $1
 
-name=$1
+name=$2
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
  
 ## 下面是未定的存储和pavi使用方案，我先暂时这样写了
 if [ "x$OMPI_COMM_WORLD_LOCAL_RANK" == "x0" ]

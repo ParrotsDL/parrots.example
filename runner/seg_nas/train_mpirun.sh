@@ -1,16 +1,16 @@
 #!/bin/bash
 set -x
 
-source pat_latest
+source $1
 
 # 多机多卡的训练脚本
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
-MODEL_NAME=$1
+MODEL_NAME=$2
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 
 ## 下面是未定的存储和pavi使用方案，我先暂时这样写了
 if [ "x$OMPI_COMM_WORLD_LOCAL_RANK" == "x0" ]

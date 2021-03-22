@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /usr/local/env/pat_latest
+source $1
 
 mkdir -p log/Pattern
 now=$(date +"%Y%m%d_%H%M%S")
@@ -23,13 +23,13 @@ fi
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 
 partition="place-holder"
 train_gpu=0
-config=$1
+config=$2
 
 
 SRUN_ARGS=${SRUN_ARGS}  sh runner/Pattern/train_1.sh $partition $train_gpu   $config  ${EXTRA_ARGS} 

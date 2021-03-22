@@ -1,13 +1,13 @@
 #!/bin/bash
 set -x
 
-source /usr/local/env/pat_latest
+source $1
 
-MODEL_NAME=$1
+MODEL_NAME=$2
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 
 mkdir -p log/pod_v2.3.0/
 
