@@ -1,13 +1,31 @@
 #!/bin/bash
 set -x  
-NAMESPACE=$1
-FRAMEWORK_NAME=$2
-MODEL_NAME=$3
-GPUS=$4
- 
+IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"  
+ENV="/usr/local/env/pat_latest"
+POS=1
+while getopts "i:e:" opt; do
+  case $opt in
+    i)
+        IMAGE=$OPTARG
+        POS=`expr ${POS} + 2`
+        ;;
+    e)
+        ENV=$OPTARG
+        POS=`expr ${POS} + 2`
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" 
+        ;;
+  esac
+done
+
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:4:$len}
+NAMESPACE=${array[@]:$POS-1:1}
+FRAMEWORK_NAME=${array[@]:$POS:1}
+MODEL_NAME=${array[@]:$POS+1:1}
+GPUS=${array[@]:$POS+2:1}
+EXTRA_ARGS=${array[@]:$POS+3:$len}
 
 # 首先需要将自己开发机home目录下的petreloss.conf 和 .pavi目录复制到nfs上自己的目录下, 不能是软连接
 cp /home/${USER}/petreloss.conf /mnt/lustre/${USER}/petreloss.conf
@@ -24,7 +42,6 @@ fi
  
 
 PARTITION=${NAMESPACE}
-IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"   #镜像名称可能也需要search_config.yaml中指定
 
 ## 资源信息
 NODES=$((${GPUS}<=8?1:(${GPUS}+7)/8))
@@ -35,7 +52,7 @@ MEMORY_PER_NODE="$((${MEMORY_PER_NODE_VALUE}>=32?${MEMORY_PER_NODE_VALUE}:32))Gi
 ## 训练脚本
 WORKING_DIR=${PWD} 
 TRAIN_SCRIPT="runner/${FRAMEWORK_NAME}/train_mpirun.sh"
-TRAIN_SCRIPT_ARGS="${MODEL_NAME} ${EXTRA_ARGS}"
+TRAIN_SCRIPT_ARGS="$ENV ${MODEL_NAME} ${EXTRA_ARGS}"
 ## 存储挂载
 VOLUMES="nfs=/mnt/lustre"
 VOLUME_MOUNTS="nfs=/mnt/lustre"

@@ -1,14 +1,14 @@
 #!/bin/bash
 set -x
 
-source /usr/local/env/pat_latest 
+source $1 
 
 
-MODEL_NAME=$1
+MODEL_NAME=$2
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 
 mkdir -p log/mmediting
 
@@ -34,9 +34,7 @@ fi
 PYTHON_ARGS="python -u models/mmediting/tools/train.py configs/mmediting/${MODEL_NAME}.py --launcher=mpi"
 
 set -x
-#OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-#srun -K --mpi=pmi2 -p $1 -n$2 --gres gpu:$g --ntasks-per-node $g --job-name=mmediting_${name} ${SRUN_ARGS}\
-#mpirun -np $2 \
+
 $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/mmediting/train.${MODEL_NAME}.log.$T
 

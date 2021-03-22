@@ -1,6 +1,7 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh jiaomenglei  {framework} {model} {gpus} {py_args}"
+    # -i指定使用的镜像， -e指定source的环境（这两个是可选的，默认是-i registry.sensetime.com/parrots/parrots:pat_latest -e /usr/local/env/pat_latest；并且-i -e只能放在{namespace}前面这个位置）
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh -i registry.sensetime.com/parrots/parrots:pat_latest -e /usr/local/env/pat_latest {namespace} {framework} {model} {gpus} {py_args}"
     # Required
     search_args:
         - type: Nested

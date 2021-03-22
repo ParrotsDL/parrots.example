@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-source pat_latest
+source $1
 mkdir -p log/instance_seg/
 ROOT=.
-name=$1
+name=$2
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 
 if [ "x$OMPI_COMM_WORLD_LOCAL_RANK" == "x0" ]
 then
