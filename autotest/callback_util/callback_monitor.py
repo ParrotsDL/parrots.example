@@ -137,12 +137,12 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
         # monitor whether the log has not changed over time (kill all process if not change for a long time)
         if lines_hash == last_lines_hash:
             if time.time() - last_lines_hash_start_time >= callback_common.wait_time_log_no_change * 60 * 60:
+                logger.error("Job({})[pid: {}, slurm: {}] is killed because the log has not changed for {} hours.".format(
+                        name, job_pid, slurm_job_id, callback_common.wait_time_log_no_change))
                 kill_task(workdir, [name])
                 # kill second time to avoid tasks not being scanned
                 os.system("scancel {}".format(slurm_job_id))
                 is_time_limit = True
-                logger.error("Job({})[pid: {}, slurm: {}] is killed because the log has not changed for {} hours.".format(
-                        name, job_pid, slurm_job_id, callback_common.wait_time_log_no_change))
         else:
             last_lines_hash = lines_hash
             last_lines_hash_start_time = time.time()
@@ -155,13 +155,12 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
                     break
             if is_time_limit_occur and time_limited_start_time is not None:
                 if time.time() - time_limited_start_time >= callback_common.wait_time_occur_time_limited * 60 * 60:
+                    logger.error("Job({})[pid: {}, slurm: {}] is killed because the log occurs '{}' for {} hours.".format(
+                            name, job_pid, slurm_job_id, time_limited_flag, callback_common.wait_time_occur_time_limited))
                     kill_task(workdir, [name])
                     # kill second time to avoid tasks not being scanned
                     os.system("scancel {}".format(slurm_job_id))
                     is_time_limit = True
-                    if logger:
-                        logger.error("Job({})[pid: {}, slurm: {}] is killed because the log occurs '{}' for {} hours.".format(
-                            name, job_pid, slurm_job_id, time_limited_flag, callback_common.wait_time_occur_time_limited))
             else:
                 time_limited_start_time = time.time()
 
