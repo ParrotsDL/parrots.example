@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh parrotstesters03  {framework} {model} {gpus} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh -i registry.sensetime.com/parrots/parrots:pat_latest_105 parrotstesters03  {framework} {model} {gpus} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -283,3 +283,6 @@ pavi:
         name: parrots.test.weeklymodeltest
 
 # slurm_job_id_monitor: true
+
+# is run job on Container?
+container: True
