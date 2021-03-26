@@ -2,8 +2,11 @@
 set -x  
 IMAGE="registry.sensetime.com/parrots/parrots:pat_latest"  
 ENV="/usr/local/env/pat_latest"
+## 存储挂载
+VOLUMES="nfs=/mnt/lustre"
+VOLUME_MOUNTS="nfs=/mnt/lustre"
 POS=1
-while getopts "i:e:" opt; do
+while getopts "i:e:v:m:" opt; do
   case $opt in
     i)
         IMAGE=$OPTARG
@@ -11,6 +14,15 @@ while getopts "i:e:" opt; do
         ;;
     e)
         ENV=$OPTARG
+        POS=`expr ${POS} + 2`
+        ;;
+    v)
+        VOLUMES=$OPTARG
+        POS=`expr ${POS} + 2`
+        ;;
+
+    m)
+        VOLUME_MOUNTS=$OPTARG
         POS=`expr ${POS} + 2`
         ;;
     \?)
@@ -53,9 +65,6 @@ MEMORY_PER_NODE="$((${MEMORY_PER_NODE_VALUE}>=32?${MEMORY_PER_NODE_VALUE}:32))Gi
 WORKING_DIR=${PWD} 
 TRAIN_SCRIPT="runner/${FRAMEWORK_NAME}/train_mpirun.sh"
 TRAIN_SCRIPT_ARGS="$ENV ${MODEL_NAME} ${EXTRA_ARGS}"
-## 存储挂载
-VOLUMES="nfs=/mnt/lustre"
-VOLUME_MOUNTS="nfs=/mnt/lustre"
  
   
 # 不变的参数
