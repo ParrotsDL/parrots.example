@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh  parrotstesters03  {framework} {model} {gpus} {py_args} -i registry.sensetime.com/parrots/parrots:pat_latest_105 -v /mnt/10-5-109-112/parrots.tester.s.03:/mnt/lustre/parrots.tester.s.03:rw /mnt/readonly/10-5-109-112/share:/mnt/lustre/share:rw"
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh parrotstesters03 {framework} {model} {gpus} {py_args} -i registry.sensetime.com/parrots/parrots:pat_latest_105 -v /mnt/10-5-109-112/parrots.tester.s.03:/mnt/lustre/parrots.tester.s.03:rw /mnt/readonly/10-5-109-112/share:/mnt/lustre/share:rw"
     # Required
     search_args:
         - type: Nested
@@ -244,7 +244,7 @@ task:
                      {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_csr', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --data_reader CephReader --seed 1024'},
                      {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_sfa', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --data_reader CephReader --seed 1024'},
                      # 38.sensestar
-                     {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project default --data_reader CephReader --seed 1024 --max_step 1'}
+                     {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project default --data_reader CephReader --seed 1024 --max_step 1'},
                     ## 39.springce_psot
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_non_siam', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
