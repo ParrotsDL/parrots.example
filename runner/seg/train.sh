@@ -2,6 +2,7 @@
 set -x
 
 export LD_LIBRARY_PATH=/mnt/lustre/share/libmemcached/lib:/mnt/lustre/share/memcached_client/lib:$LD_LIBRARY_PATH
+export PARROTS_FORK_SAFE=ON
 
 mkdir -p log/seg/
 
