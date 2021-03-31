@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh -i parrotstesters03  {framework} {model} {gpus} {py_args} registry.sensetime.com/parrots/parrots:pat_latest_105 -v /mnt/10-5-109-112/parrots.tester.s.03:/mnt/lustre/parrots.tester.s.03:rw /mnt/readonly/10-5-109-112/share:/mnt/lustre/share:rw"
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh -i registry.sensetime.com/parrots/parrots:pat_latest_105 parrotstesters03  {framework} {model} {gpus} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -276,7 +276,6 @@ scheduler:
     stop_criterion:
         max_tries: 250
     wait_to_run_time_thresh: inf # inf
-    wait_to_get_pavi_task_thresh: 0.5
 
 # Optional
 pavi:
