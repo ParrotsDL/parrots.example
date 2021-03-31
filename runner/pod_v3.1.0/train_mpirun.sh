@@ -1,15 +1,15 @@
 #!/bin/bash
-source /usr/local/env/pat_latest
+source $1
 mkdir -p log/pod_v3.1.0/
 
 T=`date +%m%d%H%M%S`
-name=$1
+name=$2
 ROOT=.
 cfg=$ROOT/configs/pod_v3.1.0/${name}.yaml
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:1:$len}
+EXTRA_ARGS=${array[@]:2:$len}
 
 if [ "x$OMPI_COMM_WORLD_LOCAL_RANK" == "x0" ]
 then

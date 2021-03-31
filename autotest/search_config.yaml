@@ -159,10 +159,10 @@ task:
                 # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades', 'py_args': '--pavi --pavi-project default --data-reader MemcachedReader --seed 1024'},
                 # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k', 'py_args': '--pavi --pavi-project default --data-reader MemcachedReader --seed 1024'},
                 ## 15.TextRecog
-                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
-                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
-                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
-                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project default --datareader ceph'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project default --datareader ceph'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project default --datareader ceph'},
+                # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project default --datareader ceph'},
                 ## 16.mmpose
                 # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --seed 1024'},
                 # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project default --data_reader MemcachedReader --seed 1024'},

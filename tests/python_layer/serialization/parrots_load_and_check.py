@@ -17,4 +17,7 @@ assert torch.allclose(zip_input, input, rtol=5e-05, atol=5e-05)
 zip_output = torch.load('output.zip')
 assert torch.allclose(zip_output, res_output, rtol=5e-05, atol=5e-05)
 
+zip_input2 = torch.load('input2.zip')
+assert torch.allclose(zip_input2, torch.tensor([0.]))
+
 print('Load and check successfully!')

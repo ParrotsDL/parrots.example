@@ -1,12 +1,13 @@
 #!/bin/bash
-source pat_latest
+source $1
 mkdir -p log/alphatrion_nas/
 
 T=`date +%m%d%H%M%S`
-name=$1
+name=$2
+array=( $@ )
+len=${#array[@]}
+EXTRA_ARGS=${array[@]:2:$len}
 ROOT=.
-EXTRA_ARGS=${@:2}
-
 pyroot=$ROOT/models/alphatrion_nas
 alphatrion_deps=$ROOT/models/alphatrion/alphatrion
 export PYTHONPATH=$pyroot:$alphatrion_deps:$PYTHONPATH

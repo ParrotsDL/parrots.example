@@ -158,10 +158,10 @@ task:
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'pix2pix_vanilla_unet_bn_1x1_80k_facades', 'py_args': '--pavi --pavi-project default --data-reader MemcachedReader --seed 1024 --max-step 500'},
                     # {'framework': 'mmediting', 'gpus': 1, 'model': 'srcnn_x4k915_g1_1000k_div2k', 'py_args': '--pavi --pavi-project default --data-reader MemcachedReader --seed 1024 --max-step 500'},
                     ## 15.TextRecog
-                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
-                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
-                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
-                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project default --datareader CephReader'},
+                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Middle', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 500'},
+                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_Big', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 500'},
+                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'print_MiddleV2', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 500'},
+                    # {'framework': 'TextRecog', 'gpus': 16, 'model': 'crnn', 'py_args': '--pavi --pavi-project default --datareader ceph --max_step 500'},
                     ## 16.mmpose
                     # {'framework': 'mmpose', 'gpus': 8, 'model': 'bottomup_hrnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1 --batch-size 6'},
                     # {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
@@ -222,27 +222,29 @@ task:
                     # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_PartA2_secfpn_2x8_cyclic_80e_kitti-3d-car', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_pointpillars_secfpn_6x8_160e_kitti-3d-3class', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     # {'framework': 'mmdetection3d', 'gpus': 8, 'model': 'hv_pointpillars_secfpn_6x8_160e_kitti-3d-car', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+                    ## 32.deformable_detr
+                    # {'framework': 'deformable_detr', 'gpus': 8, 'model': 'r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
                     ## 33.pattern_v2_5_sp
                     # {'framework': 'pattern_v2_5_sp', 'gpus': 8, 'model': 'V2_6_sp_cos_pretrain_honda', 'py_args': '--max_step 320 --seed 100 --pavi --pavi-project default'},
-                    ## 34.deformable_detr
-                    # {'framework': 'deformable_detr', 'gpus': 8, 'model': 'r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
-                    ## 35.PAR
+                    ## 34.PAR
                     # {'framework': 'PAR', 'gpus': 8, 'model': 'res101', 'py_args': '--max_step 1 --seed 1024 --pavi --pavi-project default --data_reader MemcachedReader'},
                     ## 3ddet - pause
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_0.7', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.2'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS64_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.02'},
                     # {'framework': '3ddet', 'gpus': 8, 'model': 'M_HS40_Top_PureLidar_Detection_VPCT_FPGA_2.2', 'py_args': '--pavi --pavi-project default --data-reader CephReader --seed 1024 --max-step 0.02'},
-                    ## 39.Multi_organ_seg_HR
+                    ## 35.Multi_organ_seg_HR
                     # {'framework': 'Multi_organ_seg_HR', 'gpus': 4, 'model': 'PSPNet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
-                    ## 40.mmocr
+                    ## 36.mmocr
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
                     # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 5'},
-                    ## 41.Crowd
+                    ## 37.Crowd
                     # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_csr', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 2'},
                     # {'framework': 'Crowd', 'gpus': 8, 'model': 'vgg_sfa', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 16'},
-                    ## 42.springce_psot
+                    ## 38.sensestar
+                    # {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project default --data_reader CephReader --seed 1024 --max_step 1'}
+                    ## 39.springce_psot
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_non_siam', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # # not ready {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-dilation-multirpn-lt', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
@@ -250,14 +252,7 @@ task:
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-atss', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-atss-smoothl1', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
                     # {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-topk', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 0.3'},
-                    ## 43.sensestar
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'panet_r18_fpem_ffm_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_icdar2015', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    # {'framework': 'mmocr', 'gpus': 8, 'model': 'psenet_r50_fpnf_sbn_1x_ctw1500', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 5'},
-                    ## 42.sensestar
-                    # {'framework': 'SenseStar', 'gpus': 8, 'model': 'sensestar', 'py_args': '--pavi --pavi_project default --data_reader CephReader --seed 1024 --max_step 1'}
-                    ## 44.mmocr_ctc
+                    ## 40.mmocr_ctc
                     # {'framework': 'mmocr_ctc', 'gpus': 4, 'model': 'icdar2013_ctc', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 5'},
                 ]
 
