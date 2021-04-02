@@ -1,8 +1,10 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    # -i指定使用的镜像， -e指定source的环境（这两个是可选的，默认是-i registry.sensetime.com/parrots/parrots:pat_latest -e /usr/local/env/pat_latest；并且-i -e只能放在{namespace}前面这个位置）
-    # -v -m 提供存储挂载的信息，直接传给spc run；默认值是-v nfs=/mnt/lustre -m nfs=/mnt/lustre；并且只能放在{namespace}前
-    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh -i registry.sensetime.com/parrots/parrots:pat_latest -e /usr/local/env/pat_latest -v nfs=/mnt/lustre -m nfs=/mnt/lustre {namespace} {framework} {model} {gpus} {py_args}"
+    # spc 相关参数放在 template 最后
+    # -i（可选）指定使用的镜像，默认是 -i registry.sensetime.com/parrots/parrots:pat_latest
+    # -e（可选）指定source的环境默认是 -e /usr/local/env/pat_latest
+    # -v（可选）指定存储挂载，后面可以指定多个挂载，挂载路径需以 / 开始，默认值是 -v /mnt/10-5-109-111/${USER}:/mnt/lustre/${USER}:rw /mnt/readonly/10-5-109-111/share:/mnt/lustre/share:rw
+    template: "PARROTS_BENCHMARK=1 sh runner/spc_run.sh {namespace} {framework} {model} {gpus} {py_args} -i registry.sensetime.com/parrots/parrots:pat_latest -e /usr/local/env/pat_latest -v /mnt/10-5-109-111/${USER}:/mnt/lustre/${USER}:rw /mnt/readonly/10-5-109-111/share:/mnt/lustre/share:rw"
     # Required
     search_args:
         - type: Nested
