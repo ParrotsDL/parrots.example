@@ -25,7 +25,7 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
-
+from utils.dist_utils import DistributedModel
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -68,11 +68,11 @@ def main():
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
-
+    args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
-
-    dist.init_process_group(backend="nccl")
+    
+    dist.init_process_group(backend="cncl")
     torch.cuda.set_device(args.local_rank) 
 
     if args.rank == 0:
@@ -85,28 +85,17 @@ def main():
                     socket.gethostname()))
 
     dist.barrier()
-
+ 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
-
-    if cfgs.get('seed', None):
-        random.seed(cfgs.seed)
-        torch.manual_seed(cfgs.seed)
-        torch.cuda.manual_seed(cfgs.seed)
-        cudnn.deterministic = True
-    
-    if args.seed != None:
-        random.seed(args.seed)
-        torch.manual_seed(args.seed)
-        torch.cuda.manual_seed(args.seed)
-        cudnn.deterministic = True
 
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    model = model.to_memory_format(torch.channels_last)
     model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
-
-    model = DDP(model, device_ids=[args.local_rank])
+    if args.dist:
+        model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
@@ -118,7 +107,6 @@ def main():
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
     logger.info("optimizer\n{}".format(optimizer))
 
-    cudnn.benchmark = True
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
@@ -196,8 +184,8 @@ def main():
         mem_mb = torch.tensor([mem / (1024 * 1024)],
                        dtype=torch.int,
                        device=torch.device('cuda'))
-        if  args.world_size > 1:
-            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+        #if  args.world_size > 1:
+        #    dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
 
         mem_alloc = mem_mb.item()
         # get max memory cached
@@ -205,8 +193,8 @@ def main():
         mem_mb = torch.tensor([mem / (1024 * 1024)],
                        dtype=torch.int,
                        device=torch.device('cuda'))
-        if args.world_size > 1:
-            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+        #if args.world_size > 1:
+        #    dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
         mem_cached = mem_mb.item()
         
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
@@ -279,16 +267,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
+        input = input.contiguous(torch.channels_last)
         input = input.cuda()
-        target = target.cuda()
+        target = target.int().cuda()
 
         # compute output
         output = model(input)
         loss = criterion(output, target)
 
         # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
-
+        acc1 = accuracy(output, target, topk=(1,))
+        acc5 = acc1.clone()
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
@@ -301,6 +290,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # compute gradient and do SGD step
         optimizer.zero_grad()
         loss.backward()
+        if args.dist:
+            model.average_gradients()
         optimizer.step()
 
         # measure elapsed time
@@ -349,7 +340,8 @@ def test(test_loader, model, criterion, args):
             if args.dummy_test:
                 input = input_
                 target = target_
-            input = input.cuda()
+            input = input.contiguous(torch.channels_last)
+            input = input.int().cuda()
             target = target.cuda()
 
             # compute output

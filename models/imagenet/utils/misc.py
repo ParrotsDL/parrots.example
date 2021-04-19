@@ -43,7 +43,7 @@ def accuracy(output, target, topk=(1,), raw=False):
                 res.append(correct_k)
             else:
                 res.append(correct_k.mul(100.0 / target.size(0)))
-        return res
+        return res[0]
 
 
 class AverageMeter(object):
