@@ -144,3 +144,6 @@
 [submodule "models/mmocr_ctc"]
 	path = models/mmocr_ctc
 	url = git@gitlab.sz.sensetime.com:parrots.model/mmocr.git
+[submodule "models/vision_transformer"]
+	path = models/vision_transformer
+	url = git@gitlab.sh.sensetime.com:parrots.model/vision_transformer.git
