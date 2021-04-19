@@ -1,0 +1,4 @@
+vision_transformer_b16: # Required.
+  # attr: [thresh, has_to_higher/has_to_lower]
+  validate/acc1: [10000, '>', '50%']
+  validate/acc5: [10000, '>', '50%']
