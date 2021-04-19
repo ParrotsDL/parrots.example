@@ -255,6 +255,8 @@ task:
                      {'framework': 'springce_psot', 'gpus': 8, 'model': 'vot_res50-interp-multirpn-focal_loss-topk', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --seed 1024 --max_step 0.3'},
                     ## 40.mmocr_ctc
                      { 'framework': 'mmocr_ctc', 'gpus': 4, 'model': 'icdar2013_ctc', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 5' },
+                    ## 41.vision_transformer
+                     { 'framework': 'vision_transformer', 'gpus': 8, 'model': 'b16', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 1' },
 
                 ]
 
