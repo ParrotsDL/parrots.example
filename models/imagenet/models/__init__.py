@@ -25,9 +25,10 @@ from .efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, eff
                           efficientnet_b5, efficientnet_b6, efficientnet_b7
 from .sknet import sk_resnet18, sk_resnet34, sk_resnet50, sk_resnet101, sk_resnet152
 from .resnest import ResNest, resnest50, resnest101, resnest200, resnest269
-
+from .alexnet import alexnet
 
 __all__ = [
+    'alexnet',
     'vgg11',
     'vgg11_bn',
     'vgg13',

@@ -90,12 +90,12 @@ def main():
 
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model = model.to_memory_format(torch.channels_last)
-    model.cuda()
+    #model = model.to_memory_format(torch.channels_last)
+    #model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
-    if args.dist:
-        model = DistributedModel(model)
+    #if args.dist:
+    #    model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
@@ -140,7 +140,10 @@ def main():
         if not os.path.exists(cfgs.saver.save_dir):
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
-
+    model = model.to_memory_format(torch.channels_last)
+    model  = model.cuda()
+    if args.dist:
+         model = DistributedModel(model)
     # Data loading code
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
 
@@ -176,7 +179,6 @@ def main():
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
-
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list)
         
@@ -200,7 +202,7 @@ def main():
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
-
+            model = model.cpu().to_memory_format(torch.contiguous_format)
             if args.rank == 0:
                 if monitor_writer:
                     monitor_writer.add_scalar('Accuracy_Test_top1', acc1, len(train_loader)*epoch)
@@ -270,11 +272,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input = input.contiguous(torch.channels_last)
         input = input.cuda()
         target = target.int().cuda()
-
         # compute output
         output = model(input)
         loss = criterion(output, target)
-
         # measure accuracy and record loss
         acc1 = accuracy(output, target, topk=(1,))
         acc5 = acc1.clone()
@@ -330,8 +330,9 @@ def test(test_loader, model, criterion, args):
                              prefix="Test: ")
 
     # switch to evaluate mode
-    model.eval()
-    with torch.no_grad():
+    #model.eval()
+    if True:
+    #with torch.no_grad():
         end = time.time()
         if args.dummy_test:
             input_, target_ = next(iter(test_loader))
@@ -341,21 +342,21 @@ def test(test_loader, model, criterion, args):
                 input = input_
                 target = target_
             input = input.contiguous(torch.channels_last)
-            input = input.int().cuda()
-            target = target.cuda()
+            input = input.cuda()
+            target = target.int().cuda()
 
             # compute output
             output = model(input)
             loss = criterion(output, target)
 
             # measure accuracy and record loss
-            acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
-
+            acc1 = accuracy(output, target, topk=(1,), raw=True)
+            acc5 = acc1.clone()
             losses.update(loss.item())
             top1.update(acc1[0].item() * 100.0 / target.size(0))
             top5.update(acc5[0].item() * 100.0 / target.size(0))
 
-            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
+            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]))
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -369,9 +370,11 @@ def test(test_loader, model, criterion, args):
                         stats_all[2].item()))
 
         loss = torch.tensor([losses.avg])
-        dist.all_reduce(loss.cuda())
+        loss = loss.cuda()
+        dist.all_reduce(loss)
         loss_avg = loss.item() / args.world_size
-        dist.all_reduce(stats_all.cuda())
+        stats_all = stats_all.float().cuda()
+        dist.all_reduce(stats_all)
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 
