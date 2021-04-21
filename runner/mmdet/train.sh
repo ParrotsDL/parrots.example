@@ -14,6 +14,9 @@ g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 
+# 避免mm系列重复打印
+export PARROTS_DEFAULT_LOGGER=FALSE
+
 case $name in
     "mask_rcnn_r50_caffe_fpn_mstrain_1x_coco")
 set -x

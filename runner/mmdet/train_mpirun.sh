@@ -31,6 +31,9 @@ now=$(date +"%Y%m%d_%H%M%S")
 pyroot=$ROOT/models/mmdet
 export PYTHONPATH=${pyroot}:$PYTHONPATH
 
+# 避免mm系列重复打印
+export PARROTS_DEFAULT_LOGGER=FALSE
+
 case $MODEL_NAME in
     "mask_rcnn_r50_caffe_fpn_mstrain_1x_coco")
 set -x

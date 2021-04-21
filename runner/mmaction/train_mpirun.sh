@@ -25,6 +25,9 @@ ROOT=.
 pyroot=$ROOT/models/mmaction
 export PYTHONPATH=$pyroot:$PYTHONPATH
 
+# 避免mm系列重复打印
+export PARROTS_DEFAULT_LOGGER=FALSE
+
 PYTHON_ARGS="python -u models/mmaction/tools/train.py configs/mmaction/${name}.py --launcher=mpi --validate"
 
 set -x
