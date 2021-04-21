@@ -1,4 +1,69 @@
-vision_transformer_b16: # Required.
-  # attr: [thresh, has_to_higher/has_to_lower]
-  validate/acc1: [10000, '>', '50%']
-  validate/acc5: [10000, '>', '50%']
+vision_transformer_b32:
+  all:
+    __benchmark_avg_iter_time(s):
+    - 0.3889968105113506
+    - <
+    - 5%
+    - 0.37047315286795296
+    __benchmark_mem_alloc(mb):
+    - 6855.45
+    - <
+    - 5%
+    - 6529
+    __benchmark_mem_cached(mb):
+    - 7530.6
+    - <
+    - 5%
+    - 7172
+    __benchmark_pavi_task_id:
+    - c268c9e0-f5ca-4f8f-90b9-c1e516637133
+    __benchmark_pure_training_time(h):
+    - 42.90015397942066
+    - <
+    - 5%
+    - 40.85728950421015
+    __benchmark_total_time(h):
+    - 42.90415698395173
+    - <
+    - 5%
+    - 40.86110188947784
+    test_life: 1
+    validate/acc1:
+    - 32.21500003295898
+    - '>'
+    - 50%
+    - 64.43000006591797
+    validate/acc5:
+    - 42.27199996704102
+    - '>'
+    - 50%
+    - 84.54399993408204
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.40792665290832525
+    - <
+    - 5%
+    - 0.388501574198405
+    __benchmark_mem_alloc(mb):
+    - 6855.45
+    - <
+    - 5%
+    - 6529
+    __benchmark_mem_cached(mb):
+    - 7509.6
+    - <
+    - 5%
+    - 7152
+    __benchmark_pavi_task_id:
+    - ace0db72-ee86-4a27-a235-318ec078939a
+    __benchmark_pure_training_time(h):
+    - 0.05985141491889954
+    - <
+    - 5%
+    - 0.057001347541809085
+    __benchmark_total_time(h):
+    - 0.06399076894919077
+    - <
+    - 5%
+    - 0.060943589475419786
+    test_life: 1
