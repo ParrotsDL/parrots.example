@@ -13,6 +13,8 @@ export PARROTS_POOL_DATALOADER=1
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
 
+# 避免mm系列重复打印
+export PARROTS_DEFAULT_LOGGER=FALSE
 
 PYTHON_ARGS="python -u models/mmediting/tools/train.py configs/mmediting/${name}.py --launcher=slurm"
 
