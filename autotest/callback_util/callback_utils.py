@@ -133,21 +133,6 @@ def get_monitor_info(config, run_type):
             acc_list[idx] = v
             idx += 1
     AccDesc = ', '.join(AccDesc)
-
-    PAVIUrl = None
-    try:
-        # for pavi 2.0
-        PAVIUrl=pavi.get_training_url(os.environ['pavi_training_id'])
-    except Exception:
-        pass
-
-    try:
-        # for pavi 1.0
-        PAVIUrl = '{}/#/task/{}'.format(
-            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id'])
-    except Exception:
-        pass
-
     monitor_info = dict(
         IsParrots=IsParrots,
         DataSource=DataSource,
@@ -165,7 +150,8 @@ def get_monitor_info(config, run_type):
         CachedMem=CachedMem,
         TagOrBranch=TagOrBranch,
         GitHash=GitHash,
-        PAVIUrl=PAVIUrl,
+        PAVIUrl='{}/#/task/{}'.format(
+            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id']),
         ExecDate=os.environ['start_time'],
         acc1=acc_list[0],
         acc2=acc_list[1],
@@ -198,16 +184,10 @@ def get_scalar_from_pavi(config, value_type, run_type, is_update_yaml=False):
             config['__benchmark_pavi_task_id'] = []
 
     env = os.environ.copy()
-    try:
-        if env.get('PAVI_TRAINING_ID') is not None:
-            pavi_task_id = env['PAVI_TRAINING_ID']
-        else:
-            pavi_task_id = env['pavi_training_id']
-    except KeyError:
-        if env.get('PAVI_TASK_ID') is not None:
-            pavi_task_id = env['PAVI_TASK_ID']
-        else:
-            pavi_task_id = env['pavi_task_id']
+    if env.get('PAVI_TASK_ID') is not None:
+        pavi_task_id = env['PAVI_TASK_ID']
+    else:
+        pavi_task_id = env['pavi_task_id']
 
     if is_update_yaml:
         update_ret = copy.deepcopy(config)
