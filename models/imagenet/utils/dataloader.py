@@ -1,11 +1,9 @@
 import io
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
-from petrel_client.client import Client
 from PIL import Image, ImageFile
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
-from .dataset import McDataset
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -78,8 +76,10 @@ def build_dataloader(cfg, world_size, data_reader):
     test_aug = build_augmentation(cfg.test)
 
     if data_reader == 'MemcachedReader':
+        from .dataset import McDataset
         train_dataset = McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
     elif data_reader == 'CephReader':
+        from petrel_client.client import Client
         ceph_image_dir = 's3://parrots_model_data/imagenet/images/train/'
         ceph_meta_file = 's3://parrots_model_data/imagenet/images/meta/train.txt'
         train_dataset = CephDataset(ceph_image_dir, ceph_meta_file, train_aug)
