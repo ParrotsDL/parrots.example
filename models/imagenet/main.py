@@ -90,12 +90,12 @@ def main():
 
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    #model = model.to_memory_format(torch.channels_last)
-    #model.cuda()
+    model = model.to_memory_format(torch.channels_last)
+    model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
-    #if args.dist:
-    #    model = DistributedModel(model)
+    if args.dist:
+        model = DistributedModel(model)
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
@@ -106,7 +106,6 @@ def main():
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
     logger.info("optimizer\n{}".format(optimizer))
-
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
