@@ -4,7 +4,7 @@ mkdir -p log/RetinaUnet
 
 T=`date +%m%d%H%M%S`
 name=$3
-ROOT=.
+ROOT=${PWD}
 EXTRA_ARGS=${@:4}
 
 pyroot=$ROOT/models/RetinaUnet
@@ -12,6 +12,11 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 export PYTHONPATH=$ROOT/configs/RetinaUnet/liver_ct_zssy_2d_runet:$PYTHONPATH
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
+
+# 编译算子
+cd models/RetinaUnet
+srun -p $1 --gres=gpu:1 pip install -v -e . --user
+cd ${ROOT}
 
 case $name in
     "2d_runet_infer")

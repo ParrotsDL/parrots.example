@@ -4,7 +4,7 @@ mkdir -p log/sr_v3.0
 
 T=`date +%m%d%H%M%S`
 name=$3
-ROOT=.
+ROOT=${PWD}
 EXTRA_ARGS=${@:4}
 
 pyroot=$ROOT/models/sr_v3.0
@@ -12,6 +12,11 @@ export PYTHONPATH=$pyroot:$PYTHONPATH
 export PYTHONPATH=$ROOT/models/sr_v3.0/lib:$PYTHONPATH
 g=$(($2<8?$2:8))
 SRUN_ARGS=${SRUN_ARGS:-""}
+
+# 编译算子
+cd models/sr_v3.0/lib/_ext
+srun -p $1 --gres=gpu:1 pip install -v -e . --user
+cd ${ROOT}
 
 NAME=`basename "$0"`
 SIGN="x2_0_300_10f"
