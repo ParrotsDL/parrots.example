@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 mkdir -p log/deformable_detr/
 PARTITION=$1
 GPUS=$2
@@ -8,7 +9,7 @@ BS=`expr 4 \* $2`
 EPOCH=400
 
 now=$(date +"%Y%m%d_%H%M%S")
-ROOT=.
+ROOT=${PWD}
 
 cfg=$ROOT/configs/deformable_detr/${JOB_NAME}.yaml
 
@@ -21,6 +22,15 @@ export PYTHONPATH=${pyroot}/code/:$PYTHONPATH
 
 EXP_DIR=exps/r50_deformable_detr
 mkdir -p ${EXP_DIR}
+
+# 编译算子
+TORCHV_ERSION=`python -c "import torch; print(torch.__version__)" | tail -n 1`
+if [ ${TORCHV_ERSION} != "parrots" ]
+then
+    cd models/deformable_detr/models/ops
+    srun -p $1 --gres=gpu:1 -n1 python setup.py build install --user
+    cd ${ROOT}
+fi
 
 SRUN_ARGS=${SRUN_ARGS:-""}
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
