@@ -104,7 +104,6 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
         _, _, status = callback_utils.get_slurm_job_id()
 
         if job_pid and job_log_path and workdir and name and slurm_job_id and status and status == 'R':
-            print('slurm_job_status: R')
             sys.stdout.flush()
             break
         # break if job_pid is die.
@@ -176,3 +175,4 @@ def watch_for_kill_time_limited(framework, model, config, time_limited_flag='[E]
                       with [job_pid: {}, job_log_path: {}, workdir: {}, name: {}, slurm_job_id: {}]".format(
             name, job_pid, slurm_job_id, job_pid, job_log_path, workdir, name, slurm_job_id))
 
+    os._exit(0)
