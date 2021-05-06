@@ -133,6 +133,20 @@ def get_monitor_info(config, run_type):
             acc_list[idx] = v
             idx += 1
     AccDesc = ', '.join(AccDesc)
+    PAVIUrl = None
+    try:
+        # for pavi 2.0
+        PAVIUrl=pavi.get_training_url(os.environ['pavi_training_id'])
+    except Exception:
+        pass
+
+    try:
+        # for pavi 1.0
+        PAVIUrl = '{}/#/task/{}'.format(
+            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id'])
+    except Exception:
+        pass
+
     monitor_info = dict(
         IsParrots=IsParrots,
         DataSource=DataSource,
@@ -150,8 +164,7 @@ def get_monitor_info(config, run_type):
         CachedMem=CachedMem,
         TagOrBranch=TagOrBranch,
         GitHash=GitHash,
-        PAVIUrl='{}/#/task/{}'.format(
-            pavi.Config.PAVI_SERVER.value, os.environ['pavi_task_id']),
+        PAVIUrl=PAVIUrl,
         ExecDate=os.environ['start_time'],
         acc1=acc_list[0],
         acc2=acc_list[1],
