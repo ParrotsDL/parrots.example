@@ -270,6 +270,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     loader_length = len(train_loader)
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
+        input_ = input_.cuda()
+        target_ = target_.cuda()
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
@@ -279,8 +281,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
-        input = input.cuda()
-        target = target.cuda()
+        else:
+            input = input.cuda()
+            target = target.cuda()
 
         # compute output
         output = model(input)
