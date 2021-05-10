@@ -56,6 +56,24 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
+    if not os.path.exists(cfgs.saver.save_dir):
+        os.makedirs(cfgs.saver.save_dir)
+    save_dir = cfgs.saver.save_dir
+    
+    # 创建 handler， 用于写入日志
+    rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
+    log_file = os.path.join(save_dir, cfgs.net.arch + "_" + rq + ".log")
+    fh = logging.FileHandler(log_file, mode='w')
+    fh.setLevel(logging.DEBUG)
+    # 定义 handler的输出格式
+    formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+    formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
+    fh.setFormatter(formatter)
+    # 将logger添加到handler里面
+    logger.addHandler(fh)
+
+
+
     if 'SLURM_PROCID' in os.environ.keys():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
@@ -141,7 +159,7 @@ def main():
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
     model = model.to_memory_format(torch.channels_last)
-    model  = model.cuda()
+    model = model.cuda()
     if args.dist:
          model = DistributedModel(model)
     # Data loading code

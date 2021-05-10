@@ -14,16 +14,16 @@ __all__ = [
 
 
 class VGG(nn.Module):
-    def __init__(self, features, num_classes=1000, init_weights=True):
+    def __init__(self, features, num_classes=1000, init_weights=True, p=0.5):
         super(VGG, self).__init__()
         self.features = features
         self.classifier = nn.Sequential(
             nn.Linear(512 * 7 * 7, 4096),
             nn.ReLU(True),
-            nn.Dropout(),
+            nn.Dropout(p),
             nn.Linear(4096, 4096),
             nn.ReLU(True),
-            nn.Dropout(),
+            nn.Dropout(p),
             nn.Linear(4096, num_classes),
         )
         if init_weights:
@@ -31,7 +31,9 @@ class VGG(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
+        x = x.cpu()
         x = x.view(x.size(0), -1)
+        x = x.cuda()
         x = self.classifier(x)
         return x
 

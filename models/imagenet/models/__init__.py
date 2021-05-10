@@ -4,7 +4,8 @@ from .resnet_official import resnext50_32x4d, resnext101_32x8d, resnext50d_32x4d
                              wide_resnet50_2, wide_resnet101_2, wide_resnet50d_2, wide_resnet101d_2
 from .resnet_v2 import resnet50_v2, resnet50c_v2, resnet50d_v2, resnet101_v2, resnet152_v2, resnet200_v2
 from .preact_resnet import preact_resnet18, preact_resnet34, preact_resnet50, preact_resnet101, preact_resnet152
-from .dpn import dpn68, dpn68b, dpn92, dpn98, dpn131, dpn107
+# from .dpn import dpn68, dpn68b, dpn92, dpn98, dpn131, dpn107
+from .dpn_min import dpn68, dpn68b, dpn92, dpn98, dpn131, dpn107
 from .senet import senet154, se_resnet50, se_resnet101, se_resnet152, se_resnext50_32x4d, \
                    se_resnext101_32x4d, se_resnext101_64x4d
 from .shuffle_v1 import shuffle_v1

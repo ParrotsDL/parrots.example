@@ -109,7 +109,7 @@ class BnActConv2d(nn.Module):
             kernel_size,
             stride,
             padding,
-            groups=groups,
+            groups=in_chs,
             bias=False)
 
     def forward(self, x):
@@ -181,14 +181,15 @@ class DualPathBlock(nn.Module):
                     kernel_size=1,
                     stride=1)
         self.c1x1_a = BnActConv2d(
-            in_chs=in_chs, out_chs=num_1x1_a, kernel_size=1, stride=1)
+            in_chs=in_chs, 
+            out_chs=num_1x1_a, kernel_size=1, stride=1)
         self.c3x3_b = BnActConv2d(
             in_chs=num_1x1_a,
             out_chs=num_3x3_b,
             kernel_size=3,
             stride=self.key_stride,
             padding=1,
-            groups=groups)
+            groups=num_1x1_a)
         if b:
             self.c1x1_c = CatBnAct(in_chs=num_3x3_b)
             self.c1x1_c1 = nn.Conv2d(

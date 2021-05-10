@@ -27,10 +27,10 @@ class AlexNet(nn.Module):
         )
         self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
         self.classifier = nn.Sequential(
-            nn.Dropout(),
+            # nn.Dropout(),
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(inplace=True),
-            nn.Dropout(),
+            # nn.Dropout(),
             nn.Linear(4096, 4096),
             nn.ReLU(inplace=True),
             nn.Linear(4096, num_classes),
@@ -40,7 +40,6 @@ class AlexNet(nn.Module):
         x = self.features(x)
         x = x.cpu()#.contiguous()
         #x = nn.functional.adaptive_avg_pool2d(x, (6,6))
-    
         #x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = x.cuda()
