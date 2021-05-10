@@ -195,7 +195,7 @@ task:
                     {'framework': 'prototype', 'gpus': 16, 'model': 'resnet50', 'py_args': '--seed 1024 --pavi --pavi-project pat_weekly_modeltest --max-step 4000 --data_reader CephReader'},
                     {'framework': 'prototype', 'gpus': 16, 'model': 'shufflev2', 'py_args': '--seed 1024 --pavi --pavi-project pat_weekly_modeltest --max-step 4000 --data_reader CephReader'},
                     # 23.encoder cu10
-                    {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --max_step 1'},
+                    {'framework': 'encoder', 'gpus': 1, 'model': 'benign', 'py_args': '--pavi --pavi-project pat_weekly_modeltest --max_step 1 --data_reader CephReader'},
                     # 24.sensemedical
                     {'framework': 'sensemedical', 'gpus': 8, 'model': 'Task01_BrainTumour', 'py_args': '--pavi --pavi_project pat_weekly_modeltest --max_step 1 --data_reader CephReader'},
                     # 25.pattern

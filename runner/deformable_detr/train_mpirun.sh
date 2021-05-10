@@ -3,6 +3,11 @@ set -x
 
 source $1
 
+##编译cuda算子##
+cd models/deformable_detr/models/ops
+python setup.py build install --user
+cd ../../../../
+
 # 容器云网络不太好，设置代理加速下载torchvision的pretrain model, https://download.pytorch.org/models/resnet50-19c8e357.pth 
 export http_proxy=http://172.16.1.135:3128/
 export https_proxy=http://172.16.1.135:3128/
