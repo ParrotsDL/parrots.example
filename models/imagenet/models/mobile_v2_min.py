@@ -114,9 +114,9 @@ class MobileNetV2(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
-        # x = x.mean(3, keepdim=True).mean(2, keepdim=True)
-        # x = x.squeeze()
-        # x = self.classifier(x)
+        x = x.mean(3, keepdim=True).mean(2, keepdim=True)
+        x = x.squeeze()
+        x = self.classifier(x)
         return x
 
     def _initialize_weights(self):

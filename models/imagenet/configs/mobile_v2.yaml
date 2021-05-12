@@ -27,8 +27,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 240
-  test_freq: 1
+  max_epoch: 120
+  test_freq: 120
   log_freq: 20
   optimizer:
     type: SGD
@@ -48,10 +48,10 @@ saver:
   resume_model:
   save_dir: checkpoints/mobile_v2   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: mobile_v2_1x
-    model: mobile_v2_1x
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: mobile_v2_1x
+#     model: mobile_v2_1x

@@ -7,11 +7,11 @@ import numpy as np
 import argparse
 
 
-def plot_line(iter_list, loss_list, acc1_list, acc5_list, file_path):
+def plot_line(iter_list, loss_list, acc1_list, acc5_list, file_path, title="Net"):
     # fig, ax1 = plt.subplots()
     fig = plt.figure()
     ax1 = fig.add_subplot(111)
-    ax1.set_title("vgg16")
+    ax1.set_title(title)
     
     p1 = ax1.plot(iter_list, loss_list, 'royalblue', label="loss")
     ax1.set_ylabel('loss')
@@ -70,13 +70,18 @@ def sleep_time(hour, min, sec):
 def main(args):
     second = sleep_time(0, 1, 0)
     while True:
-        time.sleep(second)
+
         print(time.localtime(time.time()))
+        
         (iter_list, loss_list, acc1_list, acc5_list) = read_log(args.log_path)
-        plot_line(iter_list, loss_list, acc1_list, acc5_list, args.log_path)
+        
+        plot_line(iter_list, loss_list, acc1_list, acc5_list, args.log_path, args.title)
+
+        time.sleep(second)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--log_path', type=str, help='path to log file')
+    parser.add_argument('--title', type=str, default='Net', help='fig title')
     args = parser.parse_args()
     main(args)

@@ -52,11 +52,13 @@ def get_data2(data, reduction='mean'):
     else:
         return data
 
-def hook(name, tag='forward'):
-    hook_func = get_data
+def hook(name, mm, tag='forward'):
+    hook_func = get_data2
     def inner_hook(m, input, output):
-        print("Layer {} {} {}:\n input {} \n output {}\n".format(code_yellow(name), code_yellow(tag), code_green(mm), hook_func(input), hook_func(output)))
-        #  print("Layer {} {}:\n input {}\n output {}\n".format(name, tag, get_data2(input), get_data2(output)))
+        if tag == 'forward':
+            print("Layer {} {} {}:\n input {} \n output {}\n".format(code_yellow(name), code_yellow(tag), code_green(mm), hook_func(input), hook_func(output)))
+        else:
+            print("Layer {} {} {}:\n input {} \n output {}\n".format(code_yellow(name), code_yellow(tag), code_green(mm), hook_func(output), hook_func(input)))
     return inner_hook
 
 class mv2(nn.Module):
@@ -64,11 +66,15 @@ class mv2(nn.Module):
         super(mv2, self).__init__()
 
         # self.conv = nn.Conv2d(96, 96, 3, 1, 1, groups=1)
-        self.conv = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1, bias=False)
-        # self.conv = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=32, bias=False)
+        # self.conv = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1, bias=False)
+        self.conv = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=32, bias=True)
+        self.batch_norm = nn.BatchNorm2d(32)
+        self.relu = nn.ReLU(False)
 
     def forward(self, x):
         x = self.conv(x)
+        x = self.batch_norm(x)
+        x = self.relu(x)
         return x
 
 if __name__=="__main__":
@@ -83,8 +89,8 @@ if __name__=="__main__":
     #进行hook注册访问每一层的forward和backward输入输出
     for name, mm in m.named_modules():
         print(code_blue(name), "---", code_blue(mm))
-        mm.register_forward_hook(hook(name))
-        mm.register_backward_hook(hook(name, tag='backward'))
+        mm.register_forward_hook(hook(name, mm))
+        mm.register_backward_hook(hook(name, mm, tag='backward'))
 
     # pytorch环境下保存模型参数和输入
     if torch.__version__ == "1.3.0a0":
