@@ -47,10 +47,10 @@ saver:
   resume_model: 
   save_dir: checkpoints/inception_v3   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: inception_v3
-    model: inception_v3
+# monitor:
+#   type: pavi
+#   _taskid: # continue training
+#   kwargs:
+#     project: default  # change to your own pavi project
+#     task: inception_v3
+#     model: inception_v3
