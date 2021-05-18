@@ -49,13 +49,15 @@ validate_pipeline = [
 
 # lmdb config
 train_db_info=dict(
-    lmdb_path="s3://parrots_model_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1_OldMeanPose_0821/",
+    #lmdb_path="s3://parrots_model_data/sketch/liutinghao_1/lmdb_path_1984/sketch/mixlmdb_106_v1_OldMeanPose_0821/",
+    lmdb_path="sketch_lmdb",
     lmdb_name="Train",
     image_type_in_lmdb="path"
 )
 
 validate_db_info=dict(
-    lmdb_path="s3://parrots_model_data/sketch/liutinghao_1/lmdb_path/sketch/mixlmdb_106_v1_OldMeanPose_0821/",
+    #lmdb_path="s3://parrots_model_data/sketch/liutinghao_1/lmdb_path_1984/sketch/mixlmdb_106_v1_OldMeanPose_0821/",
+    lmdb_path="sketch_lmdb",
     lmdb_name="Validate",
     image_type_in_lmdb="path"
 )
@@ -71,7 +73,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/meitu_2016/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/meitu_2016/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="300W_2016",
                 repeats=1,
@@ -79,7 +81,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/300W_2016/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/300W_2016/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="video_frame_2016",
                 repeats=1,
@@ -87,7 +89,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/video_frame_2016/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/video_frame_2016/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2016",
                 repeats=1,
@@ -95,7 +97,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/ghostface_2016/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/ghostface_2016/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="sideface_menpo",
                 repeats=1,
@@ -103,7 +105,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/sideface_menpo/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/sideface_menpo/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="Data_New_106pt",
                 repeats=1,
@@ -111,7 +113,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/Data_New_106pt/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/Data_New_106pt/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2",
                 repeats=1,
@@ -119,7 +121,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/ghostface_2/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/ghostface_2/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="squeeze_eye",
                 repeats=1,
@@ -127,7 +129,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/squeeze_eye/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/squeeze_eye/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="meitu_2016_hand",
                 repeats=1,
@@ -135,7 +137,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/meitu_2016_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/meitu_2016_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="video_frame_2016_hand",
                 repeats=1,
@@ -143,7 +145,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/video_frame_2016_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/video_frame_2016_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="300W_2016_hand",
                 repeats=1,
@@ -151,7 +153,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/300W_2016_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/300W_2016_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2016_hand",
                 repeats=1,
@@ -159,7 +161,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/ghostface_2016_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/ghostface_2016_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2017_hand",
                 repeats=1,
@@ -167,7 +169,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/ghostface_2017_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/ghostface_2017_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="sideface_menpo_hand",
                 repeats=1,
@@ -175,7 +177,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/sideface_menpo_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/sideface_menpo_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="squeeze_eye_hand",
                 repeats=1,
@@ -183,7 +185,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/squeeze_eye_hand/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/squeeze_eye_hand/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="meitu_2016_mic",
                 repeats=1,
@@ -191,7 +193,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/meitu_2016_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/meitu_2016_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="video_frame_2016_mic",
                 repeats=1,
@@ -199,7 +201,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/video_frame_2016_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/video_frame_2016_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="300W_2016_mic",
                 repeats=1,
@@ -207,7 +209,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/300W_2016_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/300W_2016_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2016_mic",
                 repeats=1,
@@ -215,7 +217,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/ghostface_2016_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/ghostface_2016_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2017_mic",
                 repeats=1,
@@ -223,7 +225,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/ghostface_2017_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/ghostface_2017_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="sideface_menpo_mic",
                 repeats=1,
@@ -231,7 +233,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/sideface_menpo_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/sideface_menpo_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="squeeze_eye_mic",
                 repeats=1,
@@ -239,7 +241,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/squeeze_eye_mic/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/squeeze_eye_mic/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="meitu_2016_halfface",
                 repeats=1,
@@ -247,7 +249,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/meitu_2016_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/meitu_2016_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="video_frame_2016_halfface",
                 repeats=1,
@@ -255,7 +257,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/video_frame_2016_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/video_frame_2016_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="300W_2016_halfface",
                 repeats=1,
@@ -263,7 +265,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/300W_2016_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/300W_2016_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2016_halfface",
                 repeats=1,
@@ -271,7 +273,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/ghostface_2016_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/ghostface_2016_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="ghostface_2017_halfface",
                 repeats=1,
@@ -279,7 +281,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/ghostface_2017_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/ghostface_2017_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="sideface_menpo_halfface",
                 repeats=1,
@@ -287,7 +289,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/sideface_menpo_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/sideface_menpo_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="squeeze_eye_halfface",
                 repeats=1,
@@ -295,7 +297,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/OccMake/squeeze_eye_halfface/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/OccMake/squeeze_eye_halfface/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="20190929_wink_data",
                 repeats=3,
@@ -303,7 +305,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/20190929_wink_data/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/20190929_wink_data/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="20190717_lip_with_mustache",
                 repeats=1,
@@ -311,7 +313,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/20190717_lip_with_mustache/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/20190717_lip_with_mustache/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="20190808_lip_with_mustache",
                 repeats=1,
@@ -319,7 +321,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/20190808_lip_with_mustache/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/20190808_lip_with_mustache/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="20190905_duckface_lilei",
                 repeats=2,
@@ -327,7 +329,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/20190905_duckface_lilei/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/20190905_duckface_lilei/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd"),
+                ceph_clustre="SH1984"),
             dict(
                 dataset_name="20190318_grin_liukeyi",
                 repeats=2,
@@ -335,7 +337,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Train/20190318_grin_liukeyi/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Train/20190318_grin_liukeyi/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd")
+                ceph_clustre="SH1984")
         ],
         data_versions=dict(
             eyelid_version=["v1_mark","v1_modelX-v1.0"],
@@ -356,7 +358,7 @@ data = dict(
                 image_rootpath="s3://parrots_model_data/sketch/CropFace/OldMeanPose/Validate/meitu_2016/Image/",
                 json_rootpath="s3://parrots_model_data/sketch/data/CropFace/OldMeanPose/Validate/meitu_2016/Label/",
                 source="ceph",
-                ceph_clustre="sh1984_ssd",
+                ceph_clustre="SH1984",
             ),
         ],
         data_versions=dict(
