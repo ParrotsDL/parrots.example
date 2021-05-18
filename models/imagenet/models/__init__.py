@@ -1,3 +1,4 @@
+from .googlenet import googlenet
 from .vgg import vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16, vgg16_bn, vgg19, vgg19_bn
 from .resnet import resnet18, resnet34, resnet50, resnet50c, resnet50d, resnet101, resnet101d, resnet152, resnet152d
 from .resnet_official import resnext50_32x4d, resnext101_32x8d, resnext50d_32x4d, resnext101d_32x8d, \

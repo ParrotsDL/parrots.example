@@ -27,6 +27,8 @@ from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 from utils.dist_utils import DistributedModel
 
+import pdb
+
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
@@ -269,8 +271,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
     memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
-                             memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
+    progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5, memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
 
     # switch to train mode
     model.train()
@@ -297,6 +298,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         acc1 = accuracy(output, target, topk=(1,))
         acc5 = acc1.clone()
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
+        # pdb.set_trace()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
 

@@ -7,7 +7,7 @@ import numpy as np
 import argparse
 
 
-def plot_line(iter_list, loss_list, acc1_list, acc5_list, file_path, title="Net"):
+def plot_line(iter_list, loss_list, acc1_list, acc5_list, iters, file_path, title="Net"):
     # fig, ax1 = plt.subplots()
     fig = plt.figure()
     ax1 = fig.add_subplot(111)
@@ -16,21 +16,19 @@ def plot_line(iter_list, loss_list, acc1_list, acc5_list, file_path, title="Net"
     p1 = ax1.plot(iter_list, loss_list, 'royalblue', label="loss")
     ax1.set_ylabel('loss')
     ax1.set_xlabel('epoch')
-    # ax1.set_ylim(0, 10)
+    ax1.set_xlim(0)
     
-
     ax12 = ax1.twinx()
     p12 = ax12.plot(iter_list, acc1_list, 'darkorange', label="acc1")
     # ax12.plot(iter_list, acc5_list, 'o', label="acc5")
     ax12.set_ylabel('acc(%)')
     ax12.set_ylim(0, 100)
-    # ax1.legend(loc=0)
-    # ax12.legend(loc=1)
-
+    
     plt.legend(p1 + p12, ["loss", "acc1"])
 
-    cur_epoch = max(iter_list) // 10010
-    plt.xticks([(i + 1) * 10010 for i in range(cur_epoch)], [i + 1 for i in range(cur_epoch)])
+    cur_epoch = max(iter_list) // iters + 1
+
+    plt.xticks([(i) * iters for i in range(cur_epoch)], [str(i) for i in range(cur_epoch)])
     
     fig.savefig(file_path + ".png", dpi=600)
     # fig.savefig(file_path + ".svg")
@@ -62,7 +60,7 @@ def read_log(log_path):
             loss_list.append(loss)
             acc1_list.append(acc1)
             acc5_list.append(acc5)
-    return (iter_list, loss_list, acc1_list, acc5_list)
+    return (iter_list, loss_list, acc1_list, acc5_list, total_iter)
 
 def sleep_time(hour, min, sec):
     return hour * 3600 + min * 60 + sec
@@ -73,9 +71,9 @@ def main(args):
 
         print(time.localtime(time.time()))
         
-        (iter_list, loss_list, acc1_list, acc5_list) = read_log(args.log_path)
+        (iter_list, loss_list, acc1_list, acc5_list, total_iter) = read_log(args.log_path)
         
-        plot_line(iter_list, loss_list, acc1_list, acc5_list, args.log_path, args.title)
+        plot_line(iter_list, loss_list, acc1_list, acc5_list, total_iter, args.log_path, args.title)
 
         time.sleep(second)
 
