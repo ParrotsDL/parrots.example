@@ -268,6 +268,8 @@ task:
                     # {'framework': 'objectflow2_object', 'gpus': 16, 'model': 'object', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 500'},
                     ## 46.objectflow2_mot
                     # {'framework': 'objectflow2_mot', 'gpus': 40, 'model': 'mot', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 500'},
+                    ## 47.objectflow2_action
+                    # {'framework': 'objectflow2_action', 'gpus': 8, 'model': 'action', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 2'},
                 ]
 
 

@@ -159,6 +159,9 @@
 [submodule "models/objectflow2_pet"]
 	path = models/objectflow2_pet
 	url = git@gitlab.bj.sensetime.com:parrots.fit/objectflow2_pet.git
+[submodule "models/objectflow2_action"]
+	path = models/objectflow2_action
+	url = git@gitlab.sh.sensetime.com:parrots.fit/objectflow2.git
 [submodule "models/sketch1.4"]
 	path = models/sketch1.4
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
