@@ -1,6 +1,6 @@
 task:
     # Required (change partition, num_gpus or others where necessary)
-    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_dev {gpus} {model} {py_args}"
+    template: "PARROTS_BENCHMARK=1 sh runner/{framework}/train.sh pat_test {gpus} {model} {py_args}"
     # Required
     search_args:
         - type: Nested
@@ -256,6 +256,8 @@ task:
                     # {'framework': 'mmocr_ctc', 'gpus': 4, 'model': 'icdar2013_ctc', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 5'},
                     ## 41.vision_transformer
                     # {'framework': 'vision_transformer', 'gpus': 8, 'model': 'b16', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader --max_step 1'},
+                    # 46.objectflow2_action
+                    # {'framework': 'objectflow2_action', 'gpus': 8, 'model': 'action', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 2'},
                 ]
 
 
