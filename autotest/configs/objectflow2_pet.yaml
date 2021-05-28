@@ -1,0 +1,34 @@
+objectflow2_pet_pet:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 0.23123379256488025
+    - <
+    - 5%
+    - 0.22022265958560022
+    __benchmark_mem_alloc(mb):
+    - 4182.15
+    - <
+    - 5%
+    - 3983
+    __benchmark_mem_cached(mb):
+    - 10235.4
+    - <
+    - 5%
+    - 9748
+    __benchmark_pavi_task_id:
+    - b3305af4-a463-4e94-a684-bc29cd85143b
+    __benchmark_pure_training_time(h):
+    - 0.02262542556722959
+    - <
+    - 5%
+    - 0.021548024349742467
+    __benchmark_total_time(h):
+    - 0.022671956102053324
+    - <
+    - 5%
+    - 0.021592339144812688
+    test_life: 1
+  train/ave_recall:
+  - 10000
+  - '>'
+  - 20%
