@@ -147,6 +147,9 @@
 [submodule "models/vision_transformer"]
 	path = models/vision_transformer
 	url = git@gitlab.sh.sensetime.com:parrots.model/vision_transformer.git
+[submodule "models/objectflow2_mot"]
+	path = models/objectflow2_mot
+	url = git@gitlab.sh.sensetime.com:parrots.fit/objectflow2.git
 [submodule "models/objectflow2_object"]
 	path = models/objectflow2_object
 	url = git@gitlab.bj.sensetime.com:parrots.fit/objectflow2_object.git
