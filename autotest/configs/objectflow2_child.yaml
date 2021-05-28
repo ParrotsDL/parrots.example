@@ -1,0 +1,31 @@
+objectflow2_child_child:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 3.3858722870383784
+    - <
+    - 5%
+    - 3.224640273369884
+    __benchmark_mem_alloc(mb):
+    - 2126.25
+    - <
+    - 5%
+    - 2025
+    __benchmark_mem_cached(mb):
+    - 3250.8
+    - <
+    - 5%
+    - 3096
+    __benchmark_pavi_task_id:
+    - 700c53d9-2aec-4f40-bda6-244c08b190eb
+    __benchmark_pure_training_time(h):
+    - 0.3239531150460243
+    - <
+    - 5%
+    - 0.30852677623430885
+    __benchmark_total_time(h):
+    - 0.32409123291571934
+    - <
+    - 5%
+    - 0.30865831706258984
+    test_life: 1
+  placeholder: none
