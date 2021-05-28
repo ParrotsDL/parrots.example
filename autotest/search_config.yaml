@@ -262,6 +262,8 @@ task:
                 # {'framework': 'mmocr_ctc', 'gpus': 4, 'model': 'icdar2013_ctc', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader'},
                 ## 41.vision_transformer
                 # {'framework': 'vision_transformer', 'gpus': 8, 'model': 'b16', 'py_args': ' --pavi --pavi-project default --seed 1024 --data_reader CephReader'},
+                ## 46.objectflow2_action
+                # {'framework': 'objectflow2_action', 'gpus': 8, 'model': 'action', 'py_args': ' --pavi --pavi-project default --seed 1024'},
             ]
     # Optional
     # callback: "cat"
