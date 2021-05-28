@@ -1,0 +1,31 @@
+objectflow2_mot_mot:
+  benchmark:
+    __benchmark_avg_iter_time(s):
+    - 1.3388876429200172
+    - <
+    - 5%
+    - 1.2751310884952545
+    __benchmark_mem_alloc(mb):
+    - 4340.7
+    - <
+    - 5%
+    - 4134
+    __benchmark_mem_cached(mb):
+    - 5042.1
+    - <
+    - 5%
+    - 4802
+    __benchmark_pavi_task_id:
+    - 835336d3-9bfb-4ef7-a9b5-23f1c3a9bc22
+    __benchmark_pure_training_time(h):
+    - 0.19314666908979414
+    - <
+    - 5%
+    - 0.1839492086569468
+    __benchmark_total_time(h):
+    - 0.1931519064704577
+    - <
+    - 5%
+    - 0.18395419663853116
+    test_life: 1
+  placeholder: none

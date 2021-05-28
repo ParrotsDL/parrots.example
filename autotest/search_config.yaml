@@ -272,6 +272,8 @@ task:
                 # {'framework': 'objectflow2_child', 'gpus': 16, 'model': 'child', 'py_args': ' --pavi --pavi-project default --seed 1024'},
                 ## 45.objectflow2_object
                 # {'framework': 'objectflow2_object', 'gpus': 16, 'model': 'object', 'py_args': ' --pavi --pavi-project default --seed 1024'},
+                ## 46.objectflow2_mot
+                # {'framework': 'objectflow2_mot', 'gpus': 40, 'model': 'mot', 'py_args': ' --pavi --pavi-project default --seed 1024'},
             ]
     # Optional
     # callback: "cat"
