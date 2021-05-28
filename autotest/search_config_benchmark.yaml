@@ -262,6 +262,8 @@ task:
                     # {'framework': 'sketch1.4', 'gpus': 8, 'model': 'roi-fix-main', 'py_args': '--pavi --pavi_project default --seed 1024 --max_step 1 --data_reader CephReader'},
                     ## 43.objectflow2_pet
                     # {'framework': 'objectflow2_pet', 'gpus': 8, 'model': 'pet', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 500'},
+                    ## 44.objectflow2_child
+                    # {'framework': 'objectflow2_child', 'gpus': 16, 'model': 'child', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 500'},
                 ]
 
 
