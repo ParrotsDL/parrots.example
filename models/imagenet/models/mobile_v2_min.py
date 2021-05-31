@@ -106,7 +106,7 @@ class MobileNetV2(nn.Module):
         self.features = nn.Sequential(*self.features)
 
         self.classifier = nn.Sequential(
-            nn.Dropout(0.2),
+            # nn.Dropout(0.2),
             # nn.Conv2d(self.last_channel, num_classes, kernel_size=1))
             nn.Linear(self.last_channel, num_classes))
 

@@ -3,15 +3,16 @@ import models
 import torch.nn.functional as F
 import torch.nn as nn
 import models
+import models.dpn_min
 import numpy as np
-import pdb
 from hook_function import hookCompareTool, code_blue
+
 
 if __name__=="__main__":
     
     hct = hookCompareTool()
     
-    m = models.resnet50()
+    m = models.dpn_min.dpn92()
 
     input = torch.randn(2, 3, 224, 224, requires_grad=True)
     

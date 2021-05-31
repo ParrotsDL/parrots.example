@@ -87,14 +87,13 @@ class VGG(nn.Module):
         elif isinstance(data, (tuple, list)):
             result = data.__class__(get_data(v, reduction) for v in data)
         else:
-            result =  ata
+            result =  data
         
         print(f"model moudule:{descript} data", result)
 
     
     def forward(self, x):
         x = self.features(x)
-        print("features", x.shape)
         x = self.features_2(x)
         x = x.cpu()
         x = x.view(x.size(0), -1)

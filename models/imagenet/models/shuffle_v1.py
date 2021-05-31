@@ -157,7 +157,7 @@ class ShuffleUnit(nn.Module):
                 residual, kernel_size=3, stride=2, padding=1)
 
         out = self.g_conv_1x1_compress(x)
-        out = channel_shuffle(out, self.groups)
+        # out = channel_shuffle(out, self.groups)
         out = self.depthwise_conv3x3(out)
         out = self.bn_after_depthwise(out)
         out = self.g_conv_1x1_expand(out)

@@ -2,37 +2,7 @@ import torch as torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import pdb
-
 __all__ = ['DPN', 'dpn68', 'dpn68b', 'dpn92', 'dpn98', 'dpn131', 'dpn107']
-
-
-def dpn68(**kwargs):
-    model = DPN(
-        small=True,
-        num_init_features=10,
-        k_r=128,
-        groups=32,
-        k_sec=(3, 4, 12, 3),
-        inc_sec=(16, 32, 32, 64),
-        test_time_pool=True,
-        **kwargs)
-    return model
-
-
-def dpn68b(**kwargs):
-    model = DPN(
-        small=True,
-        num_init_features=10,
-        k_r=128,
-        groups=32,
-        b=True,
-        k_sec=(3, 4, 12, 3),
-        inc_sec=(16, 32, 32, 64),
-        test_time_pool=True,
-        **kwargs)
-    return model
-
 
 def dpn92(**kwargs):
     model = DPN(
@@ -44,43 +14,6 @@ def dpn92(**kwargs):
         test_time_pool=True,
         **kwargs)
     return model
-
-
-def dpn98(**kwargs):
-    model = DPN(
-        num_init_features=96,
-        k_r=160,
-        groups=40,
-        k_sec=(3, 6, 20, 3),
-        inc_sec=(16, 32, 32, 128),
-        test_time_pool=True,
-        **kwargs)
-    return model
-
-
-def dpn131(**kwargs):
-    model = DPN(
-        num_init_features=128,
-        k_r=160,
-        groups=40,
-        k_sec=(4, 8, 28, 3),
-        inc_sec=(16, 32, 32, 128),
-        test_time_pool=True,
-        **kwargs)
-    return model
-
-
-def dpn107(pretrained='imagenet+5k', **kwargs):
-    model = DPN(
-        num_init_features=128,
-        k_r=200,
-        groups=50,
-        k_sec=(4, 8, 20, 3),
-        inc_sec=(20, 64, 64, 128),
-        test_time_pool=True,
-        **kwargs)
-    return model
-
 
 class CatBnAct(nn.Module):
     def __init__(self, in_chs, activation_fn=nn.ReLU(inplace=True)):
@@ -111,14 +44,11 @@ class BnActConv2d(nn.Module):
             kernel_size,
             stride,
             padding,
-            groups=1,
+            groups=in_chs,
             bias=False)
 
     def forward(self, x):
-        x = self.bn(x)
-        x = self.act(x)
-        x = self.conv(x)
-        return x
+        return self.conv(self.act(self.bn(x)))
 
 
 class InputBlock(nn.Module):
@@ -187,16 +117,14 @@ class DualPathBlock(nn.Module):
                     stride=1)
         self.c1x1_a = BnActConv2d(
             in_chs=in_chs, 
-            out_chs=num_1x1_a, 
-            kernel_size=1, 
-            stride=1)
+            out_chs=num_1x1_a, kernel_size=1, stride=1)
         self.c3x3_b = BnActConv2d(
             in_chs=num_1x1_a,
             out_chs=num_3x3_b,
             kernel_size=3,
             stride=self.key_stride,
             padding=1,
-            groups=1)
+            groups=num_1x1_a)
         if b:
             self.c1x1_c = CatBnAct(in_chs=num_3x3_b)
             self.c1x1_c1 = nn.Conv2d(
@@ -210,9 +138,7 @@ class DualPathBlock(nn.Module):
                 stride=1)
 
     def forward(self, x):
-        pdb.set_trace()
         x_in = torch.cat(x, dim=1) if isinstance(x, tuple) else x
-        pdb.set_trace()
         if self.has_proj:
             if self.key_stride == 2:
                 x_s = self.c1x1_w_s2(x_in)
@@ -221,7 +147,6 @@ class DualPathBlock(nn.Module):
             x_s1 = x_s[:, :self.num_1x1_c, :, :]
             x_s2 = x_s[:, self.num_1x1_c:, :, :]
         else:
-            pdb.set_trace()
             x_s1 = x[0]
             x_s2 = x[1]
         x_in = self.c1x1_a(x_in)
@@ -255,68 +180,67 @@ class DPN(nn.Module):
         self.b = b
         bw_factor = 1 if small else 4
 
-        head_blocks = []
-        error_blocks = []
-        blocks = []
+        blocks_dev = []
+        # blocks = []
+        
 
         # conv1
         if small:
-            head_blocks.append(
+            blocks_dev.append(
                 InputBlock(num_init_features, kernel_size=3, padding=1))
         else:
-            head_blocks.append(
+            blocks_dev.append(
                 InputBlock(num_init_features, kernel_size=7, padding=3))
 
         # conv2
         bw = 64 * bw_factor
         inc = inc_sec[0]
         r = (k_r * bw) // (64 * bw_factor)
-        error_blocks.append(
+        blocks_dev.append(
             DualPathBlock(num_init_features, r, r, bw, inc, groups, 'proj', b))
-        in_chs = bw + 3 * inc
-        for i in range(2, k_sec[0] + 1):
-            blocks.append(
-                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-            in_chs += inc
+        # in_chs = bw + 3 * inc
+        # for i in range(2, k_sec[0] + 1):
+        #     blocks_dev.append(
+        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+        #     in_chs += inc
 
-        # conv3
-        bw = 128 * bw_factor
-        inc = inc_sec[1]
-        r = (k_r * bw) // (64 * bw_factor)
-        blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
-        in_chs = bw + 3 * inc
-        for i in range(2, k_sec[1] + 1):
-            blocks.append(
-                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-            in_chs += inc
+        # # conv3
+        # bw = 128 * bw_factor
+        # inc = inc_sec[1]
+        # r = (k_r * bw) // (64 * bw_factor)
+        # blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
+        # in_chs = bw + 3 * inc
+        # for i in range(2, k_sec[1] + 1):
+        #     blocks.append(
+        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+        #     in_chs += inc
 
-        # conv4
-        bw = 256 * bw_factor
-        inc = inc_sec[2]
-        r = (k_r * bw) // (64 * bw_factor)
-        blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
-        in_chs = bw + 3 * inc
-        for i in range(2, k_sec[2] + 1):
-            blocks.append(
-                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-            in_chs += inc
+        # # conv4
+        # bw = 256 * bw_factor
+        # inc = inc_sec[2]
+        # r = (k_r * bw) // (64 * bw_factor)
+        # blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
+        # in_chs = bw + 3 * inc
+        # for i in range(2, k_sec[2] + 1):
+        #     blocks.append(
+        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+        #     in_chs += inc
 
-        # conv5
-        bw = 512 * bw_factor
-        inc = inc_sec[3]
-        r = (k_r * bw) // (64 * bw_factor)
-        blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
-        in_chs = bw + 3 * inc
-        for i in range(2, k_sec[3] + 1):
-            blocks.append(
-                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-            in_chs += inc
-        blocks.append(CatBnAct(in_chs))
-        self.head_features = nn.Sequential(*head_blocks)
-        self.error_features = nn.Sequential(*error_blocks)
-        self.features = nn.Sequential(*blocks)
-        self.classifier = nn.Conv2d(
-            in_chs, num_classes, kernel_size=1, bias=True)
+        # # conv5
+        # bw = 512 * bw_factor
+        # inc = inc_sec[3]
+        # r = (k_r * bw) // (64 * bw_factor)
+        # blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
+        # in_chs = bw + 3 * inc
+        # for i in range(2, k_sec[3] + 1):
+        #     blocks.append(
+        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+        #     in_chs += inc
+        # blocks.append(CatBnAct(in_chs))
+        self.features_dev = nn.Sequential(*blocks_dev)
+        # self.features = nn.Sequential(*blocks)
+        # self.classifier = nn.Conv2d(
+        #     in_chs, num_classes, kernel_size=1, bias=True)
 
     def logits(self, features):
         if not self.training and self.test_time_pool:
@@ -329,13 +253,9 @@ class DPN(nn.Module):
         return out.view(out.size(0), -1)
 
     def forward(self, input):
-        x = self.head_features(input)
-        x = self.features(x)
-        x = self.error_features(x)
-        x = self.features(x)
-        pdb.set_trace()
-        x = self.logits(x)
-        pdb.set_trace()
+        x = self.features_dev(input)
+        # x = self.features(x)
+        # x = self.logits(x)
         return x
 
 
