@@ -10,10 +10,10 @@ if __name__=="__main__":
     
     hct = hookCompareTool()
     
-    # m = models.googlenet()
-    m = models.googlenet_min.googlenet()
+    m = models.googlenet() 
+    # m = models.googlenet_min.googlenet()
 
-    input = torch.randn(2, 3, 224, 224, requires_grad=True)
+    input = torch.randn(2, 3, 299, 299, requires_grad=True)
     
     # 进行hook注册访问每一层的forward和backward输入输出
     for name, mm in m.named_modules():

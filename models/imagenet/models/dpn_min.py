@@ -15,6 +15,7 @@ def dpn92(**kwargs):
         **kwargs)
     return model
 
+
 class CatBnAct(nn.Module):
     def __init__(self, in_chs, activation_fn=nn.ReLU(inplace=True)):
         super(CatBnAct, self).__init__()
@@ -44,7 +45,7 @@ class BnActConv2d(nn.Module):
             kernel_size,
             stride,
             padding,
-            groups=in_chs,
+            groups=groups,
             bias=False)
 
     def forward(self, x):
@@ -116,15 +117,14 @@ class DualPathBlock(nn.Module):
                     kernel_size=1,
                     stride=1)
         self.c1x1_a = BnActConv2d(
-            in_chs=in_chs, 
-            out_chs=num_1x1_a, kernel_size=1, stride=1)
+            in_chs=in_chs, out_chs=num_1x1_a, kernel_size=1, stride=1)
         self.c3x3_b = BnActConv2d(
             in_chs=num_1x1_a,
             out_chs=num_3x3_b,
             kernel_size=3,
             stride=self.key_stride,
             padding=1,
-            groups=num_1x1_a)
+            groups=groups)
         if b:
             self.c1x1_c = CatBnAct(in_chs=num_3x3_b)
             self.c1x1_c1 = nn.Conv2d(
@@ -180,67 +180,64 @@ class DPN(nn.Module):
         self.b = b
         bw_factor = 1 if small else 4
 
-        blocks_dev = []
-        # blocks = []
-        
+        blocks = []
 
         # conv1
         if small:
-            blocks_dev.append(
+            blocks.append(
                 InputBlock(num_init_features, kernel_size=3, padding=1))
         else:
-            blocks_dev.append(
+            blocks.append(
                 InputBlock(num_init_features, kernel_size=7, padding=3))
 
         # conv2
         bw = 64 * bw_factor
         inc = inc_sec[0]
         r = (k_r * bw) // (64 * bw_factor)
-        blocks_dev.append(
+        blocks.append(
             DualPathBlock(num_init_features, r, r, bw, inc, groups, 'proj', b))
-        # in_chs = bw + 3 * inc
-        # for i in range(2, k_sec[0] + 1):
-        #     blocks_dev.append(
-        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-        #     in_chs += inc
+        in_chs = bw + 3 * inc
+        for i in range(2, k_sec[0] + 1):
+            blocks.append(
+                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+            in_chs += inc
 
-        # # conv3
-        # bw = 128 * bw_factor
-        # inc = inc_sec[1]
-        # r = (k_r * bw) // (64 * bw_factor)
-        # blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
-        # in_chs = bw + 3 * inc
-        # for i in range(2, k_sec[1] + 1):
-        #     blocks.append(
-        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-        #     in_chs += inc
+        # conv3
+        bw = 128 * bw_factor
+        inc = inc_sec[1]
+        r = (k_r * bw) // (64 * bw_factor)
+        blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
+        in_chs = bw + 3 * inc
+        for i in range(2, k_sec[1] + 1):
+            blocks.append(
+                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+            in_chs += inc
 
-        # # conv4
-        # bw = 256 * bw_factor
-        # inc = inc_sec[2]
-        # r = (k_r * bw) // (64 * bw_factor)
-        # blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
-        # in_chs = bw + 3 * inc
-        # for i in range(2, k_sec[2] + 1):
-        #     blocks.append(
-        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-        #     in_chs += inc
+        # conv4
+        bw = 256 * bw_factor
+        inc = inc_sec[2]
+        r = (k_r * bw) // (64 * bw_factor)
+        blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
+        in_chs = bw + 3 * inc
+        for i in range(2, k_sec[2] + 1):
+            blocks.append(
+                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+            in_chs += inc
 
-        # # conv5
-        # bw = 512 * bw_factor
-        # inc = inc_sec[3]
-        # r = (k_r * bw) // (64 * bw_factor)
-        # blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
-        # in_chs = bw + 3 * inc
-        # for i in range(2, k_sec[3] + 1):
-        #     blocks.append(
-        #         DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
-        #     in_chs += inc
-        # blocks.append(CatBnAct(in_chs))
-        self.features_dev = nn.Sequential(*blocks_dev)
-        # self.features = nn.Sequential(*blocks)
-        # self.classifier = nn.Conv2d(
-        #     in_chs, num_classes, kernel_size=1, bias=True)
+        # conv5
+        bw = 512 * bw_factor
+        inc = inc_sec[3]
+        r = (k_r * bw) // (64 * bw_factor)
+        blocks.append(DualPathBlock(in_chs, r, r, bw, inc, groups, 'down', b))
+        in_chs = bw + 3 * inc
+        for i in range(2, k_sec[3] + 1):
+            blocks.append(
+                DualPathBlock(in_chs, r, r, bw, inc, groups, 'normal', b))
+            in_chs += inc
+        blocks.append(CatBnAct(in_chs))
+        self.features = nn.Sequential(*blocks)
+        self.classifier = nn.Conv2d(
+            in_chs, num_classes, kernel_size=1, bias=True)
 
     def logits(self, features):
         if not self.training and self.test_time_pool:
@@ -253,9 +250,8 @@ class DPN(nn.Module):
         return out.view(out.size(0), -1)
 
     def forward(self, input):
-        x = self.features_dev(input)
-        # x = self.features(x)
-        # x = self.logits(x)
+        x = self.features(input)
+        x = self.logits(x)
         return x
 
 

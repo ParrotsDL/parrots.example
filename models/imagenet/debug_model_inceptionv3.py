@@ -73,6 +73,8 @@ if __name__=="__main__":
     hct = hookCompareTool()
     
     m = models.inception_v3()
+    # m = models.inception_v4()
+    # m = models.densenet121()
     # m = models.inception_v3_min.inception_v3()
     # m = incv3()
 

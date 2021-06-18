@@ -109,11 +109,10 @@ class GoogLeNet(nn.Module):
         # N x 832 x 7 x 7
         x = self.inception5b(x)
         # N x 1024 x 7 x 7
-        x = x.cpu()
         x = F.adaptive_avg_pool2d(x, (1,1))
         #x = self.avgpool(x)
         # N x 1024 x 1 x 1
-        x = torch.flatten(x, 1).cuda()
+        x = torch.flatten(x, 1)
         # N x 1024
         x = self.dropout(x)
         x = self.fc(x)
@@ -166,15 +165,11 @@ class InceptionAux(nn.Module):
 
     def forward(self, x):
         # aux1: N x 512 x 14 x 14, aux2: N x 528 x 14 x 14
-        x = x.cpu()
         x = F.adaptive_avg_pool2d(x, (4, 4))
-        x = x.cuda()
         # aux1: N x 512 x 4 x 4, aux2: N x 528 x 4 x 4
         x = self.conv(x)
         # N x 128 x 4 x 4
-        x = x.cpu()
         x = x.view(x.size(0), -1)
-        x = x.cuda()
         # N x 2048
         x = F.relu(self.fc1(x), inplace=True)
         # N x 2048

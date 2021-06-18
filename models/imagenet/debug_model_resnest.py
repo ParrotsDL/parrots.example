@@ -6,14 +6,13 @@ import models
 import numpy as np
 from hook_function import hookCompareTool, code_blue
 
-
 if __name__=="__main__":
 
     hct = hookCompareTool()
+    
+    m = models.resnest50()
 
-    m = models.alexnet()
-
-    input = torch.randn(2, 3, 224, 224, requires_grad=True)
+    input = torch.randn(2, 3, 256, 256, requires_grad=True)
     
     #进行hook注册访问每一层的forward和backward输入输出
     for name, mm in m.named_modules():

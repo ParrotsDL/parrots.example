@@ -37,7 +37,6 @@ def channel_shuffle(x, groups):
     batchsize, num_channels, height, width = x.data.size()
     channels_per_group = num_channels // groups
     x = x.view(batchsize, groups, channels_per_group, height, width)
-    print(x.is_contiguous())
     x = torch.transpose(x, 1, 2)
     x = x.contiguous()
     x = x.view(batchsize, -1, height, width)
@@ -91,13 +90,7 @@ class FinalModule(nn.Module):
     def forward(self, x):
         x = self.FinalConv(x)
         x = self.avgpool(x)
-        x = x.cpu()
         x = x.view(x.size(0), -1)
-        if torch.__version__ == "parrots":
-            x = x.cuda()
-        else:
-            import torch_mlu.core.mlu_model as ct
-            x = x.to(ct.mlu_device())
         x = self.fc(x)
         return x
 
@@ -152,11 +145,15 @@ class ShuffleNetV2Block(nn.Module):
                 self.in_channels - self.in_channels // self.splits_left
             ])
             x_left, x_right = x_split[0], x_split[1]
-            x_right = self.Right(x_right)
+            # x_right = self.Right(x_right)
 
         print(x_left.shape, x_right.shape)
         x = torch.cat((x_left, x_right), dim=1)
         # x = channel_shuffle(x, 2)
+        if torch.__version__ == "1.6.0a0":
+            x = channel_shuffle(x, 2)
+        else:
+            x = torch.shuffleChannel(x, 2)
         return x
 
 
@@ -179,8 +176,8 @@ class ShuffleNetV2(nn.Module):
         self.ParimaryModule = ParimaryModule(in_channels, self.out_channels[0])
 
         self.Stage1 = self.Stage(1, [1, 3])
-        # self.Stage2 = self.Stage(2, [1, 7])
-        # self.Stage3 = self.Stage(3, [1, 3])
+        self.Stage2 = self.Stage(2, [1, 7])
+        self.Stage3 = self.Stage(3, [1, 3])
 
         self.FinalModule = FinalModule(self.out_channels[3],
                                        self.out_channels[4], num_classes)
@@ -197,20 +194,20 @@ class ShuffleNetV2(nn.Module):
         else:
             raise ValueError('stage first block must only repeat 1 time')
 
-        # for i in range(BlockRepeat[1]):
-        #     modules.append(
-        #         ShuffleNetV2Block(self.out_channels[stage],
-        #                           self.out_channels[stage], 1,
-        #                           self.splits_left))
+        for i in range(BlockRepeat[1]):
+            modules.append(
+                ShuffleNetV2Block(self.out_channels[stage],
+                                  self.out_channels[stage], 1,
+                                  self.splits_left))
 
         return nn.Sequential(*modules)
 
     def forward(self, x):
         x = self.ParimaryModule(x)
         x = self.Stage1(x)
-        # x = self.Stage2(x)
-        # x = self.Stage3(x)
-        # x = self.FinalModule(x)
+        x = self.Stage2(x)
+        x = self.Stage3(x)
+        x = self.FinalModule(x)
         return x
 
 

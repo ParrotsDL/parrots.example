@@ -11,7 +11,8 @@ if __name__=="__main__":
     
     hct = hookCompareTool()
     
-    m = models.resnet50()
+    # m = models.resnet50()
+    m = models.resnet101()
 
     input = torch.randn(2, 3, 224, 224, requires_grad=True)
     

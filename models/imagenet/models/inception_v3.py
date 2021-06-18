@@ -107,9 +107,7 @@ class InceptionV3(nn.Module):
         # 1 x 1 x 2048
         # x = F.dropout(x, training=self.training)
         # 1 x 1 x 2048
-        x = x.cpu()
         x = x.view(x.size(0), -1)
-        x = x.cuda()
         # 2048
         x = self.fc(x)
         # 1000 (num_classes)

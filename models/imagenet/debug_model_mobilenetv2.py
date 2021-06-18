@@ -7,13 +7,14 @@ import models.mobile_v2_min
 import numpy as np
 from hook_function import hookCompareTool, code_blue
 
+
 class mv2(nn.Module):
     def __init__(self, num_classes=1000):
         super(mv2, self).__init__()
 
         # self.conv = nn.Conv2d(96, 96, 3, 1, 1, groups=1)
         self.conv = nn.Conv2d(3, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1, bias=True)
-        self.conv2 = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=32, bias=True)
+        self.conv2 = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=2, bias=True)
         # self.batch_norm = nn.BatchNorm2d(32)
         self.relu = nn.ReLU(False)
 
@@ -28,8 +29,8 @@ if __name__=="__main__":
     
     hct = hookCompareTool()
 
-    # m = models.mobile_v2()
-    m = models.mobile_v2_min.mobile_v2()
+    m = models.mobile_v2()
+    # m = models.mobile_v2_min.mobile_v2()
     # m = mv2()
 
     input = torch.randn(2, 3, 224, 224, requires_grad=True)

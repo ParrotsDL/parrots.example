@@ -39,9 +39,7 @@ class AlexNet(nn.Module):
     def forward(self, x):
         x = self.features(x)
         x = self.avgpool(x)
-        x = x.cpu()
         x = torch.flatten(x, 1)
-        x = x.cuda()
         x = self.classifier(x)
         return x
 

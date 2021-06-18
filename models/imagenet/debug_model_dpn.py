@@ -18,6 +18,8 @@ if __name__=="__main__":
     
     # 进行hook注册访问每一层的forward和backward输入输出
     for name, mm in m.named_modules():
+        if "Sequential" in f"{mm}":
+            continue
         print(code_blue(name), "---", code_blue(mm))
         mm.register_forward_hook(hct.hook(name, mm))
         mm.register_backward_hook(hct.hook(name, mm, tag='backward'))
