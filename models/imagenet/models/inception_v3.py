@@ -105,7 +105,7 @@ class InceptionV3(nn.Module):
         x = self.avg_pool(x)
         # x = F.avg_pool2d(x, kernel_size=8)
         # 1 x 1 x 2048
-        # x = F.dropout(x, training=self.training)
+        x = F.dropout(x, training=self.training)
         # 1 x 1 x 2048
         x = x.view(x.size(0), -1)
         # 2048
@@ -324,8 +324,3 @@ class BasicConv2d(nn.Module):
         x = self.conv(x)
         x = self.bn(x)
         return F.relu(x, inplace=True)
-
-
-if __name__ == '__main__':
-    model = inception_v3()
-    print(model)
