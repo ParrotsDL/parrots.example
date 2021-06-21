@@ -26,8 +26,8 @@ dataset:
   workers: 6
  
 trainer:
-  max_epoch: 4
-  test_freq: 4
+  max_epoch: 140
+  test_freq: 140
   log_freq: 20
   optimizer:
     type: SGD

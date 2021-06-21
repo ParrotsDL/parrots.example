@@ -27,7 +27,7 @@ dataset:
  
 trainer:
   max_epoch: 120
-  test_freq: 1
+  test_freq: 120
   log_freq: 100
   label_smooth:
   bn:

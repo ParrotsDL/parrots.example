@@ -50,10 +50,10 @@ saver:
   resume_model:
   save_dir: checkpoints/resnet50   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: resnet50
-    model: resnet50
+#monitor:
+#  type: pavi
+#  _taskid: # continue training
+#  kwargs:
+#    project: default  # change to your own pavi project
+#    task: resnet50
+#    model: resnet50

@@ -1,9 +1,11 @@
 
+import os
 import torch
 import pickle
 import numpy as np
 from termcolor import colored
 
+### 更换版本记得改这里 ！！！！！！
 CAMB_TORCH_VERSION = "1.6.0a0"
 CAMB_PARROTS_VERSION = "parrots"
 CPU_PYTORCH = "1.3.1"
@@ -46,7 +48,9 @@ hct.save_and_compare_hook()
 '''
 
 class hookCompareTool():
-    def __init__(self):
+    def __init__(self, reduction="mean"):
+        self.reduction = reduction
+        
         self.torch_version = torch.__version__
         self.order_counter = 0
         self.data_dict = {}
@@ -56,9 +60,20 @@ class hookCompareTool():
         self.torch_checkpoint_path = "data/checkpoint.pth"
         self.torch_input_path = "data/input.pth"
 
-        print("pytorch version:", code_red(torch.__version__))
+        self.make_dirs(self.pkl_save_path)
+        self.make_dirs(self.torch_checkpoint_path)
+        self.make_dirs(self.torch_input_path)
+
+        print("pytorch version:", code_green(torch.__version__))
+
+    def make_dirs(path):
+        parent_dir = os.path.dirname(path)
+        if not os.path.exit(parent_dir):
+            os.makedirs(parent_dir)
 
     def insert(self, name, mm, tag, input, output):
+        if "Sequential" in f"{mm}":
+            return
         if name not in self.data_dict.keys():
             self.data_dict[name] = {}
         if tag == "forward":
@@ -71,6 +86,7 @@ class hookCompareTool():
     def pkl_save(self):
         with open(self.pkl_save_path, "wb") as file:
             pickle.dump(self.data_dict, file)
+            print("save file at {}".format(self.pkl_save_path))
 
     def pkl_read(self):
         with open(self.pkl_save_path, "rb") as file:
@@ -120,22 +136,22 @@ class hookCompareTool():
         else:
             return data
 
-    def get_data_numpy(self, data, reduction='mean'):
-        assert reduction in ['mean', 'sum', 'shape', 'all']
+    def get_data_numpy(self, data):
+        assert self.reduction in ['mean', 'sum', 'shape', 'all']
         if isinstance(data, (torch.Tensor)):
             npdata = data.clone().detach().cpu().numpy()
-            if reduction == 'mean':
+            if self.reduction == 'mean':
                 return np.mean(npdata)
-            elif reduction == 'sum':
+            elif self.reduction == 'sum':
                 return np.sum(npdata)
-            elif reduction == 'shape':
+            elif self.reduction == 'shape':
                 return npdata.shape
             else:
-                return npdata.reshape(-1)[-5:], np.sum(npdata)
+                return npdata.reshape(-1)[-5:], np.mean(npdata), npdata.shape
         elif isinstance(data, dict):
-            return {k: self.get_data_numpy(v, reduction) for k, v in data.items()}
+            return {k: self.get_data_numpy(v) for k, v in data.items()}
         elif isinstance(data, (tuple, list)):
-            return data.__class__(self.get_data_numpy(v, reduction) for v in data)
+            return data.__class__(self.get_data_numpy(v) for v in data)
         else:
             return data
 
@@ -163,13 +179,16 @@ class hookCompareTool():
 
     def to_cuda(self,input, model):
         if self.torch_version == CAMB_PARROTS_VERSION:
+            # torch.cuda.set_device(4)
             model = model.to_memory_format(torch.channels_last)
             model = model.cuda()
-            input = input.contiguous(torch.channels_last)
+            # input = input.contiguous(torch.channels_last)
             input = input.cuda()
+            input = input.contiguous(torch.channels_last)
         else:
             torch.set_printoptions(10)
             import torch_mlu.core.mlu_model as ct
+            ct.set_device(4)
             ct.set_cnml_enabled(False)
             model = model.to(ct.mlu_device())
             input = input.to(ct.mlu_device())
