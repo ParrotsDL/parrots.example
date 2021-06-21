@@ -74,8 +74,6 @@ def main():
     # 将logger添加到handler里面
     logger.addHandler(fh)
 
-    print(os.environ.keys())
-
     if 'SLURM_PROCID' in os.environ.keys():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
