@@ -1,9 +1,10 @@
 seed: 99
 net:
-    arch: mobile_v1
+    arch: resnet50 # resnet18, resnet34, resnet50, resnet50c, resnet50d, resnet101, resnet101d, resnet152, resnet152d
+                   # resnext50_32x4d, resnext101_32x8d, resnext50d_32x4d, resnext101d_32x8d
+                   # wide_resnet50_2, wide_resnet101_2, wide_resnet50d_2, wide_resnet101d_2
     kwargs:
         num_classes: 1000
-        scale: 1.0
  
 dataset:
   train:
@@ -27,13 +28,13 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 120
+  max_epoch: 100
   test_freq: 1
   log_freq: 20
   optimizer:
     type: SGD
     kwargs:
-      lr: 0.045
+      lr: 0.1
       momentum: 0.9
       weight_decay: 0.0001
   lr_scheduler:
@@ -43,15 +44,16 @@ trainer:
       milestones: [30,60,90]
       gamma: 0.1
 
+
 saver:
   pretrain_model:
   resume_model:
-  save_dir: checkpoints/mobile_v1   # save checkpoint locally
+  save_dir: checkpoints/resnet50   # save checkpoint locally
  
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: pape_test  # change to your own pavi project
-    task: mobile_v1
-    model: mobile_v1
+#monitor:
+#  type: pavi
+#  _taskid: # continue training
+#  kwargs:
+#    project: default  # change to your own pavi project
+#    task: resnet50
+#    model: resnet50

@@ -27,7 +27,6 @@ from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 from utils.dist_utils import DistributedModel
 
-import pdb
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -45,6 +44,7 @@ parser.add_argument('--data_reader', type=str, default="MemcachedReader", choice
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
+parser.add_argument('--local_rank', type=int, default=0, help='cude device id')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -74,7 +74,7 @@ def main():
     # 将logger添加到handler里面
     logger.addHandler(fh)
 
-
+    print(os.environ.keys())
 
     if 'SLURM_PROCID' in os.environ.keys():
         args.rank = int(os.environ['SLURM_PROCID'])
@@ -84,10 +84,13 @@ def main():
         node_parts = re.findall('[0-9]+', node_list)
         os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
         os.environ['MASTER_PORT'] = str(args.port)
-    else:
+    elif 'OMPI_COMM_WORLD_LOCAL_SIZE' in os.environ.keys():
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
+    else:
+        args.rank = 0
+        args.world_size = 8
     args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
