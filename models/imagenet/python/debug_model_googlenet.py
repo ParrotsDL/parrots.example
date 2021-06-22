@@ -2,7 +2,6 @@ import torch
 import models
 import torch.nn.functional as F
 import torch.nn as nn
-import models.googlenet_min
 import numpy as np
 from hook_function import hookCompareTool, code_blue
 

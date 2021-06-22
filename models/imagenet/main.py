@@ -88,7 +88,7 @@ def main():
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
     else:
         args.rank = 0
-        args.world_size = 8
+        args.world_size = 1
     args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)

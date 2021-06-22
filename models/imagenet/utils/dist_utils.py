@@ -19,7 +19,7 @@ class DistributedModel(nn.Module):
         world_size = dist.get_world_size()
         param_list = []
         for param in self.model.parameters():
-            if param.requires_grad:
+            if param.requires_grad and param.data.grad is not None:
                 dist.all_reduce(param.grad.data)
                 param_list.append(param)
         for param in param_list:

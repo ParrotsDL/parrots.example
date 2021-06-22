@@ -66,9 +66,9 @@ class hookCompareTool():
 
         print("pytorch version:", code_green(torch.__version__))
 
-    def make_dirs(path):
+    def make_dirs(self, path):
         parent_dir = os.path.dirname(path)
-        if not os.path.exit(parent_dir):
+        if not os.path.exists(parent_dir):
             os.makedirs(parent_dir)
 
     def insert(self, name, mm, tag, input, output):
