@@ -32,7 +32,7 @@ class CephDataset(Dataset):
         if self.meta_list[-1] == '':
             self.meta_list.pop()
         self.num = len(self.meta_list)
-        self.ddt_flag = 0
+        self.ddt_flag = 1
         self.ddt_img = 0
 
     def __len__(self):
