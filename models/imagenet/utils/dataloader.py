@@ -45,6 +45,8 @@ class CephDataset(Dataset):
 
             img = Image.open(io.BytesIO(self.client.Get(filename, update_cache=True)))
             img = img.convert('RGB')
+            self.ddt_img = copy.deepcopy(img)
+            self.ddt_flag = 0
         else:
             img = copy.deepcopy(self.ddt_img)
             cls = int(self.meta_list[index].split()[1])
