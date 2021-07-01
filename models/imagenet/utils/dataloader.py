@@ -47,7 +47,7 @@ class CephDataset(Dataset):
             img = img.convert('RGB')
             self.ddt_img = copy.deepcopy(img)
             self.ddt_flag = 0
-            print("no dummydataset ")
+            print("no dummydataset")
         else:
             img = copy.deepcopy(self.ddt_img)
             cls = int(self.meta_list[index].split()[1])
