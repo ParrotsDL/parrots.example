@@ -41,7 +41,6 @@ parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--resume',default=None,type=str,help='resume checkpoint')
 parser.add_argument("--benchmark_range",default=None,type=str,help="benchmark_range")
-
 parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
 
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
@@ -80,7 +79,6 @@ def main():
     dist.init_process_group(backend="nccl")
     torch.cuda.set_device(args.local_rank)
 
-    os.putenv('max_step', str(args.max_step)) if args.max_step else None
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -328,8 +326,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         end = time.time()
         iter_end_time = time.time()
 
-        # print("11111111:",len(train_loader),1/3*len(train_loader),2/3*len(train_loader),
-                            # math.floor(1/3*len(train_loader)))
 
         if args.benchmark_range:
             iter_range = [int(iter) for iter in
@@ -426,7 +422,7 @@ def test(test_loader, model, criterion, args):
                     acc1, stats_all[0].item(), stats_all[2].item(),
                     acc5, stats_all[1].item(), stats_all[2].item()))
 
-        logger.info('__result__ * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
+        logger.info('__benchmark_result__ * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
             acc1, stats_all[0].item(), stats_all[2].item(),
             acc5, stats_all[1].item(), stats_all[2].item()))
 
