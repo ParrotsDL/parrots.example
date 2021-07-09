@@ -25,7 +25,7 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
-
+import math
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -34,12 +34,17 @@ parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
+
 parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
-parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
+parser.add_argument('--pavi_project', type=str, default="default", help='pavi project name')
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
-parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
+parser.add_argument('--resume',default=None,type=str,help='resume checkpoint')
+parser.add_argument("--benchmark_range",default=None,type=str,help="benchmark_range")
+
 parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+
+parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
@@ -73,7 +78,9 @@ def main():
     os.environ['RANK'] = str(args.rank)
 
     dist.init_process_group(backend="nccl")
-    torch.cuda.set_device(args.local_rank) 
+    torch.cuda.set_device(args.local_rank)
+
+    os.putenv('max_step', str(args.max_step)) if args.max_step else None
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -140,6 +147,18 @@ def main():
         args.taskid = checkpoint['taskid']
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
+    elif args.resume:
+        assert os.path.isfile(args.resume), 'Not found resume model: {}'.format(
+            args.resume)
+        checkpoint = torch.load(args.resume)
+        check_keys(model=model, checkpoint=checkpoint)
+        model.load_state_dict(checkpoint['state_dict'])
+        args.start_epoch = checkpoint['epoch']
+        best_acc1 = checkpoint['best_acc1']
+        optimizer.load_state_dict(checkpoint['optimizer'])
+        args.taskid = checkpoint['taskid']
+        logger.info("resume training from '{}' at epoch {}".format(
+            args.resume, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
         assert os.path.isfile(cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
             cfgs.saver.pretrain_model)
@@ -147,6 +166,7 @@ def main():
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
         logger.info("pretrain training from '{}'".format(cfgs.saver.pretrain_model))
+    
 
     if args.rank == 0 and cfgs.saver.get('save_dir', None):
         if not os.path.exists(cfgs.saver.save_dir):
@@ -307,9 +327,27 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         batch_time.update(time.time() - end)
         end = time.time()
         iter_end_time = time.time()
-        if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
+
+        # print("11111111:",len(train_loader),1/3*len(train_loader),2/3*len(train_loader),
+                            # math.floor(1/3*len(train_loader)))
+
+        if args.benchmark_range:
+            iter_range = [int(iter) for iter in
+                          args.benchmark_range.split(",")]
+            left_limit = iter_range[0]
+            right_limit = iter_range[1]
+            limit_range = right_limit - left_limit
+        else:
+            left_limit = math.floor(1/3*len(train_loader))
+            right_limit = math.floor(2/3*len(train_loader))
+            limit_range = right_limit - left_limit
+
+        if len(iter_time_list) <= limit_range and \
+           i >= left_limit and i <= right_limit:
             iter_time_list.append(iter_end_time - iter_start_time)
-            
+
+
+
         iter_start_time = time.time()
         if i % args.log_freq == 0:
             progress.display(i)
@@ -318,9 +356,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
-        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
-            return
 
+        if os.environ.get('PARROTS_BENCHMARK') == '1'  and i > right_limit:
+            return
+        
 
 def test(test_loader, model, criterion, args):
     logger = logging.getLogger()
@@ -386,6 +425,10 @@ def test(test_loader, model, criterion, args):
         logger.info(' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
                     acc1, stats_all[0].item(), stats_all[2].item(),
                     acc5, stats_all[1].item(), stats_all[2].item()))
+
+        logger.info('__result__ * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
+            acc1, stats_all[0].item(), stats_all[2].item(),
+            acc5, stats_all[1].item(), stats_all[2].item()))
 
     return loss_avg, acc1, acc5
 
