@@ -35,16 +35,20 @@ parser.add_argument('--test', dest='test', action='store_true',
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
 
-parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
-parser.add_argument('--pavi_project', type=str, default="default", help='pavi project name')
+parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader', 'DirectReader'], help='io backend')
+
+parser.add_argument("--benchmark", default=None, type=str, 
+                    choices=['TRUE', 'ON', '1', 'x,y'], help="benchmark_range")
+parser.add_argument('--pavi', default=None, type=str,
+                    help = 'pavi use and pavi project')
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
-parser.add_argument('--resume',default=None,type=str,help='resume checkpoint')
-parser.add_argument("--benchmark_range",default=None,type=str,help="benchmark_range")
-parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+parser.add_argument('--seed', type=int, default=None, help='random seed')
+parser.add_argument('--resume', default=None, type=str, help='resume checkpoint')
+
+
 
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
-parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
@@ -64,9 +68,7 @@ def main():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
         args.local_rank = int(os.environ['SLURM_LOCALID'])
-        node_list = str(os.environ['SLURM_NODELIST'])
-        node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = socket.gethostbyname(socket.getfqdn(socket.gethostname()))
         os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
@@ -75,6 +77,7 @@ def main():
 
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
+
 
     dist.init_process_group(backend="nccl")
     torch.cuda.set_device(args.local_rank)
@@ -133,10 +136,11 @@ def main():
     args.log_freq = cfgs.trainer.log_freq
 
     best_acc1 = 0.0
-    if cfgs.saver.resume_model:
-        assert os.path.isfile(cfgs.saver.resume_model), 'Not found resume model: {}'.format(
-            cfgs.saver.resume_model)
-        checkpoint = torch.load(cfgs.saver.resume_model)
+    resume_model = args.resume if args.resume else cfgs.saver.resume_model
+    if resume_model:
+        assert os.path.isfile(resume_model), 'Not found resume model: {}'.format(
+            resume_model)
+        checkpoint = torch.load(resume_model)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
         args.start_epoch = checkpoint['epoch']
@@ -145,18 +149,6 @@ def main():
         args.taskid = checkpoint['taskid']
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
-    elif args.resume:
-        assert os.path.isfile(args.resume), 'Not found resume model: {}'.format(
-            args.resume)
-        checkpoint = torch.load(args.resume)
-        check_keys(model=model, checkpoint=checkpoint)
-        model.load_state_dict(checkpoint['state_dict'])
-        args.start_epoch = checkpoint['epoch']
-        best_acc1 = checkpoint['best_acc1']
-        optimizer.load_state_dict(checkpoint['optimizer'])
-        args.taskid = checkpoint['taskid']
-        logger.info("resume training from '{}' at epoch {}".format(
-            args.resume, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
         assert os.path.isfile(cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
             cfgs.saver.pretrain_model)
@@ -187,9 +179,8 @@ def main():
     monitor_writer = None
     
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
-       # if cfgs.monitor.get('type', None) == 'pavi':
         if args.pavi:
-            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
+            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi}
         else:
             monitor_kwargs = cfgs.monitor.kwargs
             if hasattr(args, 'taskid'):
@@ -200,7 +191,6 @@ def main():
         monitor_writer = SummaryWriter(
             session_text=yaml.dump(args.config), **monitor_kwargs)
         args.taskid = monitor_writer.taskid
-
     run_time = time.time()
 
     # training
@@ -255,14 +245,14 @@ def main():
 
         lr_scheduler.step()
     end_time = time.time()
-    if args.rank == 0:
+    if args.benchmark and args.rank == 0:
         logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
         logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
         logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
         logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
         logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
 
-    if args.rank == 0 and monitor_writer:
+    if args.benchmark and args.rank == 0 and monitor_writer:
         monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
@@ -327,18 +317,22 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         iter_end_time = time.time()
 
 
-        if args.benchmark_range:
-            iter_range = [int(iter) for iter in
-                          args.benchmark_range.split(",")]
-            left_limit = iter_range[0]
-            right_limit = iter_range[1]
-            limit_range = right_limit - left_limit
+        #TODO(just do once)
+        if args.benchmark is not None:
+            if args.benchmark == 'ON' or args.benchmark == 'True' or args.benchmark == '1':
+                left_limit = math.floor(1/3*len(train_loader))
+                right_limit = math.floor(2/3*len(train_loader))
+                limit_range = right_limit - left_limit
+            elif ',' in args.benchmark:
+                iter_range = [int(iter) for iter in
+                            args.benchmark.split(",")]
+                left_limit = iter_range[0]
+                right_limit = iter_range[1]
+                limit_range = right_limit - left_limit
         else:
-            left_limit = math.floor(1/3*len(train_loader))
-            right_limit = math.floor(2/3*len(train_loader))
-            limit_range = right_limit - left_limit
+            limit_range = None
 
-        if len(iter_time_list) <= limit_range and \
+        if limit_range and len(iter_time_list) <= limit_range and \
            i >= left_limit and i <= right_limit:
             iter_time_list.append(iter_end_time - iter_start_time)
 
@@ -353,7 +347,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
 
-        if os.environ.get('PARROTS_BENCHMARK') == '1'  and i > right_limit:
+        if args.benchmark and i > right_limit:
             return
         
 
