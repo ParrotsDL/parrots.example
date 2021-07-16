@@ -43,6 +43,7 @@ parser.add_argument('--data_reader', type=str, default="MemcachedReader", choice
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
+parser.add_argument('--resume', default=None, type=str, help='Breakpoint entrance')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -128,10 +129,13 @@ def main():
     args.log_freq = cfgs.trainer.log_freq
 
     best_acc1 = 0.0
-    if cfgs.saver.resume_model:
-        assert os.path.isfile(cfgs.saver.resume_model), 'Not found resume model: {}'.format(
-            cfgs.saver.resume_model)
-        checkpoint = torch.load(cfgs.saver.resume_model)
+    if args.resume or cfgs.saver.resume_model:
+        if args.resume:
+            pth = args.resume
+        elif cfgs.saver.resume_model:
+            pth = cfgs.saver.resume_model
+        assert os.path.isfile(pth), 'Not found resume model: {}'.format(pth)
+        checkpoint = torch.load(pth)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
         args.start_epoch = checkpoint['epoch']
@@ -139,7 +143,7 @@ def main():
         optimizer.load_state_dict(checkpoint['optimizer'])
         args.taskid = checkpoint['taskid']
         logger.info("resume training from '{}' at epoch {}".format(
-            cfgs.saver.resume_model, checkpoint['epoch']))
+            pth, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
         assert os.path.isfile(cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
             cfgs.saver.pretrain_model)
@@ -211,6 +215,7 @@ def main():
         
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
+
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
             if args.rank == 0:
