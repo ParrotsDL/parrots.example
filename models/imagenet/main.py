@@ -26,7 +26,6 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 
-
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
@@ -61,9 +60,7 @@ def main():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
         args.local_rank = int(os.environ['SLURM_LOCALID'])
-        node_list = str(os.environ['SLURM_NODELIST'])
-        node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = socket.gethostbyname(socket.getfqdn(socket.gethostname()))
         os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
