@@ -1,0 +1,39 @@
+base: runner/config/_base_.yaml
+
+framework: example
+
+py_args:
+    --data_reader : CephReader 
+    --maxstep : 23 
+  
+
+models:
+  - dpn92_mix.benchmark:
+      --seed: 2
+      --maxstep: 1
+  - dpn92.benchmark:
+      --seed: 4           
+  - inception_v4.benchmark: 
+      --data_reader : Mem
+  - inception_v4_mix.benchmark  
+  - resnet50.benchmark          
+  - resnet50_mix.benchmark      
+  - se_resnet50.benchmark       
+  - se_resnet50_mix.benchmark   
+  - shuffle_v2.benchmark        
+  - shuffle_v2_mix.benchmark    
+  - mobile_v2.benchmark         
+  - mobile_v2_mix.benchmark     
+  - resnetNone8.benchmark       
+  - resnetNone8_mix.benchmark   
+  - resnetNone0None.benchmark   
+  - resnetNone0None_mix.benchmark
+  - resnetNone52.benchmark      
+  - resnetNone52_mix.benchmark  
+  - inception_v2.benchmark      
+  - inception_v2_mix.benchmark  
+  - inception_v3.benchmark      
+  - inception_v3_mix.benchmark  
+  - inception_resnet.benchmark  
+  - inception_resnet_mix.benchmark
+                 

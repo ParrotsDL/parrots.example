@@ -85,6 +85,8 @@ def build_dataloader(cfg, world_size, data_reader):
         train_dataset = CephDataset(ceph_image_dir, ceph_meta_file, train_aug)
     elif data_reader == 'DirectReader':
         raise NotImplementedError
+    else:
+        assert data_reader, "data reader should be provided."
 
     train_sampler = DistributedSampler(train_dataset)
     train_loader = DataLoader(

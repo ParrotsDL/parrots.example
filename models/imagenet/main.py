@@ -35,13 +35,13 @@ parser.add_argument('--test', dest='test', action='store_true',
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
 
-parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader', 'DirectReader'], help='io backend')
+parser.add_argument('--reader', type=str, default=None, choices=['MemcachedReader', 'CephReader', 'DirectReader'], help='io backend')
 
 parser.add_argument("--benchmark", default=None, type=str, 
                     choices=['TRUE', 'ON', '1', 'x,y'], help="benchmark_range")
 parser.add_argument('--pavi', default=None, type=str,
                     help = 'pavi use and pavi project')
-parser.add_argument('--max_step', default=None, type=int, metavar='N',
+parser.add_argument('--maxstep', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--resume', default=None, type=str, help='resume checkpoint')
@@ -130,8 +130,8 @@ def main():
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
-    if args.max_step is not None:
-        args.max_epoch = args.max_step
+    if args.maxstep is not None:
+        args.max_epoch = args.maxstep
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
 
@@ -164,7 +164,7 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.reader)
 
     # test mode
     if args.test:
