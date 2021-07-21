@@ -1,20 +1,21 @@
-base: runner/config/_base_.yaml
-
 framework: example
 
 py_args:
-    --data_reader : CephReader 
-    --maxstep : 23 
+    reader : CephReader 
+    maxstep : 1
+    ncard: 8
+    benchmark: 20,30
+
   
 
 models:
   - dpn92_mix.benchmark:
-      --seed: 2
-      --maxstep: 1
+      seed: 2
+      maxstep: 1
   - dpn92.benchmark:
-      --seed: 4           
+      seed: 4           
   - inception_v4.benchmark: 
-      --data_reader : Mem
+      reader : Mem
   - inception_v4_mix.benchmark  
   - resnet50.benchmark          
   - resnet50_mix.benchmark      

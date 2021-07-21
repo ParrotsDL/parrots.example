@@ -7,6 +7,7 @@ now=$(date +"%Y%m%d_%H%M%S")
 ROOT=.
 pyroot=$ROOT/submodules/example
 export PYTHONPATH=$pyroot:$PYTHONPATH
+export name=$3
 
 # 3. build necessary parameter
 partition=$1
@@ -31,7 +32,7 @@ if [[ $3 =~ "sync" ]]; then
 else
     OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
     srun --mpi=pmi2 -p $1 --job-name=example_${name} \
-        --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS} \
+        --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS}  \
         python -u $pyroot/models/imagenet/main.py --config ${cfg} \
         ${EXTRA_ARGS} \
         2>&1 | tee algolib_log/example/train_${name}.log-$now
