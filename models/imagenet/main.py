@@ -35,20 +35,6 @@ parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
-
-# parser.add_argument('--reader', type=str, default=None, choices=['MemcachedReader', 'CephReader', 'DirectReader'], help='io backend')
-
-# parser.add_argument("--benchmark", default=None, type=str, 
-#                     choices=['TRUE', 'ON', '1', 'x,y'], help="benchmark_range")
-# parser.add_argument('--pavi', default=None, type=str,
-#                     help = 'pavi use and pavi project')
-# parser.add_argument('--maxstep', default=None, type=int, metavar='N',
-#                     help='number of total epochs to run')
-# parser.add_argument('--seed', type=int, default=None, help='random seed')
-# parser.add_argument('--resume', default=None, type=str, help='resume checkpoint')
-
-
-
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
@@ -261,20 +247,6 @@ def main():
                 monitor_writer,
                 args.rank
                 )
-    # if args.benchmark and args.rank == 0:
-    #     logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
-    #     logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
-    #     logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
-    #     logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
-    #     logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
-
-    # if args.benchmark and args.rank == 0 and monitor_writer:
-    #     monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
-    #     monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
-    #     monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
-    #     monitor_writer.add_scalar('__benchmark_mem_alloc(mb)',mem_alloc,1)
-    #     monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
-    #     monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
 
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
@@ -338,27 +310,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                       len(train_loader),
                       args.benchmark,
                       iter_time_list)
-
-        # #TODO(just do once)
-        # if args.benchmark is not None:
-        #     if args.benchmark == 'ON' or args.benchmark == 'True' or args.benchmark == '1':
-        #         left_limit = math.floor(1/3*len(train_loader))
-        #         right_limit = math.floor(2/3*len(train_loader))
-        #         limit_range = right_limit - left_limit
-        #     elif ',' in args.benchmark:
-        #         iter_range = [int(iter) for iter in
-        #                     args.benchmark.split(",")]
-        #         left_limit = iter_range[0]
-        #         right_limit = iter_range[1]
-        #         limit_range = right_limit - left_limit
-        # else:
-        #     limit_range = None
-
-        # if limit_range and len(iter_time_list) <= limit_range and \
-        #    i >= left_limit and i <= right_limit:
-        #     iter_time_list.append(iter_end_time - iter_start_time)
-
-
 
         if i % args.log_freq == 0:
             progress.display(i)

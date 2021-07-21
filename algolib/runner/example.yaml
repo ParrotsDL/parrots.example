@@ -1,12 +1,8 @@
-framework: example
-
-py_args:
+global_configs:
     reader : CephReader 
     maxstep : 1
     ncard: 8
     benchmark: 20,30
-
-  
 
 models:
   - dpn92_mix.benchmark:
