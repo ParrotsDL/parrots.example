@@ -1,6 +1,6 @@
 framework: example
 
-py_args:
+global_configs:
     reader : CephReader 
     maxstep : 1
     ncard: 8
@@ -25,12 +25,12 @@ models:
   - shuffle_v2_mix.benchmark    
   - mobile_v2.benchmark         
   - mobile_v2_mix.benchmark     
-  - resnetNone8.benchmark       
-  - resnetNone8_mix.benchmark   
-  - resnetNone0None.benchmark   
-  - resnetNone0None_mix.benchmark
-  - resnetNone52.benchmark      
-  - resnetNone52_mix.benchmark  
+  - resnet18.benchmark       
+  - resnet18_mix.benchmark   
+  - resnet.benchmark   
+  - resnet_mix.benchmark
+  - resnet152.benchmark      
+  - resnet152_mix.benchmark  
   - inception_v2.benchmark      
   - inception_v2_mix.benchmark  
   - inception_v3.benchmark      

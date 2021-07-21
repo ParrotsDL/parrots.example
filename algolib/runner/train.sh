@@ -5,7 +5,7 @@ now=$(date +"%Y%m%d_%H%M%S")
 
 # 2. set env 
 ROOT=.
-pyroot=$ROOT/submodules/example
+pyroot=$ROOT/algolib/example
 export PYTHONPATH=$pyroot:$PYTHONPATH
 export name=$3
 
@@ -13,7 +13,7 @@ export name=$3
 partition=$1
 g=$(($2<8?$2:8))
 name=$3
-cfg=$ROOT/submodules/example/algolib/configs/${name}.yaml
+cfg=$ROOT/algolib/example/algolib/configs/${name}.yaml
 
 # 4. build optional parameter
 array=( $@ )
