@@ -38,6 +38,7 @@ parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
+parser.add_argument('--resume', default=None, type=str, help='Breakpoint entrance')
 
 
 add_argument(parser,
@@ -140,7 +141,7 @@ def main():
         optimizer.load_state_dict(checkpoint['optimizer'])
         args.taskid = checkpoint['taskid']
         logger.info("resume training from '{}' at epoch {}".format(
-            cfgs.saver.resume_model, checkpoint['epoch']))
+            pth, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
         assert os.path.isfile(cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
             cfgs.saver.pretrain_model)
@@ -211,6 +212,7 @@ def main():
         
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
+
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
             if args.rank == 0:
