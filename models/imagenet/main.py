@@ -265,9 +265,10 @@ def main():
 
         lr_scheduler.step()
     end_time = time.time()
-    logger_pavi(end_time - start_time, end_time - run_time,
-                np.mean(iter_time_list), mem_alloc, mem_cached, args.benchmark,
-                logger, monitor_writer, args.rank)
+    if args.benchmark and args.rank == 0:
+        logger_pavi(end_time - start_time, end_time - run_time,
+                    np.mean(iter_time_list), mem_alloc, mem_cached,
+                    logger, monitor_writer) 
 
 
 def train(train_loader, model, criterion, optimizer, epoch, args,
