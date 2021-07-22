@@ -334,11 +334,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
         iter_end_time = time.time()
         iter_start_time = time.time()
         benchmark_data(i, iter_end_time - iter_start_time, len(train_loader),
-<<<<<<< HEAD
                        args.benchmark)
-=======
-                       args.benchmark, iter_time_list)
->>>>>>> 365539f3b0fba1383c1246f776fa0e6f06c213ce
 
         if i % args.log_freq == 0:
             progress.display(i)
