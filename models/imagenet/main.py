@@ -140,6 +140,8 @@ def main():
     if args.maxstep is not None:
         args.max_epoch = args.maxstep
     args.test_freq = cfgs.trainer.test_freq
+    if args.test_step is not None:
+        args.test_freq = args.test_step
     args.log_freq = cfgs.trainer.log_freq
 
     best_acc1 = 0.0
@@ -163,14 +165,19 @@ def main():
         checkpoint = torch.load(cfgs.saver.pretrain_model)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
-        logger.info("pretrain training from '{}'".format(
-            cfgs.saver.pretrain_model))
+        logger.info("pretrain training from '{}'".format(cfgs.saver.pretrain_model))
+    
+    args.save_dir = cfgs.saver.save_dir
+    if args.save_path:
+        args.save_dir = args.save_path
 
-    if args.rank == 0 and cfgs.saver.get('save_dir', None):
-        if not os.path.exists(cfgs.saver.save_dir):
-            os.makedirs(cfgs.saver.save_dir)
-            logger.info("create checkpoint folder {}".format(
-                cfgs.saver.save_dir))
+    logger.info("sava_path'{}'".format(args.save_dir))
+
+    #if args.rank == 0 and args.save_dir is None:
+    if args.rank == 0:
+        if not os.path.exists(args.save_dir):
+            os.makedirs(args.save_dir)
+            logger.info("create checkpoint folder {}".format(args.save_dir))
 
     # Data loading code
     train_loader, train_sampler, test_loader, _ = build_dataloader(
@@ -253,11 +260,8 @@ def main():
                     'taskid': args.taskid
                 }
 
-                ckpt_path = os.path.join(
-                    cfgs.saver.save_dir,
-                    cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir,
-                                              cfgs.net.arch + '_best.pth')
+                ckpt_path = os.path.join(args.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
+                best_ckpt_path = os.path.join(args.save_dir, cfgs.net.arch + '_best.pth')
                 torch.save(checkpoint, ckpt_path)
                 if acc1 > best_acc1:
                     best_acc1 = acc1
