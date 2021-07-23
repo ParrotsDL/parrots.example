@@ -5,32 +5,32 @@ global_configs:
     benchmark: 20,30
 
 models:
-  - dpn92_mix.benchmark:
+  - dpn92_mix:
       seed: 2
       maxstep: 1
-  - dpn92.benchmark:
+  - dpn92:
       seed: 4           
-  - inception_v4.benchmark: 
+  - inception_v4: 
       reader : Mem
-  - inception_v4_mix.benchmark  
-  - resnet50.benchmark          
-  - resnet50_mix.benchmark      
-  - se_resnet50.benchmark       
-  - se_resnet50_mix.benchmark   
-  - shuffle_v2.benchmark        
-  - shuffle_v2_mix.benchmark    
-  - mobile_v2.benchmark         
-  - mobile_v2_mix.benchmark     
-  - resnet18.benchmark       
-  - resnet18_mix.benchmark   
-  - resnet.benchmark   
-  - resnet_mix.benchmark
-  - resnet152.benchmark      
-  - resnet152_mix.benchmark  
-  - inception_v2.benchmark      
-  - inception_v2_mix.benchmark  
-  - inception_v3.benchmark      
-  - inception_v3_mix.benchmark  
-  - inception_resnet.benchmark  
-  - inception_resnet_mix.benchmark
+  - inception_v4_mix  
+  - resnet50          
+  - resnet50_mix      
+  - se_resnet50       
+  - se_resnet50_mix   
+  - shuffle_v2        
+  - shuffle_v2_mix    
+  - mobile_v2         
+  - mobile_v2_mix     
+  - resnet18       
+  - resnet18_mix   
+  - resnet   
+  - resnet_mix
+  - resnet152      
+  - resnet152_mix  
+  - inception_v2      
+  - inception_v2_mix  
+  - inception_v3      
+  - inception_v3_mix  
+  - inception_resnet  
+  - inception_resnet_mix
                  
