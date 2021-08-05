@@ -20,7 +20,9 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
-from algolib.utils import add_argument, benchmark_data
+
+# parrots.algo.lib
+from algolib.common import add_argument, get_benchmark_data
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
@@ -314,10 +316,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
         batch_time.update(time.time() - end)
         end = time.time()
 
-        if args.benchmark and args.rank == 0:
+        if os.getenv('PARROTS_BENCHMARK') and args.rank == 0:
             iter_end_time = time.time()
-            benchmark_data(i, iter_end_time - iter_start_time,
-                           len(train_loader), args.benchmark)
+            get_benchmark_data(i, iter_end_time - iter_start_time,
+                           len(train_loader), monitor_writer)
             iter_start_time = time.time()
 
         if i % args.log_freq == 0:

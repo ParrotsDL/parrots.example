@@ -1,5 +1,5 @@
 set -x
-# 1. build file folder for save log
+# 1. build file folder for save log,format: algolib_log/frame
 mkdir -p algolib_log/example
 now=$(date +"%Y%m%d_%H%M%S")
 
