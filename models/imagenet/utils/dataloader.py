@@ -1,4 +1,7 @@
+import copy
 import io
+import os
+
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
 from petrel_client.client import Client
@@ -31,16 +34,34 @@ class CephDataset(Dataset):
         if self.meta_list[-1] == '':
             self.meta_list.pop()
         self.num = len(self.meta_list)
+        self.ddt_flag = 1
+        self.ddt_img = 0
 
     def __len__(self):
         return self.num
 
     def __getitem__(self, index):
-        filename = self.image_dir + self.meta_list[index].split()[0]
-        cls = int(self.meta_list[index].split()[1])
+        if os.environ.get('DUMMYDATASET') == '1':
+            if self.ddt_flag:
+                filename = self.image_dir + self.meta_list[index].split()[0]
+                cls = int(self.meta_list[index].split()[1])
 
-        img = Image.open(io.BytesIO(self.client.Get(filename, update_cache=True)))
-        img = img.convert('RGB')
+                img = Image.open(io.BytesIO(self.client.Get(filename, update_cache=True)))
+                img = img.convert('RGB')
+                self.ddt_img = copy.deepcopy(img)
+                self.ddt_flag = 0
+                print("*********no dummydataset*********")
+            else:
+                img = copy.deepcopy(self.ddt_img)
+                cls = int(self.meta_list[index].split()[1])
+                print("#######dummydataset#######")
+        else:
+
+            filename = self.image_dir + self.meta_list[index].split()[0]
+            cls = int(self.meta_list[index].split()[1])
+
+            img = Image.open(io.BytesIO(self.client.Get(filename, update_cache=True)))
+            img = img.convert('RGB')
 
         # transform
         if self.transform is not None:
