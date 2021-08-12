@@ -1,0 +1,24 @@
+1. 在auto_benchmark/benchmark_P*.yaml中配置需要跑的模型，注视不需要跑的模型
+2. 在auto_benchmark/benchmark_config.yaml 中配置执行命令模版
+注意：
+  * SRUN_ARGS的相关参数全部在sh执行命令时候给定 
+  如：
+    单节点：SRUN_ARGS="-w SH-IDC1-10-198-4-48 -p pat_modelpool -t 60 --exclusive" sh auto_benchmark/benchmark.sh pat_modelpool
+    多节点：SRUN_ARGS="-w SH-IDC1-10-198-4-[48,49] -p pat_modelpool -t 60 --exclusive" sh auto_benchmark/benchmark.sh pat_modelpool
+    多节点模版目前只支持：SH-IDC1-10-198-4-[48,49]方式
+
+  * 其他所有环境变量必须在模版里给定，保证生成命令时每个模型有对应的环境变量
+
+* 新增`MULTI_CARD`环境变量
+背景：现在模型池默认只有一种类型卡数的实验配置，在做数据分析时候，有时候需要多种实验，比如，1，8卡两种场景，则：
+`MULTI_CARD=1,8 sh auto_benchmark/benchmark.sh pat_modelppol`
+
+* 新增`write_to_xls`方法
+  * 用于将从db拉出来的无序数据根据模型分级列表顺序整合(auto_benchmark/benchmark_model_list.yaml)
+  * source_file：从db拉下来的数据；save_path: 目标数据保存路径
+  * 具体见start.py里调用
+
+TODO:
+将数据库相关用配置文件管理，目前在如下文件修改写入数据库的相关信息：
+auto_benchmark/utils/db.py +11
+

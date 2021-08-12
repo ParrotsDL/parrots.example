@@ -1,0 +1,21 @@
+[
+              #1.pattern
+              {'framework': 'Pattern', 'gpus': 8, 'model': 'eye_best_config_parrots', 'py_args': '--pavi True --pavi-project default --seed 1024 --data_reader ceph --max_step 300'},
+              {'framework': 'Pattern', 'gpus': 8, 'model': 'example_fusion_small_pytorch', 'py_args': '--pavi True --pavi-project default --seed 1024 --data_reader ceph --max_step 300'},
+              {'framework': 'Pattern', 'gpus': 8, 'model': 'attribute_config', 'py_args': '--pavi True --pavi-project default --seed 1024 --data_reader ceph --max_step 300'},
+              {'framework': 'Pattern', 'gpus': 8, 'model': 'gaze_example', 'py_args': '--pavi True --pavi-project default --seed 1024 --data_reader ceph --max_step 300'},
+              #2.sketch1.4
+              {'framework': 'sketch1.4', 'gpus': 8, 'model': 'vgg-small-all-loss-pair-MotionMake', 'py_args': '--pavi --pavi_project default --seed 1024 --max_step 1 --data_reader CephReader'},
+              {'framework': 'sketch1.4', 'gpus': 8, 'model': 'vgg-small-with-rect', 'py_args': '--pavi --pavi_project default --seed 1024 --max_step 1 --data_reader CephReader'},
+              {'framework': 'sketch1.4', 'gpus': 8, 'model': 'roi-fix-main', 'py_args': '--pavi --pavi_project default --seed 1024 --max_step 1 --data_reader CephReader'},
+              #3.objectflow2_pet
+              {'framework': 'objectflow2_pet', 'gpus': 8, 'model': 'pet', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 500'},
+              #4.objectflow2_child
+              {'framework': 'objectflow2_child', 'gpus': 16, 'model': 'child', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 500'},
+              #5.objectflow2_object
+              {'framework': 'objectflow2_object', 'gpus': 16, 'model': 'object', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 500'},
+              #6.objectflow2_mot
+              {'framework': 'objectflow2_mot', 'gpus': 40, 'model': 'mot', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 500'},
+              #7.objectflow2_action
+              {'framework': 'objectflow2_action', 'gpus': 8, 'model': 'action', 'py_args': ' --pavi --pavi-project default --seed 1024 --max_step 2'},
+]

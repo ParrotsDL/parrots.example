@@ -1,0 +1,36 @@
+[
+            # (un)commit your config here
+            ## 1.mmdet
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_x101_32x4d_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'faster_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'retinanet_r50_fpn_fp16_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r101_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'cascade_mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_caffe_fpn_mstrain_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'cascade_rcnn_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_r50_fpn_fp16_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'retinanet_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'ssd300_coco', 'py_args': '--pavi --pavi-project default --seed 1024 --data_reader CephReader --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'faster_rcnn_r50_fpn_fp16_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'mask_rcnn_x101_64x4d_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'faster_rcnn_r50_fpn_dconv_c3-c5_1x_coco', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmdet', 'gpus': 8, 'model': 'fsaf_r50_fpn_1x_coco', 'py_args': '--pavi --pavi-project default --seed 1024 --data_reader CephReader --max-step 1'},
+            #17.mmpose
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'bottomup_hrnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1 --batch-size 6'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_alexnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_darkpose', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_hourglass', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_hrnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1 --batch-size 32'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_mobilev2', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_res50', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_resnetv1d', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_resnext', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_scnet', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_senet50', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            {'framework': 'mmpose', 'gpus': 8, 'model': 'topdown_shufflev1', 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max-step 1'},
+            ## 18.mmtrack
+            {'framework': 'mmtrack', 'gpus': 8, 'model': 'config13ms_bn1', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 2'},
+            {'framework': 'mmtrack', 'gpus': 8, 'model': 'config1ms_lr', 'py_args': '--pavi --pavi-project default --seed 1024  --max_step 1'},
+            {'framework': 'mmtrack', 'gpus': 8, 'model': 'siamrpnpp', 'py_args': '--pavi --pavi-project default --seed 1024 --max_step 1'},
+        ]

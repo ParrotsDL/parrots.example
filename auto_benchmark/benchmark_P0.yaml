@@ -1,0 +1,11 @@
+[
+            {'framework': 'example', 'gpus': 1, 'model': "resnet50.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 8, 'model': "resnet50.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 32, 'model': "resnet50.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 1, 'model': "mobile_v2.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 8, 'model': "mobile_v2.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 32, 'model': "mobile_v2.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 1, 'model': "inception_v3.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 8, 'model': "inception_v3.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+            {'framework': 'example', 'gpus': 32, 'model': "inception_v3.benchmark", 'py_args': '--pavi --pavi-project default --data_reader CephReader --seed 1024 --max_step 1'},
+]
