@@ -1,0 +1,19 @@
+F1: #realdata-itertime
+   templates: "BENCHMARK_FS=REAL_ITERTIME DETAIL_INFO={framework}*{gpus}*{model} Partition=$1 PARROTS_BENCHMARK=1  sh runner/{framework}/train.sh $1 {gpus} {model} {py_args}"
+   pro: P0
+
+# F2: #dummydata-itertime
+#   templates: "BENCHMARK_FS=DUMMY_ITERTIME PARROTS_DUMMY_DATALOADER=1 DETAIL_INFO={framework}*{gpus}*{model} Partition=$1 PARROTS_BENCHMARK=1  sh runner/{framework}/train.sh $1 {gpus} {model} {py_args}"
+#   pro: P1,P2,P3
+# F3: #realdata-diffcard
+#   templates: "BENCHMARK_FS=REAL_DC{gpus} DETAIL_INFO={framework}*{gpus}*{model} Partition=$1 PARROTS_BENCHMARK=1  sh runner/{framework}/train.sh $1 {gpus} {model} {py_args}"
+#   pro: P0
+#F4: #dummydata-diffcard
+#  templates: "BENCHMARK_FS=DUMMY_DC{gpus} PARROTS_DUMMY_DATALOADER=1 DETAIL_INFO={framework}*{gpus}*{model} Partition=$1 PARROTS_BENCHMARK=1  sh runner/{framework}/train.sh $1 {gpus} {model} {py_args}"
+#  pro: P0
+## F5: #realdata-2epoch
+##   templates: "BENCHMARK_FS=REAL_2EPOCH DETAIL_INFO={framework}*{gpus}*{model} Partition=$1 PARROTS_BENCHMARK=1  sh runner/{framework}/train.sh $1 {gpus} {model} {py_args}"
+##   pro: P1
+## F6: #dummydata-2epochtime
+##   templates: "BENCHMARK_FS=DUMMY_2EPOCH PARROTS_DUMMY_DATALOADER=1 DETAIL_INFO={framework}*{gpus}*{model} Partition=$1 PARROTS_BENCHMARK=1  sh runner/{framework}/train.sh $1 {gpus} {model} {py_args}"
+##   pro: P1 

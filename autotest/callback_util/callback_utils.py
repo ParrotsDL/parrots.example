@@ -80,6 +80,7 @@ def get_slurm_job_id():
         return None, partition, None
 
 
+
 def get_monitor_info(config, run_type):
     # DataSource: dailybuild, weeklybuild, release_benchmark, weekly_benchmark
     DataSource = run_type
@@ -173,7 +174,6 @@ def get_monitor_info(config, run_type):
         AccDesc=AccDesc
     )
     return monitor_info
-
 
 def get_scalar_from_pavi(config, value_type, run_type, is_update_yaml=False):
     if run_type in config.keys():
