@@ -288,20 +288,25 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
+        del input, target
+        del output
+
+        # compute gradient and do SGD step
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
 
         stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
+        del loss
+        del acc1, acc5
 
         losses.update(stats_all[0].item())
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
+        del stats_all
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
