@@ -29,7 +29,7 @@ def test(arch='cpu'):
     try:
         r = torch.allclose(t1, o1) and torch.allclose(t2, o2) and torch.allclose(t3, o3) and torch.allclose(t4, o4)
     except:
-        logging.info("[PASSED] Compute Result Test: {}".format(arch))
+        logging.error("[FAILED] Compute Result Test: {}".format(arch))
     else:
         if r:
             logging.info("[PASSED] Compute Result Test: {}".format(arch))
@@ -40,3 +40,4 @@ def test(arch='cpu'):
 if __name__ == '__main__':
     test(arch='cpu')
     test(arch='cuda')
+    logging.info("[PASSED] FloatFunctional Test")
