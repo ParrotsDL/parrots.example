@@ -1,3 +1,5 @@
+import os
+
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
@@ -32,14 +34,15 @@ def build_augmentation(cfg):
 def build_dataloader(cfg, world_size):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
-
-    train_dataset = McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+    image_dir = os.getenv("IMAGENET_DATASET_PATH")
+    assert image_dir, "Please set IMAGENET_DATASET_PATH for training"
+    train_dataset = McDataset(image_dir + "train", image_dir + "meta/train.txt", train_aug)
     train_sampler = DistributedSampler(train_dataset)
     train_loader = DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    test_dataset = McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
+    test_dataset = McDataset(image_dir + "val", image_dir + "meta/val.txt", test_aug)
     test_sampler = DistributedSampler(test_dataset)
     test_loader = DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),

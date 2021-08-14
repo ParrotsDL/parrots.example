@@ -43,18 +43,26 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    args.rank = int(os.environ['SLURM_PROCID'])
-    args.world_size = int(os.environ['SLURM_NTASKS'])
-    args.local_rank = int(os.environ['SLURM_LOCALID'])
-
-    node_list = str(os.environ['SLURM_NODELIST'])
-    node_parts = re.findall('[0-9]+', node_list)
-    os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
-    os.environ['MASTER_PORT'] = str(args.port)
+    if 'SLURM_PROCID' in os.environ.keys():
+        args.rank = int(os.environ['SLURM_PROCID'])
+        args.world_size = int(os.environ['SLURM_NTASKS'])
+        args.local_rank = int(os.environ['SLURM_LOCALID'])
+        node_list = str(os.environ['SLURM_NODELIST'])
+        node_parts = re.findall('[0-9]+', node_list)
+        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_PORT'] = str(args.port)
+    elif 'OMPI_COMM_WORLD_LOCAL_SIZE' in os.environ.keys():
+        args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
+        args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
+        args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
+    else:
+        args.rank = 0
+        args.world_size = 1
+    args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    dist.init_process_group(backend="nccl")
+    dist.init_process_group(backend="cncl")
     torch.cuda.set_device(args.local_rank) 
 
     if args.rank == 0:
@@ -70,13 +78,9 @@ def main():
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
-    if cfgs.get('seed', None):
-        random.seed(cfgs.seed)
-        torch.manual_seed(cfgs.seed)
-        torch.cuda.manual_seed(cfgs.seed)
-        cudnn.deterministic = True
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    model = model.to_memory_format(torch.channels_last)
     model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
@@ -203,8 +207,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure data loading time
         data_time.update(time.time() - end)
 
-        input = input.cuda()
-        target = target.cuda()
+        input = input.contiguous(torch.channels_last).cuda()
+        target = target.int().cuda()
 
         # compute output
         output = model(input)
