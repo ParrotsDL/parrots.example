@@ -66,6 +66,20 @@ class SummaryWriter:
                 logging.info(
                     f'!!! {tag} is not a normal value, so exit the process.')
                 exit(0)
+        elif tag == "__benchmark_mem_alloc(mb)" and dist.get_rank() == 0:
+            if value > 0:
+                self.monitor_info['AllocatedMem'] = value
+            else:
+                logging.info(
+                    f'!!! {tag} is not a normal value, so exit the process.')
+                exit(0)
+        elif tag == "__benchmark_mem_cached(mb)" and dist.get_rank() == 0:
+            if value > 0:
+                self.monitor_info['CachedMem'] = value
+            else:
+                logging.info(
+                    f'!!! {tag} is not a normal value, so exit the process.')
+                exit(0)
         else:
             pass
         monitor = self.monitor_info

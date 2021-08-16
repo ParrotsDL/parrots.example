@@ -3,8 +3,12 @@ now=$(date +"%Y%m%d_%H%M%S")
 set -x
 
 ROOT=.
-pyroot=$ROOT/models/mmdetection3d
-export PYTHONPATH=$pyroot:$PYTHONPATH
+echo $CONDA_DEFAULT_ENV
+CONDA_ROOT=/mnt/cache/share/platform/env/miniconda3.6
+export MMCV_PATH=${CONDA_ROOT}/envs/${CONDA_DEFAULT_ENV}/mmcvs
+mmcv_version=1.1.6
+version=${mmcv_version#*=}
+export PYTHONPATH=${MMCV_PATH}/$version:$PYTHONPATH
 
 PARTITION=$1
 GPUS=$2

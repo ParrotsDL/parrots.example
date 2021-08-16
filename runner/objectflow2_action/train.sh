@@ -33,6 +33,14 @@ else
     export PYTHONPATH=$PWD:$PWD/mmdetection:$PWD/mmcv_pyt:$PYTHONPATH
     pip install future tensorboard --user
 fi
+
+echo $CONDA_DEFAULT_ENV
+CONDA_ROOT=/mnt/cache/share/platform/env/miniconda3.6
+export MMCV_PATH=${CONDA_ROOT}/envs/${CONDA_DEFAULT_ENV}/mmcvs
+mmcv_version=1.1.0
+version=${mmcv_version#*=}
+export PYTHONPATH=${MMCV_PATH}/$version:$PYTHONPATH
+
 cd ${ROOT}
 
 TASK_CONFIG_LIST=$ROOT/configs/objectflow2_action/parrots_action_config.py
