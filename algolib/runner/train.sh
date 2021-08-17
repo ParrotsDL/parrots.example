@@ -4,8 +4,13 @@ mkdir -p algolib_log/example
 now=$(date +"%Y%m%d_%H%M%S")
 
 # 2. set env 
-ROOT=.
-pyroot=$ROOT/algolib/example
+path=$PWD
+if [[ "$path" =~ "algolib/example" ]]
+then 
+    pyroot=$path
+else
+    pyroot=$path/algolib/example
+fi
 export PYTHONPATH=$pyroot:$PYTHONPATH
 export MODEL_NAME=$3
 
@@ -13,7 +18,7 @@ export MODEL_NAME=$3
 partition=$1
 g=$(($2<8?$2:8))
 MODEL_NAME=$3
-cfg=$ROOT/algolib/example/algolib/configs/${MODEL_NAME}.yaml
+cfg=$pyroot/algolib/configs/${MODEL_NAME}.yaml
 
 # 4. build optional parameter
 array=( $@ )

@@ -22,7 +22,37 @@ from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 
 # parrots.algo.lib
-from algolib.common import add_argument, get_benchmark_data
+import itertools
+count = itertools.count()
+# if next(count) == 0:
+#     from algolib.common import add_argument, get_benchmark_data
+
+try:
+    from algolib.common import add_argument, get_benchmark_data
+except ImportError:
+    def add_argument(parser, *args, **kwargs):
+        parser.add_argument(
+            '--reader',
+            type=str,
+            default='MemcachedReader')
+        parser.add_argument(
+            '--benchmark',
+            default=None,
+            type=str)
+        parser.add_argument('--pavi',
+                            default=None,
+                            type=str)
+        parser.add_argument('--maxstep',
+                            default=None)
+        parser.add_argument('--seed',
+                            type=int,
+                            default=None)
+        parser.add_argument('--resume',
+                            default=None,
+                            type=str)
+
+    def get_benchmark_data(*args, **kwargs):
+        pass
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
@@ -315,11 +345,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
-
         if os.getenv('PARROTS_BENCHMARK') and args.rank == 0:
             iter_end_time = time.time()
             get_benchmark_data(i, iter_end_time - iter_start_time,
-                           len(train_loader), monitor_writer)
+                               len(train_loader), monitor_writer)
             iter_start_time = time.time()
 
         if i % args.log_freq == 0:
@@ -331,7 +360,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
                                           cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg,
                                           cur_iter)
-
 
 
 def test(test_loader, model, criterion, args):
