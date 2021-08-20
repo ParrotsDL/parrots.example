@@ -27,6 +27,7 @@ class McDataset(Dataset):
             path, cls = line.strip().split()
             self.metas.append((path, int(cls)))
         self.initialized = False
+        self.cache = None
 
     def __len__(self):
         return self.num
@@ -40,18 +41,21 @@ class McDataset(Dataset):
             self.initialized = True
 
     def __getitem__(self, index):
-        filename = self.root + '/' + self.metas[index][0]
-        cls = self.metas[index][1]
+        if not self.cache:
+            filename = self.root + '/' + self.metas[index][0]
+            cls = self.metas[index][1]
 
-        # memcached
-        self._init_memcached()
-        value = mc.pyvector()
-        self.mclient.Get(filename, value)
-        value_buf = mc.ConvertBuffer(value)
-        buff = io.BytesIO(value_buf)
-        with Image.open(buff) as img:
-            img = img.convert('RGB')
-
+            # memcached
+            self._init_memcached()
+            value = mc.pyvector()
+            self.mclient.Get(filename, value)
+            value_buf = mc.ConvertBuffer(value)
+            buff = io.BytesIO(value_buf)
+            with Image.open(buff) as img:
+                img = img.convert('RGB')
+            self.cache = img, cls
+        else:
+            img, cls = self.cache
         # transform
         if self.transform is not None:
             img = self.transform(img)

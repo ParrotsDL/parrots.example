@@ -26,7 +26,6 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 
-
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
@@ -35,6 +34,7 @@ parser.add_argument('--test', dest='test', action='store_true',
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
 parser.add_argument('--pavi', dest='pavi', action='store_true', default=False, help='pavi use')
+parser.add_argument('--zero', dest='zero', action='store_true', default=False, help='zero use')
 parser.add_argument('--pavi-project', type=str, default="default", help='pavi project name')
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
@@ -62,7 +62,7 @@ def main():
         args.local_rank = int(os.environ['SLURM_LOCALID'])
         node_list = str(os.environ['SLURM_NODELIST'])
         node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
         os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
@@ -100,13 +100,16 @@ def main():
         torch.cuda.manual_seed(args.seed)
         cudnn.deterministic = True
 
+    if args.zero:
+        import deepspeed
+        with deepspeed.zero.Init(dtype=torch.float):
+            model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    else:
+        model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+        model.cuda()
+        logger.info("creating model '{}'".format(cfgs.net.arch))
+        model = DDP(model, device_ids=[args.local_rank])
 
-    model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model.cuda()
-
-    logger.info("creating model '{}'".format(cfgs.net.arch))
-
-    model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
@@ -184,6 +187,8 @@ def main():
         args.taskid = monitor_writer.taskid
 
     run_time = time.time()
+    if args.zero:
+        model = deepspeed.utils.init_engine(model, optimizer)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -261,8 +266,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
     memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
-                             memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
+    progress = ProgressMeter(len(train_loader), batch_time, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
 
     # switch to train mode
     model.train()
@@ -270,6 +274,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     loader_length = len(train_loader)
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
+        input_ = input_.cuda()
+        target_ = target_.cuda()
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
@@ -279,12 +285,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
-        input = input.cuda()
-        target = target.cuda()
+        else:
+            if args.zero:
+                input = input.cuda()
+            else:
+                input = input.cuda()
+            target = target.cuda()
 
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        with torch.cuda.amp.autocast():
+            output = model(input)
+            loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
@@ -299,15 +310,19 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        if args.zero:
+            model.backward(loss)
+            model.step()
+        else:
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
         iter_end_time = time.time()
-        if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
+        if len(iter_time_list) <= 200 and i >= 10 and i <= 1000:
             iter_time_list.append(iter_end_time - iter_start_time)
             
         iter_start_time = time.time()
@@ -315,9 +330,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             progress.display(i)
             if args.rank == 0 and monitor_writer:
                 cur_iter = epoch * loader_length + i
-                monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
         if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
             return
 
