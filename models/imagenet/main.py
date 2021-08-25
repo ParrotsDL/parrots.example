@@ -24,6 +24,15 @@ from utils.loss import LabelSmoothLoss
 # parrots.algo.lib
 from algolib.common import add_argument, get_benchmark_data
 
+try:
+    from algolib.common import init
+    init(os.path.join(
+        os.path.abspath(__file__).rsplit('/', 1)[0],
+        '../../algolib/runner/example.yaml'))
+    del init
+except ImportError:
+    pass
+
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
                     default='configs/resnet50.yaml',
@@ -51,12 +60,6 @@ parser.add_argument('--save_path',
                     default=None,
                     type=str,
                     help='checkpoint path')
-
-add_argument(parser,
-             cfg_name=os.path.join(
-                 os.path.abspath(__file__).rsplit('/', 1)[0],
-                 '../../algolib/runner/example.yaml'),
-             model_name=os.getenv('MODEL_NAME'))
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -193,20 +196,23 @@ def main():
 
     monitor_writer = None
 
-    if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
-        if args.pavi:
-            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi}
-        else:
-            monitor_kwargs = cfgs.monitor.kwargs
-            if hasattr(args, 'taskid'):
-                monitor_kwargs['taskid'] = args.taskid
-            elif hasattr(cfgs.monitor, '_taskid'):
-                monitor_kwargs['taskid'] = cfgs.monitor._taskid
-        from pavi import SummaryWriter
-        monitor_writer = SummaryWriter(session_text=yaml.dump(args.config),
-                                       **monitor_kwargs)
-        args.taskid = monitor_writer.taskid
+    # !!!!!!   move them to PaviHook   !!!!!!!
 
+    # if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
+    #     if args.pavi:
+    #         monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi}
+    #     else:
+    #         monitor_kwargs = cfgs.monitor.kwargs
+    #         if hasattr(args, 'taskid'):
+    #             monitor_kwargs['taskid'] = args.taskid
+    #         elif hasattr(cfgs.monitor, '_taskid'):
+    #             monitor_kwargs['taskid'] = cfgs.monitor._taskid
+    #     from pavi import SummaryWriter
+    #     monitor_writer = SummaryWriter(session_text=yaml.dump(args.config),
+    #                                    **monitor_kwargs)
+    #     args.taskid = monitor_writer.taskid
+
+    [hook.before_run() for hook in getattr(torch, '_pat_hooks', [])]
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
@@ -220,15 +226,11 @@ def main():
 
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
-            if args.rank == 0:
-                if monitor_writer:
-                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1,
-                                              len(train_loader) * epoch)
-                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5,
-                                              len(train_loader) * epoch)
-                    monitor_writer.add_scalar('Test_loss', loss,
-                                              len(train_loader) * epoch)
+            # 注意，这里要区别一下不同网络的参数不一样，可以分类分割检测用不同的hook
+            [hook.after_epoch(len(train_loader) * epoch, acc1, acc5, loss)
+                for hook in getattr(torch, '_pat_hooks', [])]
 
+            if args.rank == 0:
                 checkpoint = {
                     'epoch': epoch + 1,
                     'arch': cfgs.net.arch,
