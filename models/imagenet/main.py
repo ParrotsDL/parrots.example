@@ -18,6 +18,7 @@ import torch.optim
 from torch.backends import cudnn
 import parrots
 parrots.nn.functions.conv.default_conv2d_backend = 'ppl'
+torch.multiprocessing.set_start_method('fork', force=True)
 import pape
 import pape.distributed as dist
 from pape.parallel import DistributedModel
@@ -361,8 +362,12 @@ def test(test_loader, model, criterion, args):
             if args.dummy_test:
                 input = input_
                 target = target_
-            input = input.cuda()
-            target = target.cuda()
+            if args.nhwc:
+                input = input.cuda().contiguous(memory_format=torch.channels_last)
+                target = target.cuda()
+            else:
+                input = input.cuda()
+                target = target.cuda()
 
             # compute output
             output = model(input)
