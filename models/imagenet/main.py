@@ -33,6 +33,9 @@ parser.add_argument('--test', dest='test', action='store_true',
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
+parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
+                    help='dummy data for speed evaluation')
+
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
@@ -74,7 +77,7 @@ def main():
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
                     socket.gethostname()))
 
-    dist.barrier()
+    #dist.barrier()
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
@@ -203,12 +206,23 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
+    if args.dummy_test:
+        input_, target_  = next(iter(train_loader))
+        train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
+        input_ = input_.contiguous(torch.channels_last).cuda()
+        target_ = target_.int().cuda()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
 
-        input = input.contiguous(torch.channels_last).cuda()
-        target = target.int().cuda()
+        if args.dummy_test:
+            input = input_.detach()
+            input.requires_grad = True
+            target = target_
+        else:
+            input = input.contiguous(torch.channels_last).cuda()
+            target = target.int().cuda()
+              
 
         # compute output
         output = model(input)
@@ -258,8 +272,8 @@ def test(test_loader, model, criterion, args):
     with torch.no_grad():
         end = time.time()
         for i, (input, target) in enumerate(test_loader):
-            input = input.cuda()
-            target = target.cuda()
+            input = input.contiguous(torch.channels_last).cuda()
+            target = target.int().cuda()
 
             # compute output
             output = model(input)
