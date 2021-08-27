@@ -268,7 +268,7 @@ def test(test_loader, model, criterion, args):
                              prefix="Test: ")
 
     # switch to evaluate mode
-    model.eval()
+    #model.eval()
     with torch.no_grad():
         end = time.time()
         for i, (input, target) in enumerate(test_loader):
