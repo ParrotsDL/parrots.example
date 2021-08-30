@@ -38,7 +38,9 @@ parser.add_argument('--pavi-project', type=str, default="default", help='pavi pr
 parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
-parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+parser.add_argument('--data_reader', type=str, default="MemcachedReader",
+                    choices=['DirectReader', 'MemcachedReader', 'CephReader'],
+                    help='io backend')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')

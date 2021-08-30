@@ -4,13 +4,53 @@ import os
 
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
-from petrel_client.client import Client
+
 from PIL import Image, ImageFile
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
-from .dataset import McDataset
+
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+
+class DirectDataset(Dataset):
+    r"""
+    Dataset directly read file from lustre.
+
+    Arguments
+        * root (string): Root directory of the Dataset.
+        * meta_file (string): The meta file of the Dataset. Each line has a image path
+          and a label. Eg: ``nm091234/image_56.jpg 18``.
+        * transform (callable, optional): A function that transforms the given PIL image
+          and returns a transformed image.
+    """
+    def __init__(self, root, meta_file, transform=None):
+        self.root = root
+        self.transform = transform
+        with open(meta_file) as f:
+            meta_list = f.readlines()
+        self.num = len(meta_list)
+        self.metas = []
+        for line in meta_list:
+            path, cls = line.strip().split()
+            self.metas.append((path, int(cls)))
+        self.initialized = False
+
+    def __len__(self):
+        return self.num
+
+    def __getitem__(self, index):
+        filename = self.root + '/' + self.metas[index][0]
+        cls = self.metas[index][1]
+
+        with Image.open(filename) as img:
+            img = img.convert('RGB')
+
+        # transform
+        if self.transform is not None:
+            img = self.transform(img)
+        return img, cls
+
 
 
 class CephDataset(Dataset):
@@ -98,9 +138,13 @@ def build_dataloader(cfg, world_size, data_reader):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
 
-    if data_reader == 'MemcachedReader':
+    if data_reader == 'DirectReader':
+        train_dataset = DirectDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
+    elif data_reader == 'MemcachedReader':
+        from .dataset import McDataset
         train_dataset = McDataset(cfg.train.image_dir, cfg.train.meta_file, train_aug)
     elif data_reader == 'CephReader':
+        from petrel_client.client import Client
         ceph_image_dir = 's3://parrots_model_data/imagenet/images/train/'
         ceph_meta_file = 's3://parrots_model_data/imagenet/images/meta/train.txt'
         train_dataset = CephDataset(ceph_image_dir, ceph_meta_file, train_aug)
@@ -109,7 +153,9 @@ def build_dataloader(cfg, world_size, data_reader):
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    if data_reader == 'MemcachedReader':
+    if data_reader == 'DirectReader':
+        test_dataset = DirectDataset(cfg.test.image_dir, cfg.test_meta_file, test_aug)
+    elif data_reader == 'MemcachedReader':
         test_dataset = McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
     elif data_reader == 'CephReader':
         ceph_image_dir = 's3://parrots_model_data/imagenet/images/val/'
