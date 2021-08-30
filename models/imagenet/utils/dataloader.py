@@ -154,7 +154,7 @@ def build_dataloader(cfg, world_size, data_reader):
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
     if data_reader == 'DirectReader':
-        test_dataset = DirectDataset(cfg.test.image_dir, cfg.test_meta_file, test_aug)
+        test_dataset = DirectDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
     elif data_reader == 'MemcachedReader':
         test_dataset = McDataset(cfg.test.image_dir, cfg.test.meta_file, test_aug)
     elif data_reader == 'CephReader':
