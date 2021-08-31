@@ -31,12 +31,13 @@ def is_torchbn_module(module):
     return isinstance(module, nn.BatchNorm2d)
 
 
-def is_syncbn_module(module):
-    return isinstance(module, op.SyncBatchNorm2d)
+# def is_syncbn_module(module):
+#     return isinstance(module, op.SyncBatchNorm2d)
 
 
 def is_bn_module(module):
-    return is_torchbn_module(module) or is_syncbn_module(module)
+    # return is_torchbn_module(module) or is_syncbn_module(module)
+    return is_torchbn_module(module)
 
 
 def convert_syncbn(module, group=dist.group.WORLD):
