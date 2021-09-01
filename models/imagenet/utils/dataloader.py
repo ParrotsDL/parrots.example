@@ -35,6 +35,7 @@ def build_dataloader(cfg, world_size):
     train_aug = build_augmentation(cfg.train)
     test_aug = build_augmentation(cfg.test)
     image_dir = os.getenv("IMAGENET_DATASET_PATH")
+    image_dir = '/mnt/share/images/'
     assert image_dir, "Please set IMAGENET_DATASET_PATH for training"
     train_dataset = McDataset(image_dir + "train", image_dir + "meta/train.txt", train_aug)
     train_sampler = DistributedSampler(train_dataset)

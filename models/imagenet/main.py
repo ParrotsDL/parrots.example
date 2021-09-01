@@ -15,6 +15,7 @@ import torch.nn as nn
 import torch.nn.parallel
 import torch.optim
 from torch.backends import cudnn
+from torch.utils import quantize
 
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -66,7 +67,7 @@ def main():
     os.environ['RANK'] = str(args.rank)
 
     dist.init_process_group(backend="cncl")
-    torch.cuda.set_device(args.local_rank) 
+    torch.cuda.set_device(args.local_rank)
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -83,6 +84,7 @@ def main():
 
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    model = quantize.convert_to_adaptive_quantize(model, 10000)
     model = model.to_memory_format(torch.channels_last)
     model.cuda()
 
@@ -222,7 +224,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         else:
             input = input.contiguous(torch.channels_last).cuda()
             target = target.int().cuda()
-              
+
 
         # compute output
         output = model(input)

@@ -3,28 +3,28 @@ net:
     arch: resnest50
     kwargs:
         num_classes: 1000
- 
+
 dataset:
   train:
-    meta_file: /mnt/lustre/share/images/meta/train.txt
-    image_dir: /mnt/lustre/share/images/train
+    meta_file: /mnt/share/images/meta/train.txt
+    image_dir: /mnt/share/images/train
     random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: True
   test:
-    meta_file: /mnt/lustre/share/images/meta/val.txt
-    image_dir: /mnt/lustre/share/images/val
+    meta_file: /mnt/share/images/meta/val.txt
+    image_dir: /mnt/share/images/val
     resize: 256
     center_crop: [224, 224]
     colorjitter:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
-  batch_size: 32 # resnet101 < 128
-  workers: 4
- 
+  batch_size: 256 # resnet101 < 128
+  workers: 0
+
 trainer:
   max_epoch: 120
   test_freq: 1
@@ -56,7 +56,7 @@ saver:
   pretrain_model:
   resume_model:
   save_dir: checkpoints/resnest50   # save checkpoint locally
- 
+
 monitor:
 #   type: pavi
 #   _taskid: # continue training
