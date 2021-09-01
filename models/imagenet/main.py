@@ -82,9 +82,11 @@ def main():
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
+    # Data loading code
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model = quantize.convert_to_adaptive_quantize(model, 10000)
+    model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
     model = model.to_memory_format(torch.channels_last)
     model.cuda()
 
@@ -133,9 +135,6 @@ def main():
         if not os.path.exists(cfgs.saver.save_dir):
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
-
-    # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     # test mode
     if args.test:
