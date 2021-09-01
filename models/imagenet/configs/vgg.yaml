@@ -46,11 +46,3 @@ saver:
   pretrain_model:
   resume_model:
   save_dir: checkpoints/vgg16   # save checkpoint locally
- 
-monitor:
-  type: pavi
-  _taskid: # continue training
-  kwargs:
-    project: default  # change to your own pavi project
-    task: vgg16
-    model: vgg16
