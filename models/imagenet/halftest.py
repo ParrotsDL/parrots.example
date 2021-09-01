@@ -49,13 +49,13 @@ class testModel(nn.Module):
         super(testModel, self).__init__()
 
         self.conv = nn.Conv2d(3, 3, 3, bias=False)
-        # self.bn = nn.BatchNorm2d(3, eps=0.001)
-        # self.relu = nn.ReLU()
+        self.bn = nn.BatchNorm2d(3, eps=0.001)
+        self.relu = nn.ReLU()
 
 
     def forward(self, x):
         x = self.conv(x)
-        # x = self.bn(x)
+        x = self.bn(x)
         # x = self.relu(x)
         return x
 
@@ -63,27 +63,27 @@ class testModel(nn.Module):
 if __name__=="__main__":
 
     USE_HALF = True
-    iters = 1
+    iters = 1000
 
     # torch.cuda.syncronize()
     
-    m = testModel()
-    # m = models.resnet50()
+    # m = testModel()
+    m = models.resnet50()
 
-    input = torch.randn(2, 3, 5, 5, requires_grad=True)
+    input = torch.randn(2, 3, 224, 224, requires_grad=True)
 
-    if USE_HALF:
-        input = input.half()
-        # m = HalfModel(m)
-        m = m.half()
+    # if USE_HALF:
+    #     input = input.half()
+    #     m = HalfModel(m)
+    #     # m = m.half()
 
     # print(input)
     # for param in m.parameters():
     #     print(param)
 
-    for name, mm in m.named_modules():
-        mm.register_forward_hook(hook(name, mm))
-        mm.register_backward_hook(hook(name, mm, tag='backward'))
+    # for name, mm in m.named_modules():
+    #     mm.register_forward_hook(hook(name, mm))
+    #     mm.register_backward_hook(hook(name, mm, tag='backward'))
 
     m = m.to_memory_format(torch.channels_last)
     m = m.cuda()
@@ -95,9 +95,12 @@ if __name__=="__main__":
     
     for i in range(iters):
         out = m(input)
-        out.backward(torch.ones_like(out))
-    
+        print(i)
+        # out.backward(torch.ones_like(out))
+
+    torch.cuda.synchronize()
     end_time = time.time()
+
     print("cost time: {:.4f}".format((end_time - start_time) / iters))
 
-    print(out)
+    # print(out)

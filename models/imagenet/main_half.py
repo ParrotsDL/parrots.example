@@ -29,8 +29,6 @@ from utils.dist_utils import DistributedModel
 from pape.half.half_model import HalfModel
 from pape.half.half_optimizer import HalfOptimizer
 
-import pdb
-
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -49,7 +47,7 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 parser.add_argument('--local_rank', type=int, default=0, help='cude device id')
-parser.add_argument('--mixed', type=bool, default=False, help='if use mixed train')
+parser.add_argument('--mixed', type=bool, default=True, help='if use mixed train')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -99,8 +97,7 @@ def main():
     os.environ['RANK'] = str(args.rank)
     
     dist.init_process_group(backend="cncl")
-    torch.cuda.set_device(args.local_rank)
-
+    torch.cuda.set_device(args.local_rank) 
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -117,8 +114,8 @@ def main():
 
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    if args.mixed == True:
-        model = HalfModel(model)
+    #model = model.to_memory_format(torch.channels_last)
+    #model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
     #if args.dist:
@@ -167,6 +164,10 @@ def main():
         if not os.path.exists(cfgs.saver.save_dir):
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
+    
+    if args.mixed == True:
+        model = HalfModel(model)
+
     model = model.to_memory_format(torch.channels_last)
     model = model.cuda()
     if args.dist:
@@ -174,27 +175,41 @@ def main():
     # Data loading code
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
 
-    # # test mode
-    # if args.test:
-    #     test(test_loader, model, criterion, args)
-    #     return
+    # test mode
+    if args.test:
+        test(test_loader, model, criterion, args)
+        return
 
     # choose scheduler
     lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
                        optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
+    monitor_writer = None
+    
+    if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
+       # if cfgs.monitor.get('type', None) == 'pavi':
+        if args.pavi:
+            monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
+        else:
+            monitor_kwargs = cfgs.monitor.kwargs
+            if hasattr(args, 'taskid'):
+                monitor_kwargs['taskid'] = args.taskid
+            elif hasattr(cfgs.monitor, '_taskid'):
+                monitor_kwargs['taskid'] = cfgs.monitor._taskid
+        from pavi import SummaryWriter
+        monitor_writer = SummaryWriter(
+            session_text=yaml.dump(args.config), **monitor_kwargs)
+        args.taskid = monitor_writer.taskid
 
     run_time = time.time()
-
-    monitor_writer = None
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list)
-
+        
         mem = torch.cuda.max_memory_allocated()
         mem_mb = torch.tensor([mem / (1024 * 1024)],
                        dtype=torch.int,
@@ -217,6 +232,11 @@ def main():
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
             model = model.cpu().to_memory_format(torch.contiguous_format)
             if args.rank == 0:
+                if monitor_writer:
+                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, len(train_loader)*epoch)
+                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, len(train_loader)*epoch)
+                    monitor_writer.add_scalar('Test_loss', loss, len(train_loader)*epoch)
+
                 checkpoint = {
                     'epoch': epoch + 1,
                     'arch': cfgs.net.arch,
@@ -242,8 +262,15 @@ def main():
         logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
         logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
 
+    if args.rank == 0 and monitor_writer:
+        monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
+        monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
+        monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
+        monitor_writer.add_scalar('__benchmark_mem_alloc(mb)',mem_alloc,1)
+        monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
+        monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
+
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
-    pdb.set_trace()
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -269,6 +296,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
+        if args.mixed == True:
+            input = input.half()
         input = input.contiguous(torch.channels_last)
         input = input.cuda()
         target = target.int().cuda()
@@ -277,8 +306,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         loss = criterion(output, target)
         # measure accuracy and record loss
         acc1 = accuracy(output, target, topk=(1,))
-        # acc5 = acc1.clone()
-        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc1[0].item()]).float().cuda()
+        acc5 = acc1.clone()
+        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
         # pdb.set_trace()
         dist.all_reduce(stats_all)
         stats_all /= args.world_size
@@ -290,9 +319,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        if args.mixed == True:
-            loss *= optimizer.loss_scale
-
         loss.backward()
         if args.dist:
             model.average_gradients()
@@ -306,6 +332,13 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             iter_time_list.append(iter_end_time - iter_start_time)
             
         iter_start_time = time.time()
+        if i % args.log_freq == 0:
+            progress.display(i)
+            if args.rank == 0 and monitor_writer:
+                cur_iter = epoch * loader_length + i
+                monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
+                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
+                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
         if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
             return
 
@@ -338,10 +371,10 @@ def test(test_loader, model, criterion, args):
             if args.dummy_test:
                 input = input_
                 target = target_
-            input = input.contiguous(torch.channels_last)
-            input = input.cuda()
             if args.mixed == True:
                 input = input.half()
+            input = input.contiguous(torch.channels_last)
+            input = input.cuda()
             target = target.int().cuda()
 
             # compute output
@@ -386,4 +419,3 @@ def test(test_loader, model, criterion, args):
 
 if __name__ == '__main__':
     main()
-    # pass
