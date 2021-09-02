@@ -281,6 +281,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
+        target_ = target_.int().cuda()
+        input_ = input_.contiguous(torch.channels_last)
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
@@ -289,9 +291,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
-        input = input.contiguous(torch.channels_last)
-        input = input.cuda()
-        target = target.int().cuda()
+        else:
+            input = input.contiguous(torch.channels_last)
+            input = input.cuda()
+            target = target.int().cuda()
         # compute output
         output = model(input)
         loss = criterion(output, target)
