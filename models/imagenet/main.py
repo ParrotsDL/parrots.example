@@ -15,7 +15,7 @@ import torch.nn as nn
 import torch.nn.parallel
 import torch.optim
 from torch.backends import cudnn
-from torch.utils import quantize
+#from torch.utils import quantize
 
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -62,6 +62,7 @@ def main():
     else:
         args.rank = 0
         args.world_size = 1
+        args.local_rank = 0
     args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
@@ -86,7 +87,7 @@ def main():
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
+    #model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
     model = model.to_memory_format(torch.channels_last)
     model.cuda()
 
@@ -214,6 +215,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         target_ = target_.int().cuda()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
+        if i == 5:
+            import sys
+            sys.exit()
         data_time.update(time.time() - end)
 
         if args.dummy_test:
