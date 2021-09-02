@@ -215,9 +215,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         target_ = target_.int().cuda()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
-        if i == 5:
-            import sys
-            sys.exit()
+        # if i == 5:
+            # import sys
+            # sys.exit()
         data_time.update(time.time() - end)
 
         if args.dummy_test:
