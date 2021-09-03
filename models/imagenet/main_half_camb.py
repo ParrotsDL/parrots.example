@@ -46,9 +46,9 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 parser.add_argument('--local_rank', type=int, default=0, help='cude device id')
-parser.add_argument('--mixed', type=bool, default=True, help='if use mixed train')
+parser.add_argument('--mixed', type=bool, default=False, help='if use mixed train')
 parser.add_argument('--device', type=str, default='mlu', help='current running device')
-parser.add_argument('--hvd', type=int, default=-1, help='')
+parser.add_argument('--hvd', type=int, default=1, help='')
 
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
