@@ -117,7 +117,7 @@ def main():
     logger.info("creating model '{}'".format(cfgs.net.arch))
     #if args.dist:
     #    model = DistributedModel(model)
-    logger.info("model\n{}".format(model))
+    # logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
         criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()

@@ -114,13 +114,11 @@ def main():
 
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    #model = model.to_memory_format(torch.channels_last)
-    #model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
     #if args.dist:
     #    model = DistributedModel(model)
-    logger.info("model\n{}".format(model))
+    # logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
         criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
@@ -129,6 +127,7 @@ def main():
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    # optimizer = HalfOptimizer(optimizer)
     logger.info("optimizer\n{}".format(optimizer))
 
 
@@ -164,12 +163,11 @@ def main():
         if not os.path.exists(cfgs.saver.save_dir):
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
-    
-    if args.mixed == True:
-        model = HalfModel(model)
 
     model = model.to_memory_format(torch.channels_last)
     model = model.cuda()
+    if args.mixed == True:
+        model = HalfModel(model)
     if args.dist:
          model = DistributedModel(model)
     # Data loading code
@@ -296,13 +294,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
-        if args.mixed == True:
-            input = input.half()
+        
         input = input.contiguous(torch.channels_last)
         input = input.cuda()
+        if args.mixed == True:
+            input = input.half()
         target = target.int().cuda()
         # compute output
         output = model(input)
+        # print(output)
         loss = criterion(output, target)
         # measure accuracy and record loss
         acc1 = accuracy(output, target, topk=(1,))
@@ -319,6 +319,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
+        if args.mixed == True:
+            # loss *= optimizer.loss_scale
+            loss *= 65536
+
         loss.backward()
         if args.dist:
             model.average_gradients()
@@ -371,10 +375,11 @@ def test(test_loader, model, criterion, args):
             if args.dummy_test:
                 input = input_
                 target = target_
-            if args.mixed == True:
-                input = input.half()
+            
             input = input.contiguous(torch.channels_last)
             input = input.cuda()
+            if args.mixed == True:
+                input = input.half()
             target = target.int().cuda()
 
             # compute output

@@ -3,10 +3,10 @@ import torch
 import atexit
 from ..utils import build_helper
 pytorch_version, parrots_version = build_helper.get_env_version()
-if pytorch_version:
-    from .. import distributed_ext as distributed_ext
-else:
-    from . import parrots_distributed_ext as distributed_ext
+# if pytorch_version:
+#     from .. import distributed_ext as distributed_ext
+# else:
+#     from . import parrots_distributed_ext as distributed_ext
 
 logger = logging.getLogger('pape')
 

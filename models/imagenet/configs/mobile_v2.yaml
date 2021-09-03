@@ -7,16 +7,16 @@ net:
  
 dataset:
   train:
-    meta_file: /share1/images/meta/train.txt
-    image_dir: /share1/images/train
+    meta_file: /share2/datasets/images/meta/train.txt
+    image_dir: /share2/datasets/images/train
     random_resize_crop: 224
     colorjitter: [0.2, 0.2, 0.2, 0.1]
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: True
   test:
-    meta_file: /share1/images/meta/val.txt
-    image_dir: /share1/images/val
+    meta_file: /share2/datasets/images/meta/val.txt
+    image_dir: /share2/datasets/images/val
     resize: 256
     center_crop: [224, 224]
     colorjitter:
