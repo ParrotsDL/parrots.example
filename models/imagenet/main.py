@@ -87,8 +87,8 @@ def main():
     model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
-
-    model = DDP(model, device_ids=[args.local_rank])
+    if args.dist:
+        model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
