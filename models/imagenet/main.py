@@ -30,6 +30,8 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
+                    help='dummy_test')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
@@ -126,7 +128,12 @@ def main():
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    if args.dummy_test:
+       train_loader = [(i, i) for i in range(5005)].__iter__()
+       test_loader = train_loader
+       train_sampler = None
+    else:
+        train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     # test mode
     if args.test:
@@ -151,7 +158,8 @@ def main():
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        train_sampler.set_epoch(epoch)
+        if not args.dummy_test:
+            train_sampler.set_epoch(epoch)
 
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
@@ -193,7 +201,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
     memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
+    progress = ProgressMeter(5005, batch_time, data_time, losses, top1, top5,
                              memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
 
     # switch to train mode
@@ -202,9 +210,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
-
-        input = input.cuda()
-        target = target.cuda()
+        if args.dummy_test:
+            input = torch.randn(32, 3, 224, 224, requires_grad=True).cuda()
+            target = torch.arange(32).cuda()
+        else:
+            input = input.cuda()
+            target = target.cuda()
 
         # compute output
         output = model(input)
@@ -246,7 +257,7 @@ def test(test_loader, model, criterion, args):
     top1 = AverageMeter('Acc@1', ':.2f', -1)
     top5 = AverageMeter('Acc@5', ':.2f', -1)
     stats_all = torch.Tensor([0, 0, 0]).long()
-    progress = ProgressMeter(len(test_loader), batch_time, losses, top1, top5,
+    progress = ProgressMeter(5005, batch_time, losses, top1, top5,
                              prefix="Test: ")
 
     # switch to evaluate mode
@@ -254,8 +265,12 @@ def test(test_loader, model, criterion, args):
     with torch.no_grad():
         end = time.time()
         for i, (input, target) in enumerate(test_loader):
-            input = input.cuda()
-            target = target.cuda()
+            if args.dummy_test:
+                input = torch.randn(32, 3, 224, 224).cuda()
+                target = torch.arange(32).cuda()
+            else:
+                input = input.cuda()
+                target = target.cuda()
 
             # compute output
             output = model(input)
