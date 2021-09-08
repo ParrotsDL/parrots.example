@@ -49,6 +49,8 @@ parser.add_argument('--local_rank', type=int, default=0, help='cude device id')
 parser.add_argument('--mixed', type=bool, default=False, help='if use mixed train')
 parser.add_argument('--device', type=str, default='mlu', help='current running device')
 parser.add_argument('--hvd', type=int, default=1, help='')
+parser.add_argument('--isQuant', type=bool, default=False, help='use adaptive quantize')
+parser.add_argument('--isPerf', type=bool, default=False, help='need camb perf or not')
 
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
@@ -187,12 +189,6 @@ def main():
         # model = HalfModel(model)
         model = model.half()
 
-    if args.device == "mlu":
-        model = model.to(ct.mlu_device())
-    else:
-        model = model.to_memory_format(torch.channels_last)
-        model = model.cuda()
-
     if args.dist:
          model = DistributedModel(model)
     # Data loading code
@@ -202,6 +198,15 @@ def main():
     # if args.test:
     #     test(test_loader, model, criterion, args)
     #     return
+
+    if args.isQuant:
+        model = qt.adaptive_quantize(model, len(train_loader))
+
+    if args.device == "mlu":
+        model = model.to(ct.mlu_device())
+    else:
+        model = model.to_memory_format(torch.channels_last)
+        model = model.cuda()
 
     # choose scheduler
     lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
@@ -313,6 +318,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
+        if args.isPerf:
+            if i == 5:
+                import sys
+                sys.exit()
         data_time.update(time.time() - end)
 
         if args.dummy_test:
