@@ -233,13 +233,13 @@ class ResNet(nn.Module):
         x = self.maxpool(x)
 
         x = self.layer1(x)
-        x = self.layer2(x)
-        x = self.layer3(x)
-        x = self.layer4(x)
+        # x = self.layer2(x)
+        # x = self.layer3(x)
+        # x = self.layer4(x)
 
-        x = self.avgpool(x)
-        x = x.view(x.size(0), -1)
-        x = self.fc(x)
+        # x = self.avgpool(x)
+        # x = x.view(x.size(0), -1)
+        # x = self.fc(x)
 
         return x
 
@@ -248,6 +248,7 @@ def resnet18(pretrained=False, **kwargs):
     model = ResNet(BasicBlock, [2, 2, 2, 2], **kwargs)
     return model
 
+import torch.cuda.amp as amp
 
 if __name__=="__main__":
 
@@ -256,7 +257,6 @@ if __name__=="__main__":
 
     # m = models.resnet50()
     m = resnet18()
-
 
     m = m.to_memory_format(torch.channels_last)
     m = m.cuda()
@@ -268,13 +268,10 @@ if __name__=="__main__":
         input = input.contiguous(torch.channels_last)
         input = input.cuda()
 
-        if USE_HALF:
-            input = input.half()
-            # m = HalfModel(m)
-            m = m.half()
+        with amp.autocast():
+            out = m(input)
         
-        out = m(input)
-        print(out, out.dtype)
+            print(out, out.dtype)
         # out.backward(torch.ones_like(out))
 
     torch.cuda.synchronize()
