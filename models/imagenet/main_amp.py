@@ -21,6 +21,8 @@ from torch.backends import cudnn
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
+import torch.cuda.amp as amp
+
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
@@ -263,6 +265,8 @@ def main():
         monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
         monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
+scaler = amp.GradScaler()
+
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
@@ -292,9 +296,13 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input = input.contiguous(torch.channels_last)
         input = input.cuda()
         target = target.int().cuda()
-        # compute output
-        output = model(input)
-        loss = criterion(output, target)
+
+        with amp.autocast():
+            # compute output
+            output = model(input)
+            loss = criterion(output, target)
+            # print(output)
+
         # measure accuracy and record loss
         acc1 = accuracy(output, target, topk=(1,))
         acc5 = acc1.clone()
@@ -310,9 +318,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        loss.backward()
+        # loss.backward()
+        scaler.scale(loss).backward()
         if args.dist:
             model.average_gradients()
+        scaler.step(optimizer)
+        scaler.update()
         optimizer.step()
 
         # measure elapsed time

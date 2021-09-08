@@ -19,8 +19,7 @@ class DistributedModel(nn.Module):
         world_size = dist.get_world_size()
         param_list = []
         for param in self.model.parameters():
-            # if param.requires_grad:
-            if param.requires_grad and param.grad.data is not None:
+            if param.requires_grad and param.grad is not None:
                 dist.all_reduce(param.grad.data)
                 param_list.append(param)
         for param in param_list:
@@ -28,7 +27,7 @@ class DistributedModel(nn.Module):
 
     def sum_gradients(self):
         for param in self.model.parameters():
-            if param.requires_grad:
+            if param.requires_grad and param.grad is not None:
                 dist.all_reduce(param.grad.data)
 
     def broadcast_params(self):
