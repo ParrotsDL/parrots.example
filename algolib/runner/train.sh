@@ -1,19 +1,27 @@
 set -x
-# 1. build file folder for save log
+# 1. build file folder for save log,format: algolib_log/frame
 mkdir -p algolib_log/example
 now=$(date +"%Y%m%d_%H%M%S")
 
 # 2. set env 
-ROOT=.
-pyroot=$ROOT/algolib/example
-export PYTHONPATH=$pyroot:$PYTHONPATH
+path=$PWD
+if [[ "$path" =~ "algolib/example" ]]
+then 
+    pyroot=$path
+    comroot=$path/../..
+else
+    pyroot=$path/algolib/example
+    comroot=$path
+fi
+echo $pyroot
+export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
 export MODEL_NAME=$3
 
 # 3. build necessary parameter
 partition=$1
 g=$(($2<8?$2:8))
 MODEL_NAME=$3
-cfg=$ROOT/algolib/example/algolib/configs/${MODEL_NAME}.yaml
+cfg=$pyroot/algolib/configs/${MODEL_NAME}.yaml
 
 # 4. build optional parameter
 array=( $@ )
