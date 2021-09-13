@@ -39,6 +39,10 @@ parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
+parser.add_argument('--launcher', type=str, default="mpi", choices=['slurm', 'mpi'], help='distributed backend')
+parser.add_argument('--device', type=str, default="gpu", choices=['mlu', 'gpu'], help='card type, for camb pytorch use mlu')
+parser.add_argument('--quantify', dest='quantify', action='store_true',
+                    help='quantify training')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
@@ -47,31 +51,50 @@ parser.add_argument('--resume', default=None, type=str, help='Breakpoint entranc
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
+args = parser.parse_args()
 
+if args.device == "mlu":
+    import torch_mlu
+    import torch_mlu.core.mlu_model as ct
+    import torch_mlu.core.mlu_quantize as qt
+    import torch_mlu.core.device.notifier as Notifier
+    import torch_mlu.core.quantized.functional as func
+    ct.set_cnml_enabled(False)
+
+use_camb = False
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
 
 def main():
     start_time = time.time()
     iter_time_list = []
-    args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    if 'SLURM_PROCID' in os.environ.keys():
+    if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
         args.local_rank = int(os.environ['SLURM_LOCALID'])
         os.environ['MASTER_ADDR'] = socket.gethostbyname(socket.getfqdn(socket.gethostname()))
         os.environ['MASTER_PORT'] = str(args.port)
-    else:
+    elif args.launcher == "mpi":
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
-
+    else:
+        args.rank = 0
+        args.world_size = 1
+        args.local_rank = 0
+    args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
-
-    dist.init_process_group(backend="nccl")
-    torch.cuda.set_device(args.local_rank) 
+    if args.device == "mlu":
+        dist.init_process_group(backend="cncl", init_method="tcp://127.0.0.1:23456",
+                                rank=0, world_size=1)
+        ct.set_device(args.local_rank)
+    else:
+        dist.init_process_group(backend="nccl")
+        torch.cuda.set_device(args.local_rank) 
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -81,11 +104,12 @@ def main():
 
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
                     socket.gethostname()))
-
-    dist.barrier()
+    #if args.dist:
+    #    dist.barrier()
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
+    """
     if cfgs.get('seed', None):
         random.seed(cfgs.seed)
         torch.manual_seed(cfgs.seed)
@@ -97,20 +121,38 @@ def main():
         torch.manual_seed(args.seed)
         torch.cuda.manual_seed(args.seed)
         cudnn.deterministic = True
-
+    """
+    # Data loading code
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model.cuda()
+    
+    if use_camb:
+        model = model.to_memory_format(torch.channels_last)
+    if args.device == "mlu" and args.quantify:
+        model = qt.adaptive_quantize(model, len(train_loader))
+    elif args.device == "gpu" and args.quantify:
+        from torch.utils import quantize
+        model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
+    if args.device == "mlu":
+        model = model.to(ct.mlu_device())
+    else:
+        model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
-
-    model = DDP(model, device_ids=[args.local_rank])
+    if args.dist:
+        model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
-        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
+        criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes)
     else:
-        criterion = nn.CrossEntropyLoss().cuda()
+        criterion = nn.CrossEntropyLoss()
+    
+    if args.device == "mlu":
+        criterion = criterion.to(ct.mlu_device())
+    else:
+        criterion = criterion.cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
@@ -281,8 +323,16 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
-        input = input.cuda()
-        target = target.cuda()
+        if args.device == "mlu":
+            input = input.to(ct.mlu_device())
+            target = target.to(ct.mlu_device())
+        else:
+            if use_camb:
+                input = input.contiguous(torch.channels_last).cuda()
+                target = target.int().cuda()
+            else:
+                input = input.cuda()
+                target = target.cuda()
 
         # compute output
         output = model(input)
@@ -290,15 +340,19 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
-
-        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
-        dist.all_reduce(stats_all)
+        if args.device == "mlu":
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().to(ct.mlu_device())
+        else:
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
+        if args.dist:
+            dist.all_reduce(stats_all)
         stats_all /= args.world_size
 
         losses.update(stats_all[0].item())
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
-        memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+        if args.device == "gpu":
+            memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
@@ -365,7 +419,7 @@ def test(test_loader, model, criterion, args):
             top1.update(acc1[0].item() * 100.0 / target.size(0))
             top5.update(acc5[0].item() * 100.0 / target.size(0))
 
-            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
+            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).float())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -379,7 +433,7 @@ def test(test_loader, model, criterion, args):
                         stats_all[2].item()))
 
         loss = torch.tensor([losses.avg])
-        dist.all_reduce(loss.cuda())
+        dist.all_reduce(loss.float().cuda())
         loss_avg = loss.item() / args.world_size
         dist.all_reduce(stats_all.cuda())
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()

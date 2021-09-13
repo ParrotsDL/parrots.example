@@ -4,7 +4,6 @@ import os
 
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
-from petrel_client.client import Client
 from PIL import Image, ImageFile
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler

@@ -3,10 +3,14 @@ import io
 import os
 
 from PIL import Image
-
-import mc
+use_mc = False
+try:
+   import mc
+   use_mc = True
+except:
+    print("import mc failed")
 from torch.utils.data import Dataset
-
+use_mc = False
 
 class McDataset(Dataset):
     r"""
@@ -70,13 +74,17 @@ class McDataset(Dataset):
             cls = self.metas[index][1]
 
             # memcached
-            self._init_memcached()
-            value = mc.pyvector()
-            self.mclient.Get(filename, value)
-            value_buf = mc.ConvertBuffer(value)
-            buff = io.BytesIO(value_buf)
-            with Image.open(buff) as img:
-                img = img.convert('RGB')
+            if use_mc:
+                self._init_memcached()
+                value = mc.pyvector()
+                self.mclient.Get(filename, value)
+                value_buf = mc.ConvertBuffer(value)
+                buff = io.BytesIO(value_buf)
+                with Image.open(buff) as img:
+                    img = img.convert('RGB')
+            else:
+                with Image.open(filename) as img:
+                    img = img.convert('RGB')
 
         # transform
         if self.transform is not None:
