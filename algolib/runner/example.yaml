@@ -1,8 +1,9 @@
 global_configs:
     reader : CephReader 
-    maxstep : 1
-    ncard: 8
+    maxstep : 2
     benchmark: 20,30
+    seed: 2
+    pavi: None 
 
 models:
   - dpn92_mix:

@@ -117,3 +117,7 @@ cmake-build-debug/
 
 # sphinx docs
 docs/build
+
+# log
+algolib_log
+runs

@@ -20,7 +20,6 @@ import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
-from algolib.utils import add_argument, benchmark_data
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
@@ -49,12 +48,19 @@ parser.add_argument('--save_path',
                     default=None,
                     type=str,
                     help='checkpoint path')
-
-add_argument(parser,
-             cfg_name=os.path.join(
-                 os.path.abspath(__file__).rsplit('/', 1)[0],
-                 '../../algolib/runner/example.yaml'),
-             model_name=os.getenv('MODEL_NAME'))
+parser.add_argument('--resume',
+                    default=None,
+                    type=str,
+                    help='resume checkpoint')
+parser.add_argument('--reader',
+                    type=str,
+                    default='MemcachedReader',
+                    choices=['MemcachedReader', 'CephReader', 'DirectReader'],
+                    help='io backend')
+parser.add_argument('--pavi',
+                    default=None,
+                    type=str,
+                    help='pavi use and pavi project')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -65,7 +71,6 @@ def main():
     args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
-
     if 'SLURM_PROCID' in os.environ.keys():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
@@ -105,12 +110,6 @@ def main():
         torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
 
-    if args.seed is not None:
-        random.seed(args.seed)
-        torch.manual_seed(args.seed)
-        torch.cuda.manual_seed(args.seed)
-        cudnn.deterministic = True
-
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
     model.cuda()
 
@@ -134,8 +133,6 @@ def main():
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
-    if args.maxstep is not None:
-        args.max_epoch = args.maxstep
     args.test_freq = (args.test_freq
                       if args.test_freq else cfgs.trainer.test_freq)
     args.log_freq = cfgs.trainer.log_freq
@@ -194,19 +191,23 @@ def main():
     if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
         if args.pavi:
             monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi}
+            from pavi import SummaryWriter
         else:
             monitor_kwargs = cfgs.monitor.kwargs
             if hasattr(args, 'taskid'):
                 monitor_kwargs['taskid'] = args.taskid
             elif hasattr(cfgs.monitor, '_taskid'):
                 monitor_kwargs['taskid'] = cfgs.monitor._taskid
-        from pavi import SummaryWriter
         monitor_writer = SummaryWriter(session_text=yaml.dump(args.config),
                                        **monitor_kwargs)
         args.taskid = monitor_writer.taskid
 
+    [hook.before_run(len_loader=len(train_loader))
+     for hook in getattr(torch, '_algolib_hooks', [])]
+
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
+        [hook.before_epoch() for hook in getattr(torch, '_algolib_hooks', [])]
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
@@ -227,6 +228,7 @@ def main():
                     monitor_writer.add_scalar('Test_loss', loss,
                                               len(train_loader) * epoch)
 
+            if args.rank == 0:
                 checkpoint = {
                     'epoch': epoch + 1,
                     'arch': cfgs.net.arch,
@@ -245,8 +247,21 @@ def main():
                 if acc1 > best_acc1:
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
+        else:
+            loss, acc1, acc5 = (None, ) * 3
+
+        [hook.after_epoch(current_epoch=epoch,
+                          pavi_args=dict(
+                              iteration=len(train_loader) * epoch,
+                              enable=((epoch + 1) % args.test_freq == 0 or
+                                      epoch + 1 == args.max_epoch),
+                              values=dict(Accuracy_Test_top1=acc1,
+                                          Accuracy_Test_top5=acc5,
+                                          Test_loss=loss)))
+         for hook in getattr(torch, '_algolib_hooks', [])]
 
         lr_scheduler.step()
+    [hook.after_run() for hook in getattr(torch, '_algolib_hooks', [])]
 
 
 def train(train_loader, model, criterion, optimizer, epoch, args,
@@ -276,8 +291,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
     if args.dummy_test:
         input_, target_ = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
-    iter_start_time = time.time()
     for i, (input, target) in enumerate(train_loader):
+        [hook.before_iter() for hook in getattr(torch, '_algolib_hooks', [])]
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -314,22 +329,23 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
         batch_time.update(time.time() - end)
         end = time.time()
 
-        if args.benchmark and args.rank == 0:
-            iter_end_time = time.time()
-            benchmark_data(i, iter_end_time - iter_start_time,
-                           len(train_loader), args.benchmark)
-            iter_start_time = time.time()
-
         if i % args.log_freq == 0:
             progress.display(i)
+            cur_iter = epoch * loader_length + i
             if args.rank == 0 and monitor_writer:
-                cur_iter = epoch * loader_length + i
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg,
                                           cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg,
                                           cur_iter)
-
+        [hook.after_iter(iteration=i,
+                         pavi_args=dict(
+                             iteration=cur_iter,
+                             enable=(i % args.log_freq == 0),
+                             values=dict(Accuracy_train_top1=top1.avg,
+                                         Accuracy_train_top5=top5.avg,
+                                         Train_Loss=losses.avg)))
+         for hook in getattr(torch, '_algolib_hooks', [])]
 
 
 def test(test_loader, model, criterion, args):
@@ -414,4 +430,14 @@ def test(test_loader, model, criterion, args):
 
 
 if __name__ == '__main__':
+    # parrots.algolib
+    try:
+        from algolib.common import init
+        init(os.path.join(
+            os.path.abspath(__file__).rsplit('/', 1)[0],
+            '../../algolib/runner/example.yaml'),
+             hook=True)
+        del init
+    except ImportError:
+        pass
     main()
