@@ -39,7 +39,7 @@ parser.add_argument('--max_step', default=None, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--data_reader', type=str, default="MemcachedReader", choices=['MemcachedReader', 'CephReader'], help='io backend')
-parser.add_argument('--launcher', type=str, default="mpi", choices=['slurm', 'mpi'], help='distributed backend')
+parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'], help='distributed backend')
 parser.add_argument('--device', type=str, default="gpu", choices=['mlu', 'gpu'], help='card type, for camb pytorch use mlu')
 parser.add_argument('--quantify', dest='quantify', action='store_true',
                     help='quantify training')
@@ -109,19 +109,18 @@ def main():
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
-    """
     if cfgs.get('seed', None):
         random.seed(cfgs.seed)
         torch.manual_seed(cfgs.seed)
-        torch.cuda.manual_seed(cfgs.seed)
-        cudnn.deterministic = True
+        #torch.cuda.manual_seed(cfgs.seed)
+        #cudnn.deterministic = True
     
     if args.seed != None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
-        torch.cuda.manual_seed(args.seed)
-        cudnn.deterministic = True
-    """
+        #torch.cuda.manual_seed(args.seed)
+        #cudnn.deterministic = True
+
     # Data loading code
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size, args.data_reader)
 
@@ -322,7 +321,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         if args.dummy_test:
             input = input_.detach()
             input.requires_grad = True
-            target = target_
+            input = input.contiguous(torch.channels_last).cuda()
+            target = target_.int().cuda() if use_camb else target_.cuda()
         if args.device == "mlu":
             input = input.to(ct.mlu_device())
             target = target.to(ct.mlu_device())
