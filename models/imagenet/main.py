@@ -22,6 +22,7 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
+import torchvision.models as torchModels
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
@@ -127,7 +128,11 @@ def main():
         cudnn.deterministic = True
 
 
-    model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    try:
+        model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    except:
+        model = torchModels.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
+    
     # model.cuda()
     if use_camb:
         model = model.to_memory_format(torch.channels_last)
@@ -236,7 +241,7 @@ def main():
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list)
+        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list, cfgs.net.arch)
         
         """
         mem = torch.cuda.max_memory_allocated()
@@ -301,7 +306,7 @@ def main():
         # monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
         monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list):
+def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list, net_arch):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -340,8 +345,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 target = target.cuda()
 
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        if net_arch == 'googlenet':
+            aux1, aux2, output = model(input)
+            loss1 = criterion(output, target)
+            loss2 = criterion(aux1, target)
+            loss3 = criterion(aux2, target)
+            loss = loss1 + 0.3 * (loss2 + loss3)
+        else:
+            output = model(input)
+            loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
