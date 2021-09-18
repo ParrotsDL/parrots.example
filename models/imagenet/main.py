@@ -8,6 +8,7 @@ import yaml
 import json
 import socket
 import logging
+import math
 import numpy as np
 from addict import Dict
 
@@ -22,7 +23,6 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
-# import torchvision.models as torchModels
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
@@ -65,6 +65,23 @@ if args.device == "mlu":
 use_camb = False
 if torch.__version__ == "parrots":
     from parrots.base import use_camb
+
+def adjust_learning_rate_cos(optimizer,epoch,iteration,num_iter,args):
+    lr = optimizer.param_groups[0]['lr']
+
+    #warmup_epoch =5 if args.warmup else 0
+    warmup_epoch = 3
+    warmup_iter = warmup_epoch * num_iter
+    current_iter = iteration+epoch *num_iter
+    max_iter = args.epochs * num_iter
+
+    lr =args.lr * (1 + math.cos(math.pi*(current_iter-warmup_iter)/(max_iter-warmup_iter)))/2
+
+    if epoch < warmup_epoch:
+        lr=args.lr*current_iter / warmup_iter
+
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr
 
 def main():
     start_time = time.time()
@@ -208,7 +225,8 @@ def main():
         return
 
     # choose scheduler
-    lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
+    if cfgs.net.arch not in  ["mobile_v2"]:
+        lr_scheduler = torch.optim.lr_scheduler.__dict__[cfgs.trainer.lr_scheduler.type](
                        optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
@@ -250,8 +268,10 @@ def main():
                 if acc1 > best_acc1:
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
-
-        lr_scheduler.step()
+        if cfgs.net.arch in ["mobile_v2"]:
+            adjust_learning_rate_cos(optimizer, epoch, len(train_loader), args)
+        else:
+            lr_scheduler.step()
     end_time = time.time()
     if args.rank == 0:
         logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
@@ -287,6 +307,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure data loading time
         data_time.update(time.time() - end)
 
+        if net_arch == "mobilenet_v2":
+            adjust_learning_rate_cos(optimizer, epoch, i, len(train_loader), args)
         if args.dummy_test:
             input = input_.detach()
             input.requires_grad = True
