@@ -22,7 +22,7 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
-import torchvision.models as torchModels
+# import torchvision.models as torchModels
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
@@ -118,7 +118,8 @@ def main():
     if cfgs.get('seed', None):
         random.seed(cfgs.seed)
         torch.manual_seed(cfgs.seed)
-        torch.cuda.manual_seed(cfgs.seed)
+        if args.device == "mlu":
+            torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
     
     if args.seed != None:
