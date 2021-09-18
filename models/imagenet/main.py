@@ -95,8 +95,6 @@ def main():
 
     if args.device == "mlu":
         dist.init_process_group(backend="cncl")
-        #dist.init_process_group(backend="cncl", init_method="tcp://127.0.0.{}:23456".format(args.rank),
-        #                        rank=0, world_size=1)
         ct.set_device(args.local_rank)
     else:
         dist.init_process_group(backend="cncl")
@@ -110,8 +108,6 @@ def main():
 
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
                     socket.gethostname()))
-
-    # dist.barrier()
 
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
@@ -134,7 +130,6 @@ def main():
     except:
         model = torchModels.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
     
-    # model.cuda()
     if use_camb:
         model = model.to_memory_format(torch.channels_last)
     if args.device == "mlu" and args.quantify:
@@ -149,7 +144,6 @@ def main():
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
-    # model = DDP(model, device_ids=[args.local_rank])
     if args.dist:
         model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
@@ -219,21 +213,6 @@ def main():
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
     monitor_writer = None
-    
-    # if args.rank == 0 and (cfgs.get('monitor', None) or args.pavi):
-    #    # if cfgs.monitor.get('type', None) == 'pavi':
-    #     if args.pavi:
-    #         monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi_project}
-    #     else:
-    #         monitor_kwargs = cfgs.monitor.kwargs
-    #         if hasattr(args, 'taskid'):
-    #             monitor_kwargs['taskid'] = args.taskid
-    #         elif hasattr(cfgs.monitor, '_taskid'):
-    #             monitor_kwargs['taskid'] = cfgs.monitor._taskid
-    #     from pavi import SummaryWriter
-    #     monitor_writer = SummaryWriter(
-    #         session_text=yaml.dump(args.config), **monitor_kwargs)
-    #     args.taskid = monitor_writer.taskid
 
     run_time = time.time()
 
@@ -244,24 +223,6 @@ def main():
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list, cfgs.net.arch)
         
-        """
-        mem = torch.cuda.max_memory_allocated()
-        mem_mb = torch.tensor([mem / (1024 * 1024)],
-                       dtype=torch.int,
-                       device=torch.device('cuda'))
-        if  args.world_size > 1:
-            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
-
-        mem_alloc = mem_mb.item()
-        # get max memory cached
-        mem = torch.cuda.max_memory_cached()
-        mem_mb = torch.tensor([mem / (1024 * 1024)],
-                       dtype=torch.int,
-                       device=torch.device('cuda'))
-        if args.world_size > 1:
-            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
-        mem_cached = mem_mb.item()
-        """
         
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -296,15 +257,11 @@ def main():
         logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
         logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
         logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
-        # logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
-        # logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
 
     if args.rank == 0 and monitor_writer:
         monitor_writer.add_scalar('__benchmark_total_time(h)',(end_time - start_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_pure_training_time(h)',(end_time - run_time) / 3600,1)
         monitor_writer.add_scalar('__benchmark_avg_iter_time(s)',np.mean(iter_time_list),1)
-        # monitor_writer.add_scalar('__benchmark_mem_alloc(mb)',mem_alloc,1)
-        # monitor_writer.add_scalar('__benchmark_mem_cached(mb)',mem_cached,1)
         monitor_writer.add_snapshot('__benchmark_pseudo_snapshot', None, 1)
 
 def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer, iter_time_list, net_arch):
