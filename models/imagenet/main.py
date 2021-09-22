@@ -406,7 +406,7 @@ def test(test_loader, model, criterion, args):
                 input = input_
                 target = target_
             input = input.cuda()
-            target = target.cuda()
+            target = target.int().cuda()
 
             # compute output
             output = model(input)
@@ -435,7 +435,7 @@ def test(test_loader, model, criterion, args):
         loss = torch.tensor([losses.avg])
         dist.all_reduce(loss.float().cuda())
         loss_avg = loss.item() / args.world_size
-        dist.all_reduce(stats_all.cuda())
+        dist.all_reduce(stats_all.float().cuda())
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 

@@ -10,7 +10,6 @@ try:
 except:
     print("import mc failed")
 from torch.utils.data import Dataset
-use_mc = False
 
 class McDataset(Dataset):
     r"""
