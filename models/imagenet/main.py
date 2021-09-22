@@ -15,7 +15,6 @@ import torch.nn as nn
 import torch.nn.parallel
 import torch.optim
 from torch.backends import cudnn
-from torch.utils import quantize
 
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -31,6 +30,8 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
+parser.add_argument('--quantify', dest='quantify', action='store_true',
+                    help='quantify training')                   
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 
@@ -53,7 +54,7 @@ def main():
         args.local_rank = int(os.environ['SLURM_LOCALID'])
         node_list = str(os.environ['SLURM_NODELIST'])
         node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
         os.environ['MASTER_PORT'] = str(args.port)
     elif 'OMPI_COMM_WORLD_LOCAL_SIZE' in os.environ.keys():
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
@@ -86,7 +87,9 @@ def main():
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
+    if args.quantify:
+        from torch.utils import quantize
+        model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
     model = model.to_memory_format(torch.channels_last)
     model.cuda()
 
