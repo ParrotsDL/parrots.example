@@ -24,6 +24,13 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 
+#import benchmark
+
+from benchmark import camb_benchmark
+camb_benchmark.auto_generate_timeline_on_exit()
+
+
+
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -46,6 +53,7 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
+
     if 'SLURM_PROCID' in os.environ.keys():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
@@ -66,7 +74,9 @@ def main():
     os.environ['RANK'] = str(args.rank)
 
     dist.init_process_group(backend="cncl")
-    torch.cuda.set_device(args.local_rank) 
+    torch.cuda.set_device(args.local_rank)
+    camb_benchmark.set_camb_benchmark_action("async")
+    camb_benchmark.set_camb_benchmark_action("start")
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -222,7 +232,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         else:
             input = input.contiguous(torch.channels_last).cuda()
             target = target.int().cuda()
-              
+
 
         # compute output
         output = model(input)
@@ -251,6 +261,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         if i % args.log_freq == 0:
             progress.display(i)
+            if i == 10:
+                exit()
             if args.rank == 0 and monitor_writer:
                 cur_iter = epoch * len(train_loader) + i
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
@@ -294,6 +306,8 @@ def test(test_loader, model, criterion, args):
 
             if i % args.log_freq == 0:
                 progress.display(i)
+
+
 
         logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
                         args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
