@@ -53,7 +53,7 @@ saver:
   # resume_model: 
   # load_pavi:   # load pretrain/resume model from pavi
   # save_pavi: True   # add snapshot to pavi
-  save_dir: checkpoints/inception_v3   # save checkpoint locally
+  save_dir: algolib_gen/example/checkpoints/inception_v3   # save checkpoint locally
   save_epoch_freq: 2
   save_latest: False
   save_best: True
