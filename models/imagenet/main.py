@@ -436,7 +436,7 @@ if __name__ == '__main__':
         init(os.path.join(
             os.path.abspath(__file__).rsplit('/', 1)[0],
             '../../algolib/runner/example.yaml'),
-                hook=True)
+            hook=True)
         del init
     except ImportError:
         pass
