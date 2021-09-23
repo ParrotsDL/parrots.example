@@ -111,7 +111,8 @@ def main():
     if args.seed != None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
-        torch.cuda.manual_seed(args.seed)
+        if args.device == "mlu":
+            torch.cuda.manual_seed(args.seed)
         cudnn.deterministic = True
 
     # Data loading code
