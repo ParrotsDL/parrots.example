@@ -34,21 +34,37 @@ parser.add_argument('--quantify', dest='quantify', action='store_true',
                     help='quantify training')                   
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
-
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
+parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'],
+                    help='distributed backend')
+parser.add_argument('--device', type=str, default="mlu", choices=['mlu', 'gpu'],
+                    help='card type, for camb pytorch use mlu')
+parser.add_argument('--seed', type=int, default=None, help='random seed')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
+args = parser.parse_args()
+
+if args.device == "mlu":
+    import torch_mlu
+    import torch_mlu.core.mlu_model as ct
+    import torch_mlu.core.mlu_quantize as qt
+    import torch_mlu.core.device.notifier as Notifier
+    import torch_mlu.core.quantized.functional as func
+    ct.set_cnml_enabled(False)
+
+use_camb = False
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
 
 
 def main():
-    args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    if 'SLURM_PROCID' in os.environ.keys():
+    if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
         args.local_rank = int(os.environ['SLURM_LOCALID'])
@@ -56,19 +72,23 @@ def main():
         node_parts = re.findall('[0-9]+', node_list)
         os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
         os.environ['MASTER_PORT'] = str(args.port)
-    elif 'OMPI_COMM_WORLD_LOCAL_SIZE' in os.environ.keys():
+    elif args.launcher == "mpi":
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
     else:
         args.rank = 0
         args.world_size = 1
+        args.local_rank = 0
     args.dist = args.world_size > 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
     dist.init_process_group(backend="cncl")
-    torch.cuda.set_device(args.local_rank)
+    if args.device == "mlu":
+        ct.set_device(args.local_rank)
+    else:
+        torch.cuda.set_device(args.local_rank) 
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -79,9 +99,20 @@ def main():
     logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
                     socket.gethostname()))
 
-    #dist.barrier()
-
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
+
+    if cfgs.get('seed', None):
+        random.seed(cfgs.seed)
+        torch.manual_seed(cfgs.seed)
+        if args.device == "mlu":
+            torch.cuda.manual_seed(cfgs.seed)
+        cudnn.deterministic = True
+    
+    if args.seed != None:
+        random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        torch.cuda.manual_seed(args.seed)
+        cudnn.deterministic = True
 
     # Data loading code
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
@@ -90,18 +121,32 @@ def main():
     if args.quantify:
         from torch.utils import quantize
         model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
-    model = model.to_memory_format(torch.channels_last)
-    model.cuda()
+    if use_camb:
+        model = model.to_memory_format(torch.channels_last)
+    if args.device == "mlu" and args.quantify:
+        model = qt.adaptive_quantize(model, len(train_loader))
+    elif args.device == "gpu" and args.quantify:
+        from torch.utils import quantize
+        model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
+    if args.device == "mlu":
+        model = model.to(ct.mlu_device())
+    else:
+        model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
-    model = DDP(model, device_ids=[args.local_rank])
+    if args.dist:
+        model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
         criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
     else:
-        criterion = nn.CrossEntropyLoss().cuda()
+        criterion = nn.CrossEntropyLoss()
+    if args.device == "mlu":
+        criterion = criterion.to(ct.mlu_device())
+    else:
+        criterion = criterion.cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
@@ -149,33 +194,18 @@ def main():
                        optimizer if isinstance(optimizer, torch.optim.Optimizer) else optimizer.optimizer,
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
-    monitor_writer = None
-    if args.rank == 0 and cfgs.get('monitor', None):
-        if cfgs.monitor.get('type', None) == 'pavi':
-            from pavi import SummaryWriter
-            if cfgs.monitor.get("_taskid", None):
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs, taskid=cfgs.monitor._taskid)
-            else:
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
-
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer)
+        train(train_loader, model, criterion, optimizer, epoch, args)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
             if args.rank == 0:
-                if monitor_writer:
-                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, len(train_loader)*epoch)
-                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, len(train_loader)*epoch)
-                    monitor_writer.add_scalar('Test_loss', loss, len(train_loader)*epoch)
 
                 checkpoint = {
                     'epoch': epoch + 1,
@@ -195,7 +225,7 @@ def main():
         lr_scheduler.step()
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer):
+def train(train_loader, model, criterion, optimizer, epoch, args):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -213,8 +243,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
-        input_ = input_.contiguous(torch.channels_last).cuda()
-        target_ = target_.int().cuda()
+
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
@@ -223,9 +252,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
             input = input_.detach()
             input.requires_grad = True
             target = target_
+
+        if args.device == "mlu":
+            input = input.to(ct.mlu_device())
+            target = target.to(ct.mlu_device())
         else:
-            input = input.contiguous(torch.channels_last).cuda()
-            target = target.int().cuda()
+            if use_camb:
+                input = input.contiguous(torch.channels_last).cuda()
+                target = target.int().cuda()
+            else:
+                input = input.cuda()
+                target = target.cuda()
 
 
         # compute output
@@ -235,14 +272,19 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
-        dist.all_reduce(stats_all)
+        if args.device == "mlu":
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().to(ct.mlu_device())
+        else:
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
+        if args.dist:
+            dist.all_reduce(stats_all)
         stats_all /= args.world_size
 
         losses.update(stats_all[0].item())
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
-        memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+        if args.device == "gpu":
+            memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
@@ -255,11 +297,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         if i % args.log_freq == 0:
             progress.display(i)
-            if args.rank == 0 and monitor_writer:
-                cur_iter = epoch * len(train_loader) + i
-                monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
 
 
 def test(test_loader, model, criterion, args):
@@ -267,7 +304,7 @@ def test(test_loader, model, criterion, args):
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
     top5 = AverageMeter('Acc@5', ':.2f', -1)
-    stats_all = torch.Tensor([0, 0, 0]).long()
+    stats_all = torch.Tensor([0, 0, 0]).float()
     progress = ProgressMeter(len(test_loader), batch_time, losses, top1, top5,
                              prefix="Test: ")
 
@@ -276,8 +313,16 @@ def test(test_loader, model, criterion, args):
     with torch.no_grad():
         end = time.time()
         for i, (input, target) in enumerate(test_loader):
-            input = input.contiguous(torch.channels_last).cuda()
-            target = target.int().cuda()
+            if args.device == "mlu":
+                input = input.to(ct.mlu_device())
+                target = target.to(ct.mlu_device())
+            else:
+                if use_camb:
+                    input = input.contiguous(torch.channels_last).cuda()
+                    target = target.int().cuda()
+                else:
+                    input = input.cuda()
+                    target = target.cuda()
 
             # compute output
             output = model(input)
@@ -290,7 +335,7 @@ def test(test_loader, model, criterion, args):
             top1.update(acc1[0].item() * 100.0 / target.size(0))
             top5.update(acc5[0].item() * 100.0 / target.size(0))
 
-            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
+            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).float())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -304,9 +349,15 @@ def test(test_loader, model, criterion, args):
                         stats_all[2].item()))
 
         loss = torch.tensor([losses.avg])
-        dist.all_reduce(loss.cuda())
+        if args.device == "mlu":
+            dist.all_reduce(loss.to(ct.mlu_device()))
+        else:
+            dist.all_reduce(loss.cuda())
         loss_avg = loss.item() / args.world_size
-        dist.all_reduce(stats_all.int().float().cuda())
+        if args.device == "mlu":
+            dist.all_reduce(stats_all.to(ct.mlu_device()))
+        else:
+            dist.all_reduce(stats_all.cuda())
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 
