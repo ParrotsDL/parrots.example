@@ -6,7 +6,7 @@ global_configs:
     pavi: None 
 
 env_version:
-    pat : pat0.12.0rc0
+    pat : pat0.12.0rc0 pat0.13.0rc0
     pyt : pt1.3v1_r0.1
 
 models:
