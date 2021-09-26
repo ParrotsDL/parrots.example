@@ -24,6 +24,9 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 
+# from benchmark import camb_benchmark
+ 
+# camb_benchmark.auto_generate_timeline_on_exit()
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
@@ -89,6 +92,10 @@ def main():
         ct.set_device(args.local_rank)
     else:
         torch.cuda.set_device(args.local_rank) 
+
+#     camb_benchmark.set_camb_benchmark_action("start")
+# #camb_benchmark.set_camb_benchmark_action("async")
+#     camb_benchmark.set_camb_benchmark_action("sync")
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -204,7 +211,7 @@ def main():
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, model, criterion, args)
+            loss, acc1, acc5 = test(test_loader, model, criterion, args, cfgs.net.arch)
 
             if args.rank == 0:
 
@@ -297,6 +304,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
         # compute gradient and do SGD step
         optimizer.zero_grad()
         loss.backward()
+        # for name, p in model.named_parameters():
+        #     if p.requires_grad:
+        #         if p.grad is None:
+        #             print("--------------------------------", name)
         optimizer.step()
 
         # measure elapsed time
@@ -307,7 +318,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
             progress.display(i)
 
 
-def test(test_loader, model, criterion, args):
+def test(test_loader, model, criterion, args, net_arch):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -332,9 +343,15 @@ def test(test_loader, model, criterion, args):
                     input = input.cuda()
                     target = target.cuda()
 
-            # compute output
-            output = model(input)
-            loss = criterion(output, target)
+            if net_arch == 'googlenet':
+                aux1, aux2, output = model(input)
+                loss1 = criterion(output, target)
+                loss2 = criterion(aux1, target)
+                loss3 = criterion(aux2, target)
+                loss = loss1 + 0.3 * (loss2 + loss3)
+            else:
+                output = model(input)
+                loss = criterion(output, target)
 
             # measure accuracy and record loss
             acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
