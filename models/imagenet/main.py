@@ -150,7 +150,7 @@ def main():
         criterion = criterion.cuda()
     logger.info("loss\n{}".format(criterion))
 
-    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    optimizer = torch.optim.SGD([{'params': model.parameters(), 'initial_lr': 0.1}], **cfgs.trainer.optimizer.kwargs)
     logger.info("optimizer\n{}".format(optimizer))
 
     cudnn.benchmark = True
@@ -200,7 +200,7 @@ def main():
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args)
+        train(train_loader, model, criterion, optimizer, epoch, args, cfgs.net.arch)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -226,7 +226,7 @@ def main():
         lr_scheduler.step()
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args):
+def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -267,8 +267,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
 
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        if net_arch == 'googlenet':
+            aux1, aux2, output = model(input)
+            loss1 = criterion(output, target)
+            loss2 = criterion(aux1, target)
+            loss3 = criterion(aux2, target)
+            loss = loss1 + 0.3 * (loss2 + loss3)
+        else:
+            output = model(input)
+            loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
