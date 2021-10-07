@@ -194,7 +194,7 @@ def main():
 
     # test mode
     if args.test:
-        test(test_loader, model, criterion, args)
+        test(test_loader, model, criterion, args, cfgs.net.arch)
         return
 
     # choose scheduler
