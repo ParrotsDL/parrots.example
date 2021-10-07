@@ -192,6 +192,8 @@ def main():
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
+    args.arch = cfgs.net.arch
+
     # test mode
     if args.test:
         test(test_loader, model, criterion, args)
@@ -207,11 +209,11 @@ def main():
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, cfgs.net.arch)
+        train(train_loader, model, criterion, optimizer, epoch, args)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, model, criterion, args, cfgs.net.arch)
+            loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
             if args.rank == 0:
 
@@ -233,7 +235,7 @@ def main():
         lr_scheduler.step()
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
+def train(train_loader, model, criterion, optimizer, epoch, args):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -274,7 +276,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
 
 
         # compute output
-        if net_arch == 'googlenet':
+        if args.arch == 'googlenet':
             aux1, aux2, output = model(input)
             loss1 = criterion(output, target)
             loss2 = criterion(aux1, target)
@@ -304,10 +306,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
         # compute gradient and do SGD step
         optimizer.zero_grad()
         loss.backward()
-        # for name, p in model.named_parameters():
-        #     if p.requires_grad:
-        #         if p.grad is None:
-        #             print("--------------------------------", name)
         optimizer.step()
 
         # measure elapsed time
@@ -318,7 +316,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, net_arch):
             progress.display(i)
 
 
-def test(test_loader, model, criterion, args, net_arch):
+def test(test_loader, model, criterion, args):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -343,7 +341,7 @@ def test(test_loader, model, criterion, args, net_arch):
                     input = input.cuda()
                     target = target.cuda()
 
-            if net_arch == 'googlenet':
+            if args.arch == 'googlenet':
                 aux1, aux2, output = model(input)
                 loss1 = criterion(output, target)
                 loss2 = criterion(aux1, target)
