@@ -25,3 +25,7 @@ sh train.sh configs/resnet.yaml resnet50 Platform 8
 # sh test.sh [ConfigFilePath] [JobName] [PartitionName] [GPUNum]
 sh test.sh configs/resnet.yaml resnet50 Platform 8
 ```
+
+### 4. Cards Num
+for googlenet: 8 cards recommended.
+for alexnet and vgg : 4 cards recommended.
