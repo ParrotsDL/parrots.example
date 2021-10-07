@@ -150,7 +150,11 @@ def main():
         criterion = criterion.cuda()
     logger.info("loss\n{}".format(criterion))
 
-    optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+    if cfgs.net.arch == 'googlenet':
+        optimizer = torch.optim.SGD([{'params': model.parameters(), 'initial_lr': 0.1}], **cfgs.trainer.optimizer.kwargs)
+    else:
+        optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
+
     logger.info("optimizer\n{}".format(optimizer))
 
     cudnn.benchmark = True
@@ -184,6 +188,8 @@ def main():
         if not os.path.exists(cfgs.saver.save_dir):
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
+
+    args.arch = cfgs.net.arch
 
     # test mode
     if args.test:
@@ -267,8 +273,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
 
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        if args.arch == 'googlenet':
+            aux1, aux2, output = model(input)
+            loss1 = criterion(output, target)
+            loss2 = criterion(aux1, target)
+            loss3 = criterion(aux2, target)
+            loss = loss1 + 0.3 * (loss2 + loss3)
+        else:
+            output = model(input)
+            loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
@@ -325,9 +338,15 @@ def test(test_loader, model, criterion, args):
                     input = input.cuda()
                     target = target.cuda()
 
-            # compute output
-            output = model(input)
-            loss = criterion(output, target)
+            if args.arch == 'googlenet':
+                aux1, aux2, output = model(input)
+                loss1 = criterion(output, target)
+                loss2 = criterion(aux1, target)
+                loss3 = criterion(aux2, target)
+                loss = loss1 + 0.3 * (loss2 + loss3)
+            else:
+                output = model(input)
+                loss = criterion(output, target)
 
             # measure accuracy and record loss
             acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
