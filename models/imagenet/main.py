@@ -38,7 +38,7 @@ parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
 parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'],
                     help='distributed backend')
-parser.add_argument('--device', type=str, default="mlu", choices=['mlu', 'gpu'],
+parser.add_argument('--device', type=str, default="gpu", choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 
