@@ -31,7 +31,7 @@ parser.add_argument('--config', default='configs/resnet50.yaml',
 parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--quantify', dest='quantify', action='store_true',
-                    help='quantify training')                   
+                    help='quantify training')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
@@ -88,7 +88,7 @@ def main():
     if args.device == "mlu":
         ct.set_device(args.local_rank)
     else:
-        torch.cuda.set_device(args.local_rank) 
+        torch.cuda.set_device(args.local_rank)
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -107,7 +107,7 @@ def main():
         if args.device == "mlu":
             torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
-    
+
     if args.seed != None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
@@ -119,20 +119,18 @@ def main():
     train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    if args.quantify:
-        from torch.utils import quantize
-        model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
-    if use_camb:
-        model = model.to_memory_format(torch.channels_last)
-    if args.device == "mlu" and args.quantify:
-        model = qt.adaptive_quantize(model, len(train_loader))
-    elif args.device == "gpu" and args.quantify:
-        from torch.utils import quantize
-        model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
-    if args.device == "mlu":
-        model = model.to(ct.mlu_device())
-    else:
+
+    if args.device == "gpu":
+        if args.quantify:
+            from torch.utils import quantize
+            model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
+        if use_camb:
+            model = model.to_memory_format(torch.channels_last)
         model.cuda()
+    elif args.device == "mlu":
+        if args.quantify:
+            model = qt.adaptive_quantize(model, len(train_loader))
+        model = model.to(ct.mlu_device())
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
