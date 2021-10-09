@@ -1,4 +1,4 @@
-eed: 99
+seed: 99
 net:
     arch: googlenet
     kwargs:
