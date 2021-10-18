@@ -32,17 +32,22 @@ parser.add_argument('--test', dest='test', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
-
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
+parser.add_argument('--use_amp', dest='use_amp', action='store_true',
+                    help='use amp for auto mixed percision')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
 
+args = parser.parse_args()
+
+if args.use_amp:
+    import torch.cuda.amp as amp
+    scaler = amp.GradScaler()
 
 def main():
-    args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
@@ -52,7 +57,7 @@ def main():
         args.local_rank = int(os.environ['SLURM_LOCALID'])
         node_list = str(os.environ['SLURM_NODELIST'])
         node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
         os.environ['MASTER_PORT'] = str(args.port)
     elif 'OMPI_COMM_WORLD_LOCAL_SIZE' in os.environ.keys():
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
@@ -222,11 +227,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         else:
             input = input.contiguous(torch.channels_last).cuda()
             target = target.int().cuda()
-              
 
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        if args.use_amp:
+            with amp.autocast():
+                output = model(input)
+                loss = criterion(output, target)
+        else: # not use amp
+            output = model(input)
+            loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
@@ -242,8 +251,13 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        if args.use_amp:
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss.backward()
+            optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)

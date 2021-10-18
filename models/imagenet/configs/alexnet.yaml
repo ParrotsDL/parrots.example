@@ -28,7 +28,7 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 1
+  max_epoch: 100
   test_freq: 1
   log_freq: 20
   optimizer:
