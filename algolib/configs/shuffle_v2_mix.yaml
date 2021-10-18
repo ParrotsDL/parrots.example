@@ -56,7 +56,7 @@ saver:
   # resume_model: 
   # load_pavi:   # load pretrain/resume model from pavi
   # save_pavi: False   # add snapshot to pavi
-  save_dir: checkpoints/shuffle_v2_mix   # save checkpoint locally
+  save_dir: algolib_gen/example/checkpoints/shuffle_v2_mix   # save checkpoint locally
   save_epoch_freq: 240
   save_latest: False
   save_best: True

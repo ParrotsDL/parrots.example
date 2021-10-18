@@ -58,7 +58,7 @@ saver:
  # resume_model: ckpt_latest.pth_d7ccb963-0f3d-4651-b233-9f2be8a75a3f
  # load_pavi: True   # load pretrain/resume model from pavi
  # save_pavi: True   # add snapshot to pavi
-  save_dir: checkpoints/mobile_v1   # save checkpoint locally
+  save_dir: algolib_gen/example/checkpoints/mobile_v1   # save checkpoint locally
   save_epoch_freq: 10
   save_latest: False
   save_best: False
