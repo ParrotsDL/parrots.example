@@ -1,6 +1,6 @@
 set -x
-# 1. build file folder for save log,format: algolib_log/frame
-mkdir -p algolib_log/example
+# 1. build file folder for save log,format: algolib_gen/frame
+mkdir -p algolib_gen/example
 now=$(date +"%Y%m%d_%H%M%S")
 
 # 2. set env 
@@ -36,12 +36,12 @@ if [[ $3 =~ "sync" ]]; then
         --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS} \
         python -u $pyroot/models/imagenet/main.py --config ${cfg} \
         ${EXTRA_ARGS} \
-        2>&1 | tee algolib_log/example/train_${MODEL_NAME}.log-$now
+        2>&1 | tee algolib_gen/example/train_${MODEL_NAME}.log-$now
 else
     OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
     srun --mpi=pmi2 -p $1 --job-name=example_${MODEL_NAME} \
         --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS}  \
         python -u $pyroot/models/imagenet/main.py --config ${cfg} \
         ${EXTRA_ARGS} \
-        2>&1 | tee algolib_log/example/train_${MODEL_NAME}.log-$now
+        2>&1 | tee algolib_gen/example/train_${MODEL_NAME}.log-$now
 fi

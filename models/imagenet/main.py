@@ -62,7 +62,7 @@ parser.add_argument('--pavi',
                     type=str,
                     help='pavi use and pavi project')
 
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
 
@@ -436,8 +436,9 @@ if __name__ == '__main__':
         init(os.path.join(
             os.path.abspath(__file__).rsplit('/', 1)[0],
             '../../algolib/runner/example.yaml'),
-             hook=True)
+                hook=True)
         del init
     except ImportError:
+        logger.info("pass because of Some Error")
         pass
     main()
