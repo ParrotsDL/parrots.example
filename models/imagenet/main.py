@@ -280,19 +280,18 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
                 input = input.cuda()
                 target = target.cuda()
 
-
         # compute output
         if args.use_amp:
             with amp.autocast():
                 if args.arch == 'googlenet':
-                aux1, aux2, output = model(input)
-                loss1 = criterion(output, target)
-                loss2 = criterion(aux1, target)
-                loss3 = criterion(aux2, target)
-                loss = loss1 + 0.3 * (loss2 + loss3)
-            else:
-                output = model(input)
-                loss = criterion(output, target)
+                    aux1, aux2, output = model(input)
+                    loss1 = criterion(output, target)
+                    loss2 = criterion(aux1, target)
+                    loss3 = criterion(aux2, target)
+                    loss = loss1 + 0.3 * (loss2 + loss3)
+                else:
+                    output = model(input)
+                    loss = criterion(output, target)
         else: # not use amp
             if args.arch == 'googlenet':
                 aux1, aux2, output = model(input)
