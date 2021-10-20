@@ -41,6 +41,8 @@ parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', '
 parser.add_argument('--device', type=str, default="gpu", choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
+parser.add_argument('--use_amp', dest='use_amp', action='store_true',
+                    help='use amp for auto mixed percision')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -56,9 +58,14 @@ if args.device == "mlu":
     ct.set_cnml_enabled(False)
 
 use_camb = False
+use_cude = False
 if torch.__version__ == "parrots":
     from parrots.base import use_camb
+    from parrots.base import use_cuda
 
+if args.use_amp:
+    import torch.cuda.amp as amp
+    scaler = amp.GradScaler()
 
 def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
@@ -70,7 +77,7 @@ def main():
         args.local_rank = int(os.environ['SLURM_LOCALID'])
         node_list = str(os.environ['SLURM_NODELIST'])
         node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
+        os.environ['MASTER_ADDR'] = '{}.{}.{}.{}'.format(node_parts[0], node_parts[1], node_parts[2], node_parts[3])
         os.environ['MASTER_PORT'] = str(args.port)
     elif args.launcher == "mpi":
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
@@ -84,7 +91,11 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    dist.init_process_group(backend="cncl")
+    if use_cuda:
+        dist.init_process_group(backend="nccl")
+    else:
+        dist.init_process_group(backend="cncl")
+
     if args.device == "mlu":
         ct.set_device(args.local_rank)
     else:
@@ -271,15 +282,27 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
 
         # compute output
-        if args.arch == 'googlenet':
-            aux1, aux2, output = model(input)
-            loss1 = criterion(output, target)
-            loss2 = criterion(aux1, target)
-            loss3 = criterion(aux2, target)
-            loss = loss1 + 0.3 * (loss2 + loss3)
-        else:
-            output = model(input)
-            loss = criterion(output, target)
+        if args.use_amp:
+            with amp.autocast():
+                if args.arch == 'googlenet':
+                aux1, aux2, output = model(input)
+                loss1 = criterion(output, target)
+                loss2 = criterion(aux1, target)
+                loss3 = criterion(aux2, target)
+                loss = loss1 + 0.3 * (loss2 + loss3)
+            else:
+                output = model(input)
+                loss = criterion(output, target)
+        else: # not use amp
+            if args.arch == 'googlenet':
+                aux1, aux2, output = model(input)
+                loss1 = criterion(output, target)
+                loss2 = criterion(aux1, target)
+                loss3 = criterion(aux2, target)
+                loss = loss1 + 0.3 * (loss2 + loss3)
+            else:
+                output = model(input)
+                loss = criterion(output, target)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
@@ -300,8 +323,13 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        if args.use_amp:
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss.backward()
+            optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
