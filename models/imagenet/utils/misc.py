@@ -25,10 +25,7 @@ def accuracy(output, target, topk=(1,), raw=False):
         maxk = max(topk)
 
         _, pred = output.topk(maxk, 1, True, True)
-        pred = pred.t()
-        tar = target.view(1, -1).expand_as(pred)
-        if pred.dtype != tar.dtype:
-            tar = tar.to(pred.dtype)
+        pred = pred.t().to(target.dtype)
         correct = pred.eq(tar)
 
 

@@ -36,13 +36,13 @@ def build_dataloader(cfg, world_size):
     test_aug = build_augmentation(cfg.test)
     image_dir = os.getenv("IMAGENET_DATASET_PATH")
     assert image_dir, "Please set IMAGENET_DATASET_PATH for training"
-    train_dataset = McDataset(image_dir + "train", image_dir + "meta/train.txt", train_aug)
+    train_dataset = McDataset(os.path.join(image_dir, "train"), os.path.join(image_dir, "meta/train.txt"), train_aug)
     train_sampler = DistributedSampler(train_dataset)
     train_loader = DataLoader(
         train_dataset, batch_size=cfg.batch_size, shuffle=(train_sampler is None),
         num_workers=cfg.workers, pin_memory=True, sampler=train_sampler)
 
-    test_dataset = McDataset(image_dir + "val", image_dir + "meta/val.txt", test_aug)
+    test_dataset = McDataset(os.path.join(image_dir, "val"), os.path.join(image_dir, "meta/val.txt"), test_aug)
     test_sampler = DistributedSampler(test_dataset)
     test_loader = DataLoader(
         test_dataset, batch_size=cfg.batch_size, shuffle=(test_sampler is None),
