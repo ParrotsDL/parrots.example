@@ -26,8 +26,7 @@ def accuracy(output, target, topk=(1,), raw=False):
 
         _, pred = output.topk(maxk, 1, True, True)
         pred = pred.t().to(target.dtype)
-        correct = pred.eq(tar)
-
+        correct = pred.eq(target.view(1, -1).expand_as(pred))
 
         res = []
         for k in topk:
