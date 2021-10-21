@@ -58,7 +58,7 @@ if args.device == "mlu":
     ct.set_cnml_enabled(False)
 
 use_camb = False
-use_cude = False
+use_cuda = False
 if torch.__version__ == "parrots":
     from parrots.base import use_camb
     from parrots.base import use_cuda
