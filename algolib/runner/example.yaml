@@ -5,10 +5,13 @@ global_configs:
     seed: 2
     pavi: None 
 
+env_version:
+    pat : pat0.14.0rc0
+    pyt : pt1.3v1_r0.1
+
 global_model_strategy:
   dummydataset: None
-  dummydataloader: Parrots 
-
+  dummydataloader: Parrots
 
 models:
   - dpn92_mix:
