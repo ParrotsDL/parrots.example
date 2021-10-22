@@ -44,10 +44,12 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--use_amp', dest='use_amp', action='store_true',
                     help='use amp for auto mixed percision')
 
+args = parser.parse_args()
+
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
-args = parser.parse_args()
+
 
 if args.device == "mlu":
     import torch_mlu
@@ -70,6 +72,18 @@ if args.use_amp:
 def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
+
+    rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
+    log_file = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + "_" + rq + ".log")
+    print(f"log_file: {log_file}")
+    fh = logging.FileHandler(log_file, mode='w')
+    fh.setLevel(logging.DEBUG)
+    # 定义 handler的输出格式
+    formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+    formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
+    fh.setFormatter(formatter)
+    # 将logger添加到handler里面
+    logger.addHandler(fh)
 
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
@@ -339,6 +353,14 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
 
 def test(test_loader, model, criterion, args):
+    logger = logging.getLogger()
+    logger_all = logging.getLogger('all')
+    if args.rank == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
+    logger_all.setLevel(logging.INFO)
+
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
