@@ -64,6 +64,8 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
+    backend = "cncl" if use_camb else "nccl"
+
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
@@ -84,7 +86,7 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    dist.init_process_group(backend="cncl")
+    dist.init_process_group(backend=backend)
     if args.device == "mlu":
         ct.set_device(args.local_rank)
     else:
