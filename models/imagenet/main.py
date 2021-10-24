@@ -60,22 +60,25 @@ if args.device == "mlu":
     ct.set_cnml_enabled(False)
 
 use_camb = False
-use_cuda = False
 if torch.__version__ == "parrots":
     from parrots.base import use_camb
-    from parrots.base import use_cuda
 
 if args.use_amp:
     import torch.cuda.amp as amp
     scaler = amp.GradScaler()
+    scaler.set_growth_interval(10000000)
+    scaler.set_growth_factor(1)
 
 def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
+    backend = "cncl" if use_camb else "nccl"
+
     rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
     log_file = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + "_" + rq + ".log")
     print(f"log_file: {log_file}")
+    logger.info("saveing log file at '{}'".format(log_file))
     fh = logging.FileHandler(log_file, mode='w')
     fh.setLevel(logging.DEBUG)
     # 定义 handler的输出格式
@@ -105,10 +108,7 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    if use_cuda:
-        dist.init_process_group(backend="nccl")
-    else:
-        dist.init_process_group(backend="cncl")
+    dist.init_process_group(backend=backend)
 
     if args.device == "mlu":
         ct.set_device(args.local_rank)
@@ -197,6 +197,8 @@ def main():
         args.start_epoch = checkpoint['epoch']
         best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
+        if args.use_amp and 'scaler' in checkpoint:
+            scaler.load_state_dict(checkpoint['scaler'])
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
@@ -245,6 +247,9 @@ def main():
                     'optimizer': optimizer.state_dict()
                 }
 
+                if args.use_amp:
+                    checkpoint['scaler'] = scaler.state_dict()
+
                 ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
                 best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
                 torch.save(checkpoint, ckpt_path)
@@ -264,9 +269,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
     memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
+    if args.use_amp:
+        progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5, scaler.get_scale(),
                              memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
-
+    else:
+        progress = ProgressMeter(len(train_loader), batch_time, data_time, losses, top1, top5,
+                             memory, prefix="Epoch: [{}/{}]".format(epoch + 1, args.max_epoch))
     # switch to train mode
     model.train()
     end = time.time()
