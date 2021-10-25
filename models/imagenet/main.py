@@ -260,7 +260,7 @@ def main():
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
 
-        if args.arch not in ["mobile_v2"]:
+        if args.arch not in ["mobile_v2", "inception_v3"]:
             lr_scheduler.step()
 
 
@@ -293,7 +293,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
-        if args.arch == "mobile_v2":
+        if args.arch in ["mobile_v2", "inception_v3"]:
             adjust_learning_rate_cos(optimizer, epoch, i, len(train_loader),
                                      args)
         if args.dummy_test:
