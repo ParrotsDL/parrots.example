@@ -27,7 +27,6 @@ from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 from utils.dist_utils import DistributedModel
 
-
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config', default='configs/resnet50.yaml',
                     type=str, help='path to config file')
@@ -45,6 +44,13 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 parser.add_argument('--local_rank', type=int, default=0, help='cude device id')
+parser.add_argument('--use_amp', dest='use_amp', action='store_true', default=False, help='use amp for auto mixed percision')
+
+args = parser.parse_args()
+
+if args.use_amp:
+    import torch.cuda.amp as amp
+    scaler = amp.GradScaler()
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -54,7 +60,6 @@ logger_all = logging.getLogger('all')
 def main():
     start_time = time.time()
     iter_time_list = []
-    args = parser.parse_args()
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
@@ -293,8 +298,14 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         input = input.cuda()
         target = target.int().cuda()
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        if args.use_amp:
+            with amp.autocast():
+                output = model(input)
+                loss = criterion(output, target)
+        else:
+            output = model(input)
+            loss = criterion(output, target)
+
         # measure accuracy and record loss
         acc1 = accuracy(output, target, topk=(1,))
         acc5 = acc1.clone()
@@ -309,11 +320,21 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        if args.dist:
-            model.average_gradients()
-        optimizer.step()
+        if args.use_amp:
+            optimizer.zero_grad()
+            # loss.backward()
+            scaler.scale(loss).backward()
+            if args.dist:
+                model.average_gradients()
+            scaler.step(optimizer)
+            scaler.update()
+            # optimizer.step()
+        else:
+            optimizer.zero_grad()
+            loss.backward()
+            if args.dist:
+                model.average_gradients()
+            optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)

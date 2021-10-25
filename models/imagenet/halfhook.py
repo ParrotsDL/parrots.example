@@ -10,6 +10,8 @@ from pape.half.half_model import HalfModel
 from termcolor import colored
 import math
 
+import torch.cuda.amp as amp
+
 code_yellow = lambda x: colored(x, 'yellow')
 code_red = lambda x: colored(x, 'red')
 code_green = lambda x: colored(x, 'green')
@@ -18,10 +20,11 @@ code_grey = lambda x: colored(x, 'grey')
 code_magenta = lambda x: colored(x, 'magenta')
 code_cyan = lambda x: colored(x, 'cyan')
 
-def get_data_numpy(data, reduction='sum'):
+def get_data_numpy(data, reduction='mean'):
         if isinstance(data, (torch.Tensor)):
             npdata = data.float().clone().detach().cpu().numpy()
             if reduction == 'mean':
+                # return np.mean(npdata), npdata.reshape(-1)[-5:]
                 return np.mean(npdata)
             elif reduction == 'sum':
                 return np.sum(npdata)
@@ -61,28 +64,25 @@ def compare(dict1, dict2):
     for name in dict1.keys():
         if not name in dict2.keys(): continue
         print(f"Layer {code_yellow(name)} {code_red(k2)} {code_green(dict1[name][k2]['op'])}")
-        print(f"input {code_magenta(dict1[name][k2]['input'])} vs {code_magenta(dict2[name][k2]['input'])}")
-        print(f"output {code_cyan(dict1[name][k2]['output'])} vs {code_cyan(dict2[name][k2]['output'])}")
+        print(f"input\n 0:{code_magenta(dict1[name][k2]['input'])}\n 1:{code_magenta(dict2[name][k2]['input'])}")
+        print(f"output\n 0:{code_cyan(dict1[name][k2]['output'])}\n 1:{code_cyan(dict2[name][k2]['output'])}")
         print()
-    # @TODO: 倒序输出
-    k2 = 'backward'
-    k_list = list(dict1.keys())
-    k_list.reverse()
-    for name in k_list:
-        if not name in dict2.keys(): continue
-        print(f"Layer {code_yellow(name)} {code_red(k2)} {code_green(dict1[name][k2]['op'])}")
-        print(f"input {code_magenta(dict1[name][k2]['input'])} vs {code_magenta(dict2[name][k2]['input'])}")
-        print(f"output {code_cyan(dict1[name][k2]['output'])} vs {code_cyan(dict2[name][k2]['output'])}")
-        print()
-
-HALF = True
-# HALF = False
+    # # @TODO: 倒序输出
+    # k2 = 'backward'
+    # k_list = list(dict1.keys())
+    # k_list.reverse()
+    # for name in k_list:
+    #     if not name in dict2.keys(): continue
+    #     print(f"Layer {code_yellow(name)} {code_red(k2)} {code_green(dict1[name][k2]['op'])}")
+    #     print(f"input\n 0:{code_magenta(dict1[name][k2]['input'])}\n 1:{code_magenta(dict2[name][k2]['input'])}")
+    #     print(f"output\n 0:{code_cyan(dict1[name][k2]['output'])}\n 1:{code_cyan(dict2[name][k2]['output'])}")
+    #     print()
 
 fp32_dict = {}
 fp16_dict = {}
 
 for i in range(1):
-    model = models.resnet50()
+    model = models.alexnet()
     model_half = copy.deepcopy(model)
     
     model = model.to_memory_format(torch.channels_last).cuda()
@@ -93,32 +93,30 @@ for i in range(1):
         mm.register_forward_hook(hook(name, mm, fp32_dict, tag='forward'))
         mm.register_backward_hook(hook(name, mm, fp32_dict, tag='backward'))
 
-    # for name, mm in model_half.named_modules():
-    #     mm.register_forward_hook(hook(name, mm, fp16_dict, tag='forward'))
-    #     mm.register_backward_hook(hook(name, mm, fp16_dict, tag='backward'))
-
+    for name, mm in model_half.named_modules():
+        mm.register_forward_hook(hook(name, mm, fp16_dict, tag='forward'))
+        mm.register_backward_hook(hook(name, mm, fp16_dict, tag='backward'))
 
     input = torch.randn(2, 3, 224, 224, requires_grad=True)
     input_half = input.clone().detach()
 
     input = input.contiguous(torch.channels_last).cuda()
-    input_half = input_half.contiguous(torch.channels_last).cuda()
-    
-    # model_half = model_half.half()
-    model_half = HalfModel(model_half)
-    input_half = input_half.half()
-
-
     out = model(input)
-    out_half = model_half(input_half)
 
-    
-    out.backward(torch.ones_like(out))
-    out_half.backward(torch.ones_like(out_half))
+    input_half = input_half.contiguous(torch.channels_last).cuda().half()
+    model_half = HalfModel(model_half)
+    torch.cuda.synchronize()
+    out_half = model_half(input_half)
+    torch.cuda.synchronize()
+
+    # out.backward(torch.ones_like(out))
+    # torch.cuda.synchronize()
+    # out_half.backward(torch.ones_like(out_half))
+    # torch.cuda.synchronize()
 
     compare(fp32_dict, fp16_dict)
 
-    print(out)
-    print(out_half)
+    # print(out)
+    # print(out_half)
     out_half = out_half.float()
-    print("diff", out - out_half)
+    print(code_red("InputResultDiff"), torch.mean(out - out_half))
