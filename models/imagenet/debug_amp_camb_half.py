@@ -28,8 +28,14 @@ args = parser.parse_args()
 args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
 cfgs = Dict(args.config)
 
-args.pth_path = "/share1/fengsibo/parrots.example/models/imagenet/checkpoints/resnet50_1019/resnet50_ckpt_epoch_11.pth"
+args.pth_path = "/mnt/lustre/fengsibo/benchmark/parrots.example/models/imagenet/checkpoints/resnet50_1019/resnet50_best.pth"
 cfgs.dataset.batch_size = 2
+
+if use_cuda:
+    cfgs.dataset.train.meta_file = "/mnt/lustre/share/images/meta/train.txt"
+    cfgs.dataset.train.image_dir = "/mnt/lustre/share/images/train"
+    cfgs.dataset.test.meta_file = "/mnt/lustre/share/images/meta/val.txt"
+    cfgs.dataset.test.image_dir = "/mnt/lustre/share/images/val"
 
 train_loader, test_loader = build_dataloader(cfgs.dataset, 1, "MemcachedReader")
 input, target  = next(iter(train_loader))
@@ -40,26 +46,44 @@ def load_checkpoint(model):
         model = torch.nn.DataParallel(model)
         model.load_state_dict(state_dict['state_dict'])
 
-scaler = amp.GradScaler()
+scaler = amp.GradScaler(2**17)
 
 if __name__== "__main__":
 
-    # model = models.alexnet()
+    SEED = 42
+    torch.manual_seed(SEED)
+    
     model = models.resnet50()
     load_checkpoint(model)
+    
+    state_dict = model.state_dict()
+    for m in state_dict:
+        print(m, state_dict[m].sum())
+    
     model = model.cuda()
-    input = torch.randn(2, 3, 224, 224, requires_grad=True)
+    input = torch.ones(2, 3, 224, 224, requires_grad=True)
     input = input.cuda()
-    criterion = nn.CrossEntropyLoss().cuda()
+    if use_cuda:
+        target = torch.ones_like(target)
+        target = target.cuda()
+    else:
+        target = torch.ones_like(target)
+        target = target.int().cuda()
+
+    criterion = nn.CrossEntropyLoss()
+    criterion = criterion.cuda()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=0.0001)
 
     if use_camb:
         input = input.contiguous(torch.channels_last)
         model = model.to_memory_format(torch.channels_last)
 
-    with amp.autocast():
+    with amp.autocast(enabled=True):
         output = model(input)
-        loss = criterion(output, target)
+
+    loss = criterion(output.float(), target)
+
+    print(f"output: {output}, output_sum: {torch.sum(output).item()}, target: {target}, target_sum: {torch.sum(target)}")
 
     optimizer.zero_grad()
     scaler.scale(loss).backward()
