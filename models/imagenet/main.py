@@ -432,7 +432,7 @@ def test(test_loader, model, criterion, args):
 if __name__ == '__main__':
     # parrots.algolib
     try:
-        from algolib.common import init
+        from submodules.common import init
         init(os.path.join(
             os.path.abspath(__file__).rsplit('/', 1)[0],
             '../../algolib/runner/example.yaml'),
