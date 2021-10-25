@@ -16,6 +16,12 @@ from modules import *
 from hyperparams import *
 from hyperparams import Hyperparams as hp
 
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
+else:
+    use_camb = False
+int_dtype = torch.int if use_camb else torch.long
+
 class AttModel(nn.Module):
     def __init__(self, hp_, enc_voc, dec_voc):
         '''Attention is all you nedd. https://arxiv.org/abs/1706.03762
@@ -80,13 +86,13 @@ class AttModel(nn.Module):
 
     def forward(self, x, y):
         # define decoder inputs
-        # self.decoder_inputs = torch.cat([Variable(torch.ones(y[:, :1].size()).cuda() * 2).long(), y[:, :-1]], dim=-1)  # 2:<S>
+        # self.decoder_inputs = torch.cat([Variable(torch.ones(y[:, :1].size()).cuda() * 2).int(), y[:, :-1]], dim=-1)  # 2:<S>
         input_tensor = torch.ones(y[:, :1].size())
         if (x.is_cuda):
             input_tensor = input_tensor.cuda()
         if (x.device.type == 'mlu'):
             input_tensor = input_tensor.to('mlu')
-        self.decoder_inputs = torch.cat([Variable(input_tensor * 2).long(), y[:, :-1]], dim=-1)  # 2:<S>
+        self.decoder_inputs = torch.cat([Variable(input_tensor * 2).to(dtype=int_dtype), y[:, :-1]], dim=-1)  # 2:<S>
 
 
 
@@ -97,8 +103,8 @@ class AttModel(nn.Module):
             self.enc += self.enc_positional_encoding(x)
         else:
             #self.enc += self.enc_positional_encoding(
-            #    Variable(torch.unsqueeze(torch.arange(0, x.size()[1]), 0).repeat(x.size(0), 1).long().cuda()))
-            enc_positional = torch.unsqueeze(torch.arange(0, x.size()[1]), 0).repeat(x.size(0), 1).long()
+            #    Variable(torch.unsqueeze(torch.arange(0, x.size()[1]), 0).repeat(x.size(0), 1).int().cuda()))
+            enc_positional = torch.unsqueeze(torch.arange(0, x.size()[1]), 0).contiguous().repeat(x.size(0), 1).to(dtype=int_dtype)
             if (x.is_cuda):
                 enc_positional = enc_positional.cuda()
             if (x.device.type == 'mlu'):
@@ -118,8 +124,8 @@ class AttModel(nn.Module):
             self.dec += self.dec_positional_encoding(self.decoder_inputs)
         else:
             #self.dec += self.dec_positional_encoding(
-            #    Variable(torch.unsqueeze(torch.arange(0, self.decoder_inputs.size()[1]), 0).repeat(self.decoder_inputs.size(0), 1).long().cuda()))
-            dec_positional = torch.unsqueeze(torch.arange(0, self.decoder_inputs.size()[1]), 0).repeat(self.decoder_inputs.size(0), 1).long()
+            #    Variable(torch.unsqueeze(torch.arange(0, self.decoder_inputs.size()[1]), 0).repeat(self.decoder_inputs.size(0), 1).int().cuda()))
+            dec_positional = torch.unsqueeze(torch.arange(0, self.decoder_inputs.size()[1]), 0).contiguous().repeat(self.decoder_inputs.size(0), 1).to(dtype=int_dtype)
             if (x.is_cuda):
                 dec_positional = dec_positional.cuda()
             if (x.device.type == 'mlu'):
