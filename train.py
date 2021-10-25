@@ -35,6 +35,12 @@ try:
 except ImportError:
     print("import torch_mlu failed!")
 
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
+else:
+    use_camb = False
+int_dtype = torch.int if use_camb else torch.long
+
 logging.basicConfig(level=logging.INFO,
             format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 logger = logging.getLogger("__name__")
@@ -188,17 +194,16 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
     end = time.time()
 
     cur_iters = (epoch - 1) * epoch_iters + 1
-
     for i, (data, target) in enumerate(train_loader):
         set_lr(optimizer, args, cur_iters)
-        if (i == args.iterations):
+        if (i == args.iterations) and rank == 0:
             logger.info('The program iteration runs out. iterations: %d' % args.iterations)
             break
 
         data_time.update(time.time() - end)
         if args.device == "gpu":
-            data = data.cuda()
-            target = target.cuda()
+            data = data.to(dtype=int_dtype).cuda()
+            target = target.to(dtype=int_dtype).cuda()
         if args.device == "mlu":
             data = data.to(ct.mlu_device(), non_blocking=True)
             target = target.to(ct.mlu_device(), non_blocking=True)
@@ -220,7 +225,7 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
 
         if rank <= 0:
            msglog(epoch_log, "{}, {}".format(loss.item(), acc.item()))
-        if i % args.print_freq == 0:
+        if i % args.print_freq == 0 and rank == 0:
             progress.display(i)
     if args.device == "mlu":
         cards = ct.device_count() if rank == 0 else 1
@@ -256,7 +261,7 @@ if __name__ == '__main__':
     parser.add_argument('--print-freq', default=10, type=int, help='print frequency of information.')
     parser.add_argument('--distributed', action='store_true', help='distributed training.')
     parser.add_argument('--save_ckpt', default=True, type=bool, help='save checkpoint.')
-    parser.add_argument('--device', default='mlu', type=str, help='set the type of hardware used for training.')
+    parser.add_argument('--device', default='gpu', type=str, help='set the type of hardware used for training.')
     parser.add_argument('--bitwidth', default=8, type=int, help="Set the initial quantization width of network training.")
     parser.add_argument('--iterations', default=-1, type=int, help="Number of training iterations.")
     parser.add_argument('--dataset-path', default='/mnt/lustre/share/nlp/corpora/', type=str, help='The path of imagenet dataset.')

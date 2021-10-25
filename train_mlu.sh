@@ -9,9 +9,9 @@ if [ -z $DATASET_PATH ]; then
     exit 1
 fi
 
-num_epochs=10
-iterations=10
-print_freq=1
+num_epochs=20
+iterations=-1
+print_freq=50
 dropout_rate=0.0
 
 run_cmd="python -u train.py \

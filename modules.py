@@ -15,6 +15,12 @@ import numpy as np
 from torch.nn.parameter import Parameter
 from hyperparams import *
 
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
+else:
+    use_camb = False
+int_dtype = torch.int if use_camb else torch.long
+
 class embedding(nn.Module):
 
     def __init__(self, vocab_size, num_units, zeros_pad=True, scale=True):
@@ -66,6 +72,7 @@ class layer_normalization(nn.Module):
         self.beta = nn.Parameter(torch.zeros(features))
 
     def forward(self, x):
+        x = x.contiguous()
         mean = x.mean(-1, keepdim=True)
         std = x.std(-1, keepdim=True)
         return self.gamma * (x - mean) / (std + self.epsilon) + self.beta
@@ -92,11 +99,11 @@ class positional_encoding(nn.Module):
 
         # First part of the PE function: sin and cos argument
         # position_ind = Variable(torch.unsqueeze(torch.arange(0, T), 0).repeat(N, 1).cuda().long())
-        position_ind = torch.unsqueeze(torch.arange(0, T), 0).repeat(N, 1)
+        position_ind = torch.unsqueeze(torch.arange(0, T, dtype=int_dtype), 0).contiguous().repeat(N, 1)
         if (inputs.is_cuda):
-            position_ind = Variable(position_ind.cuda().long())
+            position_ind = Variable(position_ind.cuda().to(dtype=int_dtype))
         if (inputs.device.type == 'mlu'):
-            position_ind = Variable(position_ind.to('mlu').long())
+            position_ind = Variable(position_ind.to('mlu').to(dtype=int_dtype))
 
 
         position_enc = torch.Tensor([
@@ -175,7 +182,7 @@ class multihead_attention(nn.Module):
         V_ = torch.cat(torch.chunk(V, self.num_heads, dim=2), dim=0)  # (h*N, T_q, C/h)
 
         # Multiplication
-        outputs = torch.bmm(Q_, K_.permute(0, 2, 1))  # (h*N, T_q, T_k)
+        outputs = torch.bmm(Q_, K_.permute(0, 2, 1).contiguous())  # (h*N, T_q, T_k)
 
         # Scale
         outputs = outputs / (K_.size()[-1] ** 0.5)
@@ -183,7 +190,7 @@ class multihead_attention(nn.Module):
         # Key Masking
         key_masks = torch.sign(torch.abs(torch.sum(keys, dim=-1)))  # (N, T_k)
         key_masks = key_masks.repeat(self.num_heads, 1)  # (h*N, T_k)
-        key_masks = torch.unsqueeze(key_masks, 1).repeat(1, queries.size()[1], 1)  # (h*N, T_q, T_k)
+        key_masks = torch.unsqueeze(key_masks, 1).contiguous().repeat(1, queries.size()[1], 1)  # (h*N, T_q, T_k)
 
         #padding = Variable(torch.ones(*outputs.size()).cuda() * (-2 ** 32 + 1))
         init_tensor = torch.ones(*outputs.size())
@@ -207,7 +214,7 @@ class multihead_attention(nn.Module):
 
             tril = torch.tril(diag_vals, diagonal=0)  # (T_q, T_k)
             # print(tril)
-            masks = Variable(torch.unsqueeze(tril, 0).repeat(outputs.size()[0], 1, 1))  # (h*N, T_q, T_k)
+            masks = Variable(torch.unsqueeze(tril, 0).contiguous().repeat(outputs.size()[0], 1, 1))  # (h*N, T_q, T_k)
 
             #padding = Variable(torch.ones(*masks.size()).cuda() * (-2 ** 32 + 1))
             mask = torch.ones(*masks.size())
@@ -227,7 +234,7 @@ class multihead_attention(nn.Module):
         # Query Masking
         query_masks = torch.sign(torch.abs(torch.sum(queries, dim=-1)))  # (N, T_q)
         query_masks = query_masks.repeat(self.num_heads, 1)  # (h*N, T_q)
-        query_masks = torch.unsqueeze(query_masks, 2).repeat(1, 1, keys.size()[1])  # (h*N, T_q, T_k)
+        query_masks = torch.unsqueeze(query_masks, 2).contiguous().repeat(1, 1, keys.size()[1]).contiguous()  # (h*N, T_q, T_k)
         outputs = outputs * query_masks
 
         # Dropouts
@@ -278,7 +285,7 @@ class feedforward(nn.Module):
 
     def forward(self, inputs):
         if self.conv:
-            inputs = inputs.permute(0, 2, 1)
+            inputs = inputs.permute(0, 2, 1).contiguous()
         outputs = self.conv1(inputs)
         outputs = self.conv2(outputs)
 
@@ -287,7 +294,7 @@ class feedforward(nn.Module):
 
         # Layer normalization
         if self.conv:
-            outputs = self.normalization(outputs.permute(0, 2, 1))
+            outputs = self.normalization(outputs.permute(0, 2, 1).contiguous())
         else:
             outputs = self.normalization(outputs)
 
