@@ -199,7 +199,23 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     # switch to train mode
     model.train()
     end = time.time()
+
+    datas = []
+    from debug_tool import tools
+    hook = tools.HookTool()#如果出现merge时候数据类型不匹配。可设置merge=False
+    # 默认是先对数据进行求和再导出,如果想导出完整数据可以 hook = tools.HookTool(reduction='all')
+    hook.register_hook(model) #导入工具，在标准环境dump数据，在调试环境中直接进行数据对比
+    if hook.compare: datas = torch.load( 'data/input_{}.pth'.format(torch.cuda.current_device()))
     for i, (input, target) in enumerate(train_loader):
+        if not hook.compare:
+            print("first_step")
+            datas.append((input, target))
+            if i >= 4:
+                #保存五轮数据后退出
+                torch.save(datas, 'data/input_{}.pth'.format(torch.cuda.current_device()))
+                import sys
+                sys.exit()
+        input, target = datas[i]  # 固定输入
         # measure data loading time
         data_time.update(time.time() - end)
 
