@@ -1,8 +1,8 @@
 CURRENT_DIR=$(dirname $(readlink -f $0))
 EXAMPLES_DIR=$(dirname $(dirname $(readlink -f $0)))
+IWSLT_CORPUS_PATH=/mnt/lustre/share_data/jiangyongjiu/datasets/
 
 CORPORA_PATH=${EXAMPLES_DIR}/corpora
-CKPT_MODEL_PATH=${EXAMPLES_DIR}/ckpt_model
 
 PYTHON_VERSION=`python -c 'import sys; version=sys.version_info[:3]; \
                                print("{0}.{1}.{2}".format(*version))'`
@@ -13,23 +13,16 @@ if [ -z ${IWSLT_CORPUS_PATH} ]; then
   echo "please set environment variable IWSLT_CORPUS_PATH."
   exit 1
 fi
-if [ -z ${TRANSFORMER_CKPT} ]; then
-  echo "please set environment variable TRANSFORMER_CKPT."
-  exit 1
-fi
 
 if [ ! -d ${CORPORA_PATH} ]; then
   ln -s ${IWSLT_CORPUS_PATH} ${CORPORA_PATH}
-fi
-if [ ! -d ${CKPT_MODEL_PATH} ]; then
-  ln -s ${TRANSFORMER_CKPT} ${CKPT_MODEL_PATH}
 fi
 
 # param
 device='MLU'
 iterations=10
 num_epochs=10
-resume="${CKPT_MODEL_PATH}/model_epoch_09.pth"
+resume="model_epoch_09.pth"
 ckpt_dir=${EXAMPLES_DIR}/ckpt_model
 log_dir=${EXAMPLES_DIR}/logs
 DISTRIBUTED_TYPE=false
@@ -169,6 +162,7 @@ fi
 # R2
 pushd $EXAMPLES_DIR
 echo $check_cmd
-eval "python $check_cmd"
-check_status
-popd
+time $check_cmd
+# eval "python $check_cmd"
+# check_status
+# popd

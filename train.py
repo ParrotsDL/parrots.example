@@ -40,9 +40,25 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger("__name__")
 
 def main(args):
-    if args.device == "CPU" and args.distributed:
-        print("The CPU device platform does not support distributed operation.")
-        return
+    use_camb = False
+
+    if args.launcher == 'slurm':
+        args.rank = int(os.environ['SLURM_PROCID'])
+        args.world_size = int(os.environ['SLURM_NTASKS'])
+        args.local_rank = int(os.environ['SLURM_LOCALID'])
+        node_list = str(os.environ['SLURM_NODELIST'])
+        node_parts = re.findall('[0-9]+', node_list)
+        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
+        os.environ['MASTER_PORT'] = str(args.port)
+    elif args.launcher == "mpi":
+        args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
+        args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
+        args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
+    else:
+        args.rank = 0
+        args.world_size = 1
+        args.local_rank = 0
+    args.dist = args.world_size > 1
 
     if not os.path.exists(args.ckp_path):
         os.makedirs(args.ckp_path)
@@ -52,42 +68,16 @@ def main(args):
     if args.seed is not None:
         set_seed(args.seed)
 
-    if args.device == "MLU":
-        ndev_per_node = ct.device_count()
-    if args.device == "GPU":
-        ndev_per_node = torch.cuda.device_count()
-    args.world_size = ndev_per_node * args.world_size
     import time
     start = time.time()
-    if args.distributed:
-        if (sys.version_info[0] < 3):
-            if not os.getenv('WORLD_SIZE') or not os.getenv('LOCAL_RANK'):
-                print("WORLD_SIZE or LOCAL_RANK is empty!")
-                sys.exit(1)
-            main_worker(os.getenv('LOCAL_RANK'), os.getenv('WORLD_SIZE'), args)
-        else:
-            if not os.getenv('MASTER_ADDR'):
-                os.environ['MASTER_ADDR'] = args.master_addr
-            if not os.getenv('MASTER_PORT'):
-                os.environ['MASTER_PORT'] = args.master_port
-            mp.spawn(main_worker, nprocs=ndev_per_node, args=(ndev_per_node, args, ), join=True)
-    else:
-        main_worker(-1, ndev_per_node, args)
-    end = time.time()
-    print("Using Time: " + str(end-start))
-
-
-def main_worker(rank, ndev_per_node, args):
-    rank = (int)(rank)
-    ndev_per_node = (int)(ndev_per_node)
-    if args.device == "MLU":
-        ct.set_device(0 if rank == -1 else rank)
+    if args.device == "mlu":
+        ct.set_device(0 if args.rank == -1 else args.rank)
         ct.set_cnml_enabled(False)
-    if args.device == "GPU":
-        torch.cuda.set_device(0 if rank == -1 else rank)
+    if args.device == "gpu":
+        torch.cuda.set_device(0 if args.rank == -1 else args.rank)
     # distributed training env setting up
-    if args.distributed:
-        dist.init_process_group(backend='cncl' if args.device == "MLU" else 'nccl', rank=rank, world_size=ndev_per_node)
+    if args.dist:
+        dist.init_process_group(backend='cncl' if args.device == "mlu" else 'nccl', rank=args.rank, world_size=args.world_size)
 
     startepoch = 1
     if args.resume:
@@ -98,11 +88,8 @@ def main_worker(rank, ndev_per_node, args):
     source_train = args.dataset_path + hp.source_train
     target_train = args.dataset_path + hp.target_train
     train_dataset =  TrainDataSet(source_train, target_train)
-    if args.distributed:
-        train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas = ndev_per_node, rank = rank)
-        args.batch_size = args.batch_size // ndev_per_node
-    else:
-        train_sampler = None
+    train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas = args.world_size, rank = args.rank)
+    # args.batch_size = args.batch_size // args.world_size
 
     train_loader = torch.utils.data.DataLoader(train_dataset,
         batch_size= args.batch_size,
@@ -119,58 +106,58 @@ def main_worker(rank, ndev_per_node, args):
     model = AttModel(hp, enc_voc, dec_voc)
 
     # adaptive_quantize
-    if args.device == "MLU" and not getattr(args, 'max_bitwidth', False):
+    if args.device == "mlu" and not getattr(args, 'max_bitwidth', False):
         model = qt.adaptive_quantize(model, len(train_loader), bitwidth=args.bitwidth)
-    if args.device == "MLU":
+    if args.device == "mlu":
         model.to(ct.mlu_device())
-    if args.device == "GPU":
+    if args.device == "gpu":
         model.cuda()
 
     # load state_dict
     if args.resume:
         model.load_state_dict(state['model'], strict=False)
 
-    if args.distributed:
-        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[0 if rank == -1 else rank])
+    if args.dist:
+        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[0 if args.rank == -1 else args.rank])
 
     optimizer = optim.Adam(model.parameters(), lr=hp.lr, betas=[0.9, 0.98], eps=1e-8)
     if args.resume:
         optimizer.load_state_dict(state['optim'])
 
-        if args.device == "MLU":
+        if args.device == "mlu":
             ct.to(optimizer, torch.device('mlu'))
 
-    if args.device == "GPU":
+    if args.device == "gpu":
         cudnn.benckmark = True
 
     if args.seed is not None:
         set_seed(args.seed)
 
     for epoch in range(startepoch, args.num_epochs + 1):
-        if args.distributed:
+        if args.dist:
             train_sampler.set_epoch(epoch)
         epoch_log = os.path.join(args.log_path, "epoch{:02d}_rank{:02d}.txt".format(epoch, -1))
 
         epoch_iters = len(train_loader)
 
-        train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_iters)
+        train(train_loader, model, optimizer, epoch, args, epoch_log, args.rank, epoch_iters)
 
         # save model
         if not args.save_ckpt:
             break
-        if not args.distributed or ( args.distributed and rank % ndev_per_node == 0 ):
+        if not args.dist or ( args.dist and args.rank == 0 ):
             checkpoint_path = os.path.join(args.ckp_path, "model_epoch_{:02d}.pth".format(epoch))
             state = {}
             state['epoch'] = epoch
-            if args.distributed:
+            if args.dist:
                 state['model'] = model.module.state_dict()
             else:
                 state['model'] = model.state_dict()
             state['optim'] = optimizer.state_dict()
             torch.save(state, checkpoint_path)
 
-    if args.distributed:
-        dist.destroy_process_group()
+    end = time.time()
+    print("Using Time: " + str(end-start))
 
 def set_lr(optimizer, args, cur_iters):
     if cur_iters <= args.warmup_iters:
@@ -196,7 +183,7 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
 
     model.train()
 
-    if args.device == "GPU":
+    if args.device == "gpu":
         torch.cuda.synchronize()
     end = time.time()
 
@@ -209,10 +196,10 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
             break
 
         data_time.update(time.time() - end)
-        if args.device == "GPU":
+        if args.device == "gpu":
             data = data.cuda()
             target = target.cuda()
-        if args.device == "MLU":
+        if args.device == "mlu":
             data = data.to(ct.mlu_device(), non_blocking=True)
             target = target.to(ct.mlu_device(), non_blocking=True)
 
@@ -224,7 +211,7 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
         loss.backward()
         optimizer.step()
 
-        if args.device == "GPU":
+        if args.device == "gpu":
             torch.cuda.synchronize()
         if i >= adaptive_cnt and adaptive_cnt > 0:
             batch_time_benchmark.append(time.time() - end)
@@ -235,15 +222,15 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
            msglog(epoch_log, "{}, {}".format(loss.item(), acc.item()))
         if i % args.print_freq == 0:
             progress.display(i)
-    if args.device == "MLU":
+    if args.device == "mlu":
         cards = ct.device_count() if rank == 0 else 1
-    if args.device == "GPU":
+    if args.device == "gpu":
         cards = torch.cuda.device_count() if rank == 0 else 1
     if ((args.distributed == False) or (rank == 0)) and os.getenv('AVG_LOG'):
         with open(os.getenv('AVG_LOG'), 'a') as train_avg:
             train_avg.write('net:transformer, iter:{}, cards:{}, avg_loss:{}, avg_time:{}, '.format(args.iterations,
                             cards, losses.avg, batch_time.avg))
-    if ((args.distributed == False) or (rank == 0)) and os.getenv('BENCHMARK_LOG') and args.device == "MLU":
+    if ((args.distributed == False) or (rank == 0)) and os.getenv('BENCHMARK_LOG') and args.device == "mlu":
         with open(os.getenv('BENCHMARK_LOG'), 'a') as train_avg:
             line = 'network:transformer, Batch Size:{}, device count:{}, Precision:{}, DPF mode:{}, \
                 time_avg:{:.3f}s, time_var:{:.6f}, throughput(fps):{:.1f}'
@@ -269,10 +256,10 @@ if __name__ == '__main__':
     parser.add_argument('--print-freq', default=10, type=int, help='print frequency of information.')
     parser.add_argument('--distributed', action='store_true', help='distributed training.')
     parser.add_argument('--save_ckpt', default=True, type=bool, help='save checkpoint.')
-    parser.add_argument('--device', default='MLU', type=str, help='set the type of hardware used for training.')
+    parser.add_argument('--device', default='mlu', type=str, help='set the type of hardware used for training.')
     parser.add_argument('--bitwidth', default=8, type=int, help="Set the initial quantization width of network training.")
     parser.add_argument('--iterations', default=-1, type=int, help="Number of training iterations.")
-    parser.add_argument('--dataset-path', default='corpora/', type=str, help='The path of imagenet dataset.')
+    parser.add_argument('--dataset-path', default='/mnt/lustre/share/nlp/corpora/', type=str, help='The path of imagenet dataset.')
     parser.add_argument('--num_epochs', default=20, type=int, help='Number of training num_epochs.')
     parser.add_argument('--dropout_rate', default=0.1, type=float, help='dropout rate.')
     parser.add_argument('--master-addr', default='127.0.0.1', type=str, help='ddp address.')
@@ -280,6 +267,8 @@ if __name__ == '__main__':
     parser.add_argument('--max_bitwidth', action='store_true', help='use Max Bitwidth of MLU training')
     parser.add_argument('--warmup-iters', default=300, type=float, help='warm up iterations')
     parser.add_argument('--lr', "--learning-rate", default=0.0005, type=float, help="learning rate for training")
+    parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'], help='distributed backend')
+    parser.add_argument('--port', default=12345, type=int, metavar='P', help='master port')
     args = parser.parse_args()
     main(args)
 
