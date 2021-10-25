@@ -5,12 +5,12 @@ now=$(date +"%Y%m%d_%H%M%S")
 
 # 2. set env 
 path=$PWD
-if [[ "$path" =~ "algolib/example" ]]
+if [[ "$path" =~ "submodules/example" ]]
 then 
     pyroot=$path
     comroot=$path/../..
 else
-    pyroot=$path/algolib/example
+    pyroot=$path/submodules/example
     comroot=$path
 fi
 echo $pyroot
