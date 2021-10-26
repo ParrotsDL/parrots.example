@@ -245,7 +245,7 @@ def main():
           
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
-            if args.rank == 0:        
+            if args.rank == 0:
                 checkpoint = {
                     'epoch': epoch + 1,
                     'arch': cfgs.net.arch,
