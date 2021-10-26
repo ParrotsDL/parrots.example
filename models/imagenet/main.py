@@ -43,6 +43,7 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 parser.add_argument('--resume', default=None, type=str, help='Breakpoint entrance')
+parser.add_argument('--autoresume', dest='autoresume', action='store_true', default=False, help='Auto resume')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -148,6 +149,25 @@ def main():
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
         logger.info("pretrain training from '{}'".format(cfgs.saver.pretrain_model))
+    elif args.autoresume: 
+        checkpoint_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_latest.pth')
+        if os.path.isfile(checkpoint_path):
+            logger.info("exist resume from '{}'".format(
+                checkpoint_path))
+            checkpoint = torch.load(checkpoint_path)
+            if checkpoint['epoch'] < args.max_epoch:
+                check_keys(model=model, checkpoint=checkpoint)
+                model.load_state_dict(checkpoint['state_dict'])
+                args.start_epoch = checkpoint['epoch']
+                best_acc1 = checkpoint['best_acc1']
+                optimizer.load_state_dict(checkpoint['optimizer'])
+                args.taskid = checkpoint['taskid']
+                logger.info("resume training from '{}' at epoch {}".format(
+                    checkpoint_path, checkpoint['epoch']))
+            else:
+                logger.info("Restart training")
+        else:
+            logger.info("Not found resume model")
 
     if args.rank == 0 and cfgs.saver.get('save_dir', None):
         if not os.path.exists(cfgs.saver.save_dir):
@@ -220,7 +240,12 @@ def main():
                     monitor_writer.add_scalar('Accuracy_Test_top1', acc1, len(train_loader)*epoch)
                     monitor_writer.add_scalar('Accuracy_Test_top5', acc5, len(train_loader)*epoch)
                     monitor_writer.add_scalar('Test_loss', loss, len(train_loader)*epoch)
+        
+        if (epoch + 1) % cfgs.saver.save_epoch_freq == 0 or epoch + 1 == args.max_epoch:
+          
+            loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
+            if args.rank == 0:
                 checkpoint = {
                     'epoch': epoch + 1,
                     'arch': cfgs.net.arch,
@@ -230,7 +255,7 @@ def main():
                     'taskid': args.taskid
                 }
 
-                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
+                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_latest.pth')
                 best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
                 torch.save(checkpoint, ckpt_path)
                 if acc1 > best_acc1:
