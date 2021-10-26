@@ -4,6 +4,10 @@ from torch.nn import init
 
 __all__ = ["shuffle_v2"]
 
+use_camb = False
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
+
 
 def conv3x3(in_channels,
             out_channels,
@@ -38,6 +42,8 @@ def channel_shuffle(x, groups):
     x = x.view(batchsize, groups, channels_per_group, height, width)
     x = torch.transpose(x, 1, 2).contiguous()
     x = x.view(batchsize, -1, height, width)
+    if use_camb:
+        x = x.contiguous(torch.channels_last)
     return x
 
 
