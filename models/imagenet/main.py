@@ -292,9 +292,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         if args.device == "mlu":
             input_ = input_.to(ct.mlu_device())
             target_ = target_.to(ct.mlu_device())
-        else:
+        elif use_camb:
             input_ = input_.contiguous(torch.channels_last).cuda()
             target_ = target_.int().cuda()
+        else:
+            input_ = input_.cuda()
+            target_ = target_.cuda()
 
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
