@@ -289,6 +289,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     if args.dummy_test:
         input_, target_ = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
+        if args.device == "mlu":
+            input_ = input_.to(ct.mlu_device())
+            target_ = target_.to(ct.mlu_device())
+        else:
+            input_ = input_.contiguous(torch.channels_last).cuda()
+            target_ = target_.int().cuda()
 
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
@@ -300,17 +306,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             input = input_.detach()
             input.requires_grad = True
             target = target_
-
-        if args.device == "mlu":
+        elif args.device == "mlu":
             input = input.to(ct.mlu_device())
             target = target.to(ct.mlu_device())
+        elif use_camb:
+            input = input.contiguous(torch.channels_last).cuda()
+            target = target.int().cuda()
         else:
-            if use_camb:
-                input = input.contiguous(torch.channels_last).cuda()
-                target = target.int().cuda()
-            else:
-                input = input.cuda()
-                target = target.cuda()
+            input = input.cuda()
+            target = target.cuda()
 
         # compute output
         if args.arch == 'googlenet':
