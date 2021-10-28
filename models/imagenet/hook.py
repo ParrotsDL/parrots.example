@@ -117,22 +117,24 @@ class hookCompare():
 
     def _display(self, data):
         if data is None:
-            return -1, -1, -1, -1, [-1], [-1]
-        return np.abs(np.sum(data)), np.abs(np.mean(data)), np.max(data), np.min(data), data.shape, data.reshape(-1)[0:self.display_num]
+            return -1, -1, -1, -1, [-1], [-1], False
+        overflow = np.abs(np.max(data)) >= 65504.0
+        return np.abs(np.sum(data)), np.abs(np.mean(data)), np.abs(np.max(data)), np.abs(np.min(data)), data.shape, data.reshape(-1)[0:self.display_num], overflow
 
     def _hook_diff(self, a, b):
-        sum0, mean0, shape0, max0, min0, patch0 = self._display(a)
-        sum1, mean1, shape1, max1, min1, patch1 = self._display(b)
+        sum0, mean0, shape0, max0, min0, patch0, overflow0 = self._display(a)
+        sum1, mean1, shape1, max1, min1, patch1, overflow1 = self._display(b)
 
         try:
             import prettytable as pt
             tb = pt.PrettyTable()
-            tb.field_names = ['', 'compared', 'parrots', 'diff']
+            tb.field_names = ['', 'camb_pytorch', 'parrots', 'diff']
             tb.add_row(['sum:', sum0, sum1, sum0 - sum1])
             tb.add_row(['mean:', mean0, mean1, mean0 - mean1])
             tb.add_row(['max:', max0, max1, '-'])
             tb.add_row(['min:', min0, min1, '-'])
             tb.add_row(['shape:', shape0, shape1, '-'])
+            tb.add_row(['overflow:', overflow0, overflow1, '-'])
             print(tb)
             print(f"patch0: {patch0}")
             print(f"patch1: {patch1}")

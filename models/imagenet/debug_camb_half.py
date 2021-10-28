@@ -104,10 +104,10 @@ if __name__== "__main__":
     output = model(input)
     output = output.float()
 
-    scale = 65504 * 10000
+    scale = 2**32
     # scale = 1.0
 
-    loss = criterion(output, target)
+    loss = criterion(output, target) * scale
     # loss = torch.ones_like(output) * scale
     optimizer.zero_grad()
     loss.backward()
