@@ -43,13 +43,14 @@ parser.add_argument('--device', type=str, default="gpu", choices=['mlu', 'gpu'],
 parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--use_amp', dest='use_amp', action='store_true',
                     help='use amp for auto mixed percision')
+parser.add_argument('--log', dest='log', action='store_true',
+                    help='use amp for auto mixed percision')
 
 args = parser.parse_args()
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
-
 
 if args.device == "mlu":
     import torch_mlu
@@ -66,8 +67,8 @@ if torch.__version__ == "parrots":
 if args.use_amp:
     import torch.cuda.amp as amp
     scaler = amp.GradScaler()
-    scaler.set_growth_interval(10000000)
-    scaler.set_growth_factor(1)
+    # scaler.set_growth_interval(1)
+    # scaler.set_growth_factor(2)
 
 def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
@@ -75,18 +76,19 @@ def main():
 
     backend = "cncl" if use_camb else "nccl"
 
-    rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
-    log_file = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + "_" + rq + ".log")
-    print(f"log_file: {log_file}")
-    logger.info("saveing log file at '{}'".format(log_file))
-    fh = logging.FileHandler(log_file, mode='w')
-    fh.setLevel(logging.DEBUG)
-    # 定义 handler的输出格式
-    formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
-    formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
-    fh.setFormatter(formatter)
-    # 将logger添加到handler里面
-    logger.addHandler(fh)
+    if args.log:
+        rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
+        log_file = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + "_" + rq + ".log")
+        print(f"log_file: {log_file}")
+        logger.info("saveing log file at '{}'".format(log_file))
+        fh = logging.FileHandler(log_file, mode='w')
+        fh.setLevel(logging.DEBUG)
+        # define handler output format
+        formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+        formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
+        fh.setFormatter(formatter)
+        # add logger to handler
+        logger.addHandler(fh)
 
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
@@ -228,7 +230,7 @@ def main():
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        train_sampler.set_epoch(epoch)
+        # train_sampler.set_epoch(epoch)
 
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args)
@@ -281,8 +283,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
+        input_ = input_.contiguous(torch.channels_last).cuda()
+        target_ = target_.int().cuda()
 
     for i, (input, target) in enumerate(train_loader):
+        # if args.use_amp:
+        #     print(f"scaler state dict: {scaler.state_dict()}")
+
+        if i == 20:
+            import sys
+            sys.exit(1)
+        
         # measure data loading time
         data_time.update(time.time() - end)
 
@@ -290,17 +301,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             input = input_.detach()
             input.requires_grad = True
             target = target_
-
-        if args.device == "mlu":
-            input = input.to(ct.mlu_device())
-            target = target.to(ct.mlu_device())
         else:
-            if use_camb:
-                input = input.contiguous(torch.channels_last).cuda()
-                target = target.int().cuda()
+            if args.device == "mlu":
+                input = input.to(ct.mlu_device())
+                target = target.to(ct.mlu_device())
             else:
-                input = input.cuda()
-                target = target.cuda()
+                if use_camb:
+                    input = input.contiguous(torch.channels_last).cuda()
+                    target = target.int().cuda()
+                else:
+                    input = input.cuda()
+                    target = target.cuda()
 
         # compute output
         if args.use_amp:
