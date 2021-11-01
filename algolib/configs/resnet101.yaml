@@ -6,9 +6,9 @@ net:
  
 dataset:
   train:
-    meta_file: /mnt/lustre/share/images/meta/train.txt
+    meta_file: /mnt/lustre/share_data/parrots_algolib/datasets/Imagenet/meta/train.txt
     ceph_meta_file: s3://parrots_model_data/imagenet/images/meta/train.txt
-    image_dir: /mnt/lustre/share/images/train
+    image_dir: /mnt/lustre/share_data/parrots_algolib/datasets/Imagenet/train
     ceph_image_dir: s3://parrots_model_data/imagenet/images/train/
     reader: pillow
     random_resize_crop: 224
@@ -17,9 +17,9 @@ dataset:
     std: [0.229, 0.224, 0.225]
     mirror: True
   test:
-    meta_file: /mnt/lustre/share/images/meta/val.txt
+    meta_file: /mnt/lustre/share_data/parrots_algolib/datasets/Imagenet/meta/val.txt
     ceph_meta_file: s3://parrots_model_data/imagenet/images/meta/val.txt
-    image_dir: /mnt/lustre/share/images/val
+    image_dir: /mnt/lustre/share_data/parrots_algolib/datasets/Imagenet/val
     ceph_image_dir: s3://parrots_model_data/imagenet/images/val/
     reader: pillow
     resize: 256
