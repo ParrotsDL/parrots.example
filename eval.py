@@ -52,11 +52,11 @@ def eval(args):
         pin_memory=False)
 
     # adaptive_quantize
-    if args.device == "MLU" and not getattr(args, 'max_bitwidth', False):
+    if args.device == "mlu" and not getattr(args, 'max_bitwidth', False):
         model = qt.adaptive_quantize(model, len(test_loader), bitwidth=args.bitwidth)
-    if args.device == "MLU":
+    if args.device == "mlu":
         model.to(ct.mlu_device())
-    elif args.device == "GPU":
+    elif args.device == "gpu":
         model.cuda()
 
     state = torch.load(args.pretrained, map_location='cpu')
@@ -71,16 +71,16 @@ def eval(args):
             if (i == args.iterations):
                 break
             # Autoregressive inference
-            if args.device == "GPU":
-                x_ = x.long().cuda()
-                preds_t = torch.LongTensor(np.zeros((x.size()[0], hp.maxlen), np.int32)).cuda()
+            if args.device == "gpu":
+                x_ = x.int().cuda()
+                preds_t = torch.IntTensor(np.zeros((x.size()[0], hp.maxlen), np.int32)).cuda()
                 preds = Variable(preds_t).cuda()
-            elif args.device == "MLU":
+            elif args.device == "mlu":
                 x_ = x.long().to('mlu')
                 preds_t = torch.LongTensor(np.zeros((x.size()[0], hp.maxlen), np.int32)).to('mlu')
                 preds = Variable(preds_t.to('mlu'))
             else:
-                x_ = x.long()
+                x_ = x.int()
                 preds_t = torch.LongTensor(np.zeros((x.size()[0], hp.maxlen), np.int32))
                 preds = Variable(preds_t)
 
@@ -88,7 +88,7 @@ def eval(args):
                 _, _preds, _ = model(x_, preds)
                 #TODO: slice is not support now, use advanced index instead.
                 preds_t[:, [j]] = _preds.data[:, [j]]
-                preds = Variable(preds_t.long())
+                preds = Variable(preds_t.int())
             preds = preds.data.cpu().numpy()
 
             # Write to file
@@ -118,19 +118,19 @@ def eval(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Transformer evaluation.")
-    parser.add_argument('--device', default='MLU', type=str, help='set the type of hardware used for evaluation.')
+    parser.add_argument('--device', default='gpu', type=str, help='set the type of hardware used for evaluation.')
     parser.add_argument('--seed', default=0, type=int, help='random seed')
     parser.add_argument('--pretrained', default='model_epoch_20.pth', type=str, help='training ckps path')
     parser.add_argument('--batch-size', default=32, type=int, help='evaluation batch size.')
     parser.add_argument('--workers', default=4, type=int, help='number of workers.')
-    parser.add_argument('--log-path', default='output.txt', type=str, help='evaluation file path.')
+    parser.add_argument('--log_path', default='eval.txt', type=str, help='evaluation file path.')
     parser.add_argument('--dataset-path', default='corpora/', type=str, help='The path of imagenet dataset.')
     parser.add_argument('--iterations', default=-1, type=int, help="Number of training iterations.")
     parser.add_argument('--max_bitwidth', action='store_true', help='use Max Bitwidth of MLU training')
     parser.add_argument('--bitwidth', default=8, type=int, help="Set the initial quantization width of network training.")
     args = parser.parse_args()
 
-    if args.device == "MLU":
+    if args.device == "mlu":
         import torch_mlu
         import torch_mlu.core.mlu_model as ct
         import torch_mlu.core.mlu_quantize as qt

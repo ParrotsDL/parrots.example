@@ -22,6 +22,8 @@ import torch.optim as optim
 import torch.multiprocessing as mp
 import torch.utils.data
 import torch.utils.data.distributed
+from torch.utils.data.distributed import DistributedSampler
+
 
 from AttModel import AttModel
 from data_load import TrainDataSet, load_de_vocab, load_en_vocab
@@ -94,7 +96,7 @@ def main(args):
     source_train = args.dataset_path + hp.source_train
     target_train = args.dataset_path + hp.target_train
     train_dataset =  TrainDataSet(source_train, target_train)
-    train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas = args.world_size, rank = args.rank)
+    train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)#, num_replicas = args.world_size, rank = args.rank)
     # args.batch_size = args.batch_size // args.world_size
 
     train_loader = torch.utils.data.DataLoader(train_dataset,
