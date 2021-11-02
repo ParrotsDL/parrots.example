@@ -34,6 +34,10 @@ parser.add_argument('--dummy_test',
                     dest='dummy_test',
                     action='store_true',
                     help='dummy data for speed evaluation')
+parser.add_argument('--data_test',
+                    dest='data_test',
+                    action='store_true',
+                    help='only reading data for speed evaluation')
 parser.add_argument('--taskid', default='None', type=str, help='pavi taskid')
 parser.add_argument('--port',
                     default=12345,
@@ -214,53 +218,54 @@ def main():
         train(train_loader, model, criterion, optimizer, epoch, args,
               monitor_writer)
 
-        if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
-            # evaluate on validation set
+        if args.data_test is False:
+            if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
+                # evaluate on validation sets
 
-            loss, acc1, acc5 = test(test_loader, model, criterion, args)
+                loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
-            if args.rank == 0:
-                if monitor_writer:
-                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1,
-                                              len(train_loader) * epoch)
-                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5,
-                                              len(train_loader) * epoch)
-                    monitor_writer.add_scalar('Test_loss', loss,
-                                              len(train_loader) * epoch)
+                if args.rank == 0:
+                    if monitor_writer:
+                        monitor_writer.add_scalar('Accuracy_Test_top1', acc1,
+                                                len(train_loader) * epoch)
+                        monitor_writer.add_scalar('Accuracy_Test_top5', acc5,
+                                                len(train_loader) * epoch)
+                        monitor_writer.add_scalar('Test_loss', loss,
+                                                len(train_loader) * epoch)
 
-            if args.rank == 0:
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
-                    'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict(),
-                    'taskid': args.taskid
-                }
+                if args.rank == 0:
+                    checkpoint = {
+                        'epoch': epoch + 1,
+                        'arch': cfgs.net.arch,
+                        'state_dict': model.state_dict(),
+                        'best_acc1': best_acc1,
+                        'optimizer': optimizer.state_dict(),
+                        'taskid': args.taskid
+                    }
 
-                ckpt_path = os.path.join(
-                    save_dir,
-                    cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(save_dir,
-                                              cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
-        else:
-            loss, acc1, acc5 = (None, ) * 3
+                    ckpt_path = os.path.join(
+                        save_dir,
+                        cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
+                    best_ckpt_path = os.path.join(save_dir,
+                                                cfgs.net.arch + '_best.pth')
+                    torch.save(checkpoint, ckpt_path)
+                    if acc1 > best_acc1:
+                        best_acc1 = acc1
+                        shutil.copyfile(ckpt_path, best_ckpt_path)
+            else:
+                loss, acc1, acc5 = (None, ) * 3
 
-        [hook.after_epoch(current_epoch=epoch,
-                          pavi_args=dict(
-                              iteration=len(train_loader) * epoch,
-                              enable=((epoch + 1) % args.test_freq == 0 or
-                                      epoch + 1 == args.max_epoch),
-                              values=dict(Accuracy_Test_top1=acc1,
-                                          Accuracy_Test_top5=acc5,
-                                          Test_loss=loss)))
-         for hook in getattr(torch, '_algolib_hooks', [])]
+            [hook.after_epoch(current_epoch=epoch,
+                            pavi_args=dict(
+                                iteration=len(train_loader) * epoch,
+                                enable=((epoch + 1) % args.test_freq == 0 or
+                                        epoch + 1 == args.max_epoch),
+                                values=dict(Accuracy_Test_top1=acc1,
+                                            Accuracy_Test_top5=acc5,
+                                            Test_loss=loss)))
+            for hook in getattr(torch, '_algolib_hooks', [])]
 
-        lr_scheduler.step()
+            lr_scheduler.step()
     [hook.after_run() for hook in getattr(torch, '_algolib_hooks', [])]
 
 
@@ -296,57 +301,68 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
         # measure data loading time
         data_time.update(time.time() - end)
 
-        if args.dummy_test:
-            input = input_.detach()
-            input.requires_grad = True
-            target = target_
-        input = input.cuda()
-        target = target.cuda()
+        if args.data_test is False:
+            if args.dummy_test is True:
+                input = input_.detach()
+                input.requires_grad = True
+                target = target_
+            input = input.cuda()
+            target = target.cuda()
 
-        # compute output
-        output = model(input)
-        loss = criterion(output, target)
+            # compute output
+            output = model(input)
+            loss = criterion(output, target)
 
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+            # measure accuracy and record loss
+            acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        stats_all = torch.tensor([loss.item(), acc1[0].item(),
-                                  acc5[0].item()]).float().cuda()
-        dist.all_reduce(stats_all)
-        stats_all /= args.world_size
+            stats_all = torch.tensor([loss.item(), acc1[0].item(),
+                                    acc5[0].item()]).float().cuda()
+            dist.all_reduce(stats_all)
+            stats_all /= args.world_size
 
-        losses.update(stats_all[0].item())
-        top1.update(stats_all[1].item())
-        top5.update(stats_all[2].item())
-        memory.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
+            losses.update(stats_all[0].item())
+            top1.update(stats_all[1].item())
+            top5.update(stats_all[2].item())
+            memory.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
 
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+            # compute gradient and do SGD step
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-        # measure elapsed time
-        batch_time.update(time.time() - end)
-        end = time.time()
+            # measure elapsed time
+            batch_time.update(time.time() - end)
+            end = time.time()
 
-        if i % args.log_freq == 0:
-            progress.display(i)
-            cur_iter = epoch * loader_length + i
-            if args.rank == 0 and monitor_writer:
-                monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg,
-                                          cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg,
-                                          cur_iter)
-        [hook.after_iter(iteration=i,
+            if i % args.log_freq == 0:
+                progress.display(i)
+                cur_iter = epoch * loader_length + i
+                if args.rank == 0 and monitor_writer:
+                    monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
+                    monitor_writer.add_scalar('Accuracy_train_top1', top1.avg,
+                                            cur_iter)
+                    monitor_writer.add_scalar('Accuracy_train_top5', top5.avg,
+                                            cur_iter)
+
+            [hook.after_iter(iteration=i,
                          pavi_args=dict(
                              iteration=cur_iter,
                              enable=(i % args.log_freq == 0),
                              values=dict(Accuracy_train_top1=top1.avg,
                                          Accuracy_train_top5=top5.avg,
                                          Train_Loss=losses.avg)))
-         for hook in getattr(torch, '_algolib_hooks', [])]
-
+                for hook in getattr(torch, '_algolib_hooks', [])]
+      
+        else:
+            cur_iter = epoch * loader_length + i
+            if cur_iter % args.log_freq == 0:
+                logger.info("The current iter is {}".format(cur_iter))
+            [hook.after_iter(iteration=i,
+                            pavi_args=dict(
+                                iteration=cur_iter,
+                                enable=(i % args.log_freq == 0)))
+                for hook in getattr(torch, '_algolib_hooks', [])]
 
 def test(test_loader, model, criterion, args):
     logger = logging.getLogger()
