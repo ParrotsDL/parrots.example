@@ -1,4 +1,3 @@
-mkdir -p logs
 now=$(date +"%Y%m%d_%H%M%S")
 set -x
 
@@ -9,36 +8,34 @@ if [ -z $DATASET_PATH ]; then
     exit 1
 fi
 
-num_epochs=100
-print_freq=1
-dropout_rate=0.0
+if [ -z $MODEL_PATH ]; then
+    echo "[ERROR] Please set MODEL_PATH"
+    exit 1
+fi
 
-run_cmd="python -u train.py \
-    --log-path $CUR_DIR/logs \
-    --num_epochs $num_epochs \
-    --print-freq ${print_freq} \
-    --dropout_rate $dropout_rate \
+run_cmd="python -u eval.py \
+    --log_path $CUR_DIR/logs/eval.txt \
+    --pretrained $MODEL_PATH \
     --dataset-path $DATASET_PATH \
     "
 
-g=$(($2<8?$2:8))
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:2:$len}
+EXTRA_ARGS=${array[@]:1:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 if [[ $3 =~ "sync" ]]; then
     PARROTS_EXEC_MODE=SYNC OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
     srun --mpi=pmi2 -p $1 --job-name=transformer_train \
-        --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS} \
+        --gres=gpu:1 -n1 --ntasks-per-node=1  ${SRUN_ARGS} \
         $run_cmd \
         ${EXTRA_ARGS} \
-        2>&1 | tee logs/train_transformer.log-$now
+        2>&1 | tee logs/test_transformer.log-$now
 else
     OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
     srun --mpi=pmi2 -p $1 --job-name=transformer_train \
-        --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS} \
+        --gres=gpu:1 -n1 --ntasks-per-node=1  ${SRUN_ARGS} \
         $run_cmd \
         ${EXTRA_ARGS} \
-        2>&1 | tee logs/train_transformer.log-$now
+        2>&1 | tee logs/test_transformer.log-$now
 fi
