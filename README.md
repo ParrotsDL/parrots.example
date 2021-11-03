@@ -30,6 +30,11 @@ sh train_mlu.sh partition_name cards_num
 source /mnt/lustre/share/platform/env/pat2.0_dev_gcc5.4
 export PYTHONPATH=/mysenseparrotspath:$PYTHONPATH
 export DATASET_PATH=/mnt/lustre/share/datasets/nlp/corpora/
+// train model
 sh train_mlu.sh partition_name cards_num
+
+// test model
+export MODEL_PATH=models/model_epoch_$num.pth
+sh test_mlu.sh partiton_name
 ```
 
