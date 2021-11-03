@@ -24,6 +24,7 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 from utils.lr_scheduler import adjust_learning_rate_cos
+from utils.perf import PerfRecorder
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
@@ -229,12 +230,15 @@ def main():
                                         **cfgs.trainer.lr_scheduler.kwargs,
                                         last_epoch=args.start_epoch - 1)
 
+    pr = PerfRecorder(len(train_loader), args.max_epoch,
+                      cfgs.dataset.batch_size, args.world_size, args.rank)
+
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args)
+        train(train_loader, model, criterion, optimizer, epoch, args, pr)
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
@@ -262,9 +266,11 @@ def main():
 
         if args.arch not in ["mobile_v2"]:
             lr_scheduler.step()
+    pr.gen_perf_results()
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args):
+def train(train_loader, model, criterion, optimizer, epoch, args,
+          perf_recorder):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -286,6 +292,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     # switch to train mode
     model.train()
     end = time.time()
+    perf_recorder.set_start_timer('data')
     if args.dummy_test:
         input_, target_ = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
@@ -299,8 +306,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             input_ = input_.cuda()
             target_ = target_.cuda()
 
+    perf_recorder.set_start_timer('epoch')
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
+        perf_recorder.set_end_timer('data')
+        perf_recorder.set_start_timer('iter')
         data_time.update(time.time() - end)
         if not args.dummy_test and args.arch == "mobile_v2":
             adjust_learning_rate_cos(optimizer, epoch, i, len(train_loader),
@@ -357,10 +367,14 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
         # measure elapsed time
         batch_time.update(time.time() - end)
+        perf_recorder.set_end_timer('iter')
         end = time.time()
 
         if i % args.log_freq == 0:
             progress.display(i)
+
+        perf_recorder.set_start_timer('data')
+    perf_recorder.set_end_timer('epoch')
 
 
 def test(test_loader, model, criterion, args):
