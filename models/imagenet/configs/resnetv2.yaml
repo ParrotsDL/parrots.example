@@ -32,9 +32,10 @@ trainer:
   optimizer:
     type: SGD
     kwargs:
-      lr: 0.1
-      momentum: 0.9
-      weight_decay: 0.0001
+      card_8:
+        lr: 0.1
+        momentum: 0.9
+        weight_decay: 0.0001
   lr_scheduler:
     warmup_epochs: 0
     type: MultiStepLR

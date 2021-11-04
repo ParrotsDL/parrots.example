@@ -104,6 +104,13 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
+    kwargs_name = "card_" + str(args.world_size)
+    if kwargs_name in cfgs.trainer.optimizer.kwargs:
+        hyper_kwargs = cfgs.trainer.optimizer.kwargs[kwargs_name]
+    else:
+        raise ValueError("Configuration does not support hyperparameter for "
+              + str(args.world_size) + " card(s).")
+
     dist.init_process_group(backend=backend)
     if args.device == "mlu":
         ct.set_device(args.local_rank)
@@ -174,7 +181,7 @@ def main():
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(),
-                                **cfgs.trainer.optimizer.kwargs)
+                                **hyper_kwargs)
 
     logger.info("optimizer\n{}".format(optimizer))
 
@@ -184,7 +191,7 @@ def main():
     args.max_epoch = cfgs.trainer.max_epoch
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
-    args.lr = cfgs.trainer.optimizer.kwargs['lr']
+    args.lr = hyper_kwargs['lr']
 
     best_acc1 = 0.0
     if cfgs.saver.resume_model:
