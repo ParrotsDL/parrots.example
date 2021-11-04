@@ -50,7 +50,7 @@ parser.add_argument('--dummy_test',
 parser.add_argument('--launcher',
                     type=str,
                     default="slurm",
-                    choices=['slurm', 'mpi'],
+                    choices=['slurm', 'mpi', 'default'],
                     help='distributed backend')
 parser.add_argument('--device',
                     type=str,
@@ -81,7 +81,7 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    backend = "cncl" if use_camb else "nccl"
+    backend = "cncl" if use_camb or args.device == "mlu" else "nccl"
 
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
@@ -337,6 +337,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             output = model(input)
             loss = criterion(output, target)
 
+        # compute gradient and do SGD step
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
@@ -356,11 +361,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         top5.update(stats_all[2].item())
         if args.device == "gpu":
             memory.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
