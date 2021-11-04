@@ -1,6 +1,7 @@
 import io
 from PIL import Image
 
+import mc
 from torch.utils.data import Dataset
 
 
@@ -30,11 +31,25 @@ class McDataset(Dataset):
     def __len__(self):
         return self.num
 
+    def _init_memcached(self):
+        if not self.initialized:
+            server_list_config_file = "/mnt/lustre/share/memcached_client/server_list.conf"
+            client_config_file = "/mnt/lustre/share/memcached_client/client.conf"
+            self.mclient = mc.MemcachedClient.GetInstance(
+                server_list_config_file, client_config_file)
+            self.initialized = True
+
     def __getitem__(self, index):
         filename = self.root + '/' + self.metas[index][0]
         cls = self.metas[index][1]
 
-        with Image.open(filename) as img:
+        # memcached
+        self._init_memcached()
+        value = mc.pyvector()
+        self.mclient.Get(filename, value)
+        value_buf = mc.ConvertBuffer(value)
+        buff = io.BytesIO(value_buf)
+        with Image.open(buff) as img:
             img = img.convert('RGB')
 
         # transform
