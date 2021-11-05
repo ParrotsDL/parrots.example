@@ -108,8 +108,7 @@ def main():
     if kwargs_name in cfgs.trainer.optimizer.kwargs:
         hyper_kwargs = cfgs.trainer.optimizer.kwargs[kwargs_name]
     else:
-        raise ValueError("Configuration does not support hyperparameter for "
-              + str(args.world_size) + " card(s).")
+        hyper_kwargs = list(cfgs.trainer.optimizer.kwargs.values())[0]
 
     dist.init_process_group(backend=backend)
     if args.device == "mlu":
@@ -191,7 +190,6 @@ def main():
     args.max_epoch = cfgs.trainer.max_epoch
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
-    args.lr = hyper_kwargs['lr']
 
     best_acc1 = 0.0
     if cfgs.saver.resume_model:
