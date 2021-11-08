@@ -119,5 +119,5 @@ cmake-build-debug/
 docs/build
 
 # log
-algolib_log
+algolib_log/*
 runs
