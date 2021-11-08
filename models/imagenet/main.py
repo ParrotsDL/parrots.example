@@ -230,8 +230,8 @@ def main():
                                         **cfgs.trainer.lr_scheduler.kwargs,
                                         last_epoch=args.start_epoch - 1)
 
-    pr = PerfRecorder(len(train_loader), args.max_epoch,
-                      cfgs.dataset.batch_size, args.world_size, args.rank)
+    pr = PerfRecorder(cfgs.saver.save_dir, cfgs.dataset.batch_size,
+                      args.world_size, args.rank)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):

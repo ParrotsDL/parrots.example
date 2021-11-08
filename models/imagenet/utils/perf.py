@@ -45,8 +45,8 @@ class PerfRecorder(object):
                 self.record[k].pop()
             if len(self.record[k]) > 0:
                 res[k] = {
-                    'mean': np.around(np.mean(self.record[k])),
-                    'var': np.around(np.var(self.record[k]))
+                    'mean': np.around(np.mean(self.record[k]), 3),
+                    'var': np.around(np.var(self.record[k]), 3)
                 }
 
         # fps
