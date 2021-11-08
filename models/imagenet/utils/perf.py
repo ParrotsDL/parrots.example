@@ -26,7 +26,7 @@ class PerfRecorder(object):
         if timer_name not in self.record.keys():
             self.record[timer_name] = [time()]
         elif self.recording[timer_name]:
-            self.record[timer_name][-1] = [time()]
+            self.record[timer_name][-1] = time()
         else:
             self.record[timer_name].append(time())
         self.recording[timer_name] = True
