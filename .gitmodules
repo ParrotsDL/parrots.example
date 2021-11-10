@@ -165,3 +165,6 @@
 [submodule "models/sketch1.4"]
 	path = models/sketch1.4
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
+[submodule "models/transformer"]
+	path = models/transformer
+	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/camb_transformer.git
