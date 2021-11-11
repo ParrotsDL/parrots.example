@@ -358,10 +358,16 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
             cur_iter = epoch * loader_length + i
             if cur_iter % args.log_freq == 0:
                 logger.info("The current iter is {}".format(cur_iter))
+            top1.avg = 0
+            top5.avg = 0
+            losses.avg = 0
             [hook.after_iter(iteration=i,
                             pavi_args=dict(
                                 iteration=cur_iter,
-                                enable=(i % args.log_freq == 0)))
+                                enable=(i % args.log_freq == 0),
+                                values=dict(Accuracy_train_top1=top1.avg,
+                                         Accuracy_train_top5=top5.avg,
+                                         Train_Loss=losses.avg)))
                 for hook in getattr(torch, '_algolib_hooks', [])]
 
 def test(test_loader, model, criterion, args):

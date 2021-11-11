@@ -1,9 +1,9 @@
 global_configs:
     reader : MemcachedReader 
     maxstep : 1
-    benchmark: "True"
+    benchmark: 'True'
     seed: 2
-    pavi: None 
+    pavi: test 
 
 env_version:
     pat : pat0.14.0rc0
