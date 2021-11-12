@@ -2,7 +2,7 @@ global_configs:
     reader : MemcachedReader 
     maxstep : None
     benchmark: None
-    seed: 2
+    seed: None
     pavi: None 
 
 env_version:
@@ -15,7 +15,7 @@ global_model_strategy:
 
 models:
   - dpn92_mix:
-      seed: 4  # for test
+      seed: None  # for test
       pavi: None  # for test
       model_strategy: # for test
         dummydataset: Parrots,Pytorch
