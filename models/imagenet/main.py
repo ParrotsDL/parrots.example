@@ -192,15 +192,16 @@ def main():
         if args.pavi:
             monitor_kwargs = {'task': cfgs.net.arch, 'project': args.pavi}
             from pavi import SummaryWriter
+            monitor_writer = SummaryWriter(session_text=yaml.dump(args.config),
+                                       **monitor_kwargs)
+            args.taskid = monitor_writer.taskid
         else:
             monitor_kwargs = cfgs.monitor.kwargs
             if hasattr(args, 'taskid'):
                 monitor_kwargs['taskid'] = args.taskid
             elif hasattr(cfgs.monitor, '_taskid'):
                 monitor_kwargs['taskid'] = cfgs.monitor._taskid
-        monitor_writer = SummaryWriter(session_text=yaml.dump(args.config),
-                                       **monitor_kwargs)
-        args.taskid = monitor_writer.taskid
+
 
     [hook.before_run(len_loader=len(train_loader))
      for hook in getattr(torch, '_algolib_hooks', [])]
