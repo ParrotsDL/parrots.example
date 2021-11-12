@@ -57,6 +57,10 @@ def eval(args):
     if args.device == "mlu":
         model.to(ct.mlu_device())
     elif args.device == "gpu":
+        if args.quantify:
+            from torch.utils import quantize
+            model = quantize.convert_to_adaptive_quantize(
+                model, len(test_loader))
         model.cuda()
 
     state = torch.load(args.pretrained, map_location='cpu')
@@ -128,6 +132,7 @@ if __name__ == '__main__':
     parser.add_argument('--iterations', default=-1, type=int, help="Number of training iterations.")
     parser.add_argument('--max_bitwidth', action='store_true', help='use Max Bitwidth of MLU training')
     parser.add_argument('--bitwidth', default=8, type=int, help="Set the initial quantization width of network training.")
+    parser.add_argument('--quantify', dest='quantify', action='store_true', help='quantify training')
     args = parser.parse_args()
 
     if args.device == "mlu":

@@ -48,8 +48,6 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger("__name__")
 
 def main(args):
-    use_camb = False
-
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
@@ -85,7 +83,7 @@ def main(args):
         torch.cuda.set_device(0 if args.rank == -1 else args.rank)
     # distributed training env setting up
     if args.dist:
-        dist.init_process_group(backend='cncl' if args.device == "mlu" else 'nccl', rank=args.rank, world_size=args.world_size)
+        dist.init_process_group(backend='cncl' if use_camb or args.device == "mlu" else 'nccl', rank=args.rank, world_size=args.world_size)
 
     startepoch = 1
     if args.resume:
@@ -119,6 +117,10 @@ def main(args):
     if args.device == "mlu":
         model.to(ct.mlu_device())
     if args.device == "gpu":
+        if args.quantify:
+            from torch.utils import quantize
+            model = quantize.convert_to_adaptive_quantize(
+                model, len(train_loader))
         model.cuda()
 
     # load state_dict
@@ -127,6 +129,8 @@ def main(args):
 
     if args.dist:
         model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[0 if args.rank == -1 else args.rank])
+
+    logger.info(model)
 
     optimizer = optim.Adam(model.parameters(), lr=hp.lr, betas=[0.9, 0.98], eps=1e-8)
     if args.resume:
@@ -276,6 +280,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', "--learning-rate", default=0.0005, type=float, help="learning rate for training")
     parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'], help='distributed backend')
     parser.add_argument('--port', default=12345, type=int, metavar='P', help='master port')
+    parser.add_argument('--quantify', dest='quantify', action='store_true', help='quantify training')
     args = parser.parse_args()
     main(args)
 
