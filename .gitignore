@@ -121,3 +121,5 @@ docs/build
 # log
 algolib_log/*
 runs
+algolib_gen/*
+models/imagenet/log/*
