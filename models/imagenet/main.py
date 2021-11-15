@@ -373,7 +373,7 @@ def test(test_loader, model, criterion, args):
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
     top5 = AverageMeter('Acc@5', ':.2f', -1)
-    stats_all = torch.Tensor([0, 0, 0]).float()
+    raw_stats = torch.Tensor([0, 0, 0, 0]).float()
     progress = ProgressMeter(len(test_loader),
                              batch_time,
                              losses,
@@ -402,14 +402,21 @@ def test(test_loader, model, criterion, args):
 
             # measure accuracy and record loss
             acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
+            raw_stats.add_(torch.tensor([loss.item(), acc1[0].item(),
+                                         acc5[0].item(), target.size(0)]))
 
-            losses.update(loss.item())
-            top1.update(acc1[0].item() * 100.0 / target.size(0))
-            top5.update(acc5[0].item() * 100.0 / target.size(0))
-
-            stats_all.add_(
-                torch.tensor([acc1[0].item(), acc5[0].item(),
-                              target.size(0)]).float())
+            if args.device == "mlu":
+                stats_all = torch.tensor(
+                    [loss.item(), acc1[0].item(), acc5[0].item()]).float().to(ct.mlu_device())
+            else:
+                stats_all = torch.tensor(
+                    [loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
+            if args.dist:
+                dist.all_reduce(stats_all)
+            
+            losses.update(stats_all[0].item())
+            top1.update(stats_all[1].item())
+            top5.update(stats_all[2].item())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -418,30 +425,23 @@ def test(test_loader, model, criterion, args):
             if i % args.log_freq == 0:
                 progress.display(i)
 
+        loss_each = raw_stats[0].item() / len(test_loader)
+        total_size = raw_stats[3].item()
+        acc1_each = raw_stats[1].item() * 100 / total_size
+        acc5_each = raw_stats[2].item() * 100 / total_size
         logger_all.info(
-            ' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
-                args.rank, losses.avg, stats_all[0].item(),
-                stats_all[1].item(), stats_all[2].item()))
+            ' Rank {} Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(
+                args.rank, loss_each, acc1_each, raw_stats[1].item(), total_size,
+                acc5_each, raw_stats[2].item(), total_size))
 
-        loss = torch.tensor([losses.avg])
-        if args.device == "mlu":
-            dist.all_reduce(loss.to(ct.mlu_device()))
-        else:
-            dist.all_reduce(loss.cuda())
-        loss_avg = loss.item() / args.world_size
-        if args.device == "mlu":
-            dist.all_reduce(stats_all.to(ct.mlu_device()))
-        else:
-            dist.all_reduce(stats_all.cuda())
-        acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
-        acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
-
+        loss_avg = losses.avg / args.world_size
+        top1_avg = top1.sum * 100 / (total_size * args.world_size)
+        top5_avg = top5.sum * 100 / (total_size * args.world_size)
         logger.info(
-            ' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.
-            format(loss_avg, acc1, stats_all[0].item(), stats_all[2].item(),
-                   acc5, stats_all[1].item(), stats_all[2].item()))
+            ' * All Loss {:.4f} Acc@1 {:.3f} Acc@5 {:.3f}'.format(
+                loss_avg, top1_avg, top5_avg))
 
-    return loss_avg, acc1, acc5
+    return loss_avg, top1_avg, top5_avg
 
 
 if __name__ == '__main__':
