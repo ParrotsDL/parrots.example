@@ -234,6 +234,9 @@ def main():
                                         **cfgs.trainer.lr_scheduler.kwargs,
                                         last_epoch=args.start_epoch - 1)
 
+    # required accuracy
+    req_acc = cfgs.trainer.req_acc if 'req_acc' in cfgs.trainer else 100
+
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
@@ -264,6 +267,12 @@ def main():
                 if acc1 > best_acc1:
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
+                    
+            if acc1 >= req_acc:
+                logger.info(
+                    "Reach required accuracy {}. Training stops."
+                    .format(req_acc))
+                break
 
         if args.arch not in ["mobile_v2"]:
             lr_scheduler.step()

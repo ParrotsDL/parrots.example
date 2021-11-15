@@ -36,6 +36,7 @@ trainer:
   test_freq: 1
   log_freq: 200
   label_smooth:
+  req_acc: 70.37
   optimizer:
     type: SGD
     kwargs:

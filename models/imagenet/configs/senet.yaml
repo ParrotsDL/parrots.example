@@ -30,6 +30,7 @@ trainer:
   max_epoch: 100
   test_freq: 1
   log_freq: 20
+  req_acc: 74.76
   optimizer:
     type: SGD
     kwargs:
