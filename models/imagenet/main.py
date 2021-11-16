@@ -434,14 +434,15 @@ def test(test_loader, model, criterion, args):
 
         loss = torch.tensor([losses.avg])
         if args.device == "mlu":
-            dist.all_reduce(loss.to(ct.mlu_device()))
+            loss.to(ct.mlu_device())
+            stats_all.to(ct.mlu_device())
         else:
-            dist.all_reduce(loss.cuda())
+            loss.cuda()
+            stats_all.cuda()
+        dist.all_reduce(loss)
+        dist.all_reduce(stats_all)
+        
         loss_avg = loss.item() / args.world_size
-        if args.device == "mlu":
-            dist.all_reduce(stats_all.to(ct.mlu_device()))
-        else:
-            dist.all_reduce(stats_all.cuda())
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 
