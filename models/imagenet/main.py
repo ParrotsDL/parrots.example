@@ -422,11 +422,10 @@ def test(test_loader, model, criterion, args):
                     [loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
             if args.dist:
                 dist.all_reduce(stats_all)
-            stats_all /= args.world_size
             
             losses.update(stats_all[0].item())
-            top1.update(stats_all[1].item() * 100 / target.size(0))
-            top5.update(stats_all[2].item() * 100 / target.size(0))
+            top1.update(stats_all[1].item())
+            top5.update(stats_all[2].item())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -444,11 +443,14 @@ def test(test_loader, model, criterion, args):
                 args.rank, loss_each, acc1_each, raw_stats[1].item(), total_size,
                 acc5_each, raw_stats[2].item(), total_size))
 
+        loss_avg = losses.avg / args.world_size
+        top1_avg = top1.sum * 100 / (total_size * args.world_size)
+        top5_avg = top5.sum * 100 / (total_size * args.world_size)
         logger.info(
             ' * All Loss {:.4f} Acc@1 {:.3f} Acc@5 {:.3f}'.format(
-                losses.avg, top1.avg, top5.avg))
+                loss_avg, top1_avg, top5_avg))
 
-    return losses.avg, top1.avg, top5.avg
+    return loss_avg, top1_avg, top5_avg
 
 
 if __name__ == '__main__':
