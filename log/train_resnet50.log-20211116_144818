@@ -1,0 +1,9 @@
+phoenix-srun: job 4805575 queued and waiting for resources
+phoenix-srun: job 4805575 has been allocated resources
+phoenix-srun: Job 4805575 scheduled successfully!
+Current QUOTA_TYPE is [reserved], which means the job has occupied quota in RESERVED_TOTAL under your partition.
+Current PHX_PRIORITY is normal
+
+/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20211111/bin/python: can't open file 'main.py': [Errno 2] No such file or directory
+/mnt/lustre/share/platform/env/miniconda3.6/envs/pat20211111/bin/python: can't open file 'main.py': [Errno 2] No such file or directory
+phoenix-srun: error: SH-IDC1-10-198-4-41: tasks 0-1: Exited with exit code 2

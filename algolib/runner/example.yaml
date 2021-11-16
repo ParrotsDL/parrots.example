@@ -15,7 +15,7 @@ global_model_strategy:
 
 models:
   - dpn92_mix:
-      seed: 4  # for test
+      seed: None  # for test
       pavi: None  # for test
       model_strategy: # for test
         dummydataset: Parrots,Pytorch
@@ -31,8 +31,6 @@ models:
   - mobile_v2_mix     
   - resnet18       
   - resnet18_mix   
-  - resnet   
-  - resnet_mix
   - resnet152      
   - resnet152_mix  
   - inception_v2      

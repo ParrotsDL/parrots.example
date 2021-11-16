@@ -31,8 +31,8 @@ dataset:
   workers: 4
  
 trainer:
-  max_epoch: 2
-  test_freq: 3
+  max_epoch: 160
+  test_freq: 161
   log_freq: 200
   label_smooth:
   optimizer:
