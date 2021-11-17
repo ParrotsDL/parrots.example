@@ -27,7 +27,7 @@ dataset:
   batch_size:
     card_4: 64
     card_8: 32
-  workers: 0
+  workers: 4
 
 trainer:
   max_epoch: 10

@@ -32,7 +32,7 @@ dataset:
 trainer:
   max_epoch: 100
   test_freq: 1
-  log_freq: 20
+  log_freq: 200
   req_acc: 74.78
   optimizer:
     type: SGD

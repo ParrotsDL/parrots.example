@@ -270,8 +270,8 @@ def main():
                     
             if acc1 >= req_acc:
                 logger.info(
-                    "Reach required accuracy {}. Training stops."
-                    .format(req_acc))
+                    "Reach required accuracy {}. Current accuracy {:.2f} Training stops."
+                    .format(req_acc, acc1))
                 break
 
         if args.arch not in ["mobile_v2"]:
