@@ -108,7 +108,7 @@ def main():
     if kwargs_name in cfgs.trainer.optimizer.kwargs:
         hyper_kwargs = cfgs.trainer.optimizer.kwargs[kwargs_name]
     else:
-        hyper_kwargs = list(cfgs.trainer.optimizer.kwargs.values())[0]
+        hyper_kwargs = cfgs.trainer.optimizer.kwargs.card_8
 
     dist.init_process_group(backend=backend)
     if args.device == "mlu":

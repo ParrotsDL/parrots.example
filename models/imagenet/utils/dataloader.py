@@ -36,8 +36,7 @@ def build_dataloader(cfg, world_size):
     test_aug = build_augmentation(cfg.test)
     image_dir = os.getenv("IMAGENET_DATASET_PATH", '/mnt/lustre/share/images/')
     batch_cfg = "card_" + str(world_size)
-    batch_size = cfg.batch_size[batch_cfg] if batch_cfg in cfg.batch_size else list(
-        cfg.batch_size.values())[0]
+    batch_size = cfg.batch_size[batch_cfg] if batch_cfg in cfg.batch_size else cfg.batch_size.card_8
     assert image_dir, "Please set IMAGENET_DATASET_PATH for training"
     train_dataset = McDataset(image_dir + "train", image_dir + "meta/train.txt", train_aug)
     train_sampler = DistributedSampler(train_dataset)
