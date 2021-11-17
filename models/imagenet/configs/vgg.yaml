@@ -22,7 +22,8 @@ dataset:
     mean: [0.485, 0.456, 0.406]
     std: [0.229, 0.224, 0.225]
     mirror: False
-  batch_size: 128 # 4 card
+  batch_size:
+    card_4: 128
   workers: 6
 
 trainer:
@@ -34,10 +35,6 @@ trainer:
     type: SGD
     kwargs:
       card_4:
-        lr: 0.02
-        momentum: 0.9
-        weight_decay: 0.0001
-      card_8:
         lr: 0.02
         momentum: 0.9
         weight_decay: 0.0001
