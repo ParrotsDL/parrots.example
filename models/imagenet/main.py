@@ -58,6 +58,10 @@ parser.add_argument('--device',
                     choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
+parser.add_argument('--cfg_options',
+                    type=str,
+                    default=None,
+                    help='override some settings in the used config.')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -80,6 +84,11 @@ if torch.__version__ == "parrots":
 def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
+    if args.cfg_options is not None:
+        args.cfg_options = yaml.load(open(args.cfg_options, 'r'),
+                                     Loader=yaml.Loader)
+        cfg_options = Dict(args.cfg_options)
+        cfgs.update(cfg_options)
 
     backend = "cncl" if use_camb else "nccl"
 
