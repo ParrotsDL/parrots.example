@@ -239,8 +239,14 @@ def main():
                                         **cfgs.trainer.lr_scheduler.kwargs,
                                         last_epoch=args.start_epoch - 1)
 
-    pr = PerfRecorder(cfgs.saver.save_dir, cfgs.dataset.batch_size,
-                      args.world_size, args.rank)
+    # perf recorder(optional)
+    pr = PerfRecorder(cfgs.benchmark.test_speed.enable,
+                      cfgs.benchmark.test_speed.timer,
+                      cfgs.saver.save_dir,
+                      cfgs.dataset.batch_size,
+                      args.world_size,
+                      args.rank,
+                      trim_head=cfgs.benchmark.test_speed.trim_head)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -272,6 +278,12 @@ def main():
                 if acc1 > best_acc1:
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
+
+            if cfgs.trainer.req_acc1 and acc1 >= cfgs.trainer.req_acc1:
+                logger.info(
+                    "Current acc1: {:.2f}. Reached required acc1: {}. Training stops."
+                    .format(acc1, cfgs.trainer.req_acc1))
+                break
 
         if args.arch not in ["mobile_v2"]:
             lr_scheduler.step()
