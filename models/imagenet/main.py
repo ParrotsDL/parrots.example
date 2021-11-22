@@ -86,7 +86,8 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    dist.init_process_group(backend="nccl")
+    if not dist.is_initialized():
+        dist.init_process_group(backend="nccl")
     torch.cuda.set_device(args.local_rank)
 
     if args.rank == 0:
@@ -208,7 +209,10 @@ def main():
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        [hook.before_epoch() for hook in getattr(torch, '_algolib_hooks', [])]
+        [
+            hook.before_epoch(current_epoch=epoch)
+            for hook in getattr(torch, '_algolib_hooks', [])
+        ]
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
