@@ -17,6 +17,7 @@ run_cmd="python -u eval.py \
     --log_path $CUR_DIR/logs/eval.txt \
     --pretrained $MODEL_PATH \
     --dataset-path $DATASET_PATH \
+    --vocab_path $VOCAB_PATH \
     "
 
 array=( $@ )
