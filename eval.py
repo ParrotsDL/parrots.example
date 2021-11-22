@@ -17,7 +17,7 @@ import numpy as np
 
 import torch
 from hyperparams import Hyperparams as hp
-from data_load import TestDataSet, load_de_vocab, load_en_vocab
+from data_load import TestDataSet, load_vocab
 from nltk.translate.bleu_score import corpus_bleu
 from AttModel import AttModel
 from torch.autograd import Variable
@@ -32,8 +32,8 @@ def eval(args):
         np.random.seed(args.seed)
         random.seed(args.seed)
 
-    de2idx, idx2de = load_de_vocab()
-    en2idx, idx2en = load_en_vocab()
+    de2idx, idx2de = load_vocab(os.path.join(args.vocab_path, "de.vocab.tsv"))
+    en2idx, idx2en = load_vocab(os.path.join(args.vocab_path, "en.vocab.tsv"))
     enc_voc = len(de2idx)
     dec_voc = len(en2idx)
 
@@ -43,7 +43,7 @@ def eval(args):
 
     source_test = args.dataset_path + hp.source_test
     target_test = args.dataset_path + hp.target_test
-    test_dataset = TestDataSet(source_test, target_test)
+    test_dataset = TestDataSet(source_test, target_test, args.vocab_path)
     test_loader = torch.utils.data.DataLoader(
         test_dataset,
         batch_size=args.batch_size,
@@ -133,6 +133,7 @@ if __name__ == '__main__':
     parser.add_argument('--max_bitwidth', action='store_true', help='use Max Bitwidth of MLU training')
     parser.add_argument('--bitwidth', default=8, type=int, help="Set the initial quantization width of network training.")
     parser.add_argument('--quantify', dest='quantify', action='store_true', help='quantify training')
+    parser.add_argument('--vocab_path', type=str, default="./data/IWSLT/preprocessed", help='the path to preprocessed data')
     args = parser.parse_args()
 
     if args.device == "mlu":

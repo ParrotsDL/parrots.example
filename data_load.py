@@ -12,6 +12,7 @@ import numpy as np
 import codecs
 import regex
 import random
+import os
 import torch
 import torch.utils.data as data
 
@@ -21,31 +22,19 @@ except NameError:
     xrange = range  # Python 3
 
 
-def load_de_vocab():
+def load_vocab(path):
     vocab = [line.split()[0] \
              for line in codecs.open(
-                     './data/IWSLT/preprocessed/de.vocab.tsv',
-                     'r', 'utf-8').read().splitlines()\
+                     path, 'r', 'utf-8').read().splitlines()\
              if int(line.split()[1])>=hp.min_cnt]
     word2idx = {word: idx for idx, word in enumerate(vocab)}
     idx2word = {idx: word for idx, word in enumerate(vocab)}
     return word2idx, idx2word
 
 
-def load_en_vocab():
-    vocab = [line.split()[0] \
-             for line in codecs.open(
-                     './data/IWSLT/preprocessed/en.vocab.tsv',
-                     'r', 'utf-8').read().splitlines()\
-             if int(line.split()[1])>=hp.min_cnt]
-    word2idx = {word: idx for idx, word in enumerate(vocab)}
-    idx2word = {idx: word for idx, word in enumerate(vocab)}
-    return word2idx, idx2word
-
-
-def create_data(source_sents, target_sents):
-    de2idx, idx2de = load_de_vocab()
-    en2idx, idx2en = load_en_vocab()
+def create_data(source_sents, target_sents, vocab_path):
+    de2idx, idx2de = load_vocab(os.path.join(vocab_path, "de.vocab.tsv"))
+    en2idx, idx2en = load_vocab(os.path.join(vocab_path, "en.vocab.tsv"))
 
     # Index
     x_list, y_list, Sources, Targets = [], [], [], []
@@ -73,7 +62,7 @@ def create_data(source_sents, target_sents):
 
 
 class TrainDataSet(data.Dataset):
-    def __init__(self, source_path, target_path):
+    def __init__(self, source_path, target_path, vocab_path):
         self.source_path = source_path
         self.target_path = target_path
         # In python2 codecs cannot handle special German characters,
@@ -91,7 +80,7 @@ class TrainDataSet(data.Dataset):
                             'r',
                             'utf-8').read().split("\n") \
                     if line and line[0] != "<"]
-        self.data, self.label, _, __ = create_data(de_sents, en_sents)
+        self.data, self.label, _, __ = create_data(de_sents, en_sents, vocab_path)
 
     def __getitem__(self, index):
         return torch.LongTensor(self.data[index]), torch.LongTensor(self.label[index])
@@ -100,7 +89,7 @@ class TrainDataSet(data.Dataset):
         return len(self.data)
 
 class TestDataSet(data.Dataset):
-    def __init__(self, source_path, target_path):
+    def __init__(self, source_path, target_path, vocab_path):
         self.source_path = source_path
         self.target_path = target_path
         def _refine(line):
@@ -119,7 +108,7 @@ class TestDataSet(data.Dataset):
                             'r', 'utf-8').read().split("\n") \
                     if line and line[:4] == "<seg"]
 
-        self.data, _, self.sources, self.targets = create_data(de_sents, en_sents)
+        self.data, _, self.sources, self.targets = create_data(de_sents, en_sents, vocab_path)
 
     def __getitem__(self, index):
         return self.data[index], self.sources[index], self.targets[index]

@@ -5,6 +5,7 @@
 ```shell
 source  /mnt/lustre/share/platform/env/pat_latest
 export DATASET_PATH=/mnt/lustre/share/nlp/corpora/
+export VOCAB_PATH=/your_transformer_path/data/IWSLT/preprocessed/
 sh train_gpu.sh partition_name cards_num --device gpu
 ```
 
@@ -13,6 +14,7 @@ sh train_gpu.sh partition_name cards_num --device gpu
 ```shell
 source pat_latest
 export DATASET_PATH=/mnt/lustre/share_data/jiangyongjiu/datasets/corpora/
+export VOCAB_PATH=/your_transformer_path/data/IWSLT/preprocessed/
 sh train_gpu.sh partition_name cards_num --device gpu
 ```
 
@@ -21,6 +23,7 @@ sh train_gpu.sh partition_name cards_num --device gpu
 ```shell
 source /mnt/lustre/share/platform/env/camb_pytorch1.6
 export DATASET_PATH=/mnt/lustre/share/datasets/nlp/corpora/
+export VOCAB_PATH=/your_transformer_path/data/IWSLT/preprocessed/
 sh train_mlu.sh partition_name cards_num
 ```
 
@@ -30,6 +33,7 @@ sh train_mlu.sh partition_name cards_num
 source /mnt/lustre/share/platform/env/pat2.0_dev_gcc5.4
 export PYTHONPATH=/mysenseparrotspath:$PYTHONPATH
 export DATASET_PATH=/mnt/lustre/share/datasets/nlp/corpora/
+export VOCAB_PATH=/your_transformer_path/data/IWSLT/preprocessed/
 // train model
 sh train_mlu.sh partition_name cards_num
 

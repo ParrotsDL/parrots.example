@@ -26,7 +26,7 @@ from torch.utils.data.distributed import DistributedSampler
 
 
 from AttModel import AttModel
-from data_load import TrainDataSet, load_de_vocab, load_en_vocab
+from data_load import TrainDataSet, load_vocab
 from hyperparams import Hyperparams as hp
 from util import *
 
@@ -93,7 +93,7 @@ def main(args):
     # Load data
     source_train = args.dataset_path + hp.source_train
     target_train = args.dataset_path + hp.target_train
-    train_dataset =  TrainDataSet(source_train, target_train)
+    train_dataset =  TrainDataSet(source_train, target_train, args.vocab_path)
     train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)#, num_replicas = args.world_size, rank = args.rank)
     # args.batch_size = args.batch_size // args.world_size
 
@@ -105,8 +105,8 @@ def main(args):
     hp.dropout_rate = args.dropout_rate
 
     # distributed model
-    de2idx, idx2de = load_de_vocab()
-    en2idx, idx2en = load_en_vocab()
+    de2idx, idx2de = load_vocab(os.path.join(args.vocab_path, "de.vocab.tsv"))
+    en2idx, idx2en = load_vocab(os.path.join(args.vocab_path, "en.vocab.tsv"))
     enc_voc = len(de2idx)
     dec_voc = len(en2idx)
     model = AttModel(hp, enc_voc, dec_voc)
@@ -281,6 +281,7 @@ if __name__ == '__main__':
     parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'], help='distributed backend')
     parser.add_argument('--port', default=12345, type=int, metavar='P', help='master port')
     parser.add_argument('--quantify', dest='quantify', action='store_true', help='quantify training')
+    parser.add_argument('--vocab_path', type=str, default="./data/IWSLT/preprocessed", help='the path to preprocessed data')
     args = parser.parse_args()
     main(args)
 

@@ -19,6 +19,7 @@ run_cmd="python -u train.py \
     --print-freq ${print_freq} \
     --dropout_rate $dropout_rate \
     --dataset-path $DATASET_PATH \
+    --vocab_path $VOCAB_PATH \
     "
 
 g=$(($2<8?$2:8))
