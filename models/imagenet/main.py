@@ -26,6 +26,8 @@ from utils.loss import LabelSmoothLoss
 from utils.lr_scheduler import adjust_learning_rate_cos
 from utils.perf import PerfRecorder
 
+import numpy as np
+
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
                     default='configs/resnet50.yaml',
@@ -51,7 +53,7 @@ parser.add_argument('--dummy_test',
 parser.add_argument('--launcher',
                     type=str,
                     default="slurm",
-                    choices=['slurm', 'mpi'],
+                    choices=['slurm', 'mpi', 'none'],
                     help='distributed backend')
 parser.add_argument('--device',
                     type=str,
@@ -63,6 +65,10 @@ parser.add_argument('--cfg_options',
                     type=str,
                     default=None,
                     help='override some settings in the used config.')
+parser.add_argument('--save_inout',
+                    dest='save input and output for test',
+                    action='store_true',
+                    help='save input and output in val')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -215,7 +221,14 @@ def main():
                 cfgs.saver.pretrain_model)
         checkpoint = torch.load(cfgs.saver.pretrain_model)
         check_keys(model=model, checkpoint=checkpoint)
-        model.load_state_dict(checkpoint['state_dict'])
+        if args.quantify:
+            new_checkpoint = dict()
+            for key in checkpoint['state_dict'].keys():
+                new_key = key[7:]
+                new_checkpoint[new_key] = checkpoint['state_dict'][key]
+            model.load_state_dict(new_checkpoint)
+        else:
+            model.load_state_dict(checkpoint['state_dict'])
         logger.info("pretrain training from '{}'".format(
             cfgs.saver.pretrain_model))
 
@@ -428,6 +441,18 @@ def test(test_loader, model, criterion, args):
                     target = target.cuda()
 
             output = model(input)
+            if args.save_inout:
+                if (i == 0):
+                    in_cpu = input.cpu().numpy()
+                    out_cpu = output.cpu().numpy()
+                    np.save('test_data/input.npy', in_cpu)
+                    np.save('test_data/output.npy', out_cpu)
+                    print('input.size(): {}'.format(input.size()))
+                    print('output.size(): {}'.format(output.size()))
+                if (i == 1):
+                    print('Here is iter 1,break')
+                    import sys
+                    sys.exit()
             loss = criterion(output, target)
 
             # measure accuracy and record loss
