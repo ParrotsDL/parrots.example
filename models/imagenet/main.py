@@ -133,7 +133,8 @@ def main():
     cudnn.benchmark = True
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
-    args.max_epoch = cfgs.trainer.max_epoch
+    args.max_epoch = (int(os.getenv("maxstep")) if os.getenv("maxstep")
+                      is not None else cfgs.trainer.max_epoch)
     args.test_freq = (args.test_freq
                       if args.test_freq else cfgs.trainer.test_freq)
     args.log_freq = cfgs.trainer.log_freq
