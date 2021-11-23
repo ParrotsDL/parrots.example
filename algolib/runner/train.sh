@@ -20,6 +20,8 @@ export MODEL_NAME=$3
 export FRAME_NAME=example #customize for each frame
 cfg=$pyroot/algolib/configs/${MODEL_NAME}.yaml
 export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
+export PARROTS_DEFAULT_LOGGER=FALSE
+
 export PYTHONPATH=$PWD/submodules/common/sites/:$PYTHONPATH # necessary for init
 
 # 4. build necessary parameter
