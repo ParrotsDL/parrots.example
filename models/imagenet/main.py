@@ -90,7 +90,8 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    dist.init_process_group(backend="nccl")
+    if not dist.is_initialized():
+        dist.init_process_group(backend="nccl")
     torch.cuda.set_device(args.local_rank)
 
     if args.rank == 0:
@@ -136,7 +137,8 @@ def main():
     cudnn.benchmark = True
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
-    args.max_epoch = cfgs.trainer.max_epoch
+    args.max_epoch = (int(os.getenv("maxstep")) if os.getenv("maxstep")
+                      is not None else cfgs.trainer.max_epoch)
     args.test_freq = (args.test_freq
                       if args.test_freq else cfgs.trainer.test_freq)
     args.log_freq = cfgs.trainer.log_freq
@@ -212,7 +214,10 @@ def main():
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
-        [hook.before_epoch() for hook in getattr(torch, '_algolib_hooks', [])]
+        [
+            hook.before_epoch(current_epoch=epoch)
+            for hook in getattr(torch, '_algolib_hooks', [])
+        ]
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
