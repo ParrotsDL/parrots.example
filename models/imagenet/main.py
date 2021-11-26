@@ -50,7 +50,7 @@ parser.add_argument('--dummy_test',
 parser.add_argument('--launcher',
                     type=str,
                     default="slurm",
-                    choices=['slurm', 'mpi'],
+                    choices=['slurm', 'mpi', 'none'],
                     help='distributed backend')
 parser.add_argument('--device',
                     type=str,
@@ -81,7 +81,7 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    backend = "cncl" if use_camb else "nccl"
+    backend = "cncl" if use_camb or args.device == "mlu" else "nccl"
 
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
@@ -330,6 +330,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             output = model(input)
             loss = criterion(output, target)
 
+        # compute gradient and do SGD step
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
@@ -349,11 +354,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         top5.update(stats_all[2].item())
         if args.device == "gpu":
             memory.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -420,14 +420,16 @@ def test(test_loader, model, criterion, args):
 
         loss = torch.tensor([losses.avg])
         if args.device == "mlu":
-            dist.all_reduce(loss.to(ct.mlu_device()))
+            loss = loss.to(ct.mlu_device())
+            stats_all = stats_all.to(ct.mlu_device())
         else:
-            dist.all_reduce(loss.cuda())
+            loss = loss.cuda()
+            stats_all = stats_all.cuda()
+        if args.dist:
+            dist.all_reduce(loss)
+            dist.all_reduce(stats_all)
+
         loss_avg = loss.item() / args.world_size
-        if args.device == "mlu":
-            dist.all_reduce(stats_all.to(ct.mlu_device()))
-        else:
-            dist.all_reduce(stats_all.cuda())
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 

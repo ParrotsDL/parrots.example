@@ -117,3 +117,6 @@ cmake-build-debug/
 
 # sphinx docs
 docs/build
+
+# training logs
+models/imagenet/log/*
