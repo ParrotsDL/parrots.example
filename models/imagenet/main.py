@@ -81,7 +81,7 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    backend = "cncl" if use_camb else "nccl"
+    backend = "cncl" if use_camb or args.device == "mlu" else "nccl"
 
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
