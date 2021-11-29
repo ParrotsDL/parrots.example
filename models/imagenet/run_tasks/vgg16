@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+#SBATCH -J vgg16
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=16
+#SBATCH --gres=dcu:4
+##SBATCH --cpu-bind=map_ldom:4,5,6,7
+#SBATCH -o log/%x_job%j.out
+#SBATCH -e log/%x_job%j.err
+
+#numactl --cpunodebind=0,1,2,3 --membind=0,1,2,3 srun python ../main.py --config ../configs/vgg.yaml
+srun python ../main.py --config ../configs/vgg.yaml
