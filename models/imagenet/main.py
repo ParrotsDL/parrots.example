@@ -63,7 +63,7 @@ def main():
         args.local_rank = int(os.environ['SLURM_LOCALID'])
         node_list = str(os.environ['SLURM_NODELIST'])
         node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
         os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
