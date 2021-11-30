@@ -324,8 +324,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             input = input.to(ct.mlu_device())
             target = target.to(ct.mlu_device())
         elif use_camb:
-            input = input.contiguous(torch.channels_last).cuda()
-            target = target.int().cuda()
+            input = input.cuda().contiguous(torch.channels_last)
+            target = target.cuda().int()
         else:
             input = input.cuda()
             target = target.cuda()
