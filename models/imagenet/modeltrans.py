@@ -62,6 +62,9 @@ parser.add_argument('--seed', type=int, default=None, help='random seed')
 parser.add_argument('--quant2float', dest='quant2float',
                     action='store_true',
                     help='flag to convert quantize model to float')
+parser.add_argument('--saveInOut', dest='saveInOut',
+                    action='store_true',
+                    help='save input and output of single iter')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -201,25 +204,26 @@ def main():
             logger.info("create checkpoint folder {}".format(
                 cfgs.saver.save_dir))
     args.arch = cfgs.net.arch
-    if args.quantify:
-        logger.info("Executing the quantize model test ...")
-        test(test_loader, model, criterion, args)
-    else:
-        logger.info("Executing the fix bitwidth model test ...")
-        test(test_loader, model, criterion, args)
-    time.sleep(5)
+    if not args.saveInOut:
+        if args.quantify:
+            logger.info("Executing the quantize model test ...")
+            test(test_loader, model, criterion, args)
+        else:
+            logger.info("Executing the fix bitwidth model test ...")
+            test(test_loader, model, criterion, args)
+        time.sleep(5)
 
     if args.quant2float:
         logger.info("Converting quantize model to a float model ...")
         model = quantize.convert_from_adaptive_quantize(model)
         model = model.to_memory_format(torch.channels_last)
-        test(test_loader, model, criterion, args)
         model_path = cfgs.saver.pretrain_model
+        test(test_loader, model, criterion, args, model_path)
         float_model_name = model_path.split('.')[0] + '_float.pth'
         torch.save(model.cpu().state_dict(), float_model_name)
 
 
-def test(test_loader, model, criterion, args):
+def test(test_loader, model, criterion, args, model_path=None):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -249,6 +253,21 @@ def test(test_loader, model, criterion, args):
                     target = target.cuda()
 
             output = model(input)
+            if args.saveInOut and model_path != None:
+                import numpy as np
+                import sys
+                if i == 0:
+                    in_cpu = input.data.cpu().numpy()
+                    out_cpu = output.data.cpu().numpy()
+                    in_name = model_path.split('.')[0] + '_input.npy'
+                    out_name = model_path.split('.')[0] + '_output.npy'
+                    np.save(in_name, in_cpu)
+                    np.save(out_name, out_cpu)
+                    logger.info('input.size: {}'.format(input.size()))
+                    logger.info('output.size: {}'.format(output.size()))
+                    logger.info("Save input and output over, just stop! \n")
+                    sys.exit()
+
             loss = criterion(output, target)
 
             # measure accuracy and record loss
