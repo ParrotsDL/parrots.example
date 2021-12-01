@@ -36,7 +36,7 @@ parser.add_argument('--port', default=12345, type=int, metavar='P',
                     help='master port')
 parser.add_argument('--dummy_test', dest='dummy_test', action='store_true',
                     help='dummy data for speed evaluation')
-parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi'],
+parser.add_argument('--launcher', type=str, default="slurm", choices=['slurm', 'mpi', 'none'],
                     help='distributed backend')
 parser.add_argument('--device', type=str, default="gpu", choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
@@ -289,10 +289,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     for i, (input, target) in enumerate(train_loader):
         # if args.use_amp:
         #     print(f"scaler state dict: {scaler.state_dict()}")
-
-        if i == 20:
-            import sys
-            sys.exit(1)
         
         # measure data loading time
         data_time.update(time.time() - end)
@@ -336,20 +332,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
                 output = model(input)
                 loss = criterion(output, target)
 
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        if args.device == "mlu":
-            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().to(ct.mlu_device())
-        else:
-            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
-        if args.dist:
-            dist.all_reduce(stats_all)
-        stats_all /= args.world_size
-
-        losses.update(stats_all[0].item())
-        top1.update(stats_all[1].item())
-        top5.update(stats_all[2].item())
         if args.device == "gpu":
             memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
@@ -362,6 +345,21 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         else:
             loss.backward()
             optimizer.step()
+
+        # measure accuracy and record loss
+        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+        
+        if args.device == "mlu":
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().to(ct.mlu_device())
+        else:
+            stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
+        if args.dist:
+            dist.all_reduce(stats_all)
+        stats_all /= args.world_size
+
+        losses.update(stats_all[0].item())
+        top1.update(stats_all[1].item())
+        top5.update(stats_all[2].item())
 
         # measure elapsed time
         batch_time.update(time.time() - end)
