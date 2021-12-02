@@ -9,6 +9,11 @@ if [ -z $DATASET_PATH ]; then
     exit 1
 fi
 
+if [ -z $VOCAB_PATH ]; then
+    echo "[ERROR] Please set VOCAB_PATH"
+    exit 1
+fi
+
 num_epochs=20
 iterations=-1
 print_freq=50

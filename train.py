@@ -8,11 +8,11 @@ https://www.github.cim/leviswind/transformer-pytorch
 from __future__ import print_function
 
 import argparse
-import random
 import os
 import time
 import re
 import logging
+import shutil
 
 import numpy as np
 import torch
@@ -23,7 +23,10 @@ import torch.multiprocessing as mp
 import torch.utils.data
 import torch.utils.data.distributed
 from torch.utils.data.distributed import DistributedSampler
-
+from torch.autograd import Variable
+from hyperparams import Hyperparams as hp
+from data_load import TestDataSet, load_vocab
+from nltk.translate.bleu_score import corpus_bleu
 
 from AttModel import AttModel
 from data_load import TrainDataSet, load_vocab
@@ -43,9 +46,9 @@ else:
     use_camb = False
 int_dtype = torch.int if use_camb else torch.long
 
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(
             format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
-logger = logging.getLogger("__name__")
+logger = logging.getLogger()
 
 def main(args):
     if args.launcher == 'slurm':
@@ -66,13 +69,18 @@ def main(args):
         args.local_rank = 0
     args.dist = args.world_size > 1
 
-    if not os.path.exists(args.ckp_path):
+    if args.rank == 0 and not os.path.exists(args.ckp_path):
         os.makedirs(args.ckp_path)
-    if not os.path.exists(args.log_path):
+    if args.rank == 0 and not os.path.exists(args.log_path):
         os.makedirs(args.log_path)
 
     if args.seed is not None:
         set_seed(args.seed)
+        
+    if args.rank == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
 
     import time
     start = time.time()
@@ -101,6 +109,16 @@ def main(args):
         batch_size= args.batch_size,
         shuffle=(train_sampler is None),
         sampler=train_sampler)
+
+    source_test = args.dataset_path + hp.source_test
+    target_test = args.dataset_path + hp.target_test
+    test_dataset = TestDataSet(source_test, target_test, args.vocab_path)
+    test_loader = torch.utils.data.DataLoader(
+        test_dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.workers,
+        pin_memory=False)
 
     hp.dropout_rate = args.dropout_rate
 
@@ -145,6 +163,8 @@ def main(args):
     if args.seed is not None:
         set_seed(args.seed)
 
+    best_bleu = 0.0
+    best_epoch = 0
     for epoch in range(startepoch, args.num_epochs + 1):
         if args.dist:
             train_sampler.set_epoch(epoch)
@@ -153,6 +173,7 @@ def main(args):
         epoch_iters = len(train_loader)
 
         train(train_loader, model, optimizer, epoch, args, epoch_log, args.rank, epoch_iters)
+        bleu = eval(test_loader, model, args, idx2en)
 
         # save model
         if not args.save_ckpt:
@@ -167,9 +188,15 @@ def main(args):
                 state['model'] = model.state_dict()
             state['optim'] = optimizer.state_dict()
             torch.save(state, checkpoint_path)
+            best_ckpt_path = os.path.join(args.ckp_path, "model_best.pth")
+            if bleu > best_bleu:
+                best_bleu = bleu
+                best_epoch = epoch
+                shutil.copyfile(checkpoint_path, best_ckpt_path)
 
     end = time.time()
-    print("Using Time: " + str(end-start))
+    logger.info("Best BLEU: {:.2f} at epoch {:02d}".format(100 * best_bleu, best_epoch))
+    logger.info("Using Time: " + str(end-start))
 
 def set_lr(optimizer, args, cur_iters):
     if cur_iters <= args.warmup_iters:
@@ -252,6 +279,50 @@ def train(train_loader, model, optimizer, epoch, args, epoch_log, rank, epoch_it
                 np.mean(batch_time_benchmark),
                 np.var(batch_time_benchmark),
                 args.batch_size * hp.maxlen / np.mean(batch_time_benchmark) * cards) + "\n")
+
+
+def eval(test_loader, model, args, idx2en):
+    logger.info("Start evaluation.")
+    model.eval()
+
+    list_of_refs, hypotheses = [], []
+    for i, (x, sources, targets) in enumerate(test_loader):
+        if (i == args.iterations):
+            break
+        # Autoregressive inference
+        if args.device == "gpu":
+            x_ = x.int().cuda()
+            preds_t = torch.IntTensor(np.zeros((x.size()[0], hp.maxlen), np.int32)).cuda()
+            preds = Variable(preds_t).cuda()
+        elif args.device == "mlu":
+            x_ = x.long().to('mlu')
+            preds_t = torch.LongTensor(np.zeros((x.size()[0], hp.maxlen), np.int32)).to('mlu')
+            preds = Variable(preds_t.to('mlu'))
+        else:
+            x_ = x.int()
+            preds_t = torch.LongTensor(np.zeros((x.size()[0], hp.maxlen), np.int32))
+            preds = Variable(preds_t)
+
+        for j in range(hp.maxlen):
+            _, _preds, _ = model(x_, preds)
+            #TODO: slice is not support now, use advanced index instead.
+            preds_t[:, [j]] = _preds.data[:, [j]]
+            preds = Variable(preds_t.int())
+        preds = preds.data.cpu().numpy()
+        
+        for source, target, pred in zip(sources, targets, preds):  # sentence-wise
+            got = " ".join(idx2en[idx] for idx in pred).split("</S>")[0].strip()
+            # bleu score
+            ref = target.split()
+            hypothesis = got.split()
+            if len(ref) > 3 and len(hypothesis) > 3:
+                list_of_refs.append([ref])
+                hypotheses.append(hypothesis)
+
+    # Calculate bleu score
+    score = corpus_bleu(list_of_refs, hypotheses)
+    logger.info("Bleu Score = {}".format(100 * score))
+    return score
 
 
 if __name__ == '__main__':
