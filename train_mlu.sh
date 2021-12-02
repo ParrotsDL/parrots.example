@@ -18,6 +18,7 @@ num_epochs=20
 iterations=-1
 print_freq=50
 dropout_rate=0.0
+batch_size=$(($2>=4?8:32))
 
 run_cmd="python -u train.py \
     --log-path $CUR_DIR/logs \
@@ -27,6 +28,7 @@ run_cmd="python -u train.py \
     --dropout_rate $dropout_rate \
     --dataset-path $DATASET_PATH \
     --vocab_path $VOCAB_PATH \
+    --batch-size $batch_size  \
     "
 
 g=$(($2<8?$2:8))
