@@ -55,6 +55,9 @@ from .modeling_utils import (
 )
 from .utils import logging
 
+use_camb=False
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
 
 logger = logging.get_logger(__name__)
 
@@ -173,11 +176,14 @@ class BertEmbeddings(nn.Module):
 
         # self.LayerNorm is not snake-cased to stick with TensorFlow model variable name and be able to load
         # any TensorFlow checkpoint file
-        self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
         # position_ids (1, len position emb) is contiguous in memory and exported when serialized
-        self.register_buffer("position_ids", torch.arange(config.max_position_embeddings).expand((1, -1)))
+        if use_camb:
+            self.register_buffer("position_ids", torch.arange(config.max_position_embeddings, dtype=torch.int).expand((1, -1)))
+        else:
+            self.register_buffer("position_ids", torch.arange(config.max_position_embeddings).expand((1, -1)))
 
     def forward(self, input_ids=None, token_type_ids=None, position_ids=None, inputs_embeds=None):
         if input_ids is not None:
@@ -255,14 +261,15 @@ class BertSelfAttention(nn.Module):
         value_layer = self.transpose_for_scores(mixed_value_layer)
 
         # Take the dot product between "query" and "key" to get the raw attention scores.
-        attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
+        attention_scores = torch.matmul(query_layer.contiguous(), key_layer.contiguous().transpose(-1, -2).contiguous())
         attention_scores = attention_scores / math.sqrt(self.attention_head_size)
         if attention_mask is not None:
             # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
             attention_scores = attention_scores + attention_mask
 
         # Normalize the attention scores to probabilities.
-        attention_probs = nn.Softmax(dim=-1)(attention_scores)
+        N,C, H, W = attention_scores.shape
+        attention_probs = nn.Softmax(dim=-1)(attention_scores.reshape(-1,H, W)).reshape(N,C, H, W)
 
         # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.
@@ -272,7 +279,7 @@ class BertSelfAttention(nn.Module):
         if head_mask is not None:
             attention_probs = attention_probs * head_mask
 
-        context_layer = torch.matmul(attention_probs, value_layer)
+        context_layer = torch.matmul(attention_probs.contiguous(), value_layer.contiguous())
 
         context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
         new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size,)
@@ -286,7 +293,7 @@ class BertSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.dense = nn.Linear(config.hidden_size, config.hidden_size)
-        self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
     def forward(self, hidden_states, input_tensor):
@@ -362,7 +369,7 @@ class BertOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.dense = nn.Linear(config.intermediate_size, config.hidden_size)
-        self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
     def forward(self, hidden_states, input_tensor):
@@ -519,6 +526,18 @@ class BertPooler(nn.Module):
         pooled_output = self.activation(pooled_output)
         return pooled_output
 
+class LayerNorm(nn.Module):
+    def __init__(self, hidden_size, eps=1e-12):
+        super(LayerNorm, self).__init__()
+        self.bias = nn.Parameter(torch.zeros(hidden_size))
+        self.weight = nn.Parameter(torch.zeros(hidden_size))
+        self.eps = eps
+
+    def forward(self, x):
+        x = x.contiguous()
+        mean = x.mean(-1, keepdim=True)
+        std = x.std(-1, keepdim=True)
+        return self.weight * (x - mean) / (std + self.eps) + self.bias
 
 class BertPredictionHeadTransform(nn.Module):
     def __init__(self, config):
@@ -528,7 +547,7 @@ class BertPredictionHeadTransform(nn.Module):
             self.transform_act_fn = ACT2FN[config.hidden_act]
         else:
             self.transform_act_fn = config.hidden_act
-        self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
 
     def forward(self, hidden_states):
         hidden_states = self.dense(hidden_states)
@@ -606,7 +625,7 @@ class BertPreTrainedModel(PreTrainedModel):
             # Slightly different from the TF version which uses truncated_normal for initialization
             # cf https://github.com/pytorch/pytorch/pull/5617
             module.weight.data.normal_(mean=0.0, std=self.config.initializer_range)
-        elif isinstance(module, nn.LayerNorm):
+        elif isinstance(module, LayerNorm):
             module.bias.data.zero_()
             module.weight.data.fill_(1.0)
         if isinstance(module, nn.Linear) and module.bias is not None:
