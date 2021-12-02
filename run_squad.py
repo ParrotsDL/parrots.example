@@ -49,6 +49,10 @@ from transformers.data.metrics.squad_metrics import (
 )
 from transformers.data.processors.squad import SquadResult, SquadV1Processor, SquadV2Processor
 
+use_camb = False
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
+int_dtype = torch.int if use_camb else torch.long
 
 try:
     from torch.utils.tensorboard import SummaryWriter
@@ -68,35 +72,35 @@ try:
 except ImportError:
     print("train without cnmix")
 
-logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger()
+logger_all = logging.getLogger('all')
 
 MODEL_CONFIG_CLASSES = list(MODEL_FOR_QUESTION_ANSWERING_MAPPING.keys())
 MODEL_TYPES = tuple(conf.model_type for conf in MODEL_CONFIG_CLASSES)
 
+use_camb=False
+if torch.__version__ == "parrots":
+    from parrots.base import use_camb
 
 def set_seed(args):
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
-    if args.n_device > 0:
-        torch.cuda.manual_seed_all(args.seed)
+    if args.world_size > 0:
+        if not use_camb:
+            torch.cuda.manual_seed_all(args.seed)
 
 
 def to_list(tensor):
     return tensor.detach().cpu().tolist()
 
 
-def train(args, train_dataset, model, tokenizer):
+def train(args, train_dataset, train_dataloader, model, tokenizer):
     """ Train the model """
-    if args.local_rank in [-1, 0]:
+    if args.local_rank == 0:
         tb_writer = SummaryWriter()
 
-    args.train_batch_size = args.per_gpu_train_batch_size * max(1, args.n_device)
-    train_sampler = RandomSampler(train_dataset) if args.local_rank == -1 else DistributedSampler(train_dataset)
-    train_dataloader = DataLoader(train_dataset, sampler=train_sampler, batch_size=args.train_batch_size)
-
-    if args.device_param == "mlu":
-        model.to('mlu').float()
     if args.max_steps > 0:
         t_total = args.max_steps
         args.num_train_epochs = args.max_steps // (len(train_dataloader) // args.gradient_accumulation_steps) + 1
@@ -125,29 +129,6 @@ def train(args, train_dataset, model, tokenizer):
         optimizer.load_state_dict(torch.load(os.path.join(args.model_name_or_path, "optimizer.pt")))
         scheduler.load_state_dict(torch.load(os.path.join(args.model_name_or_path, "scheduler.pt")))
 
-    if not getattr(args, 'cnmix', False) and args.fp16:
-        try:
-            from apex import amp
-        except ImportError:
-            raise ImportError("Please install apex from https://www.github.com/nvidia/apex to use fp16 training.")
-
-        model, optimizer = amp.initialize(model, optimizer, opt_level=args.fp16_opt_level)
-
-    if getattr(args, 'cnmix', False) and args.device_param == 'mlu':
-        model, optimizer = cnmix.initialize(model, optimizer, opt_level=args.fp16_opt_level)
-        cnmix.core.cnmix_set_amp_quantify_params('all', {'batch_size': args.train_batch_size,
-                                                         'data_num': args.train_batch_size * len(train_dataloader)})
-
-
-    # multi-gpu training (should be after apex fp16 initialization)
-    # if args.n_device > 1:
-    #    model = torch.nn.DataParallel(model)
-
-    # Distributed training (should be after apex fp16 initialization)
-    #if args.local_rank != -1:
-        #model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank],
-        #        find_unused_parameters=True,broadcast_buffers=False)
-    model = DDP(model)
     # Train!
     logger.info("***** Running training *****")
     logger.info("  Num examples = %d", len(train_dataset))
@@ -191,25 +172,27 @@ def train(args, train_dataset, model, tokenizer):
     # Added here for reproductibility
     set_seed(args)
     batch_time_benchmark = []
-    for _ in train_iterator:
-        epoch_iterator = tqdm(train_dataloader, desc="Iteration", disable=args.local_rank not in [-1, 0])
+
+    for epoch in train_iterator:
         start = time.time()
         iter_num = 0
         epoch_loss = 0
         step_time_start = time.time()
-        for step, batch in enumerate(epoch_iterator):
+        for step, batch in enumerate(train_dataloader):
 
             # Skip past any already trained steps if resuming training
             if steps_trained_in_current_epoch > 0:
                 steps_trained_in_current_epoch -= 1
                 continue
 
-            if adaptive_cnt and step >= (adaptive_cnt + 200):
-                break
-
             iter_num = iter_num + 1
             model.train()
-            batch = tuple(t.to(args.device) for t in batch)
+
+            batch = [ba.int() if ba.dtype == torch.long else ba for ba in batch]
+            if args.device == "mlu":
+                batch = tuple(t.to(ct.mlu_device()) for t in batch)
+            else:
+                batch = tuple(t.to('cuda') for t in batch)
 
             inputs = {
                 "input_ids": batch[0],
@@ -228,14 +211,14 @@ def train(args, train_dataset, model, tokenizer):
                     inputs.update({"is_impossible": batch[7]})
                 if hasattr(model, "config") and hasattr(model.config, "lang2id"):
                     inputs.update(
-                        {"langs": (torch.ones(batch[0].shape, dtype=torch.int64) * args.lang_id).to(args.device)}
+                        {"langs": (torch.ones(batch[0].shape, dtype=int_dtype) * args.lang_id).to(args.device)}
                     )
-
+            #inputs = [da.int() if isinstance(da, torch.Tensor) and da.dtype == torch.long else da for da in inputs]
             outputs = model(**inputs)
             # model outputs are always tuple in transformers (see doc)
             loss = outputs[0]
 
-            if args.n_device > 1:
+            if args.world_size > 1:
                 loss = loss.mean()  # mean() to average on multi-gpu parallel (not distributed) training
             if args.gradient_accumulation_steps > 1:
                 loss = loss / args.gradient_accumulation_steps
@@ -261,10 +244,15 @@ def train(args, train_dataset, model, tokenizer):
                 model.zero_grad()
                 global_step += 1
             if args.max_steps > 0 and global_step > args.max_steps:
-                epoch_iterator.close()
                 break
+            batch_time = time.time() - step_time_start
             if step > adaptive_cnt and adaptive_cnt > 0:
-                batch_time_benchmark.append(time.time() - step_time_start)
+                batch_time_benchmark.append(batch_time)
+
+            if step % 20 == 0:
+                logger.info('Epoch: [{}/{}][  {}/{}] Time {:.3f} Loss {:.4f}'.format(
+                    epoch, int(args.num_train_epochs), step, len(train_dataloader), batch_time, loss.item()))
+
             step_time_start = time.time()
         avg_time = (time.time() - start) / iter_num
         cards = 1 if not torch.distributed.is_initialized() else int(os.environ["WORLD_SIZE"])
@@ -289,7 +277,7 @@ def train(args, train_dataset, model, tokenizer):
             train_iterator.close()
             break
 
-    if args.local_rank in [-1, 0]:
+    if args.local_rank == 0:
         tb_writer.close()
 
     return global_step, tr_loss / global_step
@@ -301,15 +289,11 @@ def evaluate(args, model, tokenizer, prefix=""):
     if not os.path.exists(args.output_dir) and args.local_rank in [-1, 0]:
         os.makedirs(args.output_dir)
 
-    args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_device)
+    args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.world_size)
 
     # Note that DistributedSampler samples randomly
     eval_sampler = SequentialSampler(dataset)
     eval_dataloader = DataLoader(dataset, sampler=eval_sampler, batch_size=args.eval_batch_size)
-
-    # multi-gpu evaluate
-    if args.n_device > 1 and not isinstance(model, torch.nn.DataParallel):
-        model = torch.nn.DataParallel(model)
 
     # Eval!
     logger.info("***** Running evaluation {} *****".format(prefix))
@@ -323,7 +307,11 @@ def evaluate(args, model, tokenizer, prefix=""):
         if step == args.eval_iters:
             break
         model.eval()
-        batch = tuple(t.to(args.device) for t in batch)
+        batch = [ba.int() if ba.dtype == torch.long else ba for ba in batch]
+        if args.device == "mlu":
+            batch = tuple(t.to(ct.mlu_device()) for t in batch)
+        else:
+            batch = tuple(t.to('cuda') for t in batch)
 
         with torch.no_grad():
             inputs = {
@@ -343,7 +331,7 @@ def evaluate(args, model, tokenizer, prefix=""):
                 # for lang_id-sensitive xlm models
                 if hasattr(model, "config") and hasattr(model.config, "lang2id"):
                     inputs.update(
-                        {"langs": (torch.ones(batch[0].shape, dtype=torch.int64) * args.lang_id).to(args.device)}
+                        {"langs": (torch.ones(batch[0].shape, dtype=int_dtype) * args.lang_id).to(args.device)}
                     )
             outputs = model(**inputs)
 
@@ -432,7 +420,7 @@ def evaluate(args, model, tokenizer, prefix=""):
 
 
 def load_and_cache_examples(args, tokenizer, evaluate=False, output_examples=False):
-    if args.local_rank not in [-1, 0] and not evaluate:
+    if args.local_rank != 0 and not evaluate:
         # Make sure only the first process in distributed training process the dataset, and the others will use the cache
         torch.distributed.barrier()
 
@@ -668,7 +656,7 @@ def main():
         action="store_true",
         help="Evaluate all checkpoints starting with the same prefix as model_name ending and ending with step number",
     )
-    parser.add_argument("--device_param", type=str, default="gpu", help="use gpu, mlu or cpu")
+    parser.add_argument("--device", type=str, default="gpu", help="use gpu, mlu or cpu")
     parser.add_argument(
         "--overwrite_output_dir", action="store_true", help="Overwrite the content of the output directory"
     )
@@ -704,6 +692,7 @@ def main():
                     default="slurm",
                     choices=['slurm', 'mpi'],
                     help='distributed backend')
+    parser.add_argument('--quantify', dest='quantify', action='store_true', help='quantify training')
     args = parser.parse_args()
     args.port = 12345
     if args.launcher == 'slurm':
@@ -713,7 +702,7 @@ def main():
 
         node_list = str(os.environ['SLURM_NODELIST'])
         node_parts = re.findall('[0-9]+', node_list)
-        os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
+        os.environ['MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
         os.environ['MASTER_PORT'] = str(args.port)
         os.environ['WORLD_SIZE'] = str(args.world_size)
         os.environ['RANK'] = str(args.rank)
@@ -738,6 +727,15 @@ def main():
     #os.environ['WORLD_SIZE'] = str(args.world_size)
     #os.environ['RANK'] = str(args.rank)
     os.environ['MASTER_PORT'] = str(12345)
+
+    if args.rank == 0:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.ERROR)
+    logger_all.setLevel(logging.INFO)
+
+    logger_all.info("rank {} of {} jobs".format(args.rank, args.world_size))
+
     if args.doc_stride >= args.max_seq_length - args.max_query_length:
         logger.warning(
             "WARNING - You've set a doc stride which may be superior to the document length in some "
@@ -757,53 +755,15 @@ def main():
             )
         )
 
-    # Setup distant debugging if needed
-    if args.server_ip and args.server_port:
-        # Distant debugging - see https://code.visualstudio.com/docs/python/debugging#_attach-to-a-local-script
-        import ptvsd
-
-        print("Waiting for debugger attach")
-        ptvsd.enable_attach(address=(args.server_ip, args.server_port), redirect_output=True)
-        ptvsd.wait_for_attach()
-
-    # Setup CUDA, GPU & distributed training
-    if args.local_rank == -1:
-        device = torch.device("cuda" if torch.cuda.is_available() and args.device_param == "gpu" else args.device_param)
+    backend = "cncl" if use_camb or args.device == "mlu" else "nccl"
+    dist.init_process_group(backend=backend)
+    if args.device == "mlu":
+        ct.set_device(args.local_rank)
     else:
-        if args.device_param == "mlu":
-            ct.set_device(args.local_rank)
-        elif args.device_param == "gpu":
-            torch.distributed.init_process_group(backend='nccl')# if args.device_param == "mlu" else "nccl", init_method='env://')
-            torch.cuda.set_device(args.local_rank)
-        #torch.distributed.init_process_group(backend='nccl')# if args.device_param == "mlu" else "nccl", init_method='env://')
-        device = 'cuda' #torch.device("cuda" if torch.cuda.is_available() and args.device_param == "gpu" else args.device_param, args.local_rank)
-        #torch.distributed.init_process_group(backend='nccl')# if args.device_param == "mlu" else "nccl", init_method='env://')
-    args.n_device = 1
-    args.device = device
-
-    # Setup logging
-    logging.basicConfig(
-        format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
-        datefmt="%m/%d/%Y %H:%M:%S",
-        level=logging.INFO if args.local_rank in [-1, 0] else logging.WARN,
-    )
-    logger.warning(
-        "Process rank: %s, device: %s, n_gpu: %s, distributed training: %s, 16-bits training: %s",
-        args.local_rank,
-        device,
-        args.n_device,
-        bool(args.local_rank != -1),
-        args.fp16,
-    )
+        torch.cuda.set_device(args.local_rank)
 
     # Set seed
     set_seed(args)
-
-    # Load pretrained model and tokenizer
-    if args.local_rank not in [-1, 0]:
-        # Make sure only the first process in distributed training will download model & vocab
-        #torch.distributed.barrier()
-        pass
 
     args.model_type = args.model_type.lower()
     config = AutoConfig.from_pretrained(
@@ -822,36 +782,34 @@ def main():
         cache_dir=args.cache_dir if args.cache_dir else None,
     )
 
-    if args.local_rank == 0:
-        # Make sure only the first process in distributed training will download model & vocab
-        torch.distributed.barrier()
+    train_dataset = load_and_cache_examples(args, tokenizer, evaluate=False, output_examples=False)
+    args.train_batch_size = args.per_gpu_train_batch_size * max(1, args.world_size)
+    train_sampler = DistributedSampler(train_dataset)
+    train_dataloader = DataLoader(train_dataset, sampler=train_sampler, batch_size=args.per_gpu_train_batch_size)
 
-    model.to(args.device)
+    if args.device == "mlu":
+        model.to('mlu').float()
+    elif args.device == "gpu":
+        if args.quantify:
+            from torch.utils import quantize
+            model = quantize.convert_to_adaptive_quantize(
+                model, len(train_dataloader))
+        model.cuda().float()
 
-    logger.info("Training/evaluation parameters %s", args)
+    logger.info("model\n{}".format(model))
 
-    # Before we do anything with models, we want to ensure that we get fp16 execution of torch.einsum if args.fp16 is set.
-    # Otherwise it'll default to "promote" mode, and we'll get fp32 operations. Note that running `--fp16_opt_level="O2"` will
-    # remove the need for this code, but it is still valid.
-    if not getattr(args, 'cnmix', False) and args.fp16:
-        try:
-            import apex
-
-            apex.amp.register_half_function(torch, "einsum")
-        except ImportError:
-            raise ImportError("Please install apex from https://www.github.com/nvidia/apex to use fp16 training.")
+    # multi-gpu training
+    if args.world_size > 1:
+        model = DDP(model, device_ids=[args.local_rank])
 
     # Training
     if args.do_train:
-        train_dataset = load_and_cache_examples(args, tokenizer, evaluate=False, output_examples=False)
-        global_step, tr_loss = train(args, train_dataset, model, tokenizer)
+        global_step, tr_loss = train(args, train_dataset, train_dataloader, model, tokenizer)
         logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
 
     # Save the trained model and the tokenizer
 
     # MLU training benchmark mode bypass model Evaluation
-    if (os.getenv('MLU_ADAPTIVE_STRATEGY_COUNT') is not None):
-        exit()
     if args.do_train and (args.local_rank == -1 or torch.distributed.get_rank() == 0):
         logger.info("Saving model checkpoint to %s", args.output_dir)
         # Save a trained model, configuration and tokenizer using `save_pretrained()`.
@@ -864,11 +822,6 @@ def main():
 
         # Good practice: save your training arguments together with the trained model
         torch.save(args, os.path.join(args.output_dir, "training_args.bin"))
-
-        # Load a trained model and vocabulary that you have fine-tuned
-        model = AutoModelForQuestionAnswering.from_pretrained(args.output_dir)  # , force_download=True)
-        tokenizer = AutoTokenizer.from_pretrained(args.output_dir, do_lower_case=args.do_lower_case)
-        model.to(args.device)
 
     # Evaluation - we can ask to evaluate all the checkpoints (sub-directories) in a directory
     results = {}
@@ -888,17 +841,11 @@ def main():
 
         logger.info("Evaluate the following checkpoints: %s", checkpoints)
 
-        for checkpoint in checkpoints:
-            # Reload the model
-            global_step = checkpoint.split("-")[-1] if len(checkpoints) > 1 else ""
-            model = AutoModelForQuestionAnswering.from_pretrained(checkpoint)  # , force_download=True)
-            model.to(args.device)
+        # Evaluate
+        result = evaluate(args, model, tokenizer, prefix=global_step)
 
-            # Evaluate
-            result = evaluate(args, model, tokenizer, prefix=global_step)
-
-            result = dict((k + ("_{}".format(global_step) if global_step else ""), v) for k, v in result.items())
-            results.update(result)
+        result = dict((k + ("_{}".format(global_step) if global_step else ""), v) for k, v in result.items())
+        results.update(result)
 
     logger.info("Results: {}".format(results))
 

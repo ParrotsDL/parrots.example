@@ -11,6 +11,7 @@ python run_squad.py \
  --num_train_epochs 2 \
  --max_seq_length 384 \
  --doc_stride 128 \
- --output_dir bert_base_cased_ddp_from_scratch_$now \
+ --output_dir bert_base_cased_ddp_from_scratch_quantify_$now \
  --max_steps -1 \
- --do_eval
+ --do_eval \
+ --quantify
