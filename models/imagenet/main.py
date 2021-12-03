@@ -329,20 +329,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         else:
             input = input.cuda()
             target = target.cuda()
-
-        # compute output
-        if args.use_amp:
-            with amp.autocast():
-                if args.arch == 'googlenet':
-                    aux1, aux2, output = model(input)
-                    loss1 = criterion(output, target)
-                    loss2 = criterion(aux1, target)
-                    loss3 = criterion(aux2, target)
-                    loss = loss1 + 0.3 * (loss2 + loss3)
-                else:
-                    output = model(input)
-                    loss = criterion(output, target)
-        else: # not use amp
+            
+        def train_loss(input, target):
             if args.arch == 'googlenet':
                 aux1, aux2, output = model(input)
                 loss1 = criterion(output, target)
@@ -352,6 +340,14 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             else:
                 output = model(input)
                 loss = criterion(output, target)
+            return output, loss
+
+        # compute output
+        if args.use_amp:
+            with amp.autocast():
+                output, loss = train_loss(input, target)
+        else: # not use amp
+            output, loss = train_loss(input, target)
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
