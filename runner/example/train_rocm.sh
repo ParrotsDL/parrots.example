@@ -11,12 +11,12 @@ cfg=$ROOT/configs/example/${name}.yaml
 
 array=( $@ )
 len=${#array[@]}
-EXTRA_ARGS=${array[@]:4:$len}
+EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 if [[ $4 =~ "sync" ]]; then
     PARROTS_EXEC_MODE=SYNC OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-    srun --mpi=pmi2 -p $1 --job-name=${name} \ 
+    srun --mpi=pmi2 -p $1 --job-name=${name} \
         --gres=dcu:$g -n$2 --ntasks-per-node=$g  --cpus-per-task 8 ${SRUN_ARGS} \
         numactl --cpunodebind=0,1,2,3 --membind=0,1,2,3 \
         python -u $ROOT/models/parrots.example/models/imagenet/main.py --config ${cfg} \
@@ -24,7 +24,7 @@ if [[ $4 =~ "sync" ]]; then
         2>&1 | tee log/example/train_${name}.log-$now
 else
     OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1 \
-    srun --mpi=pmi2 -p $1 --job-name=${name} \ 
+    srun --mpi=pmi2 -p $1 --job-name=${name} \
         --gres=dcu:$g -n$2 --ntasks-per-node=$g --cpus-per-task 8 ${SRUN_ARGS} \
         numactl --cpunodebind=0,1,2,3 --membind=0,1,2,3 \
         python -u $ROOT/models/parrots.example/models/imagenet/main.py --config ${cfg} \
