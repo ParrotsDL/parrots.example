@@ -168,3 +168,6 @@
 [submodule "models/transformer"]
 	path = models/transformer
 	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/camb_transformer.git
+[submodule "models/bert"]
+	path = models/bert
+	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/bert.git
