@@ -78,8 +78,10 @@ use_camb = False
 if torch.__version__ == "parrots":
     from parrots.base import use_camb
 
+use_amp = False
 if args.use_amp:
     import torch.cuda.amp as amp
+    use_amp = True
     scaler = amp.GradScaler()
 
 
@@ -203,7 +205,7 @@ def main():
         args.start_epoch = checkpoint['epoch']
         best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
-        if args.use_amp and 'scaler' in checkpoint:
+        if use_amp and 'scaler' in checkpoint:
             scaler.load_state_dict(checkpoint['scaler'])
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
@@ -258,7 +260,7 @@ def main():
                     'optimizer': optimizer.state_dict()
                 }
 
-                if args.use_amp:
+                if use_amp:
                     checkpoint['scaler'] = scaler.state_dict()
 
                 ckpt_path = os.path.join(
@@ -329,8 +331,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         else:
             input = input.cuda()
             target = target.cuda()
-            
-        def train_loss(input, target):
+
+        with amp.autocast(enabled=use_amp):
             if args.arch == 'googlenet':
                 aux1, aux2, output = model(input)
                 loss1 = criterion(output, target)
@@ -340,24 +342,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
             else:
                 output = model(input)
                 loss = criterion(output, target)
-            return output, loss
-
-        # compute output
-        if args.use_amp:
-            with amp.autocast():
-                output, loss = train_loss(input, target)
-        else: # not use amp
-            output, loss = train_loss(input, target)
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        if args.use_amp:
-            scaler.scale(loss).backward()
-            scaler.step(optimizer)
-            scaler.update()
-        else:
-            loss.backward()
-            optimizer.step()
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
