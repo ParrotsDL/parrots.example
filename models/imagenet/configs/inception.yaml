@@ -3,7 +3,7 @@ net:
     arch: inception_v3  # inception_v1, inception_v2, inception_v3
     kwargs:
         num_classes: 1000
- 
+
 dataset:
   train:
     meta_file: /mnt/lustre/share/images/meta/train.txt
@@ -24,11 +24,12 @@ dataset:
     mirror: False
   batch_size: 128
   workers: 4
- 
+
 trainer:
   max_epoch: 1
   test_freq: 1
   log_freq: 20
+  req_acc1: 75.96
   optimizer:
     type: SGD
     kwargs:
@@ -41,8 +42,8 @@ trainer:
     kwargs:
       milestones: [30,60,90]
       gamma: 0.1
- 
+
 saver:
-  pretrian_model: 
-  resume_model: 
+  pretrian_model:
+  resume_model:
   save_dir: checkpoints/inception_v3   # save checkpoint locally

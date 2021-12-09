@@ -35,6 +35,7 @@ trainer:
   max_epoch: 150
   test_freq: 1
   log_freq: 200
+  req_acc1: 70.37
   label_smooth:
   optimizer:
     type: SGD
