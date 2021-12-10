@@ -11,18 +11,20 @@ path=$PWD
 if [[ "$path" =~ "submodules/example" ]]
 then 
     pyroot=$path
-    comroot=$path/../..
+    algolib_root=$path/../..
+    init_path=$path/..
 else
     pyroot=$path/submodules/example
-    comroot=$path
+    algolib_root=$path
+    init_path=$path/submodules
 fi
+export FRAME_NAME=example # customize for each frame
 export MODEL_NAME=$3
-export FRAME_NAME=example #customize for each frame
 cfg=$pyroot/algolib/configs/${MODEL_NAME}.yaml
-export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
-export PARROTS_DEFAULT_LOGGER=FALSE
+export PYTHONPATH=$algolib_root:$pyroot:$PYTHONPATH
 
-export PYTHONPATH=$PWD/submodules/common/sites/:$PYTHONPATH # necessary for init
+# init_path
+export PYTHONPATH=$init_path/common/sites/:$PYTHONPATH # necessary for init
 
 # 4. build necessary parameter
 partition=$1
