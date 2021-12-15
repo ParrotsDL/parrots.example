@@ -13,6 +13,11 @@ global_model_strategy:
   dummydataset: None
   dummydataloader: Parrots
 
+tool_configs:
+  opbenchmark: None
+  prec_debugtool: None
+  runtime_prec_service: None
+
 models:
   - dpn92_mix:
       seed: None  # for test
@@ -39,4 +44,3 @@ models:
   - inception_v3_mix  
   - inception_resnet  
   - inception_resnet_mix
-                 
