@@ -205,7 +205,10 @@ def main():
                 monitor_kwargs['taskid'] = cfgs.monitor._taskid
 
 
-    [hook.before_run(len_loader=len(train_loader))
+    [hook.before_run(
+        len_loader=len(train_loader),
+        model=model
+        )
      for hook in getattr(torch, '_algolib_hooks', [])]
 
     # training
@@ -298,7 +301,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args,
         input_, target_ = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
     for i, (input, target) in enumerate(train_loader):
-        [hook.before_iter() for hook in getattr(torch, '_algolib_hooks', [])]
+        data_list = [input, target]
+        [hook.before_iter(
+            data=data_list,
+        ) for hook in getattr(torch, '_algolib_hooks', [])]
+        input, target = data_list
         # measure data loading time
         data_time.update(time.time() - end)
 
