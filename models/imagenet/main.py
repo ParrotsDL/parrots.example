@@ -24,6 +24,7 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 from utils.lr_scheduler import adjust_learning_rate_cos
+from utils.config import acc1_values
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
@@ -259,6 +260,13 @@ def main():
                 if acc1 > best_acc1:
                     best_acc1 = acc1
                     shutil.copyfile(ckpt_path, best_ckpt_path)
+                
+            if cfgs.net.arch in acc1_values and acc1 >= acc1_values[cfgs.net.arch]:
+                logger.info(
+                    "Current acc1: {:.2f}. Reached required acc1: {}. Training stops."
+                    .format(acc1, acc1_values[cfgs.net.arch]))
+                break
+                
 
         if args.arch not in ["mobile_v2"]:
             lr_scheduler.step()
