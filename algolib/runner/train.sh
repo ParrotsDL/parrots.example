@@ -2,8 +2,10 @@ set -x
 set -o pipefail
 set -e
 
-# 1. build file folder for save log,format: algolib_log/frame
-mkdir -p algolib_log/example
+# 1. build file folder for save log,format: algolib_gen/frame
+mkdir -p algolib_gen/example
+
+# 2. set time
 now=$(date +"%Y%m%d_%H%M%S")
 
 # 3. set env
