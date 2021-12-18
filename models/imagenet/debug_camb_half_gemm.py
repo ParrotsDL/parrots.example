@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import models
 import numpy as np
-import hook
+import models.imagenet.hook as hook
 from pape.half.half_model import HalfModel
 import copy
 

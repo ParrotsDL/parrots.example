@@ -116,12 +116,11 @@ class hookCompare():
         return np.linalg.norm(a - b)
 
     def _display(self, data):
-        if data is None:
-            return -1, -1, -1, -1, [-1], [-1], False
         overflow = np.abs(np.max(data)) >= 65504.0
         return np.abs(np.sum(data)), np.abs(np.mean(data)), np.abs(np.max(data)), np.abs(np.min(data)), data.shape, data.reshape(-1)[0:self.display_num], overflow
 
     def _hook_diff(self, a, b):
+        if isinstance(a, list) or isinstance(b, list): return 
         sum0, mean0, shape0, max0, min0, patch0, overflow0 = self._display(a)
         sum1, mean1, shape1, max1, min1, patch1, overflow1 = self._display(b)
 
@@ -135,6 +134,7 @@ class hookCompare():
             tb.add_row(['min:', min0, min1, '-'])
             tb.add_row(['shape:', shape0, shape1, '-'])
             tb.add_row(['overflow:', overflow0, overflow1, '-'])
+            tb.add_row(['dtype:', a.dtype, b.dtype, '-'])
             print(tb)
             print(f"patch0: {patch0}")
             print(f"patch1: {patch1}")
@@ -234,6 +234,16 @@ class hookCompare():
             model.load_state_dict(torch.load(self.torch_checkpoint_path))
 
         return input, target, model
+    
+    def save_and_load2(self, input, model):
+        if self.torch_version != CAMB_PARROTS_VERSION:
+            torch.save(model.state_dict(), self.torch_checkpoint_path)
+            torch.save(input, self.torch_input_path)
+        else:
+            input = torch.load(self.torch_input_path)
+            model.load_state_dict(torch.load(self.torch_checkpoint_path))
+
+        return input, model
 
     def save_updated_model(self, model):
         if self.torch_version != CAMB_PARROTS_VERSION:
