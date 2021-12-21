@@ -74,7 +74,7 @@ class hookCompare():
         self._make_dirs(self.torch_target_path)
         self._make_dirs(self.compared_updated_model_path)
         self._make_dirs(self.parrots_updated_model_path)
-        self._check()
+        # self._check()
 
         print("pytorch version:", code_green(torch.__version__))
 
