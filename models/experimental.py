@@ -10,6 +10,7 @@ import torch.nn as nn
 
 from models.common import Conv
 from utils.downloads import attempt_download
+from utils.config import use_camb
 
 
 class CrossConv(nn.Module):
