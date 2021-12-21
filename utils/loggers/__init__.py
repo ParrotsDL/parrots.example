@@ -9,7 +9,6 @@ from threading import Thread
 
 import pkg_resources as pkg
 import torch
-from torch.utils.tensorboard import SummaryWriter
 
 from utils.general import colorstr, emojis
 from utils.loggers.wandb.wandb_utils import WandbLogger
@@ -50,7 +49,8 @@ class Loggers():
         for k in LOGGERS:
             setattr(self, k, None)  # init empty logger dictionary
         self.csv = True  # always log to csv
-
+        self.use_tb = False
+        self.tb = None
         # Message
         if not wandb:
             prefix = colorstr('Weights & Biases: ')
@@ -59,7 +59,7 @@ class Loggers():
 
         # TensorBoard
         s = self.save_dir
-        if 'tb' in self.include and not self.opt.evolve:
+        if self.use_tb and 'tb' in self.include and not self.opt.evolve:
             prefix = colorstr('TensorBoard: ')
             self.logger.info(f"{prefix}Start with 'tensorboard --logdir {s.parent}', view at http://localhost:6006/")
             self.tb = SummaryWriter(str(s))
@@ -81,7 +81,7 @@ class Loggers():
 
     def on_train_batch_end(self, ni, model, imgs, targets, paths, plots, sync_bn):
         # Callback runs on train batch end
-        if plots:
+        if plots and self.use_tb:
             if ni == 0:
                 if not sync_bn:  # tb.add_graph() --sync known issue https://github.com/ultralytics/yolov5/issues/3754
                     with warnings.catch_warnings():

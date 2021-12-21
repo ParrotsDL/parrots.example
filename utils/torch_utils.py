@@ -32,10 +32,10 @@ def torch_distributed_zero_first(local_rank: int):
     Decorator to make all processes in distributed training wait for each local_master to do something.
     """
     if local_rank not in [-1, 0]:
-        dist.barrier(device_ids=[local_rank])
+       torch.cuda.synchronize()
     yield
     if local_rank == 0:
-        dist.barrier(device_ids=[0])
+        torch.cuda.synchronize()
 
 
 def date_modified(path=__file__):
@@ -160,7 +160,7 @@ def initialize_weights(model):
         elif t is nn.BatchNorm2d:
             m.eps = 1e-3
             m.momentum = 0.03
-        elif t in [nn.Hardswish, nn.LeakyReLU, nn.ReLU, nn.ReLU6, nn.SiLU]:
+        elif t in [nn.LeakyReLU, nn.ReLU, nn.ReLU6, nn.SiLU]:
             m.inplace = True
 
 

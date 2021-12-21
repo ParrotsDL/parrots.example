@@ -32,6 +32,7 @@ from utils.general import (LOGGER, NCOLS, box_iou, check_dataset, check_img_size
 from utils.metrics import ConfusionMatrix, ap_per_class
 from utils.plots import output_to_target, plot_images, plot_val_study
 from utils.torch_utils import select_device, time_sync
+from utils.config import use_camb
 
 
 def save_one_txt(predn, save_conf, shape, file):
@@ -168,6 +169,8 @@ def run(data,
         if pt:
             im = im.to(device, non_blocking=True)
             targets = targets.to(device)
+        if use_camb:
+            im = im.contiguous(torch.channels_last)
         im = im.half() if half else im.float()  # uint8 to fp16/32
         im /= 255  # 0 - 255 to 0.0 - 1.0
         nb, _, height, width = im.shape  # batch size, channels, height, width
@@ -199,7 +202,7 @@ def run(data,
 
             if len(pred) == 0:
                 if nl:
-                    stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor(), torch.Tensor(), tcls))
+                    stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor([]), torch.Tensor([]), tcls))
                 continue
 
             # Predictions

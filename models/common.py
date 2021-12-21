@@ -24,6 +24,7 @@ from utils.general import (LOGGER, check_requirements, check_suffix, colorstr, i
                            non_max_suppression, scale_coords, xywh2xyxy, xyxy2xywh)
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import time_sync
+from utils.config import use_camb
 
 
 def autopad(k, p=None):  # kernel, padding
