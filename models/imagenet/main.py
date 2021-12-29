@@ -188,10 +188,7 @@ def main():
     args.lr = cfgs.trainer.optimizer.kwargs['lr']
 
     best_acc1 = 0.0
-    if cfgs.saver.resume_model:
-        assert os.path.isfile(
-            cfgs.saver.resume_model), 'Not found resume model: {}'.format(
-                cfgs.saver.resume_model)
+    if cfgs.saver.resume_model and os.path.isfile(cfgs.saver.resume_model):
         checkpoint = torch.load(cfgs.saver.resume_model)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
@@ -200,10 +197,7 @@ def main():
         optimizer.load_state_dict(checkpoint['optimizer'])
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
-    elif cfgs.saver.pretrain_model:
-        assert os.path.isfile(
-            cfgs.saver.pretrain_model), 'Not found pretrain model: {}'.format(
-                cfgs.saver.pretrain_model)
+    elif cfgs.saver.pretrain_model and os.path.isfile(cfgs.saver.pretrain_model):
         checkpoint = torch.load(cfgs.saver.pretrain_model)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
