@@ -3,27 +3,56 @@
 ## 1984 (v100)
 
 **本地安装环境：**
-
+```shell
+export PYTHONPATH=`pwd`:$PYTHONPATH
 source /mnt/lustre/share/platform/env/pt1.7.0
-
-拷贝/mnt/luster/share_data/jiangyongjiu/yolov3/Arial.ttf & Arial.Unicode.ttf文件到当前目录
-
+cp /mnt/luster/share_data/jiangyongjiu/yolov3/Arial.ttf .
+cp /mnt/luster/share_data/jiangyongjiu/yolov3/Arial.Unicode.ttf .
 pip install -r requirements
+```
 
 **执行：**
+```shell
+# train
+sh tools/train_gpu.sh pat_rd 4
 
-sh train_1984.sh pat_rd 1
+# train with pretrained model
+sh tools/train_gpu.sh pat_rd 4 --pretrained_model xxx.pth
 
-相关参数可根据train.py脚本自选添加到train_1984.sh中
+# test a pretrained model
+sh tools/train_gpu.sh pat_rd 4 --pretrained_model xxx.pth --test
+```
+
+相关参数可根据train.py脚本自选增加到启动脚本后增加相应参数，如需要增加保存checkpoint的路径，则执行以下命令
+```shell
+sh tools/train_gpu.sh pat_rd 4 --saved_path checkpoint
+```
 
 ## 1424_200 (mlu290)
 
 **环境配置：**
+```shell
 source /mnt/lustre/share/platform/env/pat2.0_dev_gcc5.4
-编译parrots，分支使用openinfra/dev/v1.0
-设置PYTHONPATH： export PYTHONPATH=path_to_senseparrots:$PYTHONPATH
-若echo $LC_ALL为空，需要设置export LC_ALL=en_US.UTF-8
+# compile parrots
+git clone git@gitlab.bj.sensetime.com:platform/ParrotsDL/senseparrots.git
+cd senseparrots; git checkout openinfra/dev/v1.0;
+sh scripts/ci_camb_script.sh mk_camb_mpion; cd python;make -j;
+# PYTHONPATH
+export PYTHONPATH=path_to_parrots:path_to_torchvision:$PYTHONPATH
+```
+若echo $LC_ALL为空，需要设置
+```shell
+export LC_ALL=en_US.UTF-8
+```
 
 **执行：**
-sh train_mlu.sh camb_mlu290 1
-相关参数可根据train.py参数列表自选添加到train_mlu290.sh中
+```shell
+# train
+sh tools/train_mlu.sh camb_mlu290 4
+# train with pretrained model
+sh tools/train_mlu.sh camb_mlu290 4 --pretrained_model xxx.pth
+# test 
+sh tools/train_mlu.sh camb_mlu290 4 --pretrained_model xxx.pth --test
+```
+
+若需额外参数，可根据train.py参数列表自选添加到train_mlu290.sh结尾参数中，具体可以参考在v100上训练时增加参数的方法

@@ -31,7 +31,7 @@ import yaml
 
 from utils.downloads import gsutil_getsize
 from utils.metrics import box_iou, fitness
-from utils.config import int_dtype
+from utils.config import int_dtype, use_camb
 
 # Settings
 #torch.set_printoptions(linewidth=320, precision=5, profile='long')
@@ -619,10 +619,15 @@ def scale_coords(img1_shape, coords, img0_shape, ratio_pad=None):
         gain = ratio_pad[0][0]
         pad = ratio_pad[1]
 
+    if use_camb:
+        device = coords.device
+        coords = coords.cpu()
     coords[:, [0, 2]] -= pad[0]  # x padding
     coords[:, [1, 3]] -= pad[1]  # y padding
     coords[:, :4] /= gain
     clip_coords(coords, img0_shape)
+    if use_camb:
+        coords = coords.to(device=device)
     return coords
 
 
@@ -682,7 +687,12 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, classes=Non
             continue
 
         # Compute conf
-        x[:, 5:] *= x[:, 4:5]  # conf = obj_conf * cls_conf
+        if use_camb:
+            obj_conf = x[:, 4:5]
+            cls_conf = x[:, 5:]
+            x[:, 5:] = obj_conf * cls_conf
+        else:
+            x[:, 5:] *= x[:, 4:5]  # conf = obj_conf * cls_conf
 
         # Box (center x, center y, width, height) to (x1, y1, x2, y2)
         box = xywh2xyxy(x[:, :4])
@@ -690,7 +700,13 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, classes=Non
         # Detections matrix nx6 (xyxy, conf, cls)
         if multi_label:
             i, j = (x[:, 5:] > conf_thres).nonzero(as_tuple=False).T
-            x = torch.cat((box[i], x[i, j + 5, None], j[:, None].float()), 1)
+            if use_camb:
+                x_cpu = x.cpu()
+                tmp = x_cpu[i.cpu().to(torch.int64), j.cpu().to(torch.int64)+5, None]
+                tmp = tmp.cuda()
+                x = torch.cat((box[i], tmp, j[:, None].float()), 1)
+            else:
+                x = torch.cat((box[i], x[i, j + 5, None], j[:, None].float()), 1)
         else:  # best class only
             conf, j = x[:, 5:].max(1, keepdim=True)
             x = torch.cat((box, conf, j.float()), 1)[conf.view(-1) > conf_thres]
