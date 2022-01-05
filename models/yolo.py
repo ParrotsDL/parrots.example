@@ -24,7 +24,7 @@ from utils.general import LOGGER, check_version, check_yaml, make_divisible, pri
 from utils.plots import feature_visualization
 from utils.torch_utils import (copy_attr, fuse_conv_and_bn, initialize_weights, model_info, scale_img, select_device,
                                time_sync)
-from utils.config import int_dtype
+from utils.config import int_dtype, use_camb
 
 try:
     import thop  # for FLOPs computation
@@ -61,10 +61,16 @@ class Detect(nn.Module):
 
                 y = x[i].sigmoid()
                 if self.inplace:
-                    y[..., 0:2] = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i]  # xy
+                    if use_camb:
+                        y[..., 0:2] = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i].cuda()  # xy
+                    else:
+                        y[..., 0:2] = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i]  # xy
                     y[..., 2:4] = (y[..., 2:4] * 2) ** 2 * self.anchor_grid[i]  # wh
                 else:  # for  on AWS Inferentia https://github.com/ultralytics/yolov5/pull/2953
-                    xy = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i]  # xy
+                    if use_camb:
+                        xy = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i].cuda()  # xy
+                    else:
+                        xy = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i]  # xy
                     wh = (y[..., 2:4] * 2) ** 2 * self.anchor_grid[i]  # wh
                     y = torch.cat((xy, wh, y[..., 4:]), -1)
                 z.append(y.view(bs, -1, self.no))
@@ -78,8 +84,12 @@ class Detect(nn.Module):
         else:
             yv, xv = torch.meshgrid([torch.arange(ny, dtype=int_dtype).to(d), torch.arange(nx, dtype=int_dtype).to(d)])
         grid = torch.stack((xv, yv), 2).expand((1, self.na, ny, nx, 2)).float()
-        anchor_grid = (self.anchors[i].clone() * self.stride[i]) \
-            .view((1, self.na, 1, 1, 2)).expand((1, self.na, ny, nx, 2)).float()
+        if use_camb:
+            anchor_grid = (self.anchors[i].clone() * self.stride[i].cuda()) \
+                .view((1, self.na, 1, 1, 2)).expand((1, self.na, ny, nx, 2)).float()
+        else:
+            anchor_grid = (self.anchors[i].clone() * self.stride[i]) \
+                .view((1, self.na, 1, 1, 2)).expand((1, self.na, ny, nx, 2)).float()
         return grid, anchor_grid
 
 

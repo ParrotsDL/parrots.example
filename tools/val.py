@@ -32,7 +32,7 @@ from utils.general import (LOGGER, NCOLS, box_iou, check_dataset, check_img_size
 from utils.metrics import ConfusionMatrix, ap_per_class
 from utils.plots import output_to_target, plot_images, plot_val_study
 from utils.torch_utils import select_device, time_sync
-from utils.config import use_camb
+from utils.config import use_camb, int_dtype
 
 
 def save_one_txt(predn, save_conf, shape, file):
@@ -70,14 +70,17 @@ def process_batch(detections, labels, iouv):
     iou = box_iou(labels[:, 1:], detections[:, :4])
     x = torch.where((iou >= iouv[0]) & (labels[:, 0:1] == detections[:, 5]))  # IoU above threshold and classes match
     if x[0].shape[0]:
-        matches = torch.cat((torch.stack(x, 1), iou[x[0], x[1]][:, None]), 1).cpu().numpy()  # [label, detection, iou]
+        if use_camb:
+            matches = torch.cat((torch.stack(x, 1).to(dtype=torch.float), iou[x[0], x[1]][:, None]), 1).cpu().numpy()  # [label, detection, iou]
+        else:
+            matches = torch.cat((torch.stack(x, 1), iou[x[0], x[1]][:, None]), 1).cpu().numpy()  # [label, detection, iou]
         if x[0].shape[0] > 1:
             matches = matches[matches[:, 2].argsort()[::-1]]
             matches = matches[np.unique(matches[:, 1], return_index=True)[1]]
             # matches = matches[matches[:, 2].argsort()[::-1]]
             matches = matches[np.unique(matches[:, 0], return_index=True)[1]]
         matches = torch.Tensor(matches).to(iouv.device)
-        correct[matches[:, 1].long()] = matches[:, 2:3] >= iouv
+        correct[matches[:, 1].to(dtype=int_dtype)] = matches[:, 2:3] >= iouv
     return correct
 
 
@@ -194,6 +197,8 @@ def run(data,
 
         # Metrics
         for si, pred in enumerate(out):
+            if use_camb:
+                tmp_stats = []
             labels = targets[targets[:, 0] == si, 1:]
             nl = len(labels)
             tcls = labels[:, 0].tolist() if nl else []  # target class
@@ -202,7 +207,10 @@ def run(data,
 
             if len(pred) == 0:
                 if nl:
-                    stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor([]), torch.Tensor([]), tcls))
+                    if use_camb:
+                        tmp_stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor([]), torch.Tensor([]), tcls))
+                    else:
+                        stats.append((torch.zeros(0, niou, dtype=torch.bool), torch.Tensor([]), torch.Tensor([]), tcls))
                 continue
 
             # Predictions
@@ -221,7 +229,12 @@ def run(data,
                     confusion_matrix.process_batch(predn, labelsn)
             else:
                 correct = torch.zeros(pred.shape[0], niou, dtype=torch.bool)
-            stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))  # (correct, conf, pcls, tcls)
+            if use_camb:
+                tmp_stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))  # (correct, conf, pcls, tcls)
+                tmp_stats = [np.concatenate(x, 0) for x in zip(*tmp_stats)]
+                stats.append(tmp_stats)
+            else:
+                stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))  # (correct, conf, pcls, tcls)
 
             # Save/log
             if save_txt:

@@ -27,7 +27,7 @@ from tqdm import tqdm
 from utils.torch_utils import time_sync
 
 FILE = Path(__file__).resolve()
-ROOT = FILE.parents[0]  # root directory
+ROOT = FILE.parents[1]  # root directory
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))  # add ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
@@ -244,7 +244,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
 
     # Process 0
     if RANK in [-1, 0]:
-        val_loader = create_dataloader(val_path, imgsz, batch_size // WORLD_SIZE * 2, gs, single_cls,
+        val_loader = create_dataloader(val_path, imgsz, batch_size // WORLD_SIZE, gs, single_cls,
                                        hyp=hyp, cache=None if noval else opt.cache, rect=True, rank=-1,
                                        workers=workers, pad=0.5,
                                        prefix=colorstr('val: '))[0]
@@ -297,6 +297,13 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
 
     if use_camb:
         model = model.to_memory_format(torch.channels_last)
+
+    if opt.test and RANK in [-1, 0]:
+        results, maps, _ = val.run(data_dict, batch_size=batch_size // WORLD_SIZE,
+                                   imgsz=imgsz, model=model, single_cls=single_cls,
+                                   dataloader=val_loader, save_dir=save_dir, plots=False,
+                                   callbacks=callbacks, compute_loss=compute_loss, half=opt.use_amp)
+        return
 
     batch_time = AverageMeter('Time', ':.3f', 50)
     loss_all = AverageMeter('Loss', ':.4f', 50)
@@ -531,6 +538,7 @@ def parse_opt(known=False):
     parser.add_argument('--bbox_interval', type=int, default=-1, help='W&B: Set bounding-box image logging interval')
     parser.add_argument('--artifact_alias', type=str, default='latest', help='W&B: Version of dataset artifact to use')
     parser.add_argument('--port', default=12345, type=int, metavar='P', help='master port')
+    parser.add_argument('--test', action='store_true', help='if defined, just execute the test process')
 
     opt = parser.parse_known_args()[0] if known else parser.parse_args()
     return opt
