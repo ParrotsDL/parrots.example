@@ -52,7 +52,8 @@ sh tools/train_mlu.sh camb_mlu290 4
 # train with pretrained model
 sh tools/train_mlu.sh camb_mlu290 4 --pretrained_model xxx.pth
 # test 
-sh tools/train_mlu.sh camb_mlu290 4 --pretrained_model xxx.pth --test
+sh tools/test_mlu.sh camb_mlu290 4 --pretrained_model xxx.pth
 ```
+ps: 寒武纪脚本单独对模型做test时，尽量先使用单卡进行测试，多卡使用时容易在创建dataloader时卡住（后期修复）。
 
 若需额外参数，可根据train.py参数列表自选添加到train_mlu290.sh结尾参数中，具体可以参考在v100上训练时增加参数的方法

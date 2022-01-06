@@ -439,9 +439,9 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                 if final_epoch:
                     last_ckpt_name = opt.saved_path + "/last_epoch_{}.pth".format(epoch)
                     torch.save(ckpt, last_ckpt_name)
-                if best_fitness == fi:
-                    best_ckpt_name = opt.saved_path + "/best_epoch_{}.pth".format(epoch)
-                    torch.save(ckpt, best_ckpt_name)
+                # if best_fitness == fi:
+                    # best_ckpt_name = opt.saved_path + "/best_epoch_{}.pth".format(epoch)
+                    # torch.save(ckpt, best_ckpt_name)
                 if (epoch >0) and (opt.save_period > 0) and (epoch % opt.save_period == 0):
                     normal_ckpt_name = opt.saved_path + "/epoch_{}.pth".format(epoch)
                     torch.save(ckpt, normal_ckpt_name)
