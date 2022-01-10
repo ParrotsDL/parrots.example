@@ -171,3 +171,7 @@
 [submodule "models/bert"]
 	path = models/bert
 	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/bert.git
+[submodule "models/yolov3"]
+	path = models/yolov3
+	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/yolov3.git
+	branch = camb/dev/v1.0
