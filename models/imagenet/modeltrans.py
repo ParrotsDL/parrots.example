@@ -1,3 +1,4 @@
+#convert model between float and quantized model
 import os
 import shutil
 import argparse
@@ -15,8 +16,8 @@ import torch.nn as nn
 import torch.nn.parallel
 import torch.optim
 from torch.backends import cudnn
-
 import torch.distributed as dist
+from torch.utils import quantize
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
@@ -24,9 +25,6 @@ from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
 from utils.loss import LabelSmoothLoss
 from utils.lr_scheduler import adjust_learning_rate_cos
-from utils.perf import PerfRecorder
-
-import numpy as np
 
 parser = argparse.ArgumentParser(description='ImageNet Training Example')
 parser.add_argument('--config',
@@ -53,7 +51,7 @@ parser.add_argument('--dummy_test',
 parser.add_argument('--launcher',
                     type=str,
                     default="slurm",
-                    choices=['slurm', 'mpi', 'none'],
+                    choices=['slurm', 'mpi'],
                     help='distributed backend')
 parser.add_argument('--device',
                     type=str,
@@ -61,27 +59,17 @@ parser.add_argument('--device',
                     choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
-parser.add_argument('--cfg_options',
-                    type=str,
-                    default=None,
-                    help='override some settings in the used config.')
-parser.add_argument('--save_inout',
-                    dest='save input and output for test',
+parser.add_argument('--quant2float', dest='quant2float',
                     action='store_true',
-                    help='save input and output in val')
+                    help='flag to convert quantize model to float')
+parser.add_argument('--saveInOut', dest='saveInOut',
+                    action='store_true',
+                    help='save input and output of single iter')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
 logger_all = logging.getLogger('all')
 args = parser.parse_args()
-
-if args.device == "mlu":
-    import torch_mlu
-    import torch_mlu.core.mlu_model as ct
-    import torch_mlu.core.mlu_quantize as qt
-    import torch_mlu.core.device.notifier as Notifier
-    import torch_mlu.core.quantized.functional as func
-    ct.set_cnml_enabled(False)
 
 use_camb = False
 if torch.__version__ == "parrots":
@@ -91,11 +79,6 @@ if torch.__version__ == "parrots":
 def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
-    if args.cfg_options is not None:
-        args.cfg_options = yaml.load(open(args.cfg_options, 'r'),
-                                     Loader=yaml.Loader)
-        cfg_options = Dict(args.cfg_options)
-        cfgs.update(cfg_options)
 
     backend = "cncl" if use_camb else "nccl"
 
@@ -116,15 +99,12 @@ def main():
         args.rank = 0
         args.world_size = 1
         args.local_rank = 0
-    args.dist = args.world_size > 1
+    args.dist = args.world_size >= 1
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
     dist.init_process_group(backend=backend)
-    if args.device == "mlu":
-        ct.set_device(args.local_rank)
-    else:
-        torch.cuda.set_device(args.local_rank)
+    torch.cuda.set_device(args.local_rank)
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -142,15 +122,15 @@ def main():
     if cfgs.get('seed', None):
         random.seed(cfgs.seed)
         torch.manual_seed(cfgs.seed)
-        if args.device == "mlu":
-            torch.cuda.manual_seed(cfgs.seed)
+        #if args.device == "mlu":
+            #torch.cuda.manual_seed(cfgs.seed)
         cudnn.deterministic = True
 
     if args.seed is not None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
-        if args.device == "mlu":
-            torch.cuda.manual_seed(args.seed)
+        #if args.device == "mlu":
+            #torch.cuda.manual_seed(args.seed)
         cudnn.deterministic = True
 
     # Data loading code
@@ -158,20 +138,13 @@ def main():
         cfgs.dataset, args.world_size)
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-
-    if args.device == "gpu":
-        if args.quantify:
-            from torch.utils import quantize
-            model = quantize.convert_to_adaptive_quantize(
-                model, len(train_loader))
+    
+    if args.quantify:
+        model = quantize.convert_to_adaptive_quantize(model, len(train_loader))
         if use_camb:
             model = model.to_memory_format(torch.channels_last)
-        model.cuda()
-    elif args.device == "mlu":
-        if args.quantify:
-            model = qt.adaptive_quantize(model, len(train_loader))
-        model = model.to(ct.mlu_device())
-
+        model = model.cuda()
+    
     logger.info("creating model '{}'".format(cfgs.net.arch))
 
     if args.dist:
@@ -183,10 +156,10 @@ def main():
                                     cfgs.net.kwargs.num_classes).cuda()
     else:
         criterion = nn.CrossEntropyLoss()
-    if args.device == "mlu":
-        criterion = criterion.to(ct.mlu_device())
-    else:
-        criterion = criterion.cuda()
+    #if args.device == "mlu":
+        #criterion = criterion.to(ct.mlu_device())
+    #else:
+    criterion = criterion.cuda()
     logger.info("loss\n{}".format(criterion))
 
     optimizer = torch.optim.SGD(model.parameters(),
@@ -221,14 +194,7 @@ def main():
                 cfgs.saver.pretrain_model)
         checkpoint = torch.load(cfgs.saver.pretrain_model)
         check_keys(model=model, checkpoint=checkpoint)
-        if args.quantify:
-            new_checkpoint = dict()
-            for key in checkpoint['state_dict'].keys():
-                new_key = key[7:]
-                new_checkpoint[new_key] = checkpoint['state_dict'][key]
-            model.load_state_dict(new_checkpoint)
-        else:
-            model.load_state_dict(checkpoint['state_dict'])
+        model.load_state_dict(checkpoint['state_dict'])
         logger.info("pretrain training from '{}'".format(
             cfgs.saver.pretrain_model))
 
@@ -237,181 +203,27 @@ def main():
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(
                 cfgs.saver.save_dir))
-
     args.arch = cfgs.net.arch
-
-    # test mode
-    if args.test:
-        test(test_loader, model, criterion, args)
-        return
-
-    # choose scheduler
-    lr_scheduler = torch.optim.lr_scheduler.__dict__[
-        cfgs.trainer.lr_scheduler.type](optimizer if isinstance(
-            optimizer, torch.optim.Optimizer) else optimizer.optimizer,
-                                        **cfgs.trainer.lr_scheduler.kwargs,
-                                        last_epoch=args.start_epoch - 1)
-
-    # perf recorder(optional)
-    pr = PerfRecorder(cfgs.benchmark.test_speed.enable,
-                      cfgs.benchmark.test_speed.timer,
-                      cfgs.saver.save_dir,
-                      cfgs.dataset.batch_size,
-                      args.world_size,
-                      args.rank,
-                      trim_head=cfgs.benchmark.test_speed.trim_head)
-
-    # training
-    for epoch in range(args.start_epoch, args.max_epoch):
-        train_sampler.set_epoch(epoch)
-
-        # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args, pr)
-
-        if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
-            # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, model, criterion, args)
-
-            if args.rank == 0:
-
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
-                    'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict()
-                }
-
-                ckpt_path = os.path.join(
-                    cfgs.saver.save_dir,
-                    cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir,
-                                              cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
-
-            if cfgs.trainer.req_acc1 and acc1 >= cfgs.trainer.req_acc1:
-                logger.info(
-                    "Current acc1: {:.2f}. Reached required acc1: {}. Training stops."
-                    .format(acc1, cfgs.trainer.req_acc1))
-                break
-
-        if args.arch not in ["mobile_v2"]:
-            lr_scheduler.step()
-    pr.gen_perf_results()
-
-
-def train(train_loader, model, criterion, optimizer, epoch, args,
-          perf_recorder):
-    batch_time = AverageMeter('Time', ':.3f', 200)
-    data_time = AverageMeter('Data', ':.3f', 200)
-
-    losses = AverageMeter('Loss', ':.4f', 50)
-    top1 = AverageMeter('Acc@1', ':.2f', 50)
-    top5 = AverageMeter('Acc@5', ':.2f', 50)
-
-    memory = AverageMeter('Memory(MB)', ':.0f')
-    progress = ProgressMeter(len(train_loader),
-                             batch_time,
-                             data_time,
-                             losses,
-                             top1,
-                             top5,
-                             memory,
-                             prefix="Epoch: [{}/{}]".format(
-                                 epoch + 1, args.max_epoch))
-
-    # switch to train mode
-    model.train()
-    end = time.time()
-    perf_recorder.set_start_timer('data')
-    if args.dummy_test:
-        input_, target_ = next(iter(train_loader))
-        train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
-        if args.device == "mlu":
-            input_ = input_.to(ct.mlu_device())
-            target_ = target_.to(ct.mlu_device())
-        elif use_camb:
-            input_ = input_.contiguous(torch.channels_last).cuda()
-            target_ = target_.int().cuda()
+    if not args.saveInOut:
+        if args.quantify:
+            logger.info("Executing the quantize model test ...")
+            test(test_loader, model, criterion, args)
         else:
-            input_ = input_.cuda()
-            target_ = target_.cuda()
+            logger.info("Executing the fix bitwidth model test ...")
+            test(test_loader, model, criterion, args)
+        time.sleep(5)
 
-    perf_recorder.set_start_timer('epoch')
-    for i, (input, target) in enumerate(train_loader):
-        # measure data loading time
-        perf_recorder.set_end_timer('data')
-        perf_recorder.set_start_timer('iter')
-        data_time.update(time.time() - end)
-        if not args.dummy_test and args.arch == "mobile_v2":
-            adjust_learning_rate_cos(optimizer, epoch, i, len(train_loader),
-                                     args)
-        if args.dummy_test:
-            input = input_.detach()
-            input.requires_grad = True
-            target = target_
-        elif args.device == "mlu":
-            input = input.to(ct.mlu_device())
-            target = target.to(ct.mlu_device())
-        elif use_camb:
-            input = input.contiguous(torch.channels_last).cuda()
-            target = target.int().cuda()
-        else:
-            input = input.cuda()
-            target = target.cuda()
-
-        # compute output
-        if args.arch == 'googlenet':
-            aux1, aux2, output = model(input)
-            loss1 = criterion(output, target)
-            loss2 = criterion(aux1, target)
-            loss3 = criterion(aux2, target)
-            loss = loss1 + 0.3 * (loss2 + loss3)
-        else:
-            output = model(input)
-            loss = criterion(output, target)
-
-        # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
-
-        if args.device == "mlu":
-            stats_all = torch.tensor(
-                [loss.item(), acc1[0].item(),
-                 acc5[0].item()]).float().to(ct.mlu_device())
-        else:
-            stats_all = torch.tensor(
-                [loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
-        if args.dist:
-            dist.all_reduce(stats_all)
-        stats_all /= args.world_size
-
-        losses.update(stats_all[0].item())
-        top1.update(stats_all[1].item())
-        top5.update(stats_all[2].item())
-        if args.device == "gpu":
-            memory.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
-
-        # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        # measure elapsed time
-        batch_time.update(time.time() - end)
-        perf_recorder.set_end_timer('iter')
-        end = time.time()
-
-        if i % args.log_freq == 0:
-            progress.display(i)
-
-        perf_recorder.set_start_timer('data')
-    perf_recorder.set_end_timer('epoch')
+    if args.quant2float:
+        logger.info("Converting quantize model to a float model ...")
+        model = quantize.convert_from_adaptive_quantize(model)
+        model = model.to_memory_format(torch.channels_last)
+        model_path = cfgs.saver.pretrain_model
+        test(test_loader, model, criterion, args, model_path)
+        float_model_name = model_path.split('.')[0] + '_float.pth'
+        torch.save(model.cpu().state_dict(), float_model_name)
 
 
-def test(test_loader, model, criterion, args):
+def test(test_loader, model, criterion, args, model_path=None):
     batch_time = AverageMeter('Time', ':.3f', 10)
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
@@ -441,18 +253,21 @@ def test(test_loader, model, criterion, args):
                     target = target.cuda()
 
             output = model(input)
-            if args.save_inout:
-                if (i == 0):
-                    in_cpu = input.cpu().numpy()
-                    out_cpu = output.cpu().numpy()
-                    np.save('test_data/input.npy', in_cpu)
-                    np.save('test_data/output.npy', out_cpu)
-                    print('input.size(): {}'.format(input.size()))
-                    print('output.size(): {}'.format(output.size()))
-                if (i == 1):
-                    print('Here is iter 1,break')
-                    import sys
+            if args.saveInOut and model_path != None:
+                import numpy as np
+                import sys
+                if i == 0:
+                    in_cpu = input.data.cpu().numpy()
+                    out_cpu = output.data.cpu().numpy()
+                    in_name = model_path.split('.')[0] + '_input.npy'
+                    out_name = model_path.split('.')[0] + '_output.npy'
+                    np.save(in_name, in_cpu)
+                    np.save(out_name, out_cpu)
+                    logger.info('input.size: {}'.format(input.size()))
+                    logger.info('output.size: {}'.format(output.size()))
+                    logger.info("Save input and output over, just stop! \n")
                     sys.exit()
+
             loss = criterion(output, target)
 
             # measure accuracy and record loss
