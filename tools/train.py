@@ -402,9 +402,9 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
             callbacks.run('on_train_epoch_end', epoch=epoch)
             ema.update_attr(model, include=['yaml', 'nc', 'hyp', 'names', 'stride', 'class_weights'])
             final_epoch = (epoch + 1 == epochs) or stopper.possible_stop
-            if not noval or final_epoch:  # Calculate mAP
+            if not noval:  # Calculate mAP
                 results, maps, _ = val.run(data_dict,
-                                           batch_size=batch_size // WORLD_SIZE * 2,
+                                           batch_size=batch_size // WORLD_SIZE,
                                            imgsz=imgsz,
                                            model=model,
                                            single_cls=single_cls,
@@ -436,15 +436,18 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                 ckpt_path = opt.saved_path
                 if not os.path.isdir(ckpt_path):
                     os.mkdir(ckpt_path)
+                latest_ckpt_name = opt.saved_path + "/checkpoint_latest.pth"
                 if final_epoch:
                     last_ckpt_name = opt.saved_path + "/last_epoch_{}.pth".format(epoch)
                     torch.save(ckpt, last_ckpt_name)
+                    torch.save(ckpt, latest_ckpt_name)
                 # if best_fitness == fi:
                     # best_ckpt_name = opt.saved_path + "/best_epoch_{}.pth".format(epoch)
                     # torch.save(ckpt, best_ckpt_name)
                 if (epoch >0) and (opt.save_period > 0) and (epoch % opt.save_period == 0):
                     normal_ckpt_name = opt.saved_path + "/epoch_{}.pth".format(epoch)
                     torch.save(ckpt, normal_ckpt_name)
+                    torch.save(ckpt, latest_ckpt_name)
                 del ckpt
                 callbacks.run('on_model_save', last, epoch, final_epoch, best_fitness, 0)
 
