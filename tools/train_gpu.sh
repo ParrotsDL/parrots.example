@@ -15,9 +15,10 @@ data=data/coco2017.yaml
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:2:$len}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 srun -p $1 -n$2 --gres=gpu:$2 --ntasks-per-node=$2 \
---job-name=yolov3 python tools/train.py \
+--job-name=yolov3 ${SRUN_ARGS} python tools/train.py \
 --data ${data} --batch-size ${batch_size} \
 --save_period ${save_period} --noval ${EXTRA_ARGS} \
 2>&1 | tee ${log_path}/yolov3_gpu_${T}.log
