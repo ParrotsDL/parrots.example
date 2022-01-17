@@ -13,6 +13,7 @@ num_epochs=150
 save_period=10
 batch_size=128
 data=models/yolov3/data/coco2017.yaml
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 # extra param of training
 array=( $@ )
@@ -21,7 +22,7 @@ EXTRA_ARGS=${array[@]:2:$len}
 saved_path="yolov3_ckpt"
 
 srun -p $1 -n$2 --gres=mlu:$2 --ntasks-per-node=$2 \
---job-name=yolov3 python models/yolov3/tools/train.py \
+--job-name=yolov3 ${SRUN_ARGS} python models/yolov3/tools/train.py \
 --data ${data} --batch-size ${batch_size} --epochs ${num_epochs} \
 --cfg models/yolov3/models/yolov3.yaml \
 --hyp models/yolov3/data/hyps/hyp.scratch.yaml \
@@ -36,7 +37,7 @@ test_ckpt=${saved_path}/checkpoint_latest.pth
 
 if [ -f "${test_ckpt}" ];then
     srun -p $1 -n1 --gres=mlu:1 --ntasks-per-node=1 \
-    --job-name=yolov3_test python models/yolov3/tools/train.py \
+    --job-name=yolov3_test ${SRUN_ARGS} python models/yolov3/tools/train.py \
     --data ${test_data} --batch-size ${test_batch_size} \
     --cfg models/yolov3/models/yolov3.yaml \
     --hyp models/yolov3/data/hyps/hyp.scratch.yaml \
