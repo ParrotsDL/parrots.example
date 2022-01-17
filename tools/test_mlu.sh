@@ -13,9 +13,10 @@ data=data/coco2014.yaml
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 srun -p $1 -n$2 --gres=mlu:$2 --ntasks-per-node=$2 \
---job-name=yolov3 python tools/train.py \
+--job-name=yolov3 ${SRUN_ARGS} python tools/train.py \
 --data ${data} --batch-size ${batch_size} \
 --noval --test --pretrained_model $3 ${EXTRA_ARGS} \
 2>&1 | tee ${log_path}/yolov3_mlu290_test_${T}.log

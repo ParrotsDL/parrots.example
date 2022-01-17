@@ -390,7 +390,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                     # f'{epoch}/{epochs - 1}', mem, *mloss, targets.shape[0], imgs.shape[-1]))
                 # callbacks.run('on_train_batch_end', ni, model, imgs, targets, paths, plots, opt.sync_bn)
                 LOGGER.info('Epoch: {}/{}, Iter: {}/{}, {}, {}, {}, {}, {}\n'.format(
-                    epoch, epochs, i, len(train_loader), loss_box, loss_obj, loss_cls, loss_all, batch_time))
+                    epoch+1, epochs, i, len(train_loader), loss_box, loss_obj, loss_cls, loss_all, batch_time))
             # end batch ------------------------------------------------------------------------------------------------
 
         # Scheduler
@@ -444,7 +444,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                 # if best_fitness == fi:
                     # best_ckpt_name = opt.saved_path + "/best_epoch_{}.pth".format(epoch)
                     # torch.save(ckpt, best_ckpt_name)
-                if (epoch >0) and (opt.save_period > 0) and (epoch % opt.save_period == 0):
+                if (epoch > 0) and (opt.save_period > 0) and (epoch % opt.save_period == 0):
                     normal_ckpt_name = opt.saved_path + "/epoch_{}.pth".format(epoch)
                     torch.save(ckpt, normal_ckpt_name)
                     torch.save(ckpt, latest_ckpt_name)
@@ -583,9 +583,6 @@ def main(opt, callbacks=Callbacks()):
     # Train
     if not opt.evolve:
         train(opt.hyp, opt, device, callbacks)
-        if WORLD_SIZE > 1 and RANK == 0:
-            LOGGER.info('Destroying process group... ')
-            dist.destroy_process_group()
 
     # Evolve hyperparameters (optional)
     else:

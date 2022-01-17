@@ -18,10 +18,11 @@ train_data=data/coco2017.yaml
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:2:$len}
+SRUN_ARGS=${SRUN_ARGS:-""}
 
 # train model
 srun -p $1 -n$2 --gres=mlu:$2 --ntasks-per-node=$2 \
---job-name=yolov3 python tools/train.py \
+--job-name=yolov3 ${SRUN_ARGS} python tools/train.py \
 --data ${train_data} --batch-size ${batch_size} --epochs ${num_epochs} \
 --save_period ${save_period} --noval --saved_path ${saved_path} ${EXTRA_ARGS} \
 2>&1 | tee ${log_path}/yolov3_mlu290_${T}.log
@@ -34,7 +35,7 @@ test_ckpt=${saved_path}/checkpoint_latest.pth
 
 if [ -f "${test_ckpt}" ]; then
     srun -p $1 -n1 --gres=mlu:1 --ntasks-per-node=1 \
-    --job-name=yolov3 python tools/train.py \
+    --job-name=yolov3 ${SRUN_ARGS} python tools/train.py \
     --data ${test_data} --batch-size ${test_batch_size} \
     --noval --test --pretrained_model ${test_ckpt} \
     2>&1 | tee ${log_path}/yolov3_mlu290_test_${T}.log
