@@ -6,8 +6,9 @@ global_configs:
     pavi: None 
 
 env_version:
-    pat : pat0.14.0rc0
+    pat : 0.14
     pyt : pt1.3v1_r0.1
+    mmcv: None
 
 global_model_strategy:
   dummydataset: None
