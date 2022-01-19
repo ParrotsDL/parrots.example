@@ -60,6 +60,8 @@ parser.add_argument('--device',
                     choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
+parser.add_argument('--early_stop', dest='early_test', action='store_true',
+                    help='early stop train when reach the target accuracy')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -284,7 +286,7 @@ def main():
                         best_acc1 = acc1
                         shutil.copyfile(ckpt_path, best_ckpt_path)
 
-                if cfgs.net.arch in acc1_values and acc1 >= acc1_values[cfgs.net.arch]:
+                if cfgs.early_stop and cfgs.net.arch in acc1_values and acc1 >= acc1_values[cfgs.net.arch]:
                     logger.info(
                         "Current acc1: {:.2f}. Reached required acc1: {}. Training stops."
                         .format(acc1, acc1_values[cfgs.net.arch]))
