@@ -8,6 +8,7 @@ import yaml
 import json
 import socket
 import logging
+import numpy as np
 from addict import Dict
 
 import torch
@@ -79,6 +80,8 @@ if torch.__version__ == "parrots":
 
 
 def main():
+    start_time = time.time()
+    iter_time_list = []
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
@@ -97,6 +100,8 @@ def main():
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
+        os.environ['MASTER_ADDR'] = 'localhost'
+        os.environ['MASTER_PORT'] = '60000'
     else:
         args.rank = 0
         args.world_size = 1
@@ -229,50 +234,75 @@ def main():
             optimizer, torch.optim.Optimizer) else optimizer.optimizer,
                                         **cfgs.trainer.lr_scheduler.kwargs,
                                         last_epoch=args.start_epoch - 1)
+    run_time = time.time()
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
         train_sampler.set_epoch(epoch)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, args)
+        train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list)
+        mem = torch.cuda.max_memory_allocated()
+        mem_mb = torch.tensor([mem / (1024 * 1024)],
+                       dtype=torch.int,
+                       device=torch.device('cuda'))
+        if  args.world_size > 1:
+            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+
+        mem_alloc = mem_mb.item()
+        # get max memory cached
+        mem = torch.cuda.max_memory_cached()
+        mem_mb = torch.tensor([mem / (1024 * 1024)],
+                       dtype=torch.int,
+                       device=torch.device('cuda'))
+        if args.world_size > 1:
+            dist.reduce(mem_mb, 0, op=dist.ReduceOp.MAX)
+        mem_cached = mem_mb.item()
 
         if (epoch + 1) % args.test_freq == 0 or epoch + 1 == args.max_epoch:
             # evaluate on validation set
-            loss, acc1, acc5 = test(test_loader, model, criterion, args)
+            if not os.environ.get('PARROTS_BENCHMARK') == '1':
+                loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
-            if args.rank == 0:
+                if args.rank == 0:
 
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
-                    'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict()
-                }
+                    checkpoint = {
+                        'epoch': epoch + 1,
+                        'arch': cfgs.net.arch,
+                        'state_dict': model.state_dict(),
+                        'best_acc1': best_acc1,
+                        'optimizer': optimizer.state_dict()
+                    }
 
-                ckpt_path = os.path.join(
-                    cfgs.saver.save_dir,
-                    cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir,
-                                              cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
-                
-            if cfgs.net.arch in acc1_values and acc1 >= acc1_values[cfgs.net.arch]:
-                logger.info(
-                    "Current acc1: {:.2f}. Reached required acc1: {}. Training stops."
-                    .format(acc1, acc1_values[cfgs.net.arch]))
-                break
-                
+                    ckpt_path = os.path.join(
+                        cfgs.saver.save_dir,
+                        cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
+                    best_ckpt_path = os.path.join(cfgs.saver.save_dir,
+                                                  cfgs.net.arch + '_best.pth')
+                    torch.save(checkpoint, ckpt_path)
+                    if acc1 > best_acc1:
+                        best_acc1 = acc1
+                        shutil.copyfile(ckpt_path, best_ckpt_path)
+
+                if cfgs.net.arch in acc1_values and acc1 >= acc1_values[cfgs.net.arch]:
+                    logger.info(
+                        "Current acc1: {:.2f}. Reached required acc1: {}. Training stops."
+                        .format(acc1, acc1_values[cfgs.net.arch]))
+                    break
+
 
         if args.arch not in ["mobile_v2"]:
             lr_scheduler.step()
+    end_time = time.time()
+    if args.rank == 0:
+        logger.info('__benchmark_total_time(h): {}'.format((end_time - start_time) / 3600))
+        logger.info('__benchmark_pure_training_time(h): {}'.format((end_time - run_time) / 3600))
+        logger.info('__benchmark_avg_iter_time(s): {}'.format(np.mean(iter_time_list)))
+        logger.info('__benchmark_mem_alloc(mb): {}'.format(mem_alloc))
+        logger.info('__benchmark_mem_cached(mb): {}'.format(mem_cached))
 
 
-def train(train_loader, model, criterion, optimizer, epoch, args):
+def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
 
@@ -366,9 +396,15 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
+        iter_end_time = time.time()
+        if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
+            iter_time_list.append(iter_end_time - iter_start_time)
 
+        iter_start_time = time.time()
         if i % args.log_freq == 0:
             progress.display(i)
+        if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
+            return
 
 
 def test(test_loader, model, criterion, args):
