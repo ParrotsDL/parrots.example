@@ -191,6 +191,7 @@ def main():
     args.test_freq = cfgs.trainer.test_freq
     args.log_freq = cfgs.trainer.log_freq
     args.lr = cfgs.trainer.optimizer.kwargs['lr']
+    args.batch_size = cfgs.dataset.batch_size
 
     best_acc1 = 0.0
     if cfgs.saver.resume_model:
@@ -305,6 +306,7 @@ def main():
 def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list):
     batch_time = AverageMeter('Time', ':.3f', 200)
     data_time = AverageMeter('Data', ':.3f', 200)
+    ips = AverageMeter("IPS", ':.3f', 200)
 
     losses = AverageMeter('Loss', ':.4f', 50)
     top1 = AverageMeter('Acc@1', ':.2f', 50)
@@ -314,6 +316,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list
     progress = ProgressMeter(len(train_loader),
                              batch_time,
                              data_time,
+                             ips,
                              losses,
                              top1,
                              top5,
@@ -396,6 +399,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list
         # measure elapsed time
         batch_time.update(time.time() - end)
         end = time.time()
+        ips.update((args.world_size * args.batch_size) / batch_time.val)
+
         iter_end_time = time.time()
         if len(iter_time_list) <= 200 and i >= 800 and i <= 1000:
             iter_time_list.append(iter_end_time - iter_start_time)
