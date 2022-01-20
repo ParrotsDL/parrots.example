@@ -17,7 +17,6 @@ import torch.optim
 from torch.backends import cudnn
 
 import torch.distributed as dist
-from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
 from utils.dataloader import build_dataloader
@@ -43,45 +42,17 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
-    args.rank = int(os.environ['SLURM_PROCID'])
-    args.world_size = int(os.environ['SLURM_NTASKS'])
-    args.local_rank = int(os.environ['SLURM_LOCALID'])
-
-    node_list = str(os.environ['SLURM_NODELIST'])
-    node_parts = re.findall('[0-9]+', node_list)
-    os.environ['MASTER_ADDR'] = f'{node_parts[1]}.{node_parts[2]}.{node_parts[3]}.{node_parts[4]}'
-    os.environ['MASTER_PORT'] = str(args.port)
-    os.environ['WORLD_SIZE'] = str(args.world_size)
-    os.environ['RANK'] = str(args.rank)
-
-    dist.init_process_group(backend="nccl")
-    torch.cuda.set_device(args.local_rank) 
-
-    if args.rank == 0:
-        logger.setLevel(logging.INFO)
-    else:
-        logger.setLevel(logging.ERROR)
+    logger.setLevel(logging.INFO)
     logger_all.setLevel(logging.INFO)
-
-    logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
-                    socket.gethostname()))
-
-    dist.barrier()
-
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
     if cfgs.get('seed', None):
         random.seed(cfgs.seed)
         torch.manual_seed(cfgs.seed)
-        torch.cuda.manual_seed(cfgs.seed)
-        cudnn.deterministic = True
 
     model = models.__dict__[cfgs.net.arch](**cfgs.net.kwargs)
-    model.cuda()
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
-
-    model = DDP(model, device_ids=[args.local_rank])
     logger.info("model\n{}".format(model))
 
     if cfgs.get('label_smooth', None):
@@ -92,8 +63,6 @@ def main():
 
     optimizer = torch.optim.SGD(model.parameters(), **cfgs.trainer.optimizer.kwargs)
     logger.info("optimizer\n{}".format(optimizer))
-
-    cudnn.benchmark = True
 
     args.start_epoch = -cfgs.trainer.lr_scheduler.get('warmup_epochs', 0)
     args.max_epoch = cfgs.trainer.max_epoch
@@ -120,13 +89,13 @@ def main():
         model.load_state_dict(checkpoint['state_dict'])
         logger.info("pretrain training from '{}'".format(cfgs.saver.pretrain_model))
 
-    if args.rank == 0 and cfgs.saver.get('save_dir', None):
+    if cfgs.saver.get('save_dir', None):
         if not os.path.exists(cfgs.saver.save_dir):
             os.makedirs(cfgs.saver.save_dir)
             logger.info("create checkpoint folder {}".format(cfgs.saver.save_dir))
 
     # Data loading code
-    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, args.world_size)
+    train_loader, train_sampler, test_loader, _ = build_dataloader(cfgs.dataset, 0)
 
     # test mode
     if args.test:
@@ -139,15 +108,6 @@ def main():
                        **cfgs.trainer.lr_scheduler.kwargs, last_epoch=args.start_epoch - 1)
 
     monitor_writer = None
-    if args.rank == 0 and cfgs.get('monitor', None):
-        if cfgs.monitor.get('type', None) == 'pavi':
-            from pavi import SummaryWriter
-            if cfgs.monitor.get("_taskid", None):
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs, taskid=cfgs.monitor._taskid)
-            else:
-                monitor_writer = SummaryWriter(
-                    session_text=yaml.dump(args.config), **cfgs.monitor.kwargs)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -160,26 +120,21 @@ def main():
             # evaluate on validation set
             loss, acc1, acc5 = test(test_loader, model, criterion, args)
 
-            if args.rank == 0:
-                if monitor_writer:
-                    monitor_writer.add_scalar('Accuracy_Test_top1', acc1, len(train_loader)*epoch)
-                    monitor_writer.add_scalar('Accuracy_Test_top5', acc5, len(train_loader)*epoch)
-                    monitor_writer.add_scalar('Test_loss', loss, len(train_loader)*epoch)
 
-                checkpoint = {
-                    'epoch': epoch + 1,
-                    'arch': cfgs.net.arch,
-                    'state_dict': model.state_dict(),
-                    'best_acc1': best_acc1,
-                    'optimizer': optimizer.state_dict()
-                }
+            checkpoint = {
+                'epoch': epoch + 1,
+                'arch': cfgs.net.arch,
+                'state_dict': model.state_dict(),
+                'best_acc1': best_acc1,
+                'optimizer': optimizer.state_dict()
+            }
 
-                ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
-                best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
-                torch.save(checkpoint, ckpt_path)
-                if acc1 > best_acc1:
-                    best_acc1 = acc1
-                    shutil.copyfile(ckpt_path, best_ckpt_path)
+            ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_ckpt_epoch_{}.pth'.format(epoch))
+            best_ckpt_path = os.path.join(cfgs.saver.save_dir, cfgs.net.arch + '_best.pth')
+            torch.save(checkpoint, ckpt_path)
+            if acc1 > best_acc1:
+                best_acc1 = acc1
+                shutil.copyfile(ckpt_path, best_ckpt_path)
 
         lr_scheduler.step()
 
@@ -203,29 +158,29 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # measure data loading time
         data_time.update(time.time() - end)
 
-        input = input.cuda()
-        target = target.cuda()
+        # input = input.cuda()
+        # target = target.cuda()
 
         # compute output
-        output = model(input)
-        loss = criterion(output, target)
+        # output = model(input)
+        # loss = criterion(output, target)
 
         # measure accuracy and record loss
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+        # acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
-        dist.all_reduce(stats_all)
-        stats_all /= args.world_size
+        # stats_all = torch.tensor([loss.item(), acc1[0].item(), acc5[0].item()]).float().cuda()
+        # dist.all_reduce(stats_all)
+        # stats_all /= args.world_size
 
-        losses.update(stats_all[0].item())
-        top1.update(stats_all[1].item())
-        top5.update(stats_all[2].item())
-        memory.update(torch.cuda.max_memory_allocated()/1024/1024)
+        # losses.update(stats_all[0].item())
+        # top1.update(stats_all[1].item())
+        # top5.update(stats_all[2].item())
+        # memory.update(torch.cuda.max_memory_allocated()/1024/1024)
 
         # compute gradient and do SGD step
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        # optimizer.zero_grad()
+        # loss.backward()
+        # optimizer.step()
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -233,11 +188,6 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
 
         if i % args.log_freq == 0:
             progress.display(i)
-            if args.rank == 0 and monitor_writer:
-                cur_iter = epoch * len(train_loader) + i
-                monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
-                monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
 
 
 def test(test_loader, model, criterion, args):
@@ -254,21 +204,21 @@ def test(test_loader, model, criterion, args):
     with torch.no_grad():
         end = time.time()
         for i, (input, target) in enumerate(test_loader):
-            input = input.cuda()
-            target = target.cuda()
+            # input = input.cuda()
+            # target = target.cuda()
 
             # compute output
-            output = model(input)
-            loss = criterion(output, target)
+            # output = model(input)
+            # loss = criterion(output, target)
 
             # measure accuracy and record loss
-            acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
+            # acc1, acc5 = accuracy(output, target, topk=(1, 5), raw=True)
 
-            losses.update(loss.item())
-            top1.update(acc1[0].item() * 100.0 / target.size(0))
-            top5.update(acc5[0].item() * 100.0 / target.size(0))
+            # losses.update(loss.item())
+            # top1.update(acc1[0].item() * 100.0 / target.size(0))
+            # top5.update(acc5[0].item() * 100.0 / target.size(0))
 
-            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
+            # stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -277,22 +227,23 @@ def test(test_loader, model, criterion, args):
             if i % args.log_freq == 0:
                 progress.display(i)
 
-        logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
-                        args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
-                        stats_all[2].item()))
+        # logger_all.info(' Rank {} Loss {:.4f} Acc@1 {} Acc@5 {} total_size {}'.format(
+        #                 args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
+        #                 stats_all[2].item()))
 
-        loss = torch.tensor([losses.avg])
-        dist.all_reduce(loss.cuda())
-        loss_avg = loss.item() / args.world_size
-        dist.all_reduce(stats_all.cuda())
-        acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
-        acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
+        # loss = torch.tensor([losses.avg])
+        # dist.all_reduce(loss.cuda())
+        # loss_avg = loss.item() / args.world_size
+        # dist.all_reduce(stats_all.cuda())
+        # acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
+        # acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 
-        logger.info(' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
-                    acc1, stats_all[0].item(), stats_all[2].item(),
-                    acc5, stats_all[1].item(), stats_all[2].item()))
+        # logger.info(' * All Loss {:.4f} Acc@1 {:.3f} ({}/{}) Acc@5 {:.3f} ({}/{})'.format(loss_avg,
+        #             acc1, stats_all[0].item(), stats_all[2].item(),
+        #             acc5, stats_all[1].item(), stats_all[2].item()))
 
-    return loss_avg, acc1, acc5
+    # return loss_avg, acc1, acc5
+    return 0, 0, 0
 
 
 if __name__ == '__main__':
