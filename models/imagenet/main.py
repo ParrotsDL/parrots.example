@@ -17,6 +17,7 @@ import torch.optim
 from torch.backends import cudnn
 
 import torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel as DDP
 
 import models
 from utils.dataloader import build_dataloader
@@ -42,8 +43,32 @@ def main():
     args.config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
     cfgs = Dict(args.config)
 
+    if 'SLURM_PROCID' in os.environ.keys():
+        args.rank = int(os.environ['SLURM_PROCID'])
+        args.world_size = int(os.environ['SLURM_NTASKS'])
+        args.local_rank = int(os.environ['SLURM_LOCALID'])
+        os.environ['MASTER_ADDR'] = socket.gethostbyname(socket.getfqdn(socket.gethostname()))
+        os.environ['MASTER_PORT'] = str(args.port)
+    else:
+        args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
+        args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
+        args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
+
+    os.environ['WORLD_SIZE'] = str(args.world_size)
+    os.environ['RANK'] = str(args.rank)
+
+    dist.init_process_group(backend="mpi")
+
+
+
+
     logger.setLevel(logging.INFO)
     logger_all.setLevel(logging.INFO)
+    logger_all.info("rank {} of {} jobs, in {}".format(args.rank, args.world_size,
+                    socket.gethostname()))
+
+    dist.barrier()
+
     logger.info("config\n{}".format(json.dumps(cfgs, indent=2, ensure_ascii=False)))
 
     if cfgs.get('seed', None):
@@ -54,6 +79,8 @@ def main():
 
     logger.info("creating model '{}'".format(cfgs.net.arch))
     logger.info("model\n{}".format(model))
+
+    model = DDP(model, device_ids=[args.local_rank])
 
     if cfgs.get('label_smooth', None):
         criterion = LabelSmoothLoss(cfgs.trainer.label_smooth, cfgs.net.kwargs.num_classes).cuda()
