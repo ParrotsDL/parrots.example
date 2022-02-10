@@ -32,7 +32,7 @@ from utils.general import (LOGGER, NCOLS, box_iou, check_dataset, check_img_size
 from utils.metrics import ConfusionMatrix, ap_per_class
 from utils.plots import output_to_target, plot_images, plot_val_study
 from utils.torch_utils import select_device, time_sync
-from utils.config import use_camb, int_dtype
+from utils.config import use_camb, use_hip, int_dtype
 
 
 def save_one_txt(predn, save_conf, shape, file):
@@ -70,7 +70,7 @@ def process_batch(detections, labels, iouv):
     iou = box_iou(labels[:, 1:], detections[:, :4])
     x = torch.where((iou >= iouv[0]) & (labels[:, 0:1] == detections[:, 5]))  # IoU above threshold and classes match
     if x[0].shape[0]:
-        if use_camb:
+        if use_camb or use_hip:
             matches = torch.cat((torch.stack(x, 1).to(dtype=torch.float), iou[x[0], x[1]][:, None]), 1).cpu().numpy()  # [label, detection, iou]
         else:
             matches = torch.cat((torch.stack(x, 1), iou[x[0], x[1]][:, None]), 1).cpu().numpy()  # [label, detection, iou]
@@ -174,6 +174,8 @@ def run(data,
             targets = targets.to(device)
         if use_camb:
             im = im.contiguous(torch.channels_last)
+        elif use_hip:
+            im = im.contiguous()
         im = im.half() if half else im.float()  # uint8 to fp16/32
         im /= 255  # 0 - 255 to 0.0 - 1.0
         nb, _, height, width = im.shape  # batch size, channels, height, width
