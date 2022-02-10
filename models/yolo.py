@@ -24,7 +24,7 @@ from utils.general import LOGGER, check_version, check_yaml, make_divisible, pri
 from utils.plots import feature_visualization
 from utils.torch_utils import (copy_attr, fuse_conv_and_bn, initialize_weights, model_info, scale_img, select_device,
                                time_sync)
-from utils.config import int_dtype, use_camb
+from utils.config import int_dtype, use_camb, use_hip
 
 try:
     import thop  # for FLOPs computation
@@ -52,6 +52,7 @@ class Detect(nn.Module):
         z = []  # inference output
         for i in range(self.nl):
             x[i] = self.m[i](x[i])  # conv
+            d = x[i].device
             bs, _, ny, nx = x[i].shape  # x(bs,255,20,20) to x(bs,3,20,20,85)
             x[i] = x[i].view(bs, self.na, self.no, ny, nx).permute(0, 1, 3, 4, 2).contiguous()
 
@@ -63,12 +64,16 @@ class Detect(nn.Module):
                 if self.inplace:
                     if use_camb:
                         y[..., 0:2] = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i].cuda()  # xy
+                    elif use_hip:
+                        y[..., 0:2] = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i].to(d)  # xy
                     else:
                         y[..., 0:2] = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i]  # xy
                     y[..., 2:4] = (y[..., 2:4] * 2) ** 2 * self.anchor_grid[i]  # wh
                 else:  # for  on AWS Inferentia https://github.com/ultralytics/yolov5/pull/2953
                     if use_camb:
                         xy = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i].cuda()  # xy
+                    elif use_hip:
+                        xy = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i].to(d)  # xy
                     else:
                         xy = (y[..., 0:2] * 2 - 0.5 + self.grid[i]) * self.stride[i]  # xy
                     wh = (y[..., 2:4] * 2) ** 2 * self.anchor_grid[i]  # wh
@@ -86,6 +91,9 @@ class Detect(nn.Module):
         grid = torch.stack((xv, yv), 2).expand((1, self.na, ny, nx, 2)).float()
         if use_camb:
             anchor_grid = (self.anchors[i].clone() * self.stride[i].cuda()) \
+                .view((1, self.na, 1, 1, 2)).expand((1, self.na, ny, nx, 2)).float()
+        elif use_hip:
+            anchor_grid = (self.anchors[i].clone() * self.stride[i].to(d)) \
                 .view((1, self.na, 1, 1, 2)).expand((1, self.na, ny, nx, 2)).float()
         else:
             anchor_grid = (self.anchors[i].clone() * self.stride[i]) \
