@@ -175,3 +175,7 @@
 	path = models/yolov3
 	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/yolov3.git
 	branch = camb/dev/v1.0
+[submodule "models/fairseq"]
+	path = models/fairseq
+	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/fairseq-master.git
+        branch = hl/dev
