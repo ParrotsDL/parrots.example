@@ -32,6 +32,6 @@ ${EXTRA_ARGS} 2>&1 | tee ${log_path}/fairseq_mlu290_train_${T}.log
 # test model
 srun -p $1 -n1 --gres=mlu:1 --ntasks-per-node=1 --job-name=fairseq_test \
 ${SRUN_ARGS} python models/fairseq/fairseq_cli/generate.py $BINARY_DATA_PATH \
---path ${saved_path}/checkpoint_last.pt --beam 5 --batch-size 128 \
+--path ${saved_path}/checkpoint_best.pt --beam 5 --batch-size 128 \
 --remove-bpe --eval-bleu --device gpu --sacrebleu --quiet ${EXTRA_ARGS} \
 2>&1 | tee ${log_path}/fairseq_mlu290_test_${T}.log
