@@ -60,6 +60,8 @@ parser.add_argument('--device',
                     choices=['mlu', 'gpu'],
                     help='card type, for camb pytorch use mlu')
 parser.add_argument('--seed', type=int, default=None, help='random seed')
+parser.add_argument('--use_amp', dest='use_amp', action='store_true',
+                    help='use amp for auto mixed percision')
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger()
@@ -74,6 +76,10 @@ if args.device == "mlu":
     import torch_mlu.core.quantized.functional as func
     ct.set_cnml_enabled(False)
 
+if args.use_amp:
+    import torch.cuda.amp as amp
+    scaler = amp.GradScaler()
+ 
 use_camb = False
 if torch.__version__ == "parrots":
     from parrots.base import use_camb
@@ -204,6 +210,8 @@ def main():
         args.start_epoch = checkpoint['epoch']
         best_acc1 = checkpoint['best_acc1']
         optimizer.load_state_dict(checkpoint['optimizer'])
+        if args.use_amp and 'scaler' in checkpoint:
+            scaler.load_state_dict(checkpoint['scaler'])
         logger.info("resume training from '{}' at epoch {}".format(
             cfgs.saver.resume_model, checkpoint['epoch']))
     elif cfgs.saver.pretrain_model:
@@ -274,6 +282,8 @@ def main():
                         'best_acc1': best_acc1,
                         'optimizer': optimizer.state_dict()
                     }
+                    if args.use_amp:
+                        checkpoint['scaler'] = scaler.state_dict()
 
                     ckpt_path = os.path.join(
                         cfgs.saver.save_dir,
@@ -360,21 +370,37 @@ def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list
             input = input.cuda()
             target = target.cuda()
 
-        # compute output
-        if args.arch == 'googlenet':
-            aux1, aux2, output = model(input)
-            loss1 = criterion(output, target)
-            loss2 = criterion(aux1, target)
-            loss3 = criterion(aux2, target)
-            loss = loss1 + 0.3 * (loss2 + loss3)
-        else:
-            output = model(input)
-            loss = criterion(output, target)
-
+        if args.use_amp:
+            with amp.autocast():
+                if args.arch == 'googlenet':
+                    aux1, aux2, output = model(input)
+                    loss1 = criterion(output, target)
+                    loss2 = criterion(aux1, target)
+                    loss3 = criterion(aux2, target)
+                    loss = loss1 + 0.3 * (loss2 + loss3)
+                else:
+                    output = model(input)
+                    loss = criterion(output, target)
+        else: # not use amp
+            if args.arch == 'googlenet':
+                aux1, aux2, output = model(input)
+                loss1 = criterion(output, target)
+                loss2 = criterion(aux1, target)
+                loss3 = criterion(aux2, target)
+                loss = loss1 + 0.3 * (loss2 + loss3)
+            else:
+                output = model(input)
+                loss = criterion(output, target)
+  
         # compute gradient and do SGD step
         optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        if args.use_amp:
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            loss.backward()
+            optimizer.step()
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
