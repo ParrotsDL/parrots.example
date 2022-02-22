@@ -27,6 +27,7 @@ $BINARY_DATA_PATH --arch transformer_wmt_en_de_big \
 --warmup-updates 4000 --max-tokens 4096 --log-interval 10 \
 --keep-interval-updates 20 --steps_per_epoch 4751 \
 --save-dir $saved_path --device gpu --distributed-backend cncl \
+--starting_ckpt /mnt/lustre/share/model_zoo/nlp/wmt/camb_checkpoint100.pt \
 ${EXTRA_ARGS} 2>&1 | tee ${log_path}/fairseq_mlu290_train_${T}.log
 
 # test model
