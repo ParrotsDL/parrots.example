@@ -36,6 +36,8 @@ len=${#array[@]}
 EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
+port=`expr $RANDOM % 10000 + 20000`
+
 # 5. model choice
 mkdir -p algolib_gen/example/${MODEL_NAME}/
 export PARROTS_DEFAULT_LOGGER=FALSE
@@ -44,7 +46,7 @@ if [[ $3 =~ "sync" ]]; then
     srun --mpi=pmi2 -p $partition --job-name=example_${MODEL_MODEL_NAME} \
         --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS} \
         python -u $pyroot/models/imagenet/main.py --config ${cfg} \
-        --save_path=algolib_gen/example/${MODEL_NAME} \
+        --save_path=algolib_gen/example/${MODEL_NAME} --port=$port \
         ${EXTRA_ARGS} \
         2>&1 | tee algolib_gen/example/${MODEL_NAME}/train_${MODEL_NAME}.log-$now
 else
@@ -52,7 +54,7 @@ else
     srun --mpi=pmi2 -p $partition --job-name=example_${MODEL_NAME} \
         --gres=gpu:$g -n$2 --ntasks-per-node=$g  ${SRUN_ARGS}  \
         python -u $pyroot/models/imagenet/main.py --config ${cfg} \
-        --save_path=algolib_gen/example/${MODEL_NAME} \
+        --save_path=algolib_gen/example/${MODEL_NAME} --port=$port \
         ${EXTRA_ARGS} \
         2>&1 | tee algolib_gen/example/${MODEL_NAME}/train_${MODEL_NAME}.log-$now
 fi

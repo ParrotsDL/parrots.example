@@ -43,5 +43,6 @@ models:
   - inception_v2_mix  
   - inception_v3      
   - inception_v3_mix  
+  - inception_v4
   - inception_resnet  
   - inception_resnet_mix
