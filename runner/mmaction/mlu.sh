@@ -48,6 +48,6 @@ srun -p $1 -n$2 --gres mlu:$g --ntasks-per-node $g --job-name=mmaction_${flow_co
 # merge result
 PYTHON_ARGS="python -u models/mmaction/tools/analysis/report_accuracy.py --scores work_dirs/tsn_r50_1x1x3_75e_ucf101_split_1_rgb/rgb.pkl work_dirs/tsn_r50_1x1x3_75e_ucf101_split_1_flow/flow.pkl --datalist /mnt/lustre/share/openmmlab/datasets/action/ucf101/ucf101_val_split_1_rawframes.txt"
 
-srun -p 1 -n 1 --gres mlu:1 --ntasks-per-node 1  --job-name=mmaction_merge ${SRUN_ARGS} \
+srun -p $1 -n 1 --gres mlu:1 --ntasks-per-node 1  --job-name=mmaction_merge ${SRUN_ARGS} \
     $PYTHON_ARGS \
     2>&1 | tee $ROOT/log/mmaction/merge_result.log.$T
