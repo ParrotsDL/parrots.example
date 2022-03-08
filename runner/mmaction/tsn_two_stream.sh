@@ -6,6 +6,7 @@ T=`date +%m%d%H%M%S`
 rgb_config="tsn_r50_1x1x3_80e_ucf101_rgb"
 flow_config="tsn_r50_1x1x3_30e_ucf101_flow"
 ROOT=.
+EXTRA_ARGS=${@:3}
 
 pyroot=$ROOT/models/mmaction
 export PYTHONPATH=$pyroot:$PYTHONPATH
@@ -20,14 +21,14 @@ set -x
 PYTHON_ARGS="python -u models/mmaction/tools/train.py --config configs/mmaction/${rgb_config}.py --launcher=slurm --validate"
 
 srun -p $1 -n$2 --gres mlu:$g --ntasks-per-node $g --job-name=mmaction_${rgb_config} ${SRUN_ARGS} \
-    $PYTHON_ARGS \
+    $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/mmaction/train.${rgb_config}.log.$T
 
 # train flow
 PYTHON_ARGS="python -u models/mmaction/tools/train.py --config configs/mmaction/${flow_config}.py --launcher=slurm --validate"
 
 srun -p $1 -n$2 --gres mlu:$g --ntasks-per-node $g --job-name=mmaction_${flow_config} ${SRUN_ARGS} \
-    $PYTHON_ARGS \
+    $PYTHON_ARGS $EXTRA_ARGS \
     2>&1 | tee $ROOT/log/mmaction/train.${flow_config}.log.$T
 
 
