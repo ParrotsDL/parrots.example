@@ -2,6 +2,7 @@
 if [ ! -d "log/yolov3/" ]; then
   mkdir -p log/yolov3/
 fi
+set -x
 T=`date +%m%d%H%M%S`
 CUR_DIR=$(cd $(dirname "$pwd");pwd)
 
@@ -19,7 +20,7 @@ SRUN_ARGS=${SRUN_ARGS:-""}
 array=( $@ )
 len=${#array[@]}
 EXTRA_ARGS=${array[@]:2:$len}
-saved_path="yolov3_ckpt"
+saved_path="yolov3_ckpt_$T"
 
 srun -p $1 -n$2 --gres=mlu:$2 --ntasks-per-node=$2 \
 --job-name=yolov3 ${SRUN_ARGS} python models/yolov3/tools/train.py \
