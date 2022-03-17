@@ -37,10 +37,9 @@ trainer:
       weight_decay: 0.0001
   lr_scheduler:
     warmup_epochs: 0
-    type: StepLR
+    type: CosineAnnealingWarmRestarts
     kwargs:
-      step_size: 30
-      gamma: 0.1
+      T_0: 1252
 
 saver:
   pretrain_model:
