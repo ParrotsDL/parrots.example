@@ -310,14 +310,20 @@ def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list
     top1 = AverageMeter('Acc@1', ':.2f', 50)
     top5 = AverageMeter('Acc@5', ':.2f', 50)
 
-    memory = AverageMeter('Memory(MB)', ':.0f')
+    memory_max_alloc = AverageMeter('max_Memory_alloc(MB)', ':.0f')
+    memory_max_cached = AverageMeter('max_Memory_cached(MB)', ':.0f')
+    memory_alloc= AverageMeter('Memory_alloc(MB)', ':.0f')
+    memory_cached = AverageMeter('Memory_cached(MB)', ':.0f')
     progress = ProgressMeter(len(train_loader),
                              batch_time,
                              data_time,
                              losses,
                              top1,
                              top5,
-                             memory,
+                             memory_max_alloc,
+                             memory_max_cached,
+                             memory_alloc,
+                             memory_cached,
                              prefix="Epoch: [{}/{}]".format(
                                  epoch + 1, args.max_epoch))
 
@@ -391,7 +397,10 @@ def train(train_loader, model, criterion, optimizer, epoch, args, iter_time_list
         top1.update(stats_all[1].item())
         top5.update(stats_all[2].item())
         if args.device == "gpu":
-            memory.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
+            memory_max_alloc.update(torch.cuda.max_memory_allocated() / 1024 / 1024)
+            memory_max_cached.update(torch.cuda.max_memory_cached() / 1024 / 1024)
+            memory_alloc.update(torch.cuda.memory_allocated() / 1024 / 1024)
+            memory_cached.update(torch.cuda.memory_cached() / 1024 / 1024)
 
         # measure elapsed time
         batch_time.update(time.time() - end)
