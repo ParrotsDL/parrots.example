@@ -2,6 +2,17 @@ set -x
 set -o pipefail
 set -e
 
+if $SMART_ROOT; then
+    echo "SMART_ROOT is None,Please set SMART_ROOT"
+    exit 0
+fi
+
+if [ -x "$SMART_ROOT/submodules" ];then
+    submodules_root=$SMART_ROOT
+else    
+    submodules_root=$PWD
+fi
+
 # 1. build file folder for save log,format: algolib_gen/frame
 mkdir -p algolib_gen/example
 
@@ -10,23 +21,19 @@ now=$(date +"%Y%m%d_%H%M%S")
 
 # 3. set env
 path=$PWD
-if [[ "$path" =~ "submodules/example" ]]
+if [[ "$path" =~ "submodules" ]]
 then 
-    pyroot=$path
-    algolib_root=$path/../..
-    init_path=$path/..
+    pyroot=$submodules_root/example
 else
-    pyroot=$path/submodules/example
-    algolib_root=$path
-    init_path=$path/submodules
+    pyroot=$submodules_root/submodules/example
 fi
 export FRAME_NAME=example # customize for each frame
 export MODEL_NAME=$3
 cfg=$pyroot/algolib/configs/${MODEL_NAME}.yaml
-export PYTHONPATH=$algolib_root:$pyroot:$PYTHONPATH
+export PYTHONPATH=$pyroot:$PYTHONPATH
 
 # init_path
-export PYTHONPATH=$init_path/common/sites/:$PYTHONPATH # necessary for init
+export PYTHONPATH=$SMART_ROOT/common/sites/:$PYTHONPATH # necessary for init
 
 # 4. build necessary parameter
 partition=$1
