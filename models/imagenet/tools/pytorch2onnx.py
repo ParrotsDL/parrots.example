@@ -40,7 +40,7 @@ def parse_args():
 
 def parrots2Onnx(input, model_path, onnx_path, do_simplify=False):
     print(model_path.split('/')[-2])
-    model = model_dict[model_path.split('/')[-2]]().cuda()
+    model = model_dict[model_path.split('/')[-2]]() #.cuda()
     model_ins = torch.load(model_path)
     if 'state_dict' in model_ins.keys():
         model_ins = model_ins['state_dict']
@@ -53,7 +53,7 @@ def parrots2Onnx(input, model_path, onnx_path, do_simplify=False):
             new_key = key
             new_model_ins[new_key] = model_ins[key]
     model.load_state_dict(new_model_ins)
-    model = model.cuda()
+    # model = model.cuda()
     print(onnx_path)
     torch.onnx.export(model, input, onnx_path, verbose=True, opset_version=11)
 
@@ -73,7 +73,7 @@ def main():
     shape = args.shape
     print(shape)
     simplify_flag = args.simplify
-    dummy_input = torch.randn(shape).cuda()
+    dummy_input = torch.randn(shape) #.cuda()
     model_path = args.model_path
     onnx_path = model_path.split('.')[0] + '.onnx'
     parrots2Onnx(dummy_input, model_path, onnx_path, simplify_flag)
