@@ -11,6 +11,7 @@ import logging
 import numpy as np
 from addict import Dict
 
+import inspector
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -200,11 +201,20 @@ def main():
             elif hasattr(cfgs.monitor, '_taskid'):
                 monitor_kwargs['taskid'] = cfgs.monitor._taskid
         from pavi import SummaryWriter
-        monitor_writer = SummaryWriter(
-            session_text=yaml.dump(args.config), **monitor_kwargs)
+        # monitor_writer = SummaryWriter(
+        #     session_text=yaml.dump(args.config), **monitor_kwargs)
         args.taskid = monitor_writer.taskid
 
     run_time = time.time()
+
+
+    inspector.init_writer("0513", "test_op_scope", strategy=[1,2,3,4,5])
+    inspector.profile.ModuleProfiler(model, begin_it=50, end_it=60, communication_analyze=True, op_analyze=True)
+    inspector.profile.ComputationalGraphAnalyze(model,step=40)
+    inspector.monitor.init_monitor()
+    inspector.mark.init_data_preparation_analyze()
+    # inspector.profile.TestGradFn(model, step=110)
+    # inspector.profile.OldTestGradFn(model)
 
     # training
     for epoch in range(args.start_epoch, args.max_epoch):
@@ -298,9 +308,12 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
     if args.dummy_test:
         input_, target_  = next(iter(train_loader))
         train_loader = [(i, i) for i in range(len(train_loader))].__iter__()
+    inspector.mark.at_epoch_beginning()
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
+        # time.sleep(0.5)
+        inspector.mark.after_data_preparation()
 
         if args.dummy_test:
             input = input_.detach()
@@ -328,6 +341,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
         # compute gradient and do SGD step
         optimizer.zero_grad()
         loss.backward()
+        inspector.mark.after_backward()
         optimizer.step()
 
         # measure elapsed time
@@ -345,6 +359,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args, monitor_writer
                 monitor_writer.add_scalar('Train_Loss', losses.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top1', top1.avg, cur_iter)
                 monitor_writer.add_scalar('Accuracy_train_top5', top5.avg, cur_iter)
+        inspector.mark.at_iter_end()
         if os.environ.get('PARROTS_BENCHMARK') == '1' and i == 1010:
             return
 

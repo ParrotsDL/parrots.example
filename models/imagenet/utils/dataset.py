@@ -6,6 +6,8 @@ from PIL import Image
 
 import mc
 from torch.utils.data import Dataset
+import inspector
+from inspector.utils.transform_record import record_torchvision_Compose
 
 
 class McDataset(Dataset):
@@ -32,6 +34,9 @@ class McDataset(Dataset):
             path, cls = line.strip().split()
             self.metas.append((path, int(cls)))
         self.initialized = False
+
+        record_torchvision_Compose(self.transform)
+        # print(self.transform)
 
     def __len__(self):
         return self.num
@@ -69,16 +74,36 @@ class McDataset(Dataset):
             filename = self.root + '/' + self.metas[index][0]
             cls = self.metas[index][1]
 
-            # memcached
-            self._init_memcached()
-            value = mc.pyvector()
-            self.mclient.Get(filename, value)
-            value_buf = mc.ConvertBuffer(value)
-            buff = io.BytesIO(value_buf)
-            with Image.open(buff) as img:
-                img = img.convert('RGB')
+            with inspector.mark.data_preparation_record("data_reading"):
+                # memcached
+                self._init_memcached()
+                value = mc.pyvector()
+                self.mclient.Get(filename, value)
+                value_buf = mc.ConvertBuffer(value)
+                buff = io.BytesIO(value_buf)
+            with inspector.mark.data_preparation_record("data_decoding"):
+                with Image.open(buff) as img:
+                    img = img.convert('RGB')
 
+        # with inspector.mark.transform_record("z"):
+        #     pass
         # transform
         if self.transform is not None:
             img = self.transform(img)
+        # with inspector.mark.transform_record("t2"):
+        #     pass
+
+        #     # memcached
+        #     self._init_memcached()
+        #     value = mc.pyvector()
+        #     self.mclient.Get(filename, value)
+        #     value_buf = mc.ConvertBuffer(value)
+        #     buff = io.BytesIO(value_buf)
+        #     with Image.open(buff) as img:
+        #         img = img.convert('RGB')
+
+        # # transform
+        # if self.transform is not None:
+        #     img = self.transform(img)
+
         return img, cls
