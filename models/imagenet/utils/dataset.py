@@ -1,7 +1,4 @@
-import copy
 import io
-import os
-
 from PIL import Image
 
 import mc
@@ -26,8 +23,6 @@ class McDataset(Dataset):
             meta_list = f.readlines()
         self.num = len(meta_list)
         self.metas = []
-        self.ddt_flag = 1
-        self.ddt_img = 0
         for line in meta_list:
             path, cls = line.strip().split()
             self.metas.append((path, int(cls)))
@@ -45,38 +40,17 @@ class McDataset(Dataset):
             self.initialized = True
 
     def __getitem__(self, index):
-        if os.environ.get('DUMMYDATASET') == '1':
-            if self.ddt_flag:
-                filename = self.root + '/' + self.metas[index][0]
-                cls = self.metas[index][1]
+        filename = self.root + '/' + self.metas[index][0]
+        cls = self.metas[index][1]
 
-                # memcached
-                self._init_memcached()
-                value = mc.pyvector()
-                self.mclient.Get(filename, value)
-                value_buf = mc.ConvertBuffer(value)
-                buff = io.BytesIO(value_buf)
-                with Image.open(buff) as img:
-                    img = img.convert('RGB')
-                self.ddt_img = copy.deepcopy(img)
-                self.ddt_flag = 0
-                print("*********no dummydataset*********")
-            else:
-                img = copy.deepcopy(self.ddt_img)
-                cls = self.metas[index][1]
-                print("#######dummydataset#######")
-        else:
-            filename = self.root + '/' + self.metas[index][0]
-            cls = self.metas[index][1]
-
-            # memcached
-            self._init_memcached()
-            value = mc.pyvector()
-            self.mclient.Get(filename, value)
-            value_buf = mc.ConvertBuffer(value)
-            buff = io.BytesIO(value_buf)
-            with Image.open(buff) as img:
-                img = img.convert('RGB')
+        # memcached
+        self._init_memcached()
+        value = mc.pyvector()
+        self.mclient.Get(filename, value)
+        value_buf = mc.ConvertBuffer(value)
+        buff = io.BytesIO(value_buf)
+        with Image.open(buff) as img:
+            img = img.convert('RGB')
 
         # transform
         if self.transform is not None:

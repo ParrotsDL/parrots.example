@@ -1,18 +1,10 @@
 import numpy as np
 import torch
 import logging
-import torch.distributed as dist
+logger = logging.getLogger()
 
 
 def check_keys(model, checkpoint):
-    logger = logging.getLogger()
-    logger_all = logging.getLogger('all')
-    if dist.get_rank() == 0:
-        logger.setLevel(logging.INFO)
-    else:
-        logger.setLevel(logging.ERROR)
-    logger_all.setLevel(logging.INFO)
-
     model_keys = set(model.state_dict().keys())
     ckpt_keys = set(checkpoint['state_dict'].keys())
     missing_keys = model_keys - ckpt_keys
@@ -38,7 +30,7 @@ def accuracy(output, target, topk=(1,), raw=False):
 
         res = []
         for k in topk:
-            correct_k = correct[:k].contiguous().view(-1).float().sum(0, keepdim=True)
+            correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
             if raw:
                 res.append(correct_k)
             else:
@@ -92,14 +84,6 @@ class ProgressMeter(object):
         self.prefix = prefix
 
     def display(self, batch):
-        logger = logging.getLogger()
-        logger_all = logging.getLogger('all')
-        if dist.get_rank() == 0:
-            logger.setLevel(logging.INFO)
-        else:
-            logger.setLevel(logging.ERROR)
-        logger_all.setLevel(logging.INFO)
-
         entries = [self.prefix + self.batch_fmtstr.format(batch)]
         entries += [str(meter) for meter in self.meters]
         logger.info(' '.join(entries))
