@@ -310,6 +310,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
     loss_box = AverageMeter('loss_box', ':.4f', 50)
     loss_obj = AverageMeter('loss_obj', ':.4f', 50)
     loss_cls = AverageMeter('loss_cls', ':.4f', 50)
+    IPS = AverageMeter('IPS', ':.1f', 0)
     for epoch in range(start_epoch, epochs):  # epoch ------------------------------------------------------------------
         model.train()
 
@@ -383,14 +384,15 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
             loss_box.update(loss_items[0].item())
             loss_obj.update(loss_items[1].item())
             loss_cls.update(loss_items[2].item())
+            IPS.update(batch_size/(time_sync()-end))
             if RANK in [-1, 0] and i % 50 == 0:
                 mloss = (mloss * i + loss_items) / (i + 1)  # update mean losses
                 # mem = f'{torch.cuda.memory_allocated() / 1E9 if torch.cuda.is_available() else 0:.3g}G'  # (GB)
                 # pbar.set_description(('%10s' * 2 + '%10.4g' * 5) % (
                     # f'{epoch}/{epochs - 1}', mem, *mloss, targets.shape[0], imgs.shape[-1]))
                 # callbacks.run('on_train_batch_end', ni, model, imgs, targets, paths, plots, opt.sync_bn)
-                LOGGER.info('Epoch: {}/{}, Iter: {}/{}, {}, {}, {}, {}, {}\n'.format(
-                    epoch+1, epochs, i, len(train_loader), loss_box, loss_obj, loss_cls, loss_all, batch_time))
+                LOGGER.info('Epoch: {}/{}, Iter: {}/{}, {}, {}, {}, {}, {}, {}\n'.format(
+                    epoch+1, epochs, i, len(train_loader), loss_box, loss_obj, loss_cls, loss_all, batch_time, IPS))
             # end batch ------------------------------------------------------------------------------------------------
 
         # Scheduler
