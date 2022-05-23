@@ -21,6 +21,8 @@ from torch.backends import cudnn
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
+import subprocess
+
 import models
 from utils.dataloader import build_dataloader
 from utils.misc import accuracy, check_keys, AverageMeter, ProgressMeter
@@ -62,7 +64,11 @@ def main():
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
         args.local_rank = int(os.environ['SLURM_LOCALID'])
-        os.environ['MASTER_ADDR'] = socket.gethostbyname(socket.getfqdn(socket.gethostname()))
+
+        node_list = os.environ['SLURM_NODELIST']
+        addr = subprocess.getoutput(f'scontrol show hostname {node_list} | head -n1')
+        os.environ['MASTER_ADDR'] = addr
+
         os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
