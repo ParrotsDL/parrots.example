@@ -110,7 +110,7 @@
     "inception_v4": {
         "rate": [
             0.0,
-            0.02
+            0.2
         ]
     },
     "inception_v4_mix": {
