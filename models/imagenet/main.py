@@ -363,7 +363,7 @@ def test(test_loader, model, criterion, args):
     losses = AverageMeter('Loss', ':.4f', -1)
     top1 = AverageMeter('Acc@1', ':.2f', -1)
     top5 = AverageMeter('Acc@5', ':.2f', -1)
-    stats_all = torch.Tensor([0, 0, 0]).long()
+    stats_all = torch.Tensor([0, 0, 0]).long().cuda()
     progress = ProgressMeter(len(test_loader), batch_time, losses, top1, top5,
                              prefix="Test: ")
 
@@ -392,7 +392,7 @@ def test(test_loader, model, criterion, args):
             top1.update(acc1[0].item() * 100.0 / target.size(0))
             top5.update(acc5[0].item() * 100.0 / target.size(0))
 
-            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long())
+            stats_all.add_(torch.tensor([acc1[0].item(), acc5[0].item(), target.size(0)]).long().cuda())
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -405,10 +405,10 @@ def test(test_loader, model, criterion, args):
                         args.rank, losses.avg, stats_all[0].item(), stats_all[1].item(),
                         stats_all[2].item()))
 
-        loss = torch.tensor([losses.avg])
-        dist.all_reduce(loss.cuda())
+        loss = torch.tensor([losses.avg]).cuda()
+        dist.all_reduce(loss)
         loss_avg = loss.item() / args.world_size
-        dist.all_reduce(stats_all.cuda())
+        dist.all_reduce(stats_all)
         acc1 = stats_all[0].item() * 100.0 / stats_all[2].item()
         acc5 = stats_all[1].item() * 100.0 / stats_all[2].item()
 
