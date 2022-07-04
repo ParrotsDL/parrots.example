@@ -1,5 +1,4 @@
 ## Parrots2 examples
-full doc：http://pape.parrots.sensetime.com/
 
 * `benchmark`: benchmark scripts for parallel
 * `models/imagenet`: framework for image classification
