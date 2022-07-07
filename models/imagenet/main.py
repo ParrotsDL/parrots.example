@@ -161,7 +161,7 @@ def main():
             model = quantize.convert_to_adaptive_quantize(
                 model, len(train_loader))
         if use_camb:
-            model = model.to_memory_format(torch.channels_last)
+            model = model.to(memory_format=torch.channels_last)
         model.cuda()
     elif args.device == "mlu":
         if args.quantify:
