@@ -41,7 +41,7 @@ parser.add_argument('--quantify',
                     action='store_true',
                     help='quantify training')
 parser.add_argument('--port',
-                    default=12345,
+                    default=12344,
                     type=int,
                     metavar='P',
                     help='master port')
@@ -107,7 +107,7 @@ def main():
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
         os.environ['MASTER_ADDR'] = 'localhost'
-        os.environ['MASTER_PORT'] = '60000'
+        os.environ['MASTER_PORT'] = '12320'
     else:
         args.rank = 0
         args.world_size = 1
@@ -161,7 +161,7 @@ def main():
             model = quantize.convert_to_adaptive_quantize(
                 model, len(train_loader))
         if use_camb:
-            model = model.to_memory_format(torch.channels_last)
+            model.to(memory_format=torch.channels_last)
         model.cuda()
     elif args.device == "mlu":
         if args.quantify:
