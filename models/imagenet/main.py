@@ -54,7 +54,8 @@ def main():
     os.environ['WORLD_SIZE'] = str(args.world_size)
     os.environ['RANK'] = str(args.rank)
 
-    dist.auto_env()
+    if torch.__version__ == 'parrots':
+        dist.auto_env()
     dist.init_process_group(backend="nccl")
     torch.cuda.set_device(args.local_rank) 
 
