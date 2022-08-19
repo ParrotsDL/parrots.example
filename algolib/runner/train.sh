@@ -28,6 +28,9 @@ export FRAME_NAME=example # customize for each frame
 export MODEL_NAME=$3
 export PYTHONPATH=$pyroot:$PYTHONPATH
 export PARROTS_DEFAULT_LOGGER=FALSE
+# add path for mole
+export PYTHONPATH=$pyroot/models/imagenet/:$PYTHONPATH
+
 
 # 4. init_path
 export PYTHONPATH=${SMART_ROOT}:$PYTHONPATH
