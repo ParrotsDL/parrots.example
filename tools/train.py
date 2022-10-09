@@ -64,7 +64,7 @@ if "SLURM_LOCALID" in os.environ:
     node_parts = re.findall('[0-9]+', node_list)[-4:]
     os.environ[
         'MASTER_ADDR'] = f'{node_parts[0]}.{node_parts[1]}.{node_parts[2]}.{node_parts[3]}'
-    os.environ['MASTER_PORT'] = str(12356)
+    os.environ['MASTER_PORT'] = str(14356)
 elif "OMPI_COMM_WORLD_RANK" in os.environ:
     LOCAL_RANK = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
     RANK = int(os.environ['OMPI_COMM_WORLD_RANK'])
@@ -260,7 +260,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
             # Anchors
             if not opt.noautoanchor:
                 check_anchors(dataset, model=model, thr=hyp['anchor_t'], imgsz=imgsz)
-            model.half().float()  # pre-reduce anchor precision
+            model.float()  # pre-reduce anchor precision
 
         callbacks.run('on_pretrain_routine_end')
 
@@ -296,7 +296,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                 f'Starting training for {epochs} epochs...')
 
     if use_camb:
-        model = model.to_memory_format(torch.channels_last)
+        model = model.to(torch.channels_last)
 
     if opt.test and RANK in [-1, 0]:
         results, maps, _ = val.run(data_dict, batch_size=batch_size // WORLD_SIZE,

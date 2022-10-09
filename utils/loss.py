@@ -206,6 +206,7 @@ class ComputeLoss:
                 j = torch.stack((torch.ones_like(j), j, k, l, m))
                 t = t.repeat((5, 1, 1))[j]
                 if use_camb:
+                    j = j.cpu()
                     offsets = (torch.zeros_like(gxy)[None] + off[:, None].cpu())[j]
                     offsets = offsets.cuda()
                 else:
