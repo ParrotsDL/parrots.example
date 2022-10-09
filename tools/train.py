@@ -296,7 +296,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                 f'Starting training for {epochs} epochs...')
 
     if use_camb:
-        model = model.to(torch.channels_last)
+        model = model.to_memory_format(torch.channels_last)
 
     if opt.test and RANK in [-1, 0]:
         results, maps, _ = val.run(data_dict, batch_size=batch_size // WORLD_SIZE,
