@@ -169,7 +169,7 @@ class InceptionAux(nn.Module):
         # aux1: N x 512 x 4 x 4, aux2: N x 528 x 4 x 4
         x = self.conv(x)
         # N x 128 x 4 x 4
-        x = x.view(x.size(0), -1)
+        x = x.reshape(x.size(0), -1)
         # N x 2048
         x = F.relu(self.fc1(x), inplace=True)
         # N x 2048
