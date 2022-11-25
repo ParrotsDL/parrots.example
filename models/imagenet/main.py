@@ -107,7 +107,7 @@ def main():
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
         os.environ['MASTER_ADDR'] = 'localhost'
-        os.environ['MASTER_PORT'] = '12320'
+        os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = 0
         args.world_size = 1
