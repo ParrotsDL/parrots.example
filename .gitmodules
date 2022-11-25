@@ -167,10 +167,10 @@
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
 [submodule "models/transformer"]
 	path = models/transformer
-	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/camb_transformer.git
+	url = git@gitlab.bj.sensetime.com:top/model-zoo.git
 [submodule "models/bert"]
 	path = models/bert
-	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/bert.git
+	url = git@gitlab.bj.sensetime.com:top/model-zoo.git
 [submodule "models/yolov3"]
 	path = models/yolov3
 	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/yolov3.git
