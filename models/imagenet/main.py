@@ -49,6 +49,10 @@ parser.add_argument('--dummy_test',
                     dest='dummy_test',
                     action='store_true',
                     help='dummy data for speed evaluation')
+parser.add_argument('--resume',
+                    default=None,
+                    type=str,
+                    help='resume checkpoint')
 parser.add_argument('--launcher',
                     type=str,
                     default="slurm",
@@ -107,7 +111,7 @@ def main():
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
         args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
         os.environ['MASTER_ADDR'] = 'localhost'
-        os.environ['MASTER_PORT'] = '12320'
+        os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = 0
         args.world_size = 1
@@ -200,11 +204,11 @@ def main():
     args.batch_size = cfgs.dataset.batch_size
 
     best_acc1 = 0.0
-    if cfgs.saver.resume_model:
+    resume_model = args.resume if args.resume else cfgs.saver.resume_model
+    if resume_model:
         assert os.path.isfile(
-            cfgs.saver.resume_model), 'Not found resume model: {}'.format(
-                cfgs.saver.resume_model)
-        checkpoint = torch.load(cfgs.saver.resume_model)
+            resume_model), 'Not found resume model: {}'.format(resume_model)
+        checkpoint = torch.load(resume_model)
         check_keys(model=model, checkpoint=checkpoint)
         model.load_state_dict(checkpoint['state_dict'])
         args.start_epoch = checkpoint['epoch']
