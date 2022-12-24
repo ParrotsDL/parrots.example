@@ -74,7 +74,8 @@
 	url = git@gitlab.bj.sensetime.com:parrots.model/mmtrack.git
 [submodule "models/parrots.example"]
 	path = models/parrots.example
-	url = git@gitlab.bj.sensetime.com:platform/ParrotsDL/parrots.example.git
+	url = https://github.com/ParrotsDL/parrots.example.git
+	branch = camb_example
 [submodule "models/RetinaUnet"]
 	path = models/RetinaUnet
 	url = git@gitlab.bj.sensetime.com:parrots.model/retinaunet.git
@@ -167,10 +168,12 @@
 	url = git@gitlab.bj.sensetime.com:parrots.model/sketch.git
 [submodule "models/transformer"]
 	path = models/transformer
-	url = git@gitlab.bj.sensetime.com:top/model-zoo.git
+	url = https://github.com/ParrotsDL/parrots.example.git
+	branch = camb_transformer
 [submodule "models/bert"]
 	path = models/bert
-	url = git@gitlab.bj.sensetime.com:top/model-zoo.git
+	url = https://github.com/ParrotsDL/parrots.example.git
+	branch = camb_bert
 [submodule "models/yolov3"]
 	path = models/yolov3
 	url = git@gitlab.bj.sensetime.com:jiangyongjiu1/yolov3.git

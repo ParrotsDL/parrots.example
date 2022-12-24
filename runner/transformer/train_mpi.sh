@@ -43,4 +43,4 @@ EXTRA_ARGS=${array[@]:1:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 OMPI_MCA_mpi_warn_on_fork=0 GLOG_vmodule=MemcachedClient=-1
-mpirun -np $1 $run_cmd --launcher mpi ${EXTRA_ARGS}  2>&1 | tee log/transformer/train_transformer.log-$now:
+mpirun -np $1 $run_cmd --launcher mpi ${EXTRA_ARGS}  2>&1 | tee log/transformer/train_transformer.log-$now
