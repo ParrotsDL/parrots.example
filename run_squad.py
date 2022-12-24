@@ -694,7 +694,7 @@ def main():
                     help='distributed backend')
     parser.add_argument('--quantify', dest='quantify', action='store_true', help='quantify training')
     args = parser.parse_args()
-    args.port = 12345
+    args.port = 12245
     if args.launcher == 'slurm':
         args.rank = int(os.environ['SLURM_PROCID'])
         args.world_size = int(os.environ['SLURM_NTASKS'])
@@ -718,7 +718,9 @@ def main():
     elif args.launcher == "mpi":
         args.rank = int(os.environ['OMPI_COMM_WORLD_RANK'])
         args.world_size = int(os.environ['OMPI_COMM_WORLD_SIZE'])
-        args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK'])
+        args.local_rank = int(os.environ['OMPI_COMM_WORLD_LOCAL_RANK']) 
+        os.environ['MASTER_ADDR'] = 'localhost'
+        os.environ['MASTER_PORT'] = str(args.port)
     else:
         args.rank = 0
         args.world_size = 1
@@ -726,7 +728,7 @@ def main():
     args.dist = args.world_size > 1
     #os.environ['WORLD_SIZE'] = str(args.world_size)
     #os.environ['RANK'] = str(args.rank)
-    os.environ['MASTER_PORT'] = str(12345)
+    os.environ['MASTER_PORT'] = str(12245)
 
     if args.rank == 0:
         logger.setLevel(logging.INFO)
@@ -756,7 +758,7 @@ def main():
         )
 
     backend = "cncl" if use_camb or args.device == "mlu" else "nccl"
-    dist.init_process_group(backend=backend)
+    dist.init_process_group(backend=backend,  rank=args.rank, world_size=args.world_size)
     if args.device == "mlu":
         ct.set_device(args.local_rank)
     else:
