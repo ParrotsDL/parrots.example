@@ -22,7 +22,6 @@ batch_size=$(($2>=4?8:32))
 
 run_cmd="python -u train.py \
     --log-path $CUR_DIR/logs \
-    --num_epochs $num_epochs \
     --iterations $iterations \
     --print-freq ${print_freq} \
     --dropout_rate $dropout_rate \
